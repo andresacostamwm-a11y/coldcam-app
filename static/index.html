@@ -4,12 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#0f0f1a">
+<link rel="manifest" href="/static/manifest.json">
+<link rel="icon" id="dynFavicon" type="image/png" href="/static/icon-192.png">
+
+<!-- iOS home-screen icon (must be solid, no transparency) -->
+<link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+
+<!-- iOS splash / PWA behaviour -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AI Assistant">
-<link rel="manifest" href="/static/manifest.json">
-<link rel="icon" id="dynFavicon" type="image/png" href="/static/icon-192.png">
-<link rel="apple-touch-icon" href="/static/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+
 <title>AI Personal Assistant</title>
 <style>
   :root {
@@ -193,11 +200,51 @@
 </head>
 <body>
 
+<!-- ══════════════════════════════ iOS INSTALL BANNER ══════════════════════════════ -->
+<div id="iosBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;
+  background:linear-gradient(135deg,#1a0a3e,#0a1a3e);
+  border-top:1px solid rgba(124,58,237,.5);
+  padding:16px 20px 32px;box-shadow:0 -8px 32px rgba(0,0,0,.6);">
+  <button onclick="document.getElementById('iosBanner').style.display='none'"
+    style="position:absolute;top:12px;right:16px;background:none;border:none;color:#94a3b8;font-size:22px;cursor:pointer;line-height:1">×</button>
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <img src="/static/apple-touch-icon.png" style="width:52px;height:52px;border-radius:12px;flex-shrink:0">
+    <div>
+      <div style="font-weight:700;font-size:16px;color:#e2e8f0">Instalar AI Assistant</div>
+      <div style="font-size:13px;color:#94a3b8;margin-top:2px">Agregar a pantalla de inicio</div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:12px;padding:12px 14px">
+      <span style="font-size:22px;flex-shrink:0">1️⃣</span>
+      <span style="font-size:14px;color:#e2e8f0">Toca el botón <strong style="color:#38bdf8">Compartir</strong>
+        <svg style="display:inline;vertical-align:middle;margin:0 4px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/>
+        </svg>
+        en la barra inferior de Safari</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:12px;padding:12px 14px">
+      <span style="font-size:22px;flex-shrink:0">2️⃣</span>
+      <span style="font-size:14px;color:#e2e8f0">Desplázate y toca <strong style="color:#a78bfa">"Agregar a pantalla de inicio"</strong> <span style="font-size:16px">➕</span></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:12px;padding:12px 14px">
+      <span style="font-size:22px;flex-shrink:0">3️⃣</span>
+      <span style="font-size:14px;color:#e2e8f0">Toca <strong style="color:#10b981">"Agregar"</strong> — el ícono aparece en tu pantalla de inicio</span>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════════════════════════ HOME ══════════════════════════════ -->
 <div id="home" class="screen">
   <div class="home-header">
     <div class="greeting" id="greeting">Buenos días</div>
     <h1>Asistente IA</h1>
+    <button id="installBtn" onclick="document.getElementById('iosBanner').style.display='block'"
+      style="display:none;margin:10px auto 0;padding:9px 22px;background:linear-gradient(135deg,#7c3aed,#06b6d4);
+      border:none;border-radius:20px;color:white;font-size:13px;font-weight:600;cursor:pointer;
+      box-shadow:0 4px 16px rgba(124,58,237,.4)">
+      ➕ Instalar en iPhone
+    </button>
   </div>
 
   <div class="voice-wrap">
@@ -465,6 +512,22 @@ function setGreeting() {
   const g = h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches';
   document.getElementById('greeting').textContent = g;
 }
+
+// ── iOS install detection ──────────────────────────────────────────────────────
+(function checkIOSInstall() {
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const isStandalone = window.navigator.standalone === true;
+  const dismissed = sessionStorage.getItem('installDismissed');
+  if (isIOS && isSafari && !isStandalone && !dismissed) {
+    setTimeout(() => { document.getElementById('iosBanner').style.display = 'block'; }, 1800);
+  }
+  if (isIOS && !isStandalone) {
+    document.getElementById('installBtn').style.display = 'block';
+  }
+  const closeBtn = document.querySelector('#iosBanner button');
+  if (closeBtn) closeBtn.addEventListener('click', () => sessionStorage.setItem('installDismissed','1'));
+})();
 
 // ── Screen navigation ──────────────────────────────────────────────────────────
 function showScreen(id) {
