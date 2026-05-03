@@ -1,2 +1,4 @@
 .env
 seen_emails.json
+__pycache__/
+*.pyc
