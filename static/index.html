@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AI Assistant">
+<link rel="manifest" href="/static/manifest.json">
+<title>AI Personal Assistant</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --surface: #1a1a2e;
+    --surface2: #16213e;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --accent3: #06b6d4;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --green: #10b981;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+  /* ── Screens ── */
+  .screen { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s; }
+  .screen.hidden { transform: translateX(100%); opacity: 0; pointer-events: none; }
+
+  /* ── Top bar ── */
+  .topbar { display: flex; align-items: center; gap: 12px; padding: 48px 20px 16px; background: linear-gradient(to bottom, var(--surface2), transparent); flex-shrink: 0; }
+  .back-btn { background: rgba(255,255,255,.08); border: none; color: var(--text); width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .topbar h2 { font-size: 20px; font-weight: 600; flex: 1; }
+
+  /* ── Scroll area ── */
+  .scroll { flex: 1; overflow-y: auto; padding: 0 20px 100px; }
+  .scroll::-webkit-scrollbar { display: none; }
+
+  /* ── HOME ── */
+  #home { background: radial-gradient(ellipse at top, #1a1030 0%, var(--bg) 60%); }
+  .home-header { padding: 56px 24px 24px; text-align: center; }
+  .home-header .greeting { font-size: 14px; color: var(--text2); margin-bottom: 4px; }
+  .home-header h1 { font-size: 26px; font-weight: 700; background: linear-gradient(135deg, #a78bfa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  /* Voice button */
+  .voice-wrap { display: flex; flex-direction: column; align-items: center; padding: 24px 0 32px; }
+  .voice-ring { position: relative; width: 110px; height: 110px; }
+  .voice-ring::before, .voice-ring::after {
+    content: ''; position: absolute; inset: -10px; border-radius: 50%;
+    border: 2px solid var(--accent); opacity: 0; animation: pulse 2.5s ease-out infinite;
+  }
+  .voice-ring::after { animation-delay: 1.25s; }
+  @keyframes pulse { 0%{transform:scale(.8);opacity:.6} 100%{transform:scale(1.5);opacity:0} }
+  .voice-btn {
+    width: 110px; height: 110px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    border: none; color: white; font-size: 36px; cursor: pointer;
+    box-shadow: 0 0 40px rgba(124,58,237,.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .voice-btn:active { transform: scale(.93); }
+  .voice-btn.listening { animation: voicePulse 0.8s ease-in-out infinite; background: linear-gradient(135deg, var(--red), #f97316); }
+  @keyframes voicePulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+  .voice-label { margin-top: 14px; font-size: 14px; color: var(--text2); }
+  .voice-status { margin-top: 8px; font-size: 13px; color: var(--accent2); min-height: 18px; text-align: center; padding: 0 24px; }
+
+  /* App grid */
+  .section-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text2); margin: 8px 24px 14px; }
+  .app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 0 16px 8px; }
+  .app-icon { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; }
+  .app-icon .icon-wrap { width: 58px; height: 58px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 28px; transition: transform 0.15s; }
+  .app-icon:active .icon-wrap { transform: scale(.88); }
+  .app-icon span { font-size: 10px; color: var(--text2); text-align: center; line-height: 1.2; }
+
+  /* Quick actions */
+  .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px 24px; }
+  .quick-card { background: var(--surface); border-radius: var(--radius); padding: 16px; cursor: pointer; transition: transform 0.15s, background 0.15s; border: 1px solid rgba(255,255,255,.06); }
+  .quick-card:active { transform: scale(.97); background: var(--surface2); }
+  .quick-card .qicon { font-size: 28px; margin-bottom: 8px; }
+  .quick-card .qtitle { font-size: 14px; font-weight: 600; }
+  .quick-card .qdesc { font-size: 11px; color: var(--text2); margin-top: 3px; }
+
+  /* ── SOCIAL ── */
+  #social { background: var(--bg); }
+  .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; }
+  .social-card { border-radius: var(--radius); padding: 28px 16px; text-align: center; cursor: pointer; transition: transform 0.15s; }
+  .social-card:active { transform: scale(.95); }
+  .social-card .sicon { font-size: 48px; margin-bottom: 10px; }
+  .social-card .sname { font-size: 16px; font-weight: 700; }
+  .social-card .sdesc { font-size: 12px; opacity: .7; margin-top: 4px; }
+  .fb { background: linear-gradient(135deg, #1877f2, #0d5dbf); }
+  .ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+  .tt { background: linear-gradient(135deg, #010101, #69c9d0); }
+  .yt { background: linear-gradient(135deg, #ff0000, #cc0000); }
+
+  /* ── CALCULATOR ── */
+  #calculator { background: var(--bg); }
+  .calc-mode { display: flex; gap: 8px; padding: 8px 20px 0; }
+  .calc-mode button { flex: 1; padding: 8px; border-radius: 20px; border: 1px solid rgba(255,255,255,.15); background: transparent; color: var(--text2); font-size: 13px; cursor: pointer; transition: all .2s; }
+  .calc-mode button.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .calc-display { margin: 16px 20px 8px; background: var(--surface); border-radius: var(--radius); padding: 16px 20px; min-height: 90px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .calc-expr { font-size: 14px; color: var(--text2); min-height: 20px; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .calc-result { font-size: 42px; font-weight: 300; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .calc-grid { display: grid; gap: 8px; padding: 8px 20px 20px; }
+  .calc-grid.normal { grid-template-columns: repeat(4, 1fr); }
+  .calc-grid.scientific { grid-template-columns: repeat(5, 1fr); }
+  .calc-btn { height: 58px; border-radius: var(--radius-sm); border: none; font-size: 18px; font-weight: 500; cursor: pointer; transition: transform 0.1s, opacity 0.1s; }
+  .calc-btn:active { transform: scale(.93); opacity: .8; }
+  .calc-btn.num { background: var(--surface); color: var(--text); }
+  .calc-btn.op { background: rgba(124,58,237,.25); color: var(--accent2); }
+  .calc-btn.eq { background: linear-gradient(135deg, var(--accent), var(--accent3)); color: white; font-size: 22px; }
+  .calc-btn.fn { background: rgba(6,182,212,.15); color: var(--accent3); font-size: 14px; }
+  .calc-btn.clr { background: rgba(239,68,68,.2); color: var(--red); }
+  .calc-btn.zero { grid-column: span 2; }
+
+  /* ── EMAIL ── */
+  #email { background: var(--bg); }
+  .email-list { padding: 8px 0; }
+  .email-item { padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,.06); cursor: pointer; transition: background .15s; }
+  .email-item:active { background: rgba(255,255,255,.04); }
+  .email-from { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .email-subject { font-size: 13px; color: var(--text2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .email-preview { font-size: 12px; color: var(--text2); opacity: .7; margin-top: 3px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .email-date { font-size: 11px; color: var(--text2); opacity: .6; }
+  .email-row1 { display: flex; justify-content: space-between; align-items: baseline; }
+  .fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent3)); border: none; color: white; font-size: 24px; cursor: pointer; box-shadow: 0 4px 20px rgba(124,58,237,.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
+  .loading { text-align: center; padding: 40px; color: var(--text2); }
+  .spinner { width: 32px; height: 32px; border: 3px solid rgba(255,255,255,.1); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── COMPOSE ── */
+  #compose { background: var(--bg); }
+  .form-group { margin: 12px 0; }
+  .form-group label { display: block; font-size: 12px; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: var(--surface); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius-sm);
+    color: var(--text); padding: 12px 14px; font-size: 15px; outline: none; transition: border-color .2s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+  .form-group textarea { resize: none; min-height: 120px; font-family: inherit; }
+  .form-group select option { background: var(--surface2); }
+  .btn-primary { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--accent), var(--accent3)); border: none; border-radius: var(--radius); color: white; font-size: 16px; font-weight: 600; cursor: pointer; transition: opacity .2s; margin-top: 8px; }
+  .btn-primary:active { opacity: .85; }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* ── MESSAGES ── */
+  #messages { background: var(--bg); }
+
+  /* ── DOCUMENTS ── */
+  #documents { background: var(--bg); }
+  .doc-list { padding: 0; }
+  .doc-item { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,.06); cursor: pointer; }
+  .doc-icon { width: 46px; height: 46px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .doc-info { flex: 1; min-width: 0; }
+  .doc-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .doc-meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+  /* ── CHAT ── */
+  #chat { background: var(--bg); }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+  .chat-messages::-webkit-scrollbar { display: none; }
+  .bubble { max-width: 82%; padding: 12px 16px; border-radius: 18px; font-size: 15px; line-height: 1.5; word-break: break-word; }
+  .bubble.user { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .bubble.ai { background: var(--surface); color: var(--text); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .bubble.ai.thinking { color: var(--text2); font-style: italic; }
+  .chat-input-row { display: flex; gap: 10px; padding: 12px 16px; background: var(--surface2); flex-shrink: 0; }
+  .chat-input { flex: 1; background: var(--surface); border: 1px solid rgba(255,255,255,.1); border-radius: 24px; padding: 10px 16px; color: var(--text); font-size: 15px; outline: none; }
+  .chat-input:focus { border-color: var(--accent); }
+  .chat-send { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); border: none; color: white; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  /* ── Toast ── */
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid rgba(255,255,255,.15); color: var(--text); padding: 12px 24px; border-radius: 24px; font-size: 14px; z-index: 9999; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; max-width: 90vw; text-align: center; }
+  .toast.show { opacity: 1; }
+
+  /* ── Result overlay ── */
+  .result-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 500; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity .3s; }
+  .result-overlay.show { opacity: 1; pointer-events: all; }
+  .result-sheet { background: var(--surface2); border-radius: 24px 24px 0 0; padding: 24px 24px 48px; width: 100%; max-height: 70vh; overflow-y: auto; }
+  .result-sheet h3 { margin-bottom: 16px; font-size: 18px; }
+  .result-sheet p { font-size: 15px; color: var(--text2); line-height: 1.6; }
+  .result-sheet a { color: var(--accent2); text-decoration: none; word-break: break-all; }
+  .result-sheet .close-sheet { float: right; background: none; border: none; color: var(--text2); font-size: 24px; cursor: pointer; margin-top: -4px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ HOME ══════════════════════════════ -->
+<div id="home" class="screen">
+  <div class="home-header">
+    <div class="greeting" id="greeting">Buenos días</div>
+    <h1>Asistente IA</h1>
+  </div>
+
+  <div class="voice-wrap">
+    <div class="voice-ring">
+      <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="Mantén presionado para hablar">🎤</button>
+    </div>
+    <div class="voice-label">Toca para hablar</div>
+    <div class="voice-status" id="voiceStatus">¿En qué te ayudo?</div>
+  </div>
+
+  <div class="section-title">Redes Sociales</div>
+  <div class="app-grid">
+    <div class="app-icon" onclick="openSocial('facebook')">
+      <div class="icon-wrap" style="background:linear-gradient(135deg,#1877f2,#0d5dbf)">📘</div>
+      <span>Facebook</span>
+    </div>
+    <div class="app-icon" onclick="openSocial('instagram')">
+      <div class="icon-wrap" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">📸</div>
+      <span>Instagram</span>
+    </div>
+    <div class="app-icon" onclick="openSocial('tiktok')">
+      <div class="icon-wrap" style="background:linear-gradient(135deg,#010101,#69c9d0)">🎵</div>
+      <span>TikTok</span>
+    </div>
+    <div class="app-icon" onclick="openSocial('youtube')">
+      <div class="icon-wrap" style="background:linear-gradient(135deg,#ff0000,#990000)">▶️</div>
+      <span>YouTube</span>
+    </div>
+  </div>
+
+  <div class="section-title">Herramientas</div>
+  <div class="quick-grid">
+    <div class="quick-card" onclick="showScreen('email')">
+      <div class="qicon">📧</div>
+      <div class="qtitle">Correos</div>
+      <div class="qdesc">Leer y enviar</div>
+    </div>
+    <div class="quick-card" onclick="showScreen('messages')">
+      <div class="qicon">💬</div>
+      <div class="qtitle">Mensajes</div>
+      <div class="qdesc">WhatsApp equipo</div>
+    </div>
+    <div class="quick-card" onclick="showScreen('documents')">
+      <div class="qicon">📄</div>
+      <div class="qtitle">Documentos</div>
+      <div class="qdesc">Crear con IA</div>
+    </div>
+    <div class="quick-card" onclick="showScreen('calculator')">
+      <div class="qicon">🧮</div>
+      <div class="qtitle">Calculadora</div>
+      <div class="qdesc">Normal y científica</div>
+    </div>
+    <div class="quick-card" onclick="showScreen('chat')">
+      <div class="qicon">🤖</div>
+      <div class="qtitle">Chat IA</div>
+      <div class="qdesc">Pregunta cualquier cosa</div>
+    </div>
+    <div class="quick-card" onclick="showScreen('compose-doc')">
+      <div class="qicon">✨</div>
+      <div class="qtitle">Nueva IA</div>
+      <div class="qdesc">Crear documento</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ SOCIAL ══════════════════════════════ -->
+<div id="social" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('home')">‹</button>
+    <h2>Redes Sociales</h2>
+  </div>
+  <div class="scroll">
+    <div class="social-grid">
+      <div class="social-card fb" onclick="openSocial('facebook')">
+        <div class="sicon">📘</div>
+        <div class="sname">Facebook</div>
+        <div class="sdesc">Red social</div>
+      </div>
+      <div class="social-card ig" onclick="openSocial('instagram')">
+        <div class="sicon">📸</div>
+        <div class="sname">Instagram</div>
+        <div class="sdesc">Fotos y videos</div>
+      </div>
+      <div class="social-card tt" onclick="openSocial('tiktok')">
+        <div class="sicon">🎵</div>
+        <div class="sname">TikTok</div>
+        <div class="sdesc">Videos cortos</div>
+      </div>
+      <div class="social-card yt" onclick="openSocial('youtube')">
+        <div class="sicon">▶️</div>
+        <div class="sname">YouTube</div>
+        <div class="sdesc">Videos y música</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ CALCULATOR ══════════════════════════════ -->
+<div id="calculator" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('home')">‹</button>
+    <h2>Calculadora</h2>
+  </div>
+  <div class="calc-mode">
+    <button id="btnNormal" class="active" onclick="setCalcMode('normal')">Normal</button>
+    <button id="btnSci" onclick="setCalcMode('scientific')">Científica</button>
+  </div>
+  <div class="calc-display">
+    <div class="calc-expr" id="calcExpr"></div>
+    <div class="calc-result" id="calcResult">0</div>
+  </div>
+  <div class="calc-grid normal" id="calcGrid"></div>
+</div>
+
+<!-- ══════════════════════════════ EMAIL ══════════════════════════════ -->
+<div id="email" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('home')">‹</button>
+    <h2>Correos</h2>
+    <button class="back-btn" onclick="loadEmails()" title="Actualizar" style="font-size:16px">↻</button>
+  </div>
+  <div class="scroll" id="emailList">
+    <div class="loading"><div class="spinner"></div>Cargando correos...</div>
+  </div>
+  <button class="fab" onclick="showScreen('compose-email')">✏️</button>
+</div>
+
+<!-- ══════════════════════════════ COMPOSE EMAIL ══════════════════════════════ -->
+<div id="compose-email" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('email')">‹</button>
+    <h2>Nuevo Correo</h2>
+  </div>
+  <div class="scroll">
+    <div class="form-group">
+      <label>Para</label>
+      <input type="email" id="emailTo" placeholder="destinatario@email.com">
+    </div>
+    <div class="form-group">
+      <label>Asunto</label>
+      <input type="text" id="emailSubject" placeholder="Asunto del correo">
+    </div>
+    <div class="form-group">
+      <label>Mensaje</label>
+      <textarea id="emailBody" placeholder="Escribe tu mensaje..."></textarea>
+    </div>
+    <button class="btn-primary" id="sendEmailBtn" onclick="sendEmail()">Enviar Correo 📧</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ MESSAGES ══════════════════════════════ -->
+<div id="messages" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('home')">‹</button>
+    <h2>Mensajes al Equipo</h2>
+  </div>
+  <div class="scroll">
+    <div style="padding:16px 0; color:var(--text2); font-size:14px; line-height:1.7; background:rgba(16,185,129,.08); border-radius:var(--radius); padding:16px; margin-bottom:20px; border:1px solid rgba(16,185,129,.2);">
+      📱 <strong style="color:var(--green)">WhatsApp</strong> — Envía mensajes directamente a tu número de WhatsApp via CallMeBot.
+    </div>
+    <div class="form-group">
+      <label>Mensaje para el equipo</label>
+      <textarea id="whatsappMsg" placeholder="Escribe el mensaje para tu equipo de trabajo..." style="min-height:160px"></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <button class="btn-primary" style="margin:0;font-size:13px" onclick="insertTemplate('reunion')">📅 Reunión</button>
+      <button class="btn-primary" style="margin:0;font-size:13px;background:linear-gradient(135deg,#10b981,#06b6d4)" onclick="insertTemplate('urgente')">🚨 Urgente</button>
+      <button class="btn-primary" style="margin:0;font-size:13px;background:linear-gradient(135deg,#f59e0b,#ef4444)" onclick="insertTemplate('tarea')">✅ Tarea</button>
+      <button class="btn-primary" style="margin:0;font-size:13px;background:linear-gradient(135deg,#6366f1,#8b5cf6)" onclick="insertTemplate('reporte')">📊 Reporte</button>
+    </div>
+    <button class="btn-primary" id="sendMsgBtn" onclick="sendMessage()">Enviar por WhatsApp 📤</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ DOCUMENTS ══════════════════════════════ -->
+<div id="documents" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('home')">‹</button>
+    <h2>Documentos</h2>
+  </div>
+  <div class="scroll">
+    <div id="docHistory" class="doc-list"></div>
+  </div>
+  <button class="fab" onclick="showScreen('compose-doc')">✨</button>
+</div>
+
+<!-- ══════════════════════════════ COMPOSE DOC ══════════════════════════════ -->
+<div id="compose-doc" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('documents')">‹</button>
+    <h2>Crear Documento</h2>
+  </div>
+  <div class="scroll">
+    <div class="form-group">
+      <label>Tipo de documento</label>
+      <select id="docType">
+        <option value="presentation">📊 Presentación (PPTX)</option>
+        <option value="report">📄 Informe (DOCX)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Título</label>
+      <input type="text" id="docTitle" placeholder="Título del documento">
+    </div>
+    <div class="form-group">
+      <label>Descripción / Contenido</label>
+      <textarea id="docBrief" placeholder="Describe el tema, objetivos y puntos clave que debe incluir el documento..." style="min-height:140px"></textarea>
+    </div>
+    <div class="form-group" id="slidesGroup">
+      <label>Número de diapositivas</label>
+      <input type="number" id="docSlides" value="6" min="3" max="20">
+    </div>
+    <button class="btn-primary" id="createDocBtn" onclick="createDocument()">✨ Crear con IA</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ CHAT ══════════════════════════════ -->
+<div id="chat" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('home')">‹</button>
+    <h2>Chat con IA</h2>
+    <button class="back-btn" onclick="clearChat()" title="Limpiar" style="font-size:14px">🗑</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="bubble ai">👋 Hola! Soy tu asistente de IA. Puedo responder preguntas, ayudarte con análisis, redactar textos y mucho más. ¿En qué te ayudo?</div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chatInput" placeholder="Escribe tu mensaje..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}">
+    <button class="chat-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ TOAST ══════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════════════════════ RESULT OVERLAY ══════════════════════════════ -->
+<div class="result-overlay" id="resultOverlay" onclick="closeResultIfOutside(event)">
+  <div class="result-sheet" id="resultSheet">
+    <button class="close-sheet" onclick="closeResult()">×</button>
+    <h3 id="resultTitle"></h3>
+    <div id="resultBody"></div>
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────────
+let calcExpr = '', calcHasResult = false;
+let calcMode = 'normal';
+let recognition = null;
+let isListening = false;
+let docHistory = JSON.parse(localStorage.getItem('docHistory') || '[]');
+
+// ── Init ───────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  setGreeting();
+  buildCalc();
+  renderDocHistory();
+  document.getElementById('docType').addEventListener('change', e => {
+    document.getElementById('slidesGroup').style.display = e.target.value === 'presentation' ? '' : 'none';
+  });
+});
+
+function setGreeting() {
+  const h = new Date().getHours();
+  const g = h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches';
+  document.getElementById('greeting').textContent = g;
+}
+
+// ── Screen navigation ──────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  if (id === 'email') loadEmails();
+  if (id === 'calculator') buildCalc();
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────────
+function toast(msg, duration = 3000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), duration);
+}
+
+// ── Result overlay ─────────────────────────────────────────────────────────────
+function showResult(title, html) {
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultBody').innerHTML = html;
+  document.getElementById('resultOverlay').classList.add('show');
+}
+function closeResult() { document.getElementById('resultOverlay').classList.remove('show'); }
+function closeResultIfOutside(e) { if (e.target === document.getElementById('resultOverlay')) closeResult(); }
+
+// ── Social ─────────────────────────────────────────────────────────────────────
+const socialUrls = {
+  facebook:  { app: 'fb://', web: 'https://m.facebook.com' },
+  instagram: { app: 'instagram://', web: 'https://www.instagram.com' },
+  tiktok:    { app: 'tiktok://', web: 'https://www.tiktok.com' },
+  youtube:   { app: 'youtube://', web: 'https://m.youtube.com' }
+};
+function openSocial(app) {
+  const u = socialUrls[app];
+  if (!u) return;
+  const a = document.createElement('a');
+  a.href = u.app;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { window.location.href = u.web; document.body.removeChild(a); }, 1200);
+}
+
+// ── Calculator ─────────────────────────────────────────────────────────────────
+function setCalcMode(mode) {
+  calcMode = mode;
+  document.getElementById('btnNormal').classList.toggle('active', mode === 'normal');
+  document.getElementById('btnSci').classList.toggle('active', mode === 'scientific');
+  buildCalc();
+}
+
+function buildCalc() {
+  const grid = document.getElementById('calcGrid');
+  grid.className = 'calc-grid ' + calcMode;
+  grid.innerHTML = '';
+
+  const normal = [
+    ['C','clr','±','op','÷','op'],
+    ['7','num','8','num','9','num','×','op'],
+    ['4','num','5','num','6','num','−','op'],
+    ['1','num','2','num','3','num','+','op'],
+    ['0','num zero','.',  'num','=','eq'],
+  ];
+
+  const sci = [
+    ['sin','fn','cos','fn','tan','fn','π','fn','e','fn'],
+    ['x²','fn','√','fn','log','fn','ln','fn','(','fn'],
+    ['C','clr','±','op','÷','op',')','fn'],
+    ['7','num','8','num','9','num','×','op'],
+    ['4','num','5','num','6','num','−','op'],
+    ['1','num','2','num','3','num','+','op'],
+    ['0','num zero','.',  'num','=','eq'],
+  ];
+
+  const layout = calcMode === 'normal' ? normal : sci;
+  layout.forEach(row => {
+    for (let i = 0; i < row.length; i += 2) {
+      const label = row[i];
+      const cls   = row[i+1];
+      const btn = document.createElement('button');
+      btn.textContent = label;
+      btn.className = 'calc-btn ' + cls;
+      btn.addEventListener('click', () => calcPress(label));
+      if (cls.includes('zero')) btn.style.gridColumn = 'span 2';
+      grid.appendChild(btn);
+    }
+  });
+}
+
+function calcPress(key) {
+  const ops = ['+','−','×','÷'];
+  const sciMap = { 'sin':'Math.sin(', 'cos':'Math.cos(', 'tan':'Math.tan(', 'π':'Math.PI', 'e':'Math.E',
+                   'x²':'**2', '√':'Math.sqrt(', 'log':'Math.log10(', 'ln':'Math.log(', '(':'(', ')':')' };
+  if (key === 'C') { calcExpr = ''; calcHasResult = false; setDisplay('0',''); return; }
+  if (key === '=') { evaluate(); return; }
+  if (key === '±') { toggleSign(); return; }
+  if (calcHasResult && !ops.includes(key) && key !== '.') { calcExpr = ''; calcHasResult = false; }
+  if (sciMap[key] !== undefined) { calcExpr += sciMap[key]; }
+  else if (ops.includes(key)) { calcExpr += ({'+':'+','−':'-','×':'*','÷':'/'})[key]; calcHasResult = false; }
+  else { calcExpr += key; }
+  setDisplay(calcExpr, '');
+}
+
+function evaluate() {
+  try {
+    let expr = calcExpr.replace(/Math\.PI/g,'3.14159265358979').replace(/Math\.E/g,'2.71828182845904');
+    const result = Function('"use strict"; return (' + calcExpr + ')')();
+    const disp = parseFloat(result.toPrecision(12)).toString();
+    setDisplay(disp, calcExpr + ' =');
+    calcExpr = disp;
+    calcHasResult = true;
+  } catch { setDisplay('Error', calcExpr); calcExpr = ''; }
+}
+
+function toggleSign() {
+  if (calcExpr.startsWith('-')) calcExpr = calcExpr.slice(1);
+  else calcExpr = '-' + calcExpr;
+  setDisplay(calcExpr, '');
+}
+
+function setDisplay(main, expr) {
+  document.getElementById('calcResult').textContent = main;
+  document.getElementById('calcExpr').textContent = expr;
+}
+
+// ── Voice ──────────────────────────────────────────────────────────────────────
+function toggleVoice() {
+  if (isListening) stopVoice();
+  else startVoice();
+}
+
+function startVoice() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) { toast('Tu navegador no soporta reconocimiento de voz'); return; }
+  recognition = new SpeechRecognition();
+  recognition.lang = 'es-ES';
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.onstart = () => {
+    isListening = true;
+    document.getElementById('voiceBtn').classList.add('listening');
+    document.getElementById('voiceBtn').textContent = '⏹';
+    document.getElementById('voiceStatus').textContent = 'Escuchando...';
+  };
+  recognition.onresult = e => {
+    const t = Array.from(e.results).map(r=>r[0].transcript).join('');
+    document.getElementById('voiceStatus').textContent = t;
+    if (e.results[e.results.length-1].isFinal) processVoice(t);
+  };
+  recognition.onend = () => stopVoice();
+  recognition.onerror = e => { toast('Error de micrófono: ' + e.error); stopVoice(); };
+  recognition.start();
+}
+
+function stopVoice() {
+  isListening = false;
+  if (recognition) { recognition.stop(); recognition = null; }
+  document.getElementById('voiceBtn').classList.remove('listening');
+  document.getElementById('voiceBtn').textContent = '🎤';
+}
+
+async function processVoice(transcript) {
+  document.getElementById('voiceStatus').textContent = '⏳ Procesando: "' + transcript + '"';
+  try {
+    const res = await fetch('/api/voice', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({transcript}) });
+    const data = await res.json();
+    handleVoiceResult(data, transcript);
+  } catch(e) {
+    document.getElementById('voiceStatus').textContent = '¿En qué te ayudo?';
+    toast('Error de conexión');
+  }
+}
+
+function speak(text) {
+  if (!text || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'es-ES'; u.rate = 1.05;
+  window.speechSynthesis.speak(u);
+}
+
+function handleVoiceResult(data, transcript) {
+  const intent = data.intent || 'unknown';
+  const reply  = data.reply || '';
+  document.getElementById('voiceStatus').textContent = reply || '¿En qué te ayudo?';
+  if (reply) speak(reply);
+
+  switch(intent) {
+    case 'open_social':
+      if (data.params?.app) openSocial(data.params.app);
+      break;
+    case 'calculator':
+      showScreen('calculator');
+      if (data.data?.result !== undefined) {
+        setDisplay(String(data.data.result), transcript + ' =');
+        calcExpr = String(data.data.result);
+        calcHasResult = true;
+      }
+      break;
+    case 'open_screen':
+      if (data.params?.screen) showScreen(data.params.screen);
+      break;
+    case 'read_emails':
+      showScreen('email');
+      if (data.data) renderEmails(data.data);
+      break;
+    case 'send_email':
+      toast('✅ ' + reply);
+      break;
+    case 'send_whatsapp':
+      toast('✅ ' + reply);
+      break;
+    case 'create_doc':
+      if (data.data?.url) {
+        addDocHistory(data.data.url, data.params?.title || 'Documento');
+        showResult('Documento Creado', `<p>Tu documento está listo:</p><br><a href="${data.data.url}" target="_blank">📥 Descargar documento</a>`);
+      }
+      break;
+    case 'ask_ai':
+      showResult('Respuesta IA', `<p>${escapeHtml(reply)}</p>`);
+      break;
+    default:
+      if (reply) showResult('Asistente IA', `<p>${escapeHtml(reply)}</p>`);
+  }
+}
+
+// ── Email ──────────────────────────────────────────────────────────────────────
+async function loadEmails() {
+  document.getElementById('emailList').innerHTML = '<div class="loading"><div class="spinner"></div>Cargando correos...</div>';
+  try {
+    const res = await fetch('/api/email?limit=20');
+    const data = await res.json();
+    renderEmails(data);
+  } catch(e) { document.getElementById('emailList').innerHTML = '<div class="loading">Error al cargar correos</div>'; }
+}
+
+function renderEmails(emails) {
+  if (!emails || emails.length === 0) { document.getElementById('emailList').innerHTML = '<div class="loading">No hay correos</div>'; return; }
+  if (emails[0]?.error) { document.getElementById('emailList').innerHTML = `<div class="loading">⚠️ ${emails[0].error}</div>`; return; }
+  const html = '<div class="email-list">' + emails.map(e => `
+    <div class="email-item">
+      <div class="email-row1"><span class="email-from">${escapeHtml(e.from||'')}</span><span class="email-date">${formatDate(e.date)}</span></div>
+      <div class="email-subject">${escapeHtml(e.subject||'')}</div>
+      <div class="email-preview">${escapeHtml(e.preview||'')}</div>
+    </div>`).join('') + '</div>';
+  document.getElementById('emailList').innerHTML = html;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  try { return new Date(d).toLocaleDateString('es', {month:'short',day:'numeric'}); } catch { return d.slice(0,10); }
+}
+
+async function sendEmail() {
+  const to = document.getElementById('emailTo').value.trim();
+  const subject = document.getElementById('emailSubject').value.trim();
+  const body = document.getElementById('emailBody').value.trim();
+  if (!to || !subject || !body) { toast('Completa todos los campos'); return; }
+  const btn = document.getElementById('sendEmailBtn');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  try {
+    const res = await fetch('/api/email/send', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({to, subject, body}) });
+    const data = await res.json();
+    if (data.ok) {
+      toast('✅ Correo enviado');
+      document.getElementById('emailTo').value = '';
+      document.getElementById('emailSubject').value = '';
+      document.getElementById('emailBody').value = '';
+      showScreen('email');
+    } else { toast('Error al enviar'); }
+  } catch(e) { toast('Error de conexión'); }
+  finally { btn.disabled = false; btn.textContent = 'Enviar Correo 📧'; }
+}
+
+// ── Messages ───────────────────────────────────────────────────────────────────
+const templates = {
+  reunion: '📅 Reunión de equipo\n\nHola equipo, les recuerdo que tenemos reunión. Por favor confirmen asistencia.\n\nSaludos',
+  urgente: '🚨 URGENTE\n\nHola equipo, necesito atención inmediata en el siguiente asunto:\n\n[Describe el problema aquí]\n\nGracias por la atención rápida.',
+  tarea:   '✅ Asignación de tarea\n\nHola, te asigno la siguiente tarea:\n\nTarea: [Describe la tarea]\nFecha límite: [Fecha]\n\nCualquier duda, me avisas.',
+  reporte: '📊 Reporte de avance\n\nHola equipo, adjunto el reporte de avance del proyecto:\n\n• Completado: \n• En proceso: \n• Pendiente: \n\nSaludos'
+};
+function insertTemplate(key) { document.getElementById('whatsappMsg').value = templates[key] || ''; }
+
+async function sendMessage() {
+  const message = document.getElementById('whatsappMsg').value.trim();
+  if (!message) { toast('Escribe un mensaje'); return; }
+  const btn = document.getElementById('sendMsgBtn');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  try {
+    const res = await fetch('/api/message', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message}) });
+    const data = await res.json();
+    if (data.ok) { toast('✅ Mensaje enviado por WhatsApp'); document.getElementById('whatsappMsg').value = ''; }
+    else { toast('Error al enviar'); }
+  } catch(e) { toast('Error de conexión'); }
+  finally { btn.disabled = false; btn.textContent = 'Enviar por WhatsApp 📤'; }
+}
+
+// ── Documents ──────────────────────────────────────────────────────────────────
+function addDocHistory(url, title) {
+  docHistory.unshift({ url, title, date: new Date().toISOString() });
+  if (docHistory.length > 20) docHistory.pop();
+  localStorage.setItem('docHistory', JSON.stringify(docHistory));
+  renderDocHistory();
+}
+
+function renderDocHistory() {
+  const el = document.getElementById('docHistory');
+  if (!docHistory.length) { el.innerHTML = '<div class="loading" style="padding-top:60px">No hay documentos aún.<br><br>Toca ✨ para crear uno con IA.</div>'; return; }
+  el.innerHTML = docHistory.map(d => {
+    const isPptx = d.url.endsWith('.pptx') || d.url.includes('presentation');
+    const icon = isPptx ? '📊' : '📄';
+    const bg = isPptx ? 'rgba(124,58,237,.2)' : 'rgba(6,182,212,.2)';
+    return `<div class="doc-item" onclick="window.open('${d.url}','_blank')">
+      <div class="doc-icon" style="background:${bg}">${icon}</div>
+      <div class="doc-info">
+        <div class="doc-name">${escapeHtml(d.title)}</div>
+        <div class="doc-meta">${formatDate(d.date)}</div>
+      </div>
+      <span style="color:var(--text2);font-size:18px">↗</span>
+    </div>`;
+  }).join('');
+}
+
+async function createDocument() {
+  const doc_type = document.getElementById('docType').value;
+  const title    = document.getElementById('docTitle').value.trim();
+  const brief    = document.getElementById('docBrief').value.trim();
+  const slides   = parseInt(document.getElementById('docSlides').value) || 6;
+  if (!title || !brief) { toast('Completa el título y descripción'); return; }
+  const btn = document.getElementById('createDocBtn');
+  btn.disabled = true; btn.textContent = '⏳ Creando con IA...';
+  try {
+    const res = await fetch('/api/document', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({doc_type, title, brief, slides}) });
+    const data = await res.json();
+    if (data.url) {
+      addDocHistory(data.url, title);
+      toast('✅ Documento creado');
+      showResult('Documento Listo ✅', `<p>Tu ${doc_type === 'presentation' ? 'presentación' : 'informe'} está listo:</p><br><a href="${data.url}" target="_blank" style="font-size:18px">📥 Descargar: ${escapeHtml(title)}</a>`);
+      document.getElementById('docTitle').value = '';
+      document.getElementById('docBrief').value = '';
+    } else { toast('Error al crear documento'); }
+  } catch(e) { toast('Error de conexión'); }
+  finally { btn.disabled = false; btn.textContent = '✨ Crear con IA'; }
+}
+
+// ── Chat ───────────────────────────────────────────────────────────────────────
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const message = input.value.trim();
+  if (!message) return;
+  input.value = '';
+  appendBubble('user', message);
+  const thinking = appendBubble('ai', '✦ Pensando...', true);
+  try {
+    const res = await fetch('/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message}) });
+    const data = await res.json();
+    thinking.remove();
+    appendBubble('ai', data.reply || 'Sin respuesta');
+  } catch(e) {
+    thinking.remove();
+    appendBubble('ai', 'Error de conexión. Verifica que el servidor esté activo.');
+  }
+}
+
+function appendBubble(role, text, thinking = false) {
+  const el = document.createElement('div');
+  el.className = 'bubble ' + role + (thinking ? ' thinking' : '');
+  el.textContent = text;
+  const msgs = document.getElementById('chatMessages');
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+  return el;
+}
+
+function clearChat() {
+  document.getElementById('chatMessages').innerHTML = '<div class="bubble ai">👋 Hola de nuevo! ¿En qué te ayudo?</div>';
+}
+
+// ── Utils ──────────────────────────────────────────────────────────────────────
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── PWA install ────────────────────────────────────────────────────────────────
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
+
+// ── Service Worker ─────────────────────────────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/static/sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
