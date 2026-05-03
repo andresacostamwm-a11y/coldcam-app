@@ -8,6 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AI Assistant">
 <link rel="manifest" href="/static/manifest.json">
+<link rel="icon" id="dynFavicon" type="image/png" href="/static/icon-192.png">
+<link rel="apple-touch-icon" href="/static/icon-192.png">
 <title>AI Personal Assistant</title>
 <style>
   :root {
@@ -855,6 +857,102 @@ window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferr
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/static/sw.js').catch(() => {});
 }
+
+// ── Dynamic favicon ────────────────────────────────────────────────────────────
+(function dynamicFavicon() {
+  const SZ = 64;
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = SZ;
+  const ctx = cv.getContext('2d');
+  const favicon = document.getElementById('dynFavicon');
+  const img = new Image();
+  img.src = '/static/icon-192.png';
+
+  let voiceActive = false;
+  let pulsePhase = 0;
+  let unreadCount = 0;
+
+  // expose so other code can trigger glow
+  window._faviconSetVoice = v => { voiceActive = v; };
+  window._faviconSetBadge = n => { unreadCount = n; };
+
+  function draw() {
+    ctx.clearRect(0, 0, SZ, SZ);
+
+    // base icon
+    ctx.save();
+    ctx.beginPath();
+    const r = 14;
+    ctx.moveTo(r, 0); ctx.lineTo(SZ - r, 0);
+    ctx.quadraticCurveTo(SZ, 0, SZ, r);
+    ctx.lineTo(SZ, SZ - r);
+    ctx.quadraticCurveTo(SZ, SZ, SZ - r, SZ);
+    ctx.lineTo(r, SZ);
+    ctx.quadraticCurveTo(0, SZ, 0, SZ - r);
+    ctx.lineTo(0, r);
+    ctx.quadraticCurveTo(0, 0, r, 0);
+    ctx.closePath();
+    ctx.clip();
+    if (img.complete && img.naturalWidth) {
+      ctx.drawImage(img, 0, 0, SZ, SZ);
+    } else {
+      const g = ctx.createLinearGradient(0, 0, SZ, SZ);
+      g.addColorStop(0, '#7c3aed'); g.addColorStop(1, '#06b6d4');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, SZ, SZ);
+    }
+    ctx.restore();
+
+    // clock progress ring
+    const now = new Date();
+    const sec = now.getSeconds() + now.getMilliseconds() / 1000;
+    const cx = SZ / 2, cy = SZ / 2, ringR = SZ / 2 - 3;
+    ctx.beginPath();
+    ctx.arc(cx, cy, ringR, -Math.PI / 2, -Math.PI / 2 + (sec / 60) * 2 * Math.PI);
+    ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // voice-active glow ring
+    if (voiceActive) {
+      pulsePhase += 0.12;
+      const alpha = 0.5 + 0.5 * Math.sin(pulsePhase);
+      ctx.beginPath();
+      ctx.arc(cx, cy, ringR - 1, 0, 2 * Math.PI);
+      ctx.strokeStyle = `rgba(239,68,68,${alpha})`;
+      ctx.lineWidth = 4;
+      ctx.stroke();
+    } else {
+      pulsePhase = 0;
+    }
+
+    // unread badge
+    if (unreadCount > 0) {
+      const bx = SZ - 13, by = 13;
+      ctx.beginPath();
+      ctx.arc(bx, by, 10, 0, 2 * Math.PI);
+      ctx.fillStyle = '#ef4444';
+      ctx.fill();
+      ctx.fillStyle = 'white';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(unreadCount > 9 ? '9+' : String(unreadCount), bx, by + 1);
+    }
+
+    favicon.href = cv.toDataURL('image/png');
+    requestAnimationFrame(draw);
+  }
+
+  img.onload = draw;
+  img.onerror = draw;
+  if (img.complete) draw();
+})();
+
+// Hook voice state into favicon
+const _origStart = startVoice;
+const _origStop  = stopVoice;
+startVoice = function() { window._faviconSetVoice(true);  _origStart(); };
+stopVoice  = function() { window._faviconSetVoice(false); _origStop();  };
 </script>
 </body>
 </html>
