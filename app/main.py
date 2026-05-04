@@ -1,12 +1,12 @@
 """AI Personal Assistant — FastAPI Backend"""
 from __future__ import annotations
-import os, json, imaplib, email as email_lib, smtplib, uuid
+import os, json, imaplib, email as email_lib, smtplib, uuid, asyncio
 from email.header import decode_header
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
@@ -54,6 +54,23 @@ class DocRequest(BaseModel):
 
 class ChatMsg(BaseModel):
     message: str
+
+class NLMNotebook(BaseModel):
+    title: str
+
+class NLMSource(BaseModel):
+    notebook_id: str
+    source_type: str   # "url" | "text" | "youtube"
+    content: str
+    label: str = ""
+
+class NLMChat(BaseModel):
+    notebook_id: str
+    question: str
+
+class NLMGenerate(BaseModel):
+    notebook_id: str
+    artifact_type: str  # "audio" | "quiz" | "flashcards" | "mindmap"
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -122,13 +139,16 @@ Interpreta la orden y responde SOLO con JSON válido (sin markdown):
 Intents disponibles:
 - open_social   → params: {app: "facebook"|"instagram"|"tiktok"|"youtube"}
 - calculator    → params: {expression: "..."}   (si pide calcular algo)
-- open_screen   → params: {screen: "email"|"messages"|"documents"|"chat"|"calculator"}
-- read_emails   → params: {limit: 5}
-- send_email    → params: {to: "...", subject: "...", body: "..."}
-- send_whatsapp → params: {message: "..."}
-- create_doc    → params: {doc_type: "presentation"|"report", title: "...", brief: "...", slides: 6}
-- ask_ai        → params: {question: "..."}
-- unknown       → params: {}
+- open_screen      → params: {screen: "email"|"messages"|"documents"|"chat"|"calculator"|"notebooklm"}
+- read_emails      → params: {limit: 5}
+- send_email       → params: {to: "...", subject: "...", body: "..."}
+- send_whatsapp    → params: {message: "..."}
+- create_doc       → params: {doc_type: "presentation"|"report", title: "...", brief: "...", slides: 6}
+- ask_ai           → params: {question: "..."}
+- nlm_create       → params: {title: "..."}
+- nlm_add_source   → params: {notebook_id: "...", source_type: "url"|"text"|"youtube", content: "..."}
+- nlm_chat         → params: {notebook_id: "...", question: "..."}
+- unknown          → params: {}
 
 Para cálculos matemáticos usa Python eval-safe expressions (sin imports).
 Responde SOLO con JSON."""
@@ -179,6 +199,23 @@ async def voice(cmd: VoiceCmd):
             messages=[{"role": "user", "content": params.get("question", cmd.transcript)}]
         )
         result["reply"] = resp.content[0].text.strip()
+
+    elif intent == "nlm_create":
+        try:
+            from notebooklm import NotebookLMClient
+            async def _create():
+                async with await NotebookLMClient.from_storage() as c:
+                    nb = await c.notebooks.create(params.get("title", "Nuevo cuaderno"))
+                    return nb
+            nb = asyncio.run(_create())
+            result["data"] = {"id": nb.id, "title": nb.title}
+            result["reply"] = f"Cuaderno '{nb.title}' creado en NotebookLM"
+        except Exception as e:
+            result["reply"] = f"Error NotebookLM: {e}"
+
+    elif intent in ("nlm_add_source", "nlm_chat"):
+        result["reply"] = "Abre la pantalla de NotebookLM para continuar"
+        result["params"]["screen"] = "notebooklm"
 
     return result
 
@@ -338,6 +375,86 @@ async def chat(data: ChatMsg):
         messages=[{"role": "user", "content": data.message}]
     )
     return {"reply": resp.content[0].text.strip()}
+
+
+# ── NOTEBOOKLM ────────────────────────────────────────────────────────────────
+def _nlm_client():
+    """Return an authenticated NotebookLMClient or raise a clear error."""
+    try:
+        from notebooklm import NotebookLMClient
+        return NotebookLMClient
+    except ImportError:
+        raise HTTPException(503, "notebooklm-py no instalado. Ejecuta: pip install 'notebooklm-py[browser]'")
+
+@app.get("/api/notebooklm/notebooks")
+async def nlm_list():
+    Client = _nlm_client()
+    try:
+        async with await Client.from_storage() as c:
+            nbs = await c.notebooks.list()
+            return [{"id": n.id, "title": n.title} for n in nbs]
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+@app.post("/api/notebooklm/notebook")
+async def nlm_create(data: NLMNotebook):
+    Client = _nlm_client()
+    try:
+        async with await Client.from_storage() as c:
+            nb = await c.notebooks.create(data.title)
+            return {"id": nb.id, "title": nb.title}
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+@app.post("/api/notebooklm/source")
+async def nlm_add_source(data: NLMSource):
+    Client = _nlm_client()
+    try:
+        async with await Client.from_storage() as c:
+            if data.source_type == "url":
+                src = await c.sources.add_url(data.notebook_id, data.content)
+            elif data.source_type == "youtube":
+                src = await c.sources.add_youtube(data.notebook_id, data.content)
+            else:
+                src = await c.sources.add_text(data.notebook_id, data.content,
+                                                title=data.label or "Fuente")
+            return {"ok": True, "source_id": getattr(src, "id", None)}
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+@app.post("/api/notebooklm/chat")
+async def nlm_chat(data: NLMChat):
+    Client = _nlm_client()
+    try:
+        async with await Client.from_storage() as c:
+            result = await c.chat.ask(data.notebook_id, data.question)
+            return {
+                "answer": result.answer,
+                "citations": getattr(result, "citations", []),
+            }
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+@app.post("/api/notebooklm/generate")
+async def nlm_generate(data: NLMGenerate):
+    Client = _nlm_client()
+    try:
+        async with await Client.from_storage() as c:
+            art = data.artifact_type
+            if art == "audio":
+                artifact = await c.artifacts.generate_audio(data.notebook_id)
+            elif art == "quiz":
+                artifact = await c.artifacts.generate_quiz(data.notebook_id)
+            elif art == "flashcards":
+                artifact = await c.artifacts.generate_flashcards(data.notebook_id)
+            else:
+                artifact = await c.artifacts.generate_report(data.notebook_id)
+            completed = await c.artifacts.wait_for_completion(artifact)
+            return {"ok": True, "artifact_type": art,
+                    "content": getattr(completed, "content", None),
+                    "url": getattr(completed, "url", None)}
+    except Exception as e:
+        raise HTTPException(500, str(e))
 
 
 # ── HEALTH ────────────────────────────────────────────────────────────────────
