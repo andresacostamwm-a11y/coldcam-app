@@ -2,3 +2,7 @@
 seen_emails.json
 __pycache__/
 *.pyc
+node_modules/
+video/node_modules/
+static/videos/
+out/
