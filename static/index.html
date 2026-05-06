@@ -582,9 +582,10 @@
     <div class="form-group">
       <label>Tipo de video</label>
       <select id="videoComp" onchange="videoTypeChange()">
-        <option value="Presentation">📊 Presentación animada</option>
-        <option value="Intro">✨ Intro con logo</option>
-        <option value="TextVideo">💬 Texto animado</option>
+        <option value="Presentation">📊 Presentación animada (16:9)</option>
+        <option value="Intro">✨ Intro con logo (16:9)</option>
+        <option value="TextVideo">💬 Texto animado (16:9)</option>
+        <option value="SocialReel">📱 Social Reel — Instagram/TikTok (9:16)</option>
       </select>
     </div>
 
@@ -619,6 +620,40 @@
       <div class="form-group">
         <label>Subtítulo</label>
         <input type="text" id="videoIntroSub" placeholder="Eslogan o descripción corta">
+      </div>
+    </div>
+
+    <!-- Social Reel fields -->
+    <div id="videoReelFields" style="display:none">
+      <div class="form-group">
+        <label>Hook (frase de impacto)</label>
+        <input type="text" id="videoHook" placeholder="¿Sabías que...?">
+      </div>
+      <div class="form-group">
+        <label>Subtexto</label>
+        <input type="text" id="videoSubtext" placeholder="Te cuento en 3 puntos">
+      </div>
+      <div class="form-group">
+        <label>Puntos clave (uno por línea)</label>
+        <textarea id="videoPoints" placeholder="Punto clave 1&#10;Punto clave 2&#10;Punto clave 3" style="min-height:90px"></textarea>
+      </div>
+      <div class="form-group">
+        <label>CTA (llamada a la acción)</label>
+        <input type="text" id="videoCta" placeholder="Sígueme" value="Sígueme">
+      </div>
+      <div class="form-group">
+        <label>Handle / usuario</label>
+        <input type="text" id="videoHandle" placeholder="@tuusuario">
+      </div>
+      <div class="form-group">
+        <label>Color</label>
+        <select id="videoReelColor" style="width:100%;background:var(--surface);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);color:var(--text);padding:12px 14px;font-size:15px;outline:none">
+          <option value="purple">🟣 Púrpura</option>
+          <option value="cyan">🔵 Cian</option>
+          <option value="green">🟢 Verde</option>
+          <option value="amber">🟡 Ámbar</option>
+          <option value="red">🔴 Rojo</option>
+        </select>
       </div>
     </div>
 
@@ -1108,6 +1143,8 @@ function videoTypeChange() {
   document.getElementById('videoPresFields').style.display  = type === 'Presentation' ? '' : 'none';
   document.getElementById('videoIntroFields').style.display = type === 'Intro'        ? '' : 'none';
   document.getElementById('videoTextFields').style.display  = type === 'TextVideo'    ? '' : 'none';
+  document.getElementById('videoReelFields').style.display  = type === 'SocialReel'   ? '' : 'none';
+  document.getElementById('videoPresFields').querySelector && (document.getElementById('videoPresFields').querySelector('[id=videoTitle]') || {});
 }
 
 function setVideoColor(el) {
@@ -1140,6 +1177,17 @@ async function createVideo() {
     body = { ...body, title, slides };
   } else if (composition === 'Intro') {
     body = { ...body, title: document.getElementById('videoIntroTitle').value || 'AI Assistant', text: document.getElementById('videoIntroSub').value };
+  } else if (composition === 'SocialReel') {
+    const pts = document.getElementById('videoPoints').value.trim().split('\n').filter(Boolean);
+    body = { ...body,
+      hook: document.getElementById('videoHook').value,
+      subtext: document.getElementById('videoSubtext').value,
+      points: pts,
+      cta: document.getElementById('videoCta').value,
+      handle: document.getElementById('videoHandle').value,
+      color: document.getElementById('videoReelColor').value,
+    };
+    body.title = body.hook;
   } else {
     body = { ...body, text: document.getElementById('videoText').value, author: document.getElementById('videoAuthor').value };
   }

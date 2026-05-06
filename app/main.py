@@ -73,12 +73,19 @@ class NLMGenerate(BaseModel):
     artifact_type: str  # "audio" | "quiz" | "flashcards" | "mindmap"
 
 class VideoRequest(BaseModel):
-    composition: str = "Presentation"   # Presentation | Intro | TextVideo
+    composition: str = "Presentation"   # Presentation | Intro | TextVideo | SocialReel
     title: str = ""
     slides: list = []
     text: str = ""
     author: str = "AI Assistant"
     accent_color: str = "#7c3aed"
+    # SocialReel fields
+    hook: str = ""
+    subtext: str = ""
+    points: list = []
+    cta: str = "Sígueme"
+    handle: str = ""
+    color: str = "purple"
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -409,6 +416,13 @@ async def create_video(data: VideoRequest):
         }
     elif data.composition == "TextVideo":
         props = {"text": data.text, "author": data.author}
+    elif data.composition == "SocialReel":
+        props = {
+            "hook": data.hook or data.title or "¿Sabías esto?",
+            "subtext": data.subtext or data.text or "",
+            "points": data.points or data.slides or [],
+            "cta": data.cta, "handle": data.handle, "color": data.color,
+        }
     else:
         props = {"title": data.title or "AI Assistant", "subtitle": data.text or ""}
 
