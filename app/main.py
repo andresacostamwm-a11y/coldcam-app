@@ -72,6 +72,14 @@ class NLMGenerate(BaseModel):
     notebook_id: str
     artifact_type: str  # "audio" | "quiz" | "flashcards" | "mindmap"
 
+class VideoRequest(BaseModel):
+    composition: str = "Presentation"   # Presentation | Intro | TextVideo
+    title: str = ""
+    slides: list = []
+    text: str = ""
+    author: str = "AI Assistant"
+    accent_color: str = "#7c3aed"
+
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 def _imap():
@@ -375,6 +383,56 @@ async def chat(data: ChatMsg):
         messages=[{"role": "user", "content": data.message}]
     )
     return {"reply": resp.content[0].text.strip()}
+
+
+# ── VIDEO (Remotion) ──────────────────────────────────────────────────────────
+VIDEO_DIR = BASE / "static" / "videos"
+VIDEO_DIR.mkdir(parents=True, exist_ok=True)
+REMOTION_ROOT = BASE / "video" / "src" / "index.jsx"
+
+@app.post("/api/video")
+async def create_video(data: VideoRequest):
+    import subprocess, shutil
+    node = shutil.which("node") or "node"
+    npx  = shutil.which("npx")  or "npx"
+
+    fname  = f"{uuid.uuid4().hex[:8]}.mp4"
+    output = VIDEO_DIR / fname
+
+    # Build inputProps JSON for Remotion
+    props: dict = {}
+    if data.composition == "Presentation":
+        props = {
+            "title": data.title or "Presentación",
+            "slides": data.slides or [{"title": "Slide 1", "points": ["Punto principal"]}],
+            "accentColor": data.accent_color,
+        }
+    elif data.composition == "TextVideo":
+        props = {"text": data.text, "author": data.author}
+    else:
+        props = {"title": data.title or "AI Assistant", "subtitle": data.text or ""}
+
+    cmd = [
+        npx, "remotion", "render",
+        str(REMOTION_ROOT),
+        data.composition,
+        str(output),
+        "--props", json.dumps(props),
+        "--log", "error",
+    ]
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=str(BASE / "video"),
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        _, stderr = await asyncio.wait_for(proc.communicate(), timeout=300)
+        if proc.returncode != 0:
+            raise HTTPException(500, f"Remotion error: {stderr.decode()[-400:]}")
+        return {"url": f"/static/videos/{fname}"}
+    except asyncio.TimeoutError:
+        raise HTTPException(504, "Video rendering timed out (>5 min)")
 
 
 # ── NOTEBOOKLM ────────────────────────────────────────────────────────────────

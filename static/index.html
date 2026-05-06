@@ -307,6 +307,11 @@
       <div class="qtitle">NotebookLM</div>
       <div class="qdesc">Cuadernos Google IA</div>
     </div>
+    <div class="quick-card" onclick="showScreen('video')">
+      <div class="qicon">🎬</div>
+      <div class="qtitle">Video IA</div>
+      <div class="qdesc">Crea videos con Remotion</div>
+    </div>
     <div class="quick-card" onclick="showScreen('compose-doc')">
       <div class="qicon">✨</div>
       <div class="qtitle">Crear Doc</div>
@@ -563,6 +568,75 @@
       </div>
     </div>
     <div id="nlmGenResult" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ VIDEO ══════════════════════════════ -->
+<div id="video" class="screen hidden">
+  <div class="topbar">
+    <button class="back-btn" onclick="showScreen('home')">‹</button>
+    <h2>Video con IA 🎬</h2>
+  </div>
+  <div class="scroll">
+
+    <div class="form-group">
+      <label>Tipo de video</label>
+      <select id="videoComp" onchange="videoTypeChange()">
+        <option value="Presentation">📊 Presentación animada</option>
+        <option value="Intro">✨ Intro con logo</option>
+        <option value="TextVideo">💬 Texto animado</option>
+      </select>
+    </div>
+
+    <!-- Presentation fields -->
+    <div id="videoPresFields">
+      <div class="form-group">
+        <label>Título</label>
+        <input type="text" id="videoTitle" placeholder="Título de la presentación">
+      </div>
+      <div class="form-group">
+        <label>Contenido (IA genera las diapositivas)</label>
+        <textarea id="videoBrief" placeholder="Describe el tema y la IA creará las slides automáticamente..." style="min-height:100px"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Color de acento</label>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
+          <div class="color-dot" data-color="#7c3aed" onclick="setVideoColor(this)" style="background:#7c3aed;width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid white"></div>
+          <div class="color-dot" data-color="#06b6d4" onclick="setVideoColor(this)" style="background:#06b6d4;width:34px;height:34px;border-radius:50%;cursor:pointer"></div>
+          <div class="color-dot" data-color="#10b981" onclick="setVideoColor(this)" style="background:#10b981;width:34px;height:34px;border-radius:50%;cursor:pointer"></div>
+          <div class="color-dot" data-color="#f59e0b" onclick="setVideoColor(this)" style="background:#f59e0b;width:34px;height:34px;border-radius:50%;cursor:pointer"></div>
+          <div class="color-dot" data-color="#ef4444" onclick="setVideoColor(this)" style="background:#ef4444;width:34px;height:34px;border-radius:50%;cursor:pointer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intro fields -->
+    <div id="videoIntroFields" style="display:none">
+      <div class="form-group">
+        <label>Título principal</label>
+        <input type="text" id="videoIntroTitle" placeholder="Nombre de tu app o marca">
+      </div>
+      <div class="form-group">
+        <label>Subtítulo</label>
+        <input type="text" id="videoIntroSub" placeholder="Eslogan o descripción corta">
+      </div>
+    </div>
+
+    <!-- Text fields -->
+    <div id="videoTextFields" style="display:none">
+      <div class="form-group">
+        <label>Texto animado</label>
+        <textarea id="videoText" placeholder="El texto que aparecerá animado en el video..." style="min-height:100px"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Autor / Firma</label>
+        <input type="text" id="videoAuthor" placeholder="Tu nombre o marca" value="AI Assistant">
+      </div>
+    </div>
+
+    <button class="btn-primary" id="createVideoBtn" onclick="createVideo()">🎬 Generar Video</button>
+
+    <div id="videoHistory" style="margin-top:20px"></div>
   </div>
 </div>
 
@@ -1023,6 +1097,78 @@ function clearChat() {
 // ── Utils ──────────────────────────────────────────────────────────────────────
 function escapeHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Video ──────────────────────────────────────────────────────────────────────
+let videoAccentColor = '#7c3aed';
+let videoHistory = JSON.parse(localStorage.getItem('videoHistory') || '[]');
+
+function videoTypeChange() {
+  const type = document.getElementById('videoComp').value;
+  document.getElementById('videoPresFields').style.display  = type === 'Presentation' ? '' : 'none';
+  document.getElementById('videoIntroFields').style.display = type === 'Intro'        ? '' : 'none';
+  document.getElementById('videoTextFields').style.display  = type === 'TextVideo'    ? '' : 'none';
+}
+
+function setVideoColor(el) {
+  document.querySelectorAll('.color-dot').forEach(d => d.style.border = 'none');
+  el.style.border = '3px solid white';
+  videoAccentColor = el.dataset.color;
+}
+
+async function createVideo() {
+  const composition = document.getElementById('videoComp').value;
+  const btn = document.getElementById('createVideoBtn');
+  btn.disabled = true; btn.textContent = '⏳ Renderizando video...';
+
+  let body = { composition, accent_color: videoAccentColor };
+
+  if (composition === 'Presentation') {
+    const title = document.getElementById('videoTitle').value.trim();
+    const brief = document.getElementById('videoBrief').value.trim();
+    if (!title || !brief) { toast('Completa el título y contenido'); btn.disabled=false; btn.textContent='🎬 Generar Video'; return; }
+    // Ask Claude to generate slides structure
+    btn.textContent = '✦ Generando contenido con IA...';
+    const chatRes = await fetch('/api/chat', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ message: `Genera un JSON de slides para una presentación sobre: ${brief}. Título: ${title}. Formato exacto: {"slides":[{"title":"...","points":["...","..."]}]}. Solo JSON, sin markdown, máximo 5 slides.` }) });
+    const chatData = await chatRes.json();
+    let slides = [];
+    try {
+      const raw = chatData.reply.replace(/```json?/g,'').replace(/```/g,'').trim();
+      slides = JSON.parse(raw).slides || [];
+    } catch { slides = [{ title, points: [brief] }]; }
+    body = { ...body, title, slides };
+  } else if (composition === 'Intro') {
+    body = { ...body, title: document.getElementById('videoIntroTitle').value || 'AI Assistant', text: document.getElementById('videoIntroSub').value };
+  } else {
+    body = { ...body, text: document.getElementById('videoText').value, author: document.getElementById('videoAuthor').value };
+  }
+
+  btn.textContent = '🎬 Renderizando... (puede tardar 1-2 min)';
+  try {
+    const res = await fetch('/api/video', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const data = await res.json();
+    if (data.url) {
+      videoHistory.unshift({ url: data.url, title: body.title || composition, date: new Date().toISOString() });
+      localStorage.setItem('videoHistory', JSON.stringify(videoHistory.slice(0,20)));
+      renderVideoHistory();
+      toast('✅ Video listo');
+      showResult('Video Listo 🎬', `<video controls style="width:100%;border-radius:12px;margin-top:8px" src="${data.url}"></video><br><a href="${data.url}" style="color:var(--accent2);font-size:14px" onclick="event.preventDefault();_openExternal('${data.url}')">📥 Descargar MP4</a>`);
+    } else { toast('Error: ' + (data.detail || 'Sin respuesta')); }
+  } catch(e) { toast('Error: ' + e.message); }
+  finally { btn.disabled = false; btn.textContent = '🎬 Generar Video'; }
+}
+
+function renderVideoHistory() {
+  const el = document.getElementById('videoHistory');
+  if (!el || !videoHistory.length) return;
+  el.innerHTML = '<div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);margin-bottom:12px">Videos generados</div>' +
+    videoHistory.map(v => `
+      <div class="doc-item" onclick="_openExternal('${v.url}')">
+        <div class="doc-icon" style="background:rgba(239,68,68,.2)">🎬</div>
+        <div class="doc-info"><div class="doc-name">${escapeHtml(v.title)}</div><div class="doc-meta">${formatDate(v.date)}</div></div>
+        <span style="color:var(--text2)">▶</span>
+      </div>`).join('');
 }
 
 // ── NotebookLM ─────────────────────────────────────────────────────────────────
