@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "n8n": {
+      "command": "n8n-mcp",
+      "env": {
+        "MCP_MODE": "stdio",
+        "LOG_LEVEL": "error",
+        "N8N_API_URL": "http://localhost:5678/api/v1",
+        "N8N_API_KEY": "n8n_api_paste_your_key_here"
+      },
+      "disabled": false
+    }
+  }
+}
