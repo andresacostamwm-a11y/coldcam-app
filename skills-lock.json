@@ -1,0 +1,1397 @@
+{
+  "version": 1,
+  "skills": {
+    "a11y-audit": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/a11y-audit/skills/a11y-audit/SKILL.md",
+      "computedHash": "8cb4a8d98551e4e944173adcceba6597cd2315ad9b16b8724c9eb265d4656b8c"
+    },
+    "ab-test-setup": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/ab-test-setup/SKILL.md",
+      "computedHash": "b474726b1ced198be54af516076a3b7aa8690ca7e90e6516a3c1f78f8c6bffef"
+    },
+    "ad-creative": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/ad-creative/SKILL.md",
+      "computedHash": "69cdf855995c8bb651f51cd3a3212c78d20464d212589a7df51a4c35a3c99f19"
+    },
+    "adversarial-reviewer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/adversarial-reviewer/SKILL.md",
+      "computedHash": "6df8cb1e5872793f044809c78661d1a11834c5445376e668cd9ab9edaeb186e5"
+    },
+    "agent-designer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/agent-designer/SKILL.md",
+      "computedHash": "36e5ce384243dec1cac1db5837a24004bab130d6a5b03600eda813d24647cd52"
+    },
+    "agent-protocol": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/agent-protocol/SKILL.md",
+      "computedHash": "320285b7d33b884a4c554228d960e4a931e48ca85cbacdfd8799e24e0011198b"
+    },
+    "agent-workflow-designer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/agent-workflow-designer/SKILL.md",
+      "computedHash": "d9a0bba5fd28029fd628f000fd356862ad46a2075e22da8f7c7da2bd2a20e2ca"
+    },
+    "agenthub": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/agenthub/skills/agenthub/SKILL.md",
+      "computedHash": "0dde527d96ec6dc94aae527f9f7963b187fe402af2144ecc5b1a7e1316ca54fc"
+    },
+    "agile-product-owner": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/agile-product-owner/skills/agile-product-owner/SKILL.md",
+      "computedHash": "58b3344f887746aee433d49f0dd3cd530d85bcd8392852ecc1ae55f885e0e4e8"
+    },
+    "ai-security": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/ai-security/SKILL.md",
+      "computedHash": "a0ce4e81a63adf1bd60f42ab71d85e063f2d12bb9d7b6d89d610e4e52bdfdcb1"
+    },
+    "ai-seo": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/ai-seo/SKILL.md",
+      "computedHash": "55ee3205945434ca94219e5521d47c713cf4133cab2da0c28fb50b7f39845250"
+    },
+    "analytics-tracking": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/analytics-tracking/SKILL.md",
+      "computedHash": "2f5e82d073aeceb4aa44c2f2b530f24e33d3f2c91a09fe1a156b9919091d813f"
+    },
+    "api-design-reviewer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/api-design-reviewer/SKILL.md",
+      "computedHash": "4544ef6ca1616d382813bc39837ede6972b71dfedaaa534eb8e87b68d930681c"
+    },
+    "api-test-suite-builder": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/api-test-suite-builder/SKILL.md",
+      "computedHash": "9358b2bc790e581573e72d5d7a2ecd6a7f1583d96d88eae83accbe57b8f812a9"
+    },
+    "app-store-optimization": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/app-store-optimization/SKILL.md",
+      "computedHash": "dfc5b5ca96b295aeca8162b2332db32883fbdcf2f6ff706108acce894a187e4f"
+    },
+    "apple-hig-expert": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/apple-hig-expert/skills/apple-hig-expert/SKILL.md",
+      "computedHash": "ff8d076a40062aa34fe478994a6686248a0ef0b329909b7574ed71e945bf07ae"
+    },
+    "atlassian-admin": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/atlassian-admin/SKILL.md",
+      "computedHash": "205c707b10fb940dad1d28b1fafdd2f85bd3ecb7aa74482dbd632adf60bfc72a"
+    },
+    "atlassian-templates": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/atlassian-templates/SKILL.md",
+      "computedHash": "c2ad0fc7b48bbff1851a0816cfecf73ce7a3a34c85ebf7ad175f6da6eec60af6"
+    },
+    "autoresearch-agent": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/autoresearch-agent/skills/autoresearch-agent/SKILL.md",
+      "computedHash": "71f26638eec50855a23386c39e257726030d79ce27d63dc7296cb16c7db3268b"
+    },
+    "aws-solution-architect": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/aws-solution-architect/SKILL.md",
+      "computedHash": "5247446ee32f120d6857fae9c80f5be2eef59e13338d4e13c4921321ab6f0dd1"
+    },
+    "azure-cloud-architect": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/azure-cloud-architect/SKILL.md",
+      "computedHash": "3dac60447a78794cffdde23ba366c1f63c525b47e9906dc0ce6c2f762c9b5473"
+    },
+    "board": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/agenthub/skills/board/SKILL.md",
+      "computedHash": "7098b6016c96276754ef1fc66d6cd398e437d71e313bdd7e7e5913997e22fde6"
+    },
+    "board-deck-builder": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/board-deck-builder/SKILL.md",
+      "computedHash": "89d0e22e111713ad09f8ff6d14c3c773e61bcae0810b04c4ad24252e59d075be"
+    },
+    "board-meeting": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/board-meeting/SKILL.md",
+      "computedHash": "79e7ea18c65247d20955c5200589ee40aade8a9b1505a4cf2902f0e7d400fdf9"
+    },
+    "board-prep": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/executive-mentor/skills/board-prep/SKILL.md",
+      "computedHash": "0abed2ca274ab85ae169d5fe0018a91de3bc5d1d12cc693262d42b75fb5fc384"
+    },
+    "brand-guidelines": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/brand-guidelines/SKILL.md",
+      "computedHash": "01478bada459b8f2787c23a01d6cd8139449af17b48f7b9f994236cd9820abd6"
+    },
+    "browser-automation": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/browser-automation/SKILL.md",
+      "computedHash": "8a7f9c1087ca54d6f5eb8899271a1f50c563e487456c319e7d323c8e469d59b7"
+    },
+    "browserstack": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/browserstack/SKILL.md",
+      "computedHash": "1ab4638bb9903ad6d95761ba5b744f2e36c7f27e2de8677f546ccc8973719038"
+    },
+    "business-growth-skills": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "business-growth/skills/business-growth-skills/SKILL.md",
+      "computedHash": "aa81de6deb90ce414868951514e0529b9f6dd102f9178218b6c854dbb3c21fef"
+    },
+    "c-level-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/c-level-skills/SKILL.md",
+      "computedHash": "4a991d5a57be284ca8348f8aa66ef59545e6231eeb5b01eee592021c79533b96"
+    },
+    "campaign-analytics": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/campaign-analytics/SKILL.md",
+      "computedHash": "f306cf9c07f61a4e741a6b4c0a5930efb4fb5701af642923a0dcf65116a114f6"
+    },
+    "capa-officer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/capa-officer/SKILL.md",
+      "computedHash": "b31a576f2ec8599a9c20e4d61b5f4c6d6fbb6447061f52ba5396d4c6f86c8836"
+    },
+    "ceo-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/ceo-advisor/SKILL.md",
+      "computedHash": "15817040bd944f04ac06c06499940864e40e8501844d0dda2c85926e14475b03"
+    },
+    "cfo-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/cfo-advisor/SKILL.md",
+      "computedHash": "3ade849b762ff0023e6ab28d16ad5a60862fdd6736d748152129a70d2496f6ca"
+    },
+    "challenge": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/executive-mentor/skills/challenge/SKILL.md",
+      "computedHash": "4e9e7b8429308918b2464fd4309140bc504e698e7dd7d829886f3424ad5a7733"
+    },
+    "change-management": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/change-management/SKILL.md",
+      "computedHash": "d4cab1f9974bfad5f6e272f6bf8fac603a8f862449386904d4e9f14d8b2ed389"
+    },
+    "changelog-generator": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/changelog-generator/SKILL.md",
+      "computedHash": "bb8cc561d5d754b05c641b88d7e055f3b35e5186203badcddf842d3c617d1cd0"
+    },
+    "chaos-engineering": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/chaos-engineering/SKILL.md",
+      "computedHash": "07e4f2fb74fc1bdbbe1302d0561fc1738e6d8156ef24e798494547a6ed7bd158"
+    },
+    "chief-of-staff": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/chief-of-staff/SKILL.md",
+      "computedHash": "8a6a4874513fec7ab492136471012aed4c64189c9099f274a6e88d13bf885a8e"
+    },
+    "chro-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/chro-advisor/SKILL.md",
+      "computedHash": "2d78010cd10847ea1bade3aaddece5e6e691d360ddb69aafb1fb70f5093731dd"
+    },
+    "churn-prevention": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/churn-prevention/SKILL.md",
+      "computedHash": "d4201b839f971ade85dde676ed405efb7c488ae192f0855fab47a5ce7c1436a2"
+    },
+    "ci-cd-pipeline-builder": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/ci-cd-pipeline-builder/SKILL.md",
+      "computedHash": "af05aab21f4226db4a22aad85bdcccb1eb98be04bd1c3851a1cab7c8c9fd3c61"
+    },
+    "ciso-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/ciso-advisor/SKILL.md",
+      "computedHash": "4cdc5449e266c565171bb705b2e4c0c8dfaca94a52eb79ef2f30ccfd3e42803b"
+    },
+    "cloud-security": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/cloud-security/SKILL.md",
+      "computedHash": "dfb28312c8825eccce08ebbc8031498abd72257ab7c30d8b75d1a618057d6642"
+    },
+    "cmo-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/cmo-advisor/SKILL.md",
+      "computedHash": "e1926ed0c57bbf93b1bc561136c625b1e7dc9a0008cf66c738858615c32f9bc4"
+    },
+    "code-reviewer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/code-reviewer/SKILL.md",
+      "computedHash": "1f8ffbb909c7038ef31d11b517a7f7f9407207e2ce234aa90551943ed85a5a78"
+    },
+    "code-to-prd": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/code-to-prd/skills/code-to-prd/SKILL.md",
+      "computedHash": "417b2b17e7f6460f2b14e71e8c3f2c6495f8df872fb9a4fcbdcf1fd8bf839073"
+    },
+    "code-tour": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/code-tour/skills/code-tour/SKILL.md",
+      "computedHash": "c1f4f5ebd437ccc9355f5e1220a111a42815d5130df1d7cddec7f9e727d6e874"
+    },
+    "codebase-onboarding": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/codebase-onboarding/SKILL.md",
+      "computedHash": "e14535f7a5950f04a9be5e7fbc33518bd08e206d928d45406df65db8784aee10"
+    },
+    "cold-email": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/cold-email/SKILL.md",
+      "computedHash": "6c6762a2e1fd66f33a673b7ad5dd64b2c8d1487212e8ba13269b5484f47dcfd7"
+    },
+    "command-guide": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/command-guide/SKILL.md",
+      "computedHash": "f799756d05016f488503312453afc598098c33006904a68bd4f0deb8366a3e8e"
+    },
+    "company-os": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/company-os/SKILL.md",
+      "computedHash": "2c57ce9115abe0327d560acbe064ce8cc6c5bcc60903a129b78b7c84d634e4a8"
+    },
+    "competitive-intel": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/competitive-intel/SKILL.md",
+      "computedHash": "78dd2100f315e7e3c5ff7ee49ccb7efc432583ebc20ecd806b29ea2b565a77d2"
+    },
+    "competitive-teardown": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/competitive-teardown/SKILL.md",
+      "computedHash": "67e34c1b2f60992e2b0413835166ee2c8786da2cbb50dcbd25713eee7405a7b7"
+    },
+    "competitor-alternatives": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/competitor-alternatives/SKILL.md",
+      "computedHash": "beede63a6e93a5dfc42059d7a2942737d86678b97a341a35670fefeb7af49638"
+    },
+    "confluence-expert": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/confluence-expert/SKILL.md",
+      "computedHash": "955108661b0a99ca6e0a13f003d99244c0d43a5591ed1c53bbb6e68a4a59f219"
+    },
+    "content-creator": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/content-creator/SKILL.md",
+      "computedHash": "408d010ab3a571a058cd301859f1d644db54e05bb65366e05f3a576180ce670c"
+    },
+    "content-humanizer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/content-humanizer/SKILL.md",
+      "computedHash": "adb0d39344e9d2d54ae68c446f82595d5efd677b230aeb0fbb4b83ac7f3c0e68"
+    },
+    "content-production": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/content-production/SKILL.md",
+      "computedHash": "01c6e29dc5e2bb041b001372881b6ed875dd2e8aa300b1ef8daa36f3510f5db0"
+    },
+    "content-strategy": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/content-strategy/SKILL.md",
+      "computedHash": "cefbfcafd96d4d42b58f4168b6c985d38eb39aa7cb38468d3f56ca0974919de6"
+    },
+    "context-engine": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/context-engine/SKILL.md",
+      "computedHash": "97d218a3d24af9f25217f432231cc824779407d54a77e1951fab41a840673109"
+    },
+    "contract-and-proposal-writer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "business-growth/skills/contract-and-proposal-writer/SKILL.md",
+      "computedHash": "ea7d35417b0096f0ca518133387d206fe4d651ce254768dddb74de0ec37d62b4"
+    },
+    "coo-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/coo-advisor/SKILL.md",
+      "computedHash": "bcbe6ce72dcdbb585f9026a3fe69cc553e2685b2cf0962204ff3fb4627e13be5"
+    },
+    "copy-editing": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/copy-editing/SKILL.md",
+      "computedHash": "ec82d875e191db4f5346fb1adfdfa02656d5d64745a6178a3cdba27a6850fc3b"
+    },
+    "copywriting": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/copywriting/SKILL.md",
+      "computedHash": "dcbabb6413769c7a8cd8e3c8fdf500d73c8abb44a265e372c798cad7b4e038b9"
+    },
+    "coverage": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/coverage/SKILL.md",
+      "computedHash": "766adfa256cc2e34ef65702b619fad0a228cab4f414cc3ae03a8df511fa16d6d"
+    },
+    "cpo-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/cpo-advisor/SKILL.md",
+      "computedHash": "845217f0b3aeef15c2b33a106b0b609d853df21ecbc5a2f16e6b7fe9b23364e5"
+    },
+    "cro-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/cro-advisor/SKILL.md",
+      "computedHash": "9e61493328816950a7b9f579309c6b34346b2169b0335c2a1a6204a258765700"
+    },
+    "cs-onboard": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/cs-onboard/SKILL.md",
+      "computedHash": "beb523ca6c8414e71349131a55d4d5e62e0c2522530cf9e9d564377e0ec68816"
+    },
+    "cto-advisor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/cto-advisor/SKILL.md",
+      "computedHash": "ae1dd90d06635a7220f37e055086378f67e8e3b371ac1e1353b829c2d8d4e037"
+    },
+    "culture-architect": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/culture-architect/SKILL.md",
+      "computedHash": "a64bf13f6c10704e0875b7f25184870f212f6a10f94db7b96b8965ff79488c8f"
+    },
+    "customer-success-manager": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "business-growth/skills/customer-success-manager/SKILL.md",
+      "computedHash": "b998d3d014ee9a922a9c1dc390531199d551a56ede9197a9df58550ebd0dd8b0"
+    },
+    "data-quality-auditor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/data-quality-auditor/skills/data-quality-auditor/SKILL.md",
+      "computedHash": "4f39b0d259a9c369ef875f7dafc5000355cfed4a8dbd38a843c82b516c087a74"
+    },
+    "database-designer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/database-designer/SKILL.md",
+      "computedHash": "969abb51a43c750f2b368707023ac8b7b4dfe4025a24632cceebb8e27c2e58d7"
+    },
+    "database-schema-designer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/database-schema-designer/SKILL.md",
+      "computedHash": "24a1fa53fb456256b5ac9137b132eda4232a8c4ebf659af06f5bb8d8624bfc50"
+    },
+    "decision-logger": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/decision-logger/SKILL.md",
+      "computedHash": "f90d6d1d4c065960a85c417dd1d0b88d01ea6572cb9e43e21d2b0d120f790295"
+    },
+    "demo-video": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/demo-video/skills/demo-video/SKILL.md",
+      "computedHash": "34ae2241c2fe9089d6693431a838988a75733fad947dde24382f0a50fa7ec474"
+    },
+    "dependency-auditor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/dependency-auditor/SKILL.md",
+      "computedHash": "dc9eb108e0bd8ed4a6810591dedf63f924d15c09e453befa4e11240d139dc858"
+    },
+    "docker-development": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/docker-development/skills/docker-development/SKILL.md",
+      "computedHash": "4f6ac474961ffb2ec31310178df9f297f35e1841757942f033581904ec97ebd9"
+    },
+    "email-sequence": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/email-sequence/SKILL.md",
+      "computedHash": "946943bbe1b848a7adea3f3fc255db7bcdc20acb37afdda5cb46518cebf6efad"
+    },
+    "email-template-builder": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/email-template-builder/SKILL.md",
+      "computedHash": "b149cb0fa912d4e86e55f17e9f026dd41508c1fb3affddd41edd5f2fe5fafc41"
+    },
+    "engineering-advanced-skills": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/engineering-advanced-skills/SKILL.md",
+      "computedHash": "bfa4cdab0f725a4f47268e552566e7aa79f4326729a517138280b1b0e90dfa79"
+    },
+    "engineering-skills": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/engineering-skills/SKILL.md",
+      "computedHash": "a118706ecfcf11c80f822588af3e68057ecb5fc8b549cf8b8dd04e7baa63d702"
+    },
+    "env-secrets-manager": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/env-secrets-manager/SKILL.md",
+      "computedHash": "11d3a635f284c21749e68e4c20541124f389c92f020d28c494322ce4d20ec534"
+    },
+    "epic-design": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/epic-design/SKILL.md",
+      "computedHash": "74b94b9e18b0185c4b8669fb4e4dfc601b71c253b032e986f1fb113676e57a81"
+    },
+    "eval": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/agenthub/skills/eval/SKILL.md",
+      "computedHash": "1fdd3154cc20fd6a685ae63c3a1ca641a43562da58679a286f38f8029bfc2f08"
+    },
+    "executive-mentor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/executive-mentor/skills/executive-mentor/SKILL.md",
+      "computedHash": "256c047587e352d6f15847f5bc4e8cc756771d821cca806168d27c2aa9445214"
+    },
+    "experiment-designer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/experiment-designer/SKILL.md",
+      "computedHash": "601a3687417ad0b821a010c908b57a7a5c86d77efdcc8affc45c910766563267"
+    },
+    "extract": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/self-improving-agent/skills/extract/SKILL.md",
+      "computedHash": "f7fcf7668ecbfa767226782892b48ababbddc9816a7a149ed44223d782a4a217"
+    },
+    "fda-consultant-specialist": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/fda-consultant-specialist/SKILL.md",
+      "computedHash": "6f2d751717275026b6ecb06be00e7bcf286dc62b1768559b3aad60a573dab4e8"
+    },
+    "feature-flags-architect": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/feature-flags-architect/SKILL.md",
+      "computedHash": "f1d2706427d52cbee2882f71f88f5301b919af186827f4f4153de9def3ecb4d2"
+    },
+    "finance-skills": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "finance/skills/finance-skills/SKILL.md",
+      "computedHash": "6ed70ad290c6bfa1016e103956df34a999add6d749bdb51d16f79cb65aa5f7dc"
+    },
+    "financial-analyst": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "finance/skills/financial-analyst/SKILL.md",
+      "computedHash": "b3cb8e8f4f75dd95ddf2dd7ac5ac8b62094f5b63c51fdcecc3356db06dce9baa"
+    },
+    "fix": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/fix/SKILL.md",
+      "computedHash": "1871540ba9bfe00390e6708788282de0c4d6673a6717554c24bfeadfabe569b1"
+    },
+    "focused-fix": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/focused-fix/SKILL.md",
+      "computedHash": "a14e84b1c508d26db0050e5ad90c730ed12fbb52368f6b9e98569636c3f9c26a"
+    },
+    "form-cro": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/form-cro/SKILL.md",
+      "computedHash": "3377684a0234b8c9399397b482ec2e17445412c69b78be7f8b5f5985599b7eee"
+    },
+    "founder-coach": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/founder-coach/SKILL.md",
+      "computedHash": "98087229ffa6fc47485e8f7bc653071f7dbbed050226ecde578c1923d2e1f9d0"
+    },
+    "free-tool-strategy": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/free-tool-strategy/SKILL.md",
+      "computedHash": "a34dc7c091a96b3b520184e1c573bb8a010216218f2b147910c9b4266dde8528"
+    },
+    "full-page-screenshot": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/full-page-screenshot/SKILL.md",
+      "computedHash": "3eb3c5e33a8d1435758c3ba461f85411fbfe63f7dd4d6eaf4c391db6086d8f49"
+    },
+    "gcp-cloud-architect": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/gcp-cloud-architect/SKILL.md",
+      "computedHash": "34fd081c05e05b6df038e73e999024aaa291b89a0a0a3d19fcfa431a39a4cf5b"
+    },
+    "gdpr-dsgvo-expert": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/gdpr-dsgvo-expert/SKILL.md",
+      "computedHash": "d5a47ec6067b92f891810f47eca10c8f6b617c27de430167e3d993b5ac82d57b"
+    },
+    "generate": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/generate/SKILL.md",
+      "computedHash": "859457f0e45df10d24dec1b72d5e91073446aff935ca563268e97763e746aeda"
+    },
+    "git-worktree-manager": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/git-worktree-manager/SKILL.md",
+      "computedHash": "360851b8ab8bce4e81c02d0a3607b2b23c24c8b7d77eabf3aad3091de59ca9c4"
+    },
+    "google-workspace-cli": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/google-workspace-cli/skills/google-workspace-cli/SKILL.md",
+      "computedHash": "e07a143cd1ac711fbb84e4b050c8cb5511e8b3846c7c406532d6604a8f7d7898"
+    },
+    "hard-call": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/executive-mentor/skills/hard-call/SKILL.md",
+      "computedHash": "eae683058dc93ea6c16d172800f74fdfb23e36b81cbd146c5af98bcb7a876475"
+    },
+    "helm-chart-builder": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/helm-chart-builder/skills/helm-chart-builder/SKILL.md",
+      "computedHash": "a93dd9771511bc9b832204075140c20aab6db49b599aacf065790d67b3b55e47"
+    },
+    "incident-commander": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/incident-commander/SKILL.md",
+      "computedHash": "e4d42e625931c0e67393542db221f177d31a1307cb94e7669c2adf9178eee64e"
+    },
+    "incident-response": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/incident-response/SKILL.md",
+      "computedHash": "d0ee2a54d270bd0914661d0dc21f478795f700fc5c281574f4b757e394496722"
+    },
+    "information-security-manager-iso27001": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/information-security-manager-iso27001/SKILL.md",
+      "computedHash": "adc5fa5fce253536baad51b40e73a570b5ef299010196b91ab1930ef227ea093"
+    },
+    "init": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/init/SKILL.md",
+      "computedHash": "7017e287cf72a17418774faad2ffac8c9f354fdbc83d4833485722415916e532"
+    },
+    "internal-narrative": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/internal-narrative/SKILL.md",
+      "computedHash": "8508623c51781a58a7960f762a6c7aa1906759d3808cbb29d1bc115f30d166ca"
+    },
+    "interview-system-designer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/interview-system-designer/SKILL.md",
+      "computedHash": "64e06cc82d535ace7ef8187c27f68059b92282d59d4fd635faf623fdd715d41a"
+    },
+    "intl-expansion": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/intl-expansion/SKILL.md",
+      "computedHash": "12e4609bf39d1ebd0548ebbe5e7c1c2a3fa72b44d19ca00274791203d6c479d8"
+    },
+    "isms-audit-expert": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/isms-audit-expert/SKILL.md",
+      "computedHash": "4f27e62f5a7596b5ff5eac4535c6ebc6535dc287814a21d141b4277cb5f08d74"
+    },
+    "jira-expert": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/jira-expert/SKILL.md",
+      "computedHash": "2287f788c845f4250b8ed964ebd56e59ca12e6fdf5c2e9537d0e1ea188f909fd"
+    },
+    "karpathy-coder": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/karpathy-coder/skills/karpathy-coder/SKILL.md",
+      "computedHash": "353a93e3c25fcae45cd4aba93ea247232ee99fd821886ca933fd7c19a79792ae"
+    },
+    "kubernetes-operator": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/kubernetes-operator/SKILL.md",
+      "computedHash": "4f04d907bb73ec1f5e4dd541ac0e200ad098b086cfa925d5897621da02f06a87"
+    },
+    "landing-page-generator": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/landing-page-generator/SKILL.md",
+      "computedHash": "9e4fb3ddbea332fa4cfbda4446ee908e114d686aac2628532440bd8889219a2a"
+    },
+    "launch-strategy": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/launch-strategy/SKILL.md",
+      "computedHash": "ca27bbb7d38cea54ec9466c172e79b26b6807af45cf6c55a279765574250d125"
+    },
+    "llm-wiki": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/llm-wiki/skills/llm-wiki/SKILL.md",
+      "computedHash": "2855a103d20e5e54defae69fd5ad905f9b293fc82b516decf18b2b4bbee71afc"
+    },
+    "loop": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/autoresearch-agent/skills/loop/SKILL.md",
+      "computedHash": "93abb1c2e585f0a1ff24af74690464afa697db50ba8f949134b355cef93a260c"
+    },
+    "ma-playbook": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/ma-playbook/SKILL.md",
+      "computedHash": "ca6e487fa6f79838281ed692ce30d4925e9ebd040adfd9d427508be081c60db0"
+    },
+    "marketing-context": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/marketing-context/SKILL.md",
+      "computedHash": "4420a7635b859b2de3c50c5d2e7790db13dc7e8f75dfffe381b5eb3d191deadb"
+    },
+    "marketing-demand-acquisition": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/marketing-demand-acquisition/SKILL.md",
+      "computedHash": "3fd480cb7f1e28264a12a08b78003fee3612b5ffb7f65d80ddd1cbdd63ec9f83"
+    },
+    "marketing-ideas": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/marketing-ideas/SKILL.md",
+      "computedHash": "7e689106e8692ad36996ca650b01cb9f706290bf54813656238fb30e1d5da50e"
+    },
+    "marketing-ops": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/marketing-ops/SKILL.md",
+      "computedHash": "dbe4219d41bfc4bb00a90dcb4e621d44aba8971ebd7f19c73fb57b6c942940fd"
+    },
+    "marketing-psychology": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/marketing-psychology/SKILL.md",
+      "computedHash": "5fb5155f9da5d125527183497ab0d7c47a593e12b94ea4ba3997478419407737"
+    },
+    "marketing-skills": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/marketing-skills/SKILL.md",
+      "computedHash": "d4b5fbafdf0830ea54d8fe6cd08aded3f99d0aff012b3983f89c2045ad1dabe8"
+    },
+    "marketing-strategy-pmm": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/marketing-strategy-pmm/SKILL.md",
+      "computedHash": "4e6c18bc6754495642be108e132319c1d2d11140a6831105c1989ebf8cac716d"
+    },
+    "mcp-server-builder": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/mcp-server-builder/SKILL.md",
+      "computedHash": "794f4d3cfda913cd9a9388030776cdd67a24a741a8849c19950cf17469740998"
+    },
+    "mdr-745-specialist": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/mdr-745-specialist/SKILL.md",
+      "computedHash": "19ee6f63d16443055e3e7c7e2c4fbc17a7aeb421c9af0a8301e2c0017982b5fb"
+    },
+    "meeting-analyzer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/meeting-analyzer/SKILL.md",
+      "computedHash": "5d2b8203d77bc846ba78a9e79f3383ad61a9c1ffc637a3e858595dca88ed9457"
+    },
+    "merge": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/agenthub/skills/merge/SKILL.md",
+      "computedHash": "f0e773ac2441a10acd3dbfecbbf9fa9d8affe2715405c235898a27830b18915e"
+    },
+    "migrate": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/migrate/SKILL.md",
+      "computedHash": "5606894fecef56ee44478236fd4c3c8c94062ae997cd676c37a6e6bf70a0858d"
+    },
+    "migration-architect": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/migration-architect/SKILL.md",
+      "computedHash": "c3a521b451c82afa73f527751f18566548991ddf2c4cce32e58ddc71c3b1f5e0"
+    },
+    "monorepo-navigator": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/monorepo-navigator/SKILL.md",
+      "computedHash": "f47541380fc60a7aa311c20aaab406bae53f64fbb2c52e55df99c72a1088d749"
+    },
+    "ms365-tenant-manager": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/ms365-tenant-manager/SKILL.md",
+      "computedHash": "be9cc76022404e2f85c75f925abf02187499e5d2e8951133cc62fd41f4c02e67"
+    },
+    "observability-designer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/observability-designer/SKILL.md",
+      "computedHash": "3cd5dd04d8030ed4bf0fb008f584e07108fb6af811e789ba195d7c4493579125"
+    },
+    "onboarding-cro": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/onboarding-cro/SKILL.md",
+      "computedHash": "7e1c0c68083635560cb324efb7ca037ae28ec53c3322238186fe9768b5e45617"
+    },
+    "org-health-diagnostic": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/org-health-diagnostic/SKILL.md",
+      "computedHash": "f3f0a5845cd476cd905b50c21667422342881cc2b08f235c9fb3e0cf856d3c8f"
+    },
+    "page-cro": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/page-cro/SKILL.md",
+      "computedHash": "9d1906ca90d70cb0a5d17e84b8c57d8003ad11239a3b54663525bb232dcdf463"
+    },
+    "paid-ads": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/paid-ads/SKILL.md",
+      "computedHash": "63a357e252525eff444f1f2382ce437e799bedf262f02d9cd73321467cbc10ec"
+    },
+    "paywall-upgrade-cro": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/paywall-upgrade-cro/SKILL.md",
+      "computedHash": "43e5b85229ac156978387bee479e1858b7abccb83469e69a5a3e7b10cfc0984f"
+    },
+    "performance-profiler": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/performance-profiler/SKILL.md",
+      "computedHash": "5d8f2330129b8ba4e7f6054f8dfb5780b930ef0401801034e1e5810a35741b8e"
+    },
+    "playwright-pro": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/pw/SKILL.md",
+      "computedHash": "65857406b8b8b6ce1a5237484d287e9b63d6fad4a0484464b325725cbb8a2423"
+    },
+    "pm-skills": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/pm-skills/SKILL.md",
+      "computedHash": "f86586c0c8ab1ac70256924b258c42fdec1b25ba3b2a07a0bdd0387e9eac242f"
+    },
+    "popup-cro": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/popup-cro/SKILL.md",
+      "computedHash": "510f66ebb5f31336bdbf16a3c6a3266152a134c67e1bff095a73db3b2025bc13"
+    },
+    "postmortem": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/executive-mentor/skills/postmortem/SKILL.md",
+      "computedHash": "eddaf278525720a8839dbaca65755be2ab7674c518f06f7e0a397f146510622c"
+    },
+    "pr-review-expert": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/pr-review-expert/SKILL.md",
+      "computedHash": "1d6f5f481729ebf2492e2a22700da369a4872d2798cfc6ac0b156ac6a4c8b904"
+    },
+    "pricing-strategy": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/pricing-strategy/SKILL.md",
+      "computedHash": "485eb90e85199a0bf956d804aa54e84ecbac63569045a336b0b09bb612e6ece9"
+    },
+    "product-analytics": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/product-analytics/SKILL.md",
+      "computedHash": "fe3cb9075442055c0105581be19d64fb49684a4aba063578dd85ab5cae9c5cca"
+    },
+    "product-discovery": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/product-discovery/SKILL.md",
+      "computedHash": "601a3b2bcbd7c4eab36a73c0f1baf01f33c5049dc734766ec66429208bc3abd7"
+    },
+    "product-manager-toolkit": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/product-manager-toolkit/SKILL.md",
+      "computedHash": "4b76d886158498d4696e307c5bb1e8e7542e395644d0b4eed2070ab0d301f725"
+    },
+    "product-skills": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/product-skills/SKILL.md",
+      "computedHash": "16667f920959ef17200744c99cf0a6bf1d3ecb4cbd8123d5aea833c0ba1a1d4a"
+    },
+    "product-strategist": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/product-strategist/SKILL.md",
+      "computedHash": "9e372ea31555fc2d7075d2d51c74904ac8bb55719c92e9b3391c41436449a1b8"
+    },
+    "programmatic-seo": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/programmatic-seo/SKILL.md",
+      "computedHash": "61d4f27c601894db02abc830e2df2b0e45b9a51f795c3eb060d264f930b0c8b9"
+    },
+    "promote": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/self-improving-agent/skills/promote/SKILL.md",
+      "computedHash": "c2510d6cd0226cf6b58e33cdff76af6597bca74e4999d8fb4f09c53ba89188d5"
+    },
+    "prompt-engineer-toolkit": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/prompt-engineer-toolkit/SKILL.md",
+      "computedHash": "e2e1963de77c18e2c803c6c9e790537b6159c1454375c70600c8107ec10e0f16"
+    },
+    "qms-audit-expert": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/qms-audit-expert/SKILL.md",
+      "computedHash": "15d34663f635c7af7fdefb9a67e559edf0c5608d62847a375d03e5825d12879b"
+    },
+    "quality-documentation-manager": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/quality-documentation-manager/SKILL.md",
+      "computedHash": "bfb93adead24932e60ecacfe2ac00e7b553c04780838baac31f9cf90cd1b5be2"
+    },
+    "quality-manager-qmr": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/quality-manager-qmr/SKILL.md",
+      "computedHash": "3b05f24ac195d7464f49c6ae17344755e42bc2ab4d4a12319023a825244749c3"
+    },
+    "quality-manager-qms-iso13485": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/quality-manager-qms-iso13485/SKILL.md",
+      "computedHash": "74a784312655201d6b5c1fafe9ba00cd0d8a8378e48589d0105a369bf0b28613"
+    },
+    "ra-qm-skills": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/ra-qm-skills/SKILL.md",
+      "computedHash": "d873b37d50cd331f57d227127ac7684a498fb81bf22efdedfcead9305c237d0e"
+    },
+    "rag-architect": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/rag-architect/SKILL.md",
+      "computedHash": "29e95a31672808b7ce1c66c8d441450f9b464c4ee43cfe306bffe5b3c8aeb58b"
+    },
+    "red-team": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/red-team/SKILL.md",
+      "computedHash": "53d023c2e6ef077ca186e9fc5adf3528eeb1850c246eb35afd48dae4fbcef67a"
+    },
+    "referral-program": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/referral-program/SKILL.md",
+      "computedHash": "df8ca397e815b7ed6382c4b3b022b58f3536146937ec37165038eeea792678a1"
+    },
+    "regulatory-affairs-head": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/regulatory-affairs-head/SKILL.md",
+      "computedHash": "bbefef74d4c0414f7a57beb9fc28e47318e39f9cb645316a424a51aa61f27227"
+    },
+    "release-manager": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/release-manager/SKILL.md",
+      "computedHash": "c7a402150639cf9fa780f7fc72f859d3ecc0f02218392f38ca7d12743b8a553e"
+    },
+    "remember": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/self-improving-agent/skills/remember/SKILL.md",
+      "computedHash": "7fae4a8d6490d21f038727e80aeaa720b0fb98e890eeb1103699aeaa3ecfcd22"
+    },
+    "report": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/report/SKILL.md",
+      "computedHash": "27962537f7b7caa785fe16239924d681dede27482be114cd04820df5d65249f3"
+    },
+    "research-summarizer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/research-summarizer/skills/research-summarizer/SKILL.md",
+      "computedHash": "a63430aefa494ebcff337e056664d2942062bc86fcbe08d9d5fa29494cba0cb0"
+    },
+    "resume": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/autoresearch-agent/skills/resume/SKILL.md",
+      "computedHash": "236ffe6896d2f4d820357e747f07ab918c59a8077e85b54373bf69bea7eabdb2"
+    },
+    "revenue-operations": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "business-growth/skills/revenue-operations/SKILL.md",
+      "computedHash": "3d21981393e522bd63ee4d5686c403867a20bf2e0e282d3e425893e47e4e9ed0"
+    },
+    "review": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/review/SKILL.md",
+      "computedHash": "293152a5037aa448113fd484a6c398d99e451bb984b3a685ab7b687c96592f15"
+    },
+    "risk-management-specialist": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/risk-management-specialist/SKILL.md",
+      "computedHash": "0ca458a102bfc5cde96dd9ddc38d7fc62f250fa25c80a9fbfcd43a6165682125"
+    },
+    "roadmap-communicator": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/roadmap-communicator/SKILL.md",
+      "computedHash": "10fed70b3a929b3b30f203961322e068b3433707a4633005f9e0fb39a1d49162"
+    },
+    "run": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/autoresearch-agent/skills/run/SKILL.md",
+      "computedHash": "074fa13e8e2cd2a8fb4d48360b19c953088eba5519a5675623a9d5e8818e0026"
+    },
+    "runbook-generator": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/runbook-generator/SKILL.md",
+      "computedHash": "d9899ffd714b59e89f318bfedf6c8566057981777a34a5ac0d8c3131aaddf0f5"
+    },
+    "saas-metrics-coach": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "finance/skills/saas-metrics-coach/SKILL.md",
+      "computedHash": "f4af61ab2a09959ce10a46275feb9d8139cd624b73d46e2a68e5b3983a4f61a0"
+    },
+    "saas-scaffolder": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/saas-scaffolder/SKILL.md",
+      "computedHash": "f4bf7fcac0a1b04fa4d17739799e620baaa6f9dccffdf9f2c4b1ecb0857e7b1f"
+    },
+    "sales-engineer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "business-growth/skills/sales-engineer/SKILL.md",
+      "computedHash": "1c49e0c830a4d0808c6e70119eebfe69adb9a274a7ba674ab5712fd6d05b1e94"
+    },
+    "scenario-war-room": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/scenario-war-room/SKILL.md",
+      "computedHash": "b2569a4f2c8a6df071d7186ad765cfcc320801aabd806964720a8be6af9037c9"
+    },
+    "schema-markup": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/schema-markup/SKILL.md",
+      "computedHash": "1d4f0bf40a15e35a3ced7351f03f1fb03174cfe64513e9d09e295851a5418d5f"
+    },
+    "scrum-master": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/scrum-master/SKILL.md",
+      "computedHash": "e577d61b7c184a2a3e8f10bc1bac094b7b6af1e84e9b55b5d1d51e9b1fbe40ba"
+    },
+    "secrets-vault-manager": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/secrets-vault-manager/SKILL.md",
+      "computedHash": "b0d02cac2f02ede802cea09b1626dc6e63c24c6a5e26abb55d7c733e3f60c3dd"
+    },
+    "security-pen-testing": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/security-pen-testing/SKILL.md",
+      "computedHash": "ea8508fb9d4a66f34577603bd8143776c36b6b1a88bdf06873958d8242b9b197"
+    },
+    "self-eval": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/self-eval/SKILL.md",
+      "computedHash": "5001443bda8327c661f9199a5186008a8b21729f4f2ecbf4456a68e00d26dee7"
+    },
+    "self-improving-agent": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/self-improving-agent/skills/self-improving-agent/SKILL.md",
+      "computedHash": "cc26ea12aca1094f4e9bf9c55a7a4eaf1cae3095d8318952874bdad86fd97c66"
+    },
+    "senior-architect": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-architect/SKILL.md",
+      "computedHash": "0152c1cb90512177153d936557a11bf760d5cbd21470a1305cc727d0a3af1df9"
+    },
+    "senior-backend": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-backend/SKILL.md",
+      "computedHash": "45f3294ffe96c436b689d3e950a605759440f6effc7b3747caa1ef394717b12a"
+    },
+    "senior-computer-vision": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-computer-vision/SKILL.md",
+      "computedHash": "da1b38cb44456534f90570c468f9e7d382acbb1b395202b0f83d6d1fb8b95c6e"
+    },
+    "senior-data-engineer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-data-engineer/SKILL.md",
+      "computedHash": "8bbd865c2b6fe8ffb27a63729bd4578e178827e154a82e129cebd256edbe7a17"
+    },
+    "senior-data-scientist": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-data-scientist/SKILL.md",
+      "computedHash": "f7e1f4e10ccbe96485b67eb6f9961690bd2e7e7a1b3f46b951c91ad1ef655d12"
+    },
+    "senior-devops": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-devops/SKILL.md",
+      "computedHash": "816ec10cb6ca6fcc2d218cbd0d14165a67b27d0515f42321d6586caa2b0394f3"
+    },
+    "senior-frontend": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-frontend/SKILL.md",
+      "computedHash": "876e6daaf3a8785f1628e90bc2b92675e869206fddfe352c1d95c634f146311b"
+    },
+    "senior-fullstack": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-fullstack/SKILL.md",
+      "computedHash": "a1bbb5942526a19de7b94768555a5509d37337f74ba163399ea0f41bc95959e7"
+    },
+    "senior-ml-engineer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-ml-engineer/SKILL.md",
+      "computedHash": "1f234da1d069064faf4243658fca777c734f52b1bedf73e4e4111284a77b1fba"
+    },
+    "senior-pm": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/senior-pm/SKILL.md",
+      "computedHash": "8150d0dbeaaf54e18b5ad2d45a026fc38c71634b8b8605de3d4c4efb1c8c2056"
+    },
+    "senior-prompt-engineer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-prompt-engineer/SKILL.md",
+      "computedHash": "2b06c6f753802bf31f7979761b4bd40a4073aea6d9be6dff8b69effdf2ae6226"
+    },
+    "senior-qa": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-qa/SKILL.md",
+      "computedHash": "39cb292f64ba6ecbc234ab99ce000d3b87c9b64ee57a772b3b6a38f900702749"
+    },
+    "senior-secops": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-secops/SKILL.md",
+      "computedHash": "ae0a60777ec6a1106495eee40e1a814ed55bfdc2767b440ecd5614e42e6c46c9"
+    },
+    "senior-security": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/senior-security/SKILL.md",
+      "computedHash": "815e7e7540d386358d51515e111a9897fc00bd2d5c907a6e91d1dad482010291"
+    },
+    "seo-audit": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/seo-audit/SKILL.md",
+      "computedHash": "553858ee272698dc53d1dbb23f555c0806c8027a865db32fc1f6d5790329a883"
+    },
+    "setup": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/autoresearch-agent/skills/setup/SKILL.md",
+      "computedHash": "6a4a1bb9ab10e1768aca228b022ba827a66b5bf1e9114445b02df1788beb9c18"
+    },
+    "signup-flow-cro": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/signup-flow-cro/SKILL.md",
+      "computedHash": "425589a5e7416c36736716523a7084beac049d820b12989d08b5bd7da65d0704"
+    },
+    "site-architecture": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/site-architecture/SKILL.md",
+      "computedHash": "025ee87502067fd8390400bfbc2ed3663ed1ad494eef61cd5657845c6b1057b1"
+    },
+    "skill-security-auditor": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/skill-security-auditor/SKILL.md",
+      "computedHash": "2e7474139924eb73176d4b2074551f79f25e9a6a23ebc67f27a5da25a87e7c18"
+    },
+    "skill-tester": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/skill-tester/SKILL.md",
+      "computedHash": "1c34d565c62f239e7756b2e517072fc5efa2862e5cbd4d5a314514fb718b0610"
+    },
+    "soc2-compliance": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "ra-qm-team/skills/soc2-compliance/SKILL.md",
+      "computedHash": "f5eefe69c0afb0ffbe0acb44bee8d690b08c02922ad533f48ef5b1d7f42cb345"
+    },
+    "social-content": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/social-content/SKILL.md",
+      "computedHash": "a9cd650459b02b5d7d842982878469e198c9747c16d47b2525d583ce3d13603d"
+    },
+    "social-media-analyzer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/social-media-analyzer/SKILL.md",
+      "computedHash": "01ec55dcb3dabd4183ad7fc3bf757b459e03e5981dea5592c8137619ea2a3553"
+    },
+    "social-media-manager": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/social-media-manager/SKILL.md",
+      "computedHash": "4a66b4b9b9d0c30c77be52dbdf91ce73ac9d48c3e542b289651aad905e150e83"
+    },
+    "spawn": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/agenthub/skills/spawn/SKILL.md",
+      "computedHash": "f730314174866d9552ab534285511710f56103a2204aa9899f57e51fd4e0cf6f"
+    },
+    "spec-driven-workflow": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/spec-driven-workflow/SKILL.md",
+      "computedHash": "335b4e5a3b4f29393fa7019b155af0feb7e27ada1c5b87995aea0c4a351a1785"
+    },
+    "spec-to-repo": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/spec-to-repo/SKILL.md",
+      "computedHash": "63c459fcf530f45339e66cc13fbbcd3f42bf78e9a9f4c9a33f9cbffccd2caf67"
+    },
+    "sql-database-assistant": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/sql-database-assistant/SKILL.md",
+      "computedHash": "a3879d50c8767faf6502eb9b3af962e0cb0a9462cae9ed03c09192cc7700c5a0"
+    },
+    "statistical-analyst": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/statistical-analyst/skills/statistical-analyst/SKILL.md",
+      "computedHash": "c233274c34875500b12eab3b5271b144ca5a5b2235ff730c4bfddac1315d61a2"
+    },
+    "status": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/self-improving-agent/skills/status/SKILL.md",
+      "computedHash": "a7e3ffd76010a22c9921da13ff5b5882136abe8822f5699d64c323d24c9f8a8f"
+    },
+    "strategic-alignment": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/skills/strategic-alignment/SKILL.md",
+      "computedHash": "4f6875df2a76fd6b9fe3cb948f7b9ce1949f4cc67daba718fe3f5de1e03e6599"
+    },
+    "stress-test": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "c-level-advisor/executive-mentor/skills/stress-test/SKILL.md",
+      "computedHash": "ff15de25f63ec9993940d16e6c4fbe927f47378b17cbfbecd233df9877c0b89e"
+    },
+    "stripe-integration-expert": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/stripe-integration-expert/SKILL.md",
+      "computedHash": "9d97ba85794e490f12ee1fe26e2d4458caa91016b854ff02a70d368c2abcf41d"
+    },
+    "tc-tracker": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/tc-tracker/SKILL.md",
+      "computedHash": "7c70aee3b230340f0541b2ba803606de7431687e8d8169d289b9cddf7e8a0742"
+    },
+    "tdd-guide": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/tdd-guide/SKILL.md",
+      "computedHash": "3f0637f5127bc27a9919cfc2dfb648745669507a89ac57878a44ace5fe6e4627"
+    },
+    "team-communications": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "project-management/skills/team-communications/SKILL.md",
+      "computedHash": "7429120d1fe577ef7a985a4c0315bd60e9896593e55f5a275b0d970edf42a1e4"
+    },
+    "tech-debt-tracker": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/skills/tech-debt-tracker/SKILL.md",
+      "computedHash": "a702ca374b3fc5ca27d8abccf505579c8aac2818d3794e98e73894882bdc0f03"
+    },
+    "tech-stack-evaluator": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/tech-stack-evaluator/SKILL.md",
+      "computedHash": "68446dfdaa97064943ecc0d7a5f62da82680d887705a91857bcf8ae19df8a350"
+    },
+    "terraform-patterns": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering/terraform-patterns/skills/terraform-patterns/SKILL.md",
+      "computedHash": "e60a46a5ae7c379cc0d3489cb05ef5f93bf5f7da88d908115682e112b49381d4"
+    },
+    "testrail": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/playwright-pro/skills/testrail/SKILL.md",
+      "computedHash": "a8405733ea688a9344027b89b3e9b2e99c60bd1921178c4c78e71a0bf1752c17"
+    },
+    "threat-detection": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "engineering-team/skills/threat-detection/SKILL.md",
+      "computedHash": "ef2ba20a0058c692e6980d189870c0ffbdb1506a8c171f05b7b8254871b36d14"
+    },
+    "ui-design-system": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/ui-design-system/SKILL.md",
+      "computedHash": "c7233170249bacc07461840bbfe6391eb029fdc09557d775eba6640b184e1325"
+    },
+    "ux-researcher-designer": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "product-team/skills/ux-researcher-designer/SKILL.md",
+      "computedHash": "2f0e31d8ff81d3454699684ad46224bb5a1739f57bc24db1dad1fa505251e6bf"
+    },
+    "x-twitter-growth": {
+      "source": "Alirezarezvani/claude-skills",
+      "sourceType": "github",
+      "skillPath": "marketing-skill/skills/x-twitter-growth/SKILL.md",
+      "computedHash": "68cb5ef86640034c7f3324ec36605b27c663663e8fc7676ef5610ceb1141091b"
+    }
+  }
+}
