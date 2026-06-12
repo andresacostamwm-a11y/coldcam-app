@@ -196,6 +196,23 @@
   .result-sheet p { font-size: 15px; color: var(--text2); line-height: 1.6; }
   .result-sheet a { color: var(--accent2); text-decoration: none; word-break: break-all; }
   .result-sheet .close-sheet { float: right; background: none; border: none; color: var(--text2); font-size: 24px; cursor: pointer; margin-top: -4px; }
+
+  /* ── API MONITOR ── */
+  .api-monitor { margin: 0 16px 20px; background: rgba(3,7,13,0.92); border: 1px solid rgba(75,225,255,0.25); border-radius: var(--radius); box-shadow: 0 0 12px rgba(75,225,255,0.08); padding: 14px 16px; }
+  .api-monitor-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .api-monitor-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #4be1ff; }
+  .api-status-pill { padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; }
+  .api-status-pill.online { background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.25); }
+  .api-status-pill.error  { background: rgba(255,92,92,0.12);  color: #ff5c5c; border: 1px solid rgba(255,92,92,0.25); }
+  .api-monitor-section { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .api-monitor-section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .api-row { display: flex; justify-content: space-between; align-items: center; margin: 4px 0; }
+  .api-label { font-size: 11px; color: #8ab4c9; text-transform: uppercase; letter-spacing: 0.05em; }
+  .api-value { font-size: 13px; font-family: 'SF Mono','Fira Code',monospace; color: #4be1ff; font-weight: 600; }
+  .api-cost  { font-size: 16px; font-family: 'SF Mono','Fira Code',monospace; color: #ffc657; font-weight: 700; }
+  .api-model-badge { font-size: 11px; color: #4be1ff; font-family: 'SF Mono','Fira Code',monospace; opacity: 0.75; }
+  .api-reset-btn { width: 100%; margin-top: 10px; padding: 8px; background: rgba(75,225,255,0.07); border: 1px solid rgba(75,225,255,0.18); border-radius: 8px; color: #4be1ff; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .api-reset-btn:active { background: rgba(75,225,255,0.18); }
 </style>
 </head>
 <body>
@@ -317,6 +334,49 @@
       <div class="qtitle">Crear Doc</div>
       <div class="qdesc">Presentación / informe</div>
     </div>
+  </div>
+
+  <div class="section-title">Sistema</div>
+  <div class="api-monitor" id="apiMonitor">
+    <div class="api-monitor-header">
+      <span class="api-monitor-title">⬡ API Monitor</span>
+      <span class="api-status-pill online" id="apiStatusPill">ONLINE</span>
+    </div>
+    <div class="api-monitor-section">
+      <div class="api-row">
+        <span class="api-label">Agente</span>
+        <span class="api-value">J.A.R.V.I.S.</span>
+      </div>
+      <div class="api-row">
+        <span class="api-label">Modelo</span>
+        <span class="api-model-badge" id="apiModel">claude-opus-4-7</span>
+      </div>
+    </div>
+    <div class="api-monitor-section">
+      <div class="api-row">
+        <span class="api-label">Tokens Entrada</span>
+        <span class="api-value" id="apiInputTokens">0</span>
+      </div>
+      <div class="api-row">
+        <span class="api-label">Tokens Salida</span>
+        <span class="api-value" id="apiOutputTokens">0</span>
+      </div>
+      <div class="api-row">
+        <span class="api-label">Cache Read</span>
+        <span class="api-value" id="apiCacheTokens">0</span>
+      </div>
+    </div>
+    <div class="api-monitor-section">
+      <div class="api-row">
+        <span class="api-label">Costo Sesión</span>
+        <span class="api-cost" id="apiCost">$0.0000</span>
+      </div>
+      <div class="api-row">
+        <span class="api-label">Solicitudes</span>
+        <span class="api-value" id="apiRequests">0</span>
+      </div>
+    </div>
+    <button class="api-reset-btn" onclick="resetApiMonitor()">⟳ Reset Sesión</button>
   </div>
 </div>
 
@@ -1463,6 +1523,40 @@ const _origStart = startVoice;
 const _origStop  = stopVoice;
 startVoice = function() { window._faviconSetVoice(true);  _origStart(); };
 stopVoice  = function() { window._faviconSetVoice(false); _origStop();  };
+
+// ── API Monitor ────────────────────────────────────────────────────────────────
+async function fetchApiMonitor() {
+  try {
+    const res = await fetch('/api/token-usage');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const pill = document.getElementById('apiStatusPill');
+    pill.textContent = 'ONLINE';
+    pill.className = 'api-status-pill online';
+    document.getElementById('apiModel').textContent        = data.model || 'claude-opus-4-7';
+    document.getElementById('apiInputTokens').textContent  = (data.input_tokens  || 0).toLocaleString();
+    document.getElementById('apiOutputTokens').textContent = (data.output_tokens || 0).toLocaleString();
+    document.getElementById('apiCacheTokens').textContent  = (data.cache_read_tokens || 0).toLocaleString();
+    document.getElementById('apiCost').textContent         = '$' + (data.cost_usd || 0).toFixed(4);
+    document.getElementById('apiRequests').textContent     = data.request_count || 0;
+  } catch(e) {
+    const pill = document.getElementById('apiStatusPill');
+    if (pill) { pill.textContent = 'ERROR'; pill.className = 'api-status-pill error'; }
+  }
+}
+
+async function resetApiMonitor() {
+  try {
+    await fetch('/api/token-usage/reset', { method: 'POST' });
+    await fetchApiMonitor();
+    toast('✅ Sesión de tokens reiniciada');
+  } catch(e) { toast('Error al reiniciar'); }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchApiMonitor();
+  setInterval(fetchApiMonitor, 5000);
+});
 </script>
 </body>
 </html>

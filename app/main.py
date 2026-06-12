@@ -33,6 +33,47 @@ app.mount("/static", StaticFiles(directory=str(STATIC)), name="static")
 claude = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
 MODEL  = "claude-opus-4-7"
 
+# ── Token usage store (in-memory, resets on restart) ─────────────────────────
+_token_store: dict = {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cache_read_tokens": 0,
+    "request_count": 0,
+    "last_status": "ok",
+}
+
+COST_PER_M: dict = {
+    "claude-opus-4":     {"input": 15.00, "output": 75.00, "cache_read": 1.50},
+    "claude-sonnet-4-5": {"input":  3.00, "output": 15.00, "cache_read": 0.30},
+    "claude-haiku-4-5":  {"input":  0.80, "output":  4.00, "cache_read": 0.08},
+}
+
+def _get_rates(model: str) -> dict:
+    for prefix in sorted(COST_PER_M, key=len, reverse=True):
+        if model.startswith(prefix):
+            return COST_PER_M[prefix]
+    if "opus" in model:
+        return COST_PER_M["claude-opus-4"]
+    if "sonnet" in model:
+        return COST_PER_M["claude-sonnet-4-5"]
+    return COST_PER_M["claude-haiku-4-5"]
+
+def _calc_cost(input_t: int, output_t: int, cache_t: int, model: str) -> float:
+    rates = _get_rates(model)
+    return (
+        input_t  * rates["input"]      / 1_000_000 +
+        output_t * rates["output"]     / 1_000_000 +
+        cache_t  * rates["cache_read"] / 1_000_000
+    )
+
+def _record_usage(resp) -> None:
+    usage = resp.usage
+    _token_store["input_tokens"]      += getattr(usage, "input_tokens", 0) or 0
+    _token_store["output_tokens"]     += getattr(usage, "output_tokens", 0) or 0
+    _token_store["cache_read_tokens"] += getattr(usage, "cache_read_input_tokens", 0) or 0
+    _token_store["request_count"]     += 1
+    _token_store["last_status"]        = "ok"
+
 
 # ── Pydantic models ───────────────────────────────────────────────────────────
 class VoiceCmd(BaseModel):
@@ -124,6 +165,7 @@ def _claude_json(prompt: str, system: str, max_tokens: int = 2048) -> dict:
         system=system,
         messages=[{"role": "user", "content": prompt}]
     )
+    _record_usage(resp)
     text = resp.content[0].text.strip()
     # Strip markdown fences
     if "```" in text:
@@ -213,6 +255,7 @@ async def voice(cmd: VoiceCmd):
             model=MODEL, max_tokens=1024,
             messages=[{"role": "user", "content": params.get("question", cmd.transcript)}]
         )
+        _record_usage(resp)
         result["reply"] = resp.content[0].text.strip()
 
     elif intent == "nlm_create":
@@ -389,6 +432,7 @@ async def chat(data: ChatMsg):
         model=MODEL, max_tokens=1024,
         messages=[{"role": "user", "content": data.message}]
     )
+    _record_usage(resp)
     return {"reply": resp.content[0].text.strip()}
 
 
@@ -527,6 +571,27 @@ async def nlm_generate(data: NLMGenerate):
                     "url": getattr(completed, "url", None)}
     except Exception as e:
         raise HTTPException(500, str(e))
+
+
+# ── TOKEN USAGE ───────────────────────────────────────────────────────────────
+@app.get("/api/token-usage")
+async def get_token_usage():
+    cost = _calc_cost(
+        _token_store["input_tokens"],
+        _token_store["output_tokens"],
+        _token_store["cache_read_tokens"],
+        MODEL,
+    )
+    return {**_token_store, "model": MODEL, "cost_usd": cost}
+
+@app.post("/api/token-usage/reset")
+async def reset_token_usage():
+    _token_store["input_tokens"]      = 0
+    _token_store["output_tokens"]     = 0
+    _token_store["cache_read_tokens"] = 0
+    _token_store["request_count"]     = 0
+    _token_store["last_status"]       = "ok"
+    return {"ok": True}
 
 
 # ── HEALTH ────────────────────────────────────────────────────────────────────
