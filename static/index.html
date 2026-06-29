@@ -196,6 +196,15 @@
   .result-sheet p { font-size: 15px; color: var(--text2); line-height: 1.6; }
   .result-sheet a { color: var(--accent2); text-decoration: none; word-break: break-all; }
   .result-sheet .close-sheet { float: right; background: none; border: none; color: var(--text2); font-size: 24px; cursor: pointer; margin-top: -4px; }
+
+  /* ── Headroom (auto-hide topbar on scroll) ── */
+  .topbar.headroom {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+    will-change: transform;
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+  }
+  .topbar.headroom--pinned   { transform: translateY(0); }
+  .topbar.headroom--unpinned { transform: translateY(-100%); }
 </style>
 </head>
 <body>
@@ -1463,6 +1472,36 @@ const _origStart = startVoice;
 const _origStop  = stopVoice;
 startVoice = function() { window._faviconSetVoice(true);  _origStart(); };
 stopVoice  = function() { window._faviconSetVoice(false); _origStop();  };
+</script>
+
+<!-- ══════════════════════════════ HEADROOM ══════════════════════════════ -->
+<script src="/static/headroom.min.js"></script>
+<script>
+// Auto-hide each screen's topbar when scrolling down inside its scroll area,
+// revealing it again on scroll up. Each screen scrolls in its own .scroll
+// container, so Headroom is bound to that element rather than window.
+(function initHeadroom() {
+  if (typeof Headroom === 'undefined' || !Headroom.cutsTheMustard) return;
+
+  // Only the common layout: a screen-level topbar immediately followed by its
+  // own .scroll area. Screens with intervening chrome (e.g. NotebookLM's tab
+  // bar) or no topbar (Home) are left untouched.
+  document.querySelectorAll('.screen > .topbar').forEach(topbar => {
+    const scroller = topbar.nextElementSibling;
+    if (!scroller || !scroller.classList.contains('scroll')) return;
+
+    // Take the topbar out of flow and offset the content beneath it so the
+    // layout stays put while the bar can slide up over the scroll area.
+    const barHeight = topbar.offsetHeight;
+    scroller.style.paddingTop = barHeight + 'px';
+
+    new Headroom(topbar, {
+      scroller,
+      tolerance: { up: 5, down: 5 },
+      offset: barHeight,
+    }).init();
+  });
+})();
 </script>
 </body>
 </html>
