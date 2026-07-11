@@ -1387,6 +1387,12 @@
       "skillPath": "product-team/skills/ux-researcher-designer/SKILL.md",
       "computedHash": "2f0e31d8ff81d3454699684ad46224bb5a1739f57bc24db1dad1fa505251e6bf"
     },
+    "watch": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": ".claude/skills/watch/SKILL.md",
+      "computedHash": "fee01f4c498e04b3c5172c8e822691395d6dba21d87e946e6c3f196a8bfbed1e"
+    },
     "x-twitter-growth": {
       "source": "Alirezarezvani/claude-skills",
       "sourceType": "github",
