@@ -73,6 +73,12 @@
       "skillPath": "marketing-skill/skills/analytics-tracking/SKILL.md",
       "computedHash": "2f5e82d073aeceb4aa44c2f2b530f24e33d3f2c91a09fe1a156b9919091d813f"
     },
+    "animation-vocabulary": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/animation-vocabulary/SKILL.md",
+      "computedHash": "39319fc9a33c15be08666b3685f58666f042ff36bb902b7814c0834a5ba99df4"
+    },
     "api-design-reviewer": {
       "source": "Alirezarezvani/claude-skills",
       "sourceType": "github",
@@ -90,6 +96,12 @@
       "sourceType": "github",
       "skillPath": "marketing-skill/skills/app-store-optimization/SKILL.md",
       "computedHash": "dfc5b5ca96b295aeca8162b2332db32883fbdcf2f6ff706108acce894a187e4f"
+    },
+    "apple-design": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/apple-design/SKILL.md",
+      "computedHash": "8b94db67cb9edaad5f1501010804caa610131f1d2dfda0a27664b2e858deade3"
     },
     "apple-hig-expert": {
       "source": "Alirezarezvani/claude-skills",
@@ -486,6 +498,12 @@
       "sourceType": "github",
       "skillPath": "engineering-team/skills/email-template-builder/SKILL.md",
       "computedHash": "b149cb0fa912d4e86e55f17e9f026dd41508c1fb3affddd41edd5f2fe5fafc41"
+    },
+    "emil-design-eng": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "computedHash": "8bdf9e4e6de7a4969147bf4828a4ad2c5aacd9fba4b690b250a85e0467ca387d"
     },
     "engineering-advanced-skills": {
       "source": "Alirezarezvani/claude-skills",
@@ -1044,6 +1062,12 @@
       "sourceType": "github",
       "skillPath": "engineering-team/playwright-pro/skills/review/SKILL.md",
       "computedHash": "293152a5037aa448113fd484a6c398d99e451bb984b3a685ab7b687c96592f15"
+    },
+    "review-animations": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/review-animations/SKILL.md",
+      "computedHash": "ca04aaa0a815f05e0910ded8fedbfbdfe0acdec8f52dfbb88277890070d134d4"
     },
     "risk-management-specialist": {
       "source": "Alirezarezvani/claude-skills",
