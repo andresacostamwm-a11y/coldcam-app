@@ -1,8 +1,26 @@
+# Secrets & environment
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+id_rsa*
+id_ed25519*
+credentials.json
+service-account*.json
+.npmrc
+.pypirc
+.claude/settings.local.json
+
+# App data / build artifacts
 seen_emails.json
 __pycache__/
 *.pyc
 node_modules/
 video/node_modules/
 static/videos/
+static/docs/
 out/

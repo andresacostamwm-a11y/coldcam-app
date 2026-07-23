@@ -704,6 +704,31 @@
 </div>
 
 <script>
+// ── API auth ────────────────────────────────────────────────────────────────────
+// The backend requires an X-API-Key header on every /api/* call. Store the token
+// locally and inject it into all same-origin API requests via a fetch wrapper.
+function getApiToken() {
+  let t = localStorage.getItem('apiToken');
+  if (!t) {
+    t = (prompt('Introduce tu clave de acceso (APP_API_TOKEN):') || '').trim();
+    if (t) localStorage.setItem('apiToken', t);
+  }
+  return t;
+}
+(function () {
+  const _fetch = window.fetch.bind(window);
+  window.fetch = function (input, init = {}) {
+    const url = typeof input === 'string' ? input : (input && input.url) || '';
+    if (url.startsWith('/api/') && url !== '/api/health') {
+      init = { ...init };
+      const headers = new Headers(init.headers || (typeof input !== 'string' ? input.headers : undefined) || {});
+      headers.set('X-API-Key', getApiToken());
+      init.headers = headers;
+    }
+    return _fetch(input, init);
+  };
+})();
+
 // ── State ──────────────────────────────────────────────────────────────────────
 let calcExpr = '', calcHasResult = false;
 let calcMode = 'normal';
@@ -854,10 +879,44 @@ function calcPress(key) {
   setDisplay(calcExpr, '');
 }
 
+// Safe arithmetic evaluator — recursive descent, no code generation (replaces Function/eval).
+// Grammar: expr → term (('+'|'-') term)*, term → power (('*'|'/') power)*,
+//          power → unary ('**' power)?, unary → ('+'|'-') unary | primary,
+//          primary → number | Math.CONST | Math.func '(' expr ')' | '(' expr ')'
+function safeCalc(src) {
+  const FUNCS = { 'Math.sin': Math.sin, 'Math.cos': Math.cos, 'Math.tan': Math.tan,
+                  'Math.sqrt': Math.sqrt, 'Math.log10': Math.log10, 'Math.log': Math.log };
+  const CONSTS = { 'Math.PI': Math.PI, 'Math.E': Math.E };
+  const s = src; let i = 0;
+  const skip = () => { while (i < s.length && s[i] === ' ') i++; };
+  function expr() { let v = term(); skip();
+    while (s[i] === '+' || s[i] === '-') { const op = s[i++]; const r = term(); v = op === '+' ? v + r : v - r; skip(); }
+    return v; }
+  function term() { let v = power(); skip();
+    while ((s[i] === '*' && s[i + 1] !== '*') || s[i] === '/') { const op = s[i++]; const r = power(); v = op === '*' ? v * r : v / r; skip(); }
+    return v; }
+  function power() { const v = unary(); skip();
+    if (s[i] === '*' && s[i + 1] === '*') { i += 2; return Math.pow(v, power()); }
+    return v; }
+  function unary() { skip();
+    if (s[i] === '-') { i++; return -unary(); }
+    if (s[i] === '+') { i++; return unary(); }
+    return primary(); }
+  function primary() { skip();
+    if (s[i] === '(') { i++; const v = expr(); skip(); if (s[i++] !== ')') throw new Error('paren'); return v; }
+    for (const k in CONSTS) { if (s.startsWith(k, i)) { i += k.length; return CONSTS[k]; } }
+    for (const k in FUNCS) { if (s.startsWith(k + '(', i)) { i += k.length + 1; const a = expr(); skip(); if (s[i++] !== ')') throw new Error('paren'); return FUNCS[k](a); } }
+    const m = /^[0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?/.exec(s.slice(i));
+    if (!m) throw new Error('token'); i += m[0].length; return parseFloat(m[0]); }
+  const result = expr(); skip();
+  if (i !== s.length) throw new Error('trailing');
+  return result;
+}
+
 function evaluate() {
   try {
-    let expr = calcExpr.replace(/Math\.PI/g,'3.14159265358979').replace(/Math\.E/g,'2.71828182845904');
-    const result = Function('"use strict"; return (' + calcExpr + ')')();
+    const result = safeCalc(calcExpr);
+    if (typeof result !== 'number' || !isFinite(result)) throw new Error('range');
     const disp = parseFloat(result.toPrecision(12)).toString();
     setDisplay(disp, calcExpr + ' =');
     calcExpr = disp;
@@ -989,7 +1048,7 @@ async function loadEmails() {
 
 function renderEmails(emails) {
   if (!emails || emails.length === 0) { document.getElementById('emailList').innerHTML = '<div class="loading">No hay correos</div>'; return; }
-  if (emails[0]?.error) { document.getElementById('emailList').innerHTML = `<div class="loading">⚠️ ${emails[0].error}</div>`; return; }
+  if (emails[0]?.error) { document.getElementById('emailList').innerHTML = `<div class="loading">⚠️ ${escapeHtml(emails[0].error)}</div>`; return; }
   const html = '<div class="email-list">' + emails.map(e => `
     <div class="email-item">
       <div class="email-row1"><span class="email-from">${escapeHtml(e.from||'')}</span><span class="email-date">${formatDate(e.date)}</span></div>
@@ -1131,7 +1190,8 @@ function clearChat() {
 
 // ── Utils ──────────────────────────────────────────────────────────────────────
 function escapeHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/\//g,'&#47;');
 }
 
 // ── Video ──────────────────────────────────────────────────────────────────────

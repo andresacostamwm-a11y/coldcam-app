@@ -3,6 +3,7 @@ import email
 import os
 import json
 import time
+import logging
 import schedule
 import requests
 from email.header import decode_header
@@ -10,6 +11,12 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
+
+logging.basicConfig(
+    level=os.getenv("LOG_LEVEL", "INFO"),
+    format="%(asctime)s %(levelname)s: %(message)s",
+)
+logger = logging.getLogger("email_monitor")
 
 GMAIL_USER = os.getenv("GMAIL_USER")
 GMAIL_APP_PASSWORD = os.getenv("GMAIL_APP_PASSWORD")
@@ -86,15 +93,16 @@ def send_whatsapp(message: str):
     try:
         r = requests.get(url, params=params, timeout=15)
         if r.status_code == 200:
-            print(f"[OK] WhatsApp enviado")
+            logger.info("WhatsApp enviado")
         else:
-            print(f"[ERROR] CallMeBot: {r.status_code} - {r.text}")
-    except Exception as e:
-        print(f"[ERROR] WhatsApp: {e}")
+            # Log the status only — the body can echo the API key / message.
+            logger.error("CallMeBot returned HTTP %s", r.status_code)
+    except Exception:
+        logger.exception("WhatsApp send failed")
 
 
 def check_emails():
-    print(f"\n[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Revisando correos...")
+    logger.info("Revisando correos...")
     seen = load_seen()
 
     try:
@@ -106,7 +114,7 @@ def check_emails():
         _, data = mail.search(None, f'(SINCE "{since}")')
 
         ids = data[0].split()
-        print(f"  Correos en las últimas 3h: {len(ids)}")
+        logger.info("Correos en las últimas 3h: %d", len(ids))
 
         for num in ids:
             uid = num.decode()
@@ -135,7 +143,8 @@ def check_emails():
                 f"*Contenido:*\n{preview}"
             )
 
-            print(f"  → Enviando: {subject[:50]} | De: {from_field[:40]}")
+            # Do not log message content, sender, or subject (PII / email contents).
+            logger.info("Nuevo correo coincidente encontrado, reenviando a WhatsApp")
             send_whatsapp(message)
             seen.add(uid)
             time.sleep(2)
@@ -143,18 +152,16 @@ def check_emails():
         save_seen(seen)
         mail.logout()
 
-    except imaplib.IMAP4.error as e:
-        print(f"[ERROR] IMAP: {e}")
-    except Exception as e:
-        print(f"[ERROR] General: {e}")
+    except imaplib.IMAP4.error:
+        logger.exception("IMAP error")
+    except Exception:
+        logger.exception("check_emails failed")
 
 
 if __name__ == "__main__":
-    print("=== Monitor de correos → WhatsApp ===")
-    print(f"Cuenta: {GMAIL_USER}")
-    print(f"WhatsApp destino: {CALLMEBOT_PHONE}")
-    print(f"Remitentes monitoreados: ESDEN, Hybridge, U. Salamanca, Tec de Monterrey, Bigschool, Espacio BIM")
-    print(f"Frecuencia: cada 3 horas\n")
+    logger.info("=== Monitor de correos → WhatsApp ===")
+    logger.info("Remitentes monitoreados: ESDEN, Hybridge, U. Salamanca, Tec de Monterrey, Bigschool, Espacio BIM")
+    logger.info("Frecuencia: cada 3 horas")
 
     check_emails()
 

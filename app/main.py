@@ -1,6 +1,6 @@
 """AI Personal Assistant — FastAPI Backend"""
 from __future__ import annotations
-import os, json, imaplib, email as email_lib, smtplib, uuid, asyncio
+import os, json, imaplib, email as email_lib, smtplib, uuid, asyncio, ast, logging, secrets, operator
 from email.header import decode_header
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -8,9 +8,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, List
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
@@ -19,9 +19,69 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+logging.basicConfig(
+    level=os.getenv("LOG_LEVEL", "INFO"),
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+)
+logger = logging.getLogger("assistant")
+
+ENV            = os.getenv("ENV", "prod")
+APP_API_TOKEN  = os.getenv("APP_API_TOKEN", "")
+ALLOWED_ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:8000").split(",") if o.strip()]
+
+if not APP_API_TOKEN:
+    logger.warning(
+        "APP_API_TOKEN is not set — all /api/* routes will reject requests. "
+        "Set APP_API_TOKEN in your environment to enable the API."
+    )
+
 # ── App setup ─────────────────────────────────────────────────────────────────
-app = FastAPI(title="AI Personal Assistant", version="1.0.0")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+# Docs/OpenAPI schema are only exposed in development to avoid leaking the API map.
+app = FastAPI(
+    title="AI Personal Assistant",
+    version="1.0.0",
+    docs_url="/docs" if ENV == "dev" else None,
+    redoc_url=None,
+    openapi_url="/openapi.json" if ENV == "dev" else None,
+)
+
+# Restrict CORS to explicitly configured origins (never "*" for a privileged API).
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "X-API-Key"],
+    allow_credentials=False,
+)
+
+# Public paths that do not require the API token.
+_PUBLIC_PATHS = {"/", "/api/health"}
+
+
+@app.middleware("http")
+async def _security_gate(request: Request, call_next):
+    path = request.url.path
+    is_public = (
+        request.method == "OPTIONS"
+        or path in _PUBLIC_PATHS
+        or path.startswith("/static")
+        or (ENV == "dev" and path in ("/docs", "/openapi.json"))
+    )
+    if not is_public and path.startswith("/api/"):
+        token = request.headers.get("x-api-key", "")
+        if not APP_API_TOKEN or not secrets.compare_digest(token, APP_API_TOKEN):
+            return JSONResponse({"detail": "unauthorized"}, status_code=401)
+    response = await call_next(request)
+    # Defense-in-depth security headers on every response.
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    response.headers.setdefault("X-Frame-Options", "DENY")
+    response.headers.setdefault("Referrer-Policy", "no-referrer")
+    response.headers.setdefault(
+        "Content-Security-Policy",
+        "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; "
+        "script-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'",
+    )
+    return response
 
 BASE   = Path(__file__).parent.parent
 STATIC = BASE / "static"
@@ -32,6 +92,31 @@ app.mount("/static", StaticFiles(directory=str(STATIC)), name="static")
 
 claude = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", ""))
 MODEL  = "claude-opus-4-7"
+
+
+def _safe_eval(expr: str) -> float:
+    """Evaluate a pure arithmetic expression without eval() (CWE-94 safe).
+
+    Only numeric literals and +, -, *, /, //, %, ** and unary +/- are allowed.
+    Any function call, name lookup, or attribute access raises ValueError.
+    """
+    _BIN = {
+        ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
+        ast.Div: operator.truediv, ast.FloorDiv: operator.floordiv,
+        ast.Mod: operator.mod, ast.Pow: operator.pow,
+    }
+    _UNARY = {ast.UAdd: operator.pos, ast.USub: operator.neg}
+
+    def _ev(node):
+        if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+            return node.value
+        if isinstance(node, ast.BinOp) and type(node.op) in _BIN:
+            return _BIN[type(node.op)](_ev(node.left), _ev(node.right))
+        if isinstance(node, ast.UnaryOp) and type(node.op) in _UNARY:
+            return _UNARY[type(node.op)](_ev(node.operand))
+        raise ValueError("expresión no permitida")
+
+    return _ev(ast.parse(expr, mode="eval").body)
 
 
 # ── Pydantic models ───────────────────────────────────────────────────────────
@@ -181,32 +266,32 @@ async def voice(cmd: VoiceCmd):
     elif intent == "send_email":
         try:
             _send_email(params.get("to",""), params.get("subject",""), params.get("body",""))
-        except Exception as e:
-            result["reply"] = f"Error al enviar: {e}"
+        except Exception:
+            logger.exception("voice send_email failed")
+            result["reply"] = "No pude enviar el correo."
 
     elif intent == "send_whatsapp":
         try:
             _whatsapp(params.get("message",""))
-        except Exception as e:
-            result["reply"] = f"Error WhatsApp: {e}"
+        except Exception:
+            logger.exception("voice send_whatsapp failed")
+            result["reply"] = "No pude enviar el mensaje de WhatsApp."
 
     elif intent == "create_doc":
         try:
             url = _make_doc(params)
             result["data"] = {"url": url}
-        except Exception as e:
-            result["reply"] = f"Error creando documento: {e}"
+        except Exception:
+            logger.exception("voice create_doc failed")
+            result["reply"] = "No pude crear el documento."
 
     elif intent == "calculator":
         try:
-            expr = params.get("expression","0")
-            import math as _m
-            safe = {"__builtins__": {}, "math": _m, **vars(_m)}
-            val = eval(expr, safe)
+            val = _safe_eval(params.get("expression", "0"))
             result["data"] = {"result": val}
             result["reply"] = f"El resultado es {val}"
-        except Exception as e:
-            result["reply"] = f"No pude calcular: {e}"
+        except Exception:
+            result["reply"] = "No pude calcular esa expresión."
 
     elif intent == "ask_ai":
         resp = claude.messages.create(
@@ -225,8 +310,9 @@ async def voice(cmd: VoiceCmd):
             nb = asyncio.run(_create())
             result["data"] = {"id": nb.id, "title": nb.title}
             result["reply"] = f"Cuaderno '{nb.title}' creado en NotebookLM"
-        except Exception as e:
-            result["reply"] = f"Error NotebookLM: {e}"
+        except Exception:
+            logger.exception("voice nlm_create failed")
+            result["reply"] = "No pude crear el cuaderno en NotebookLM."
 
     elif intent in ("nlm_add_source", "nlm_chat"):
         result["reply"] = "Abre la pantalla de NotebookLM para continuar"
@@ -255,8 +341,9 @@ def _fetch_emails(limit: int = 10) -> list:
             })
         mail.logout()
         return out
-    except Exception as e:
-        return [{"error": str(e)}]
+    except Exception:
+        logger.exception("fetch emails failed")
+        return [{"error": "No se pudo acceder al correo."}]
 
 @app.get("/api/email")
 async def get_emails(limit: int = 10):
@@ -277,8 +364,9 @@ async def send_email(data: EmailSend):
     try:
         _send_email(data.to, data.subject, data.body)
         return {"ok": True}
-    except Exception as e:
-        raise HTTPException(500, str(e))
+    except Exception:
+        logger.exception("send_email failed")
+        raise HTTPException(500, "No se pudo enviar el correo.")
 
 
 # ── WHATSAPP ──────────────────────────────────────────────────────────────────
@@ -289,15 +377,18 @@ def _whatsapp(message: str):
         "apikey": os.getenv("CALLMEBOT_APIKEY","")
     }, timeout=15)
     if r.status_code != 200:
-        raise Exception(f"CallMeBot {r.status_code}: {r.text[:100]}")
+        # Log the status code only — never the response body (may echo the API key / message).
+        logger.error("CallMeBot returned HTTP %s", r.status_code)
+        raise Exception(f"CallMeBot HTTP {r.status_code}")
 
 @app.post("/api/message")
 async def send_message(data: MsgSend):
     try:
         _whatsapp(data.message)
         return {"ok": True}
-    except Exception as e:
-        raise HTTPException(500, str(e))
+    except Exception:
+        logger.exception("send_message failed")
+        raise HTTPException(500, "No se pudo enviar el mensaje.")
 
 
 # ── DOCUMENTS ─────────────────────────────────────────────────────────────────
@@ -316,7 +407,8 @@ def _make_doc(params: dict) -> str:
               f"sobre: {brief}. Título: {title}")
 
     data   = _claude_json(prompt, DOC_SYS, max_tokens=2048)
-    fname  = f"{uuid.uuid4().hex[:8]}.{'pptx' if doc_type == 'presentation' else 'docx'}"
+    # Unguessable filename (~128 bits) — served via public /static, so the name is the only guard.
+    fname  = f"{secrets.token_urlsafe(16)}.{'pptx' if doc_type == 'presentation' else 'docx'}"
     fpath  = DOCS / fname
 
     if doc_type == "presentation":
@@ -378,8 +470,9 @@ async def create_doc(data: DocRequest):
         url = _make_doc({"doc_type": data.doc_type, "title": data.title,
                          "brief": data.brief, "slides": data.slides})
         return {"url": url}
-    except Exception as e:
-        raise HTTPException(500, str(e))
+    except Exception:
+        logger.exception("create_doc failed")
+        raise HTTPException(500, "No se pudo crear el documento.")
 
 
 # ── AI CHAT ───────────────────────────────────────────────────────────────────
@@ -403,7 +496,7 @@ async def create_video(data: VideoRequest):
     node = shutil.which("node") or "node"
     npx  = shutil.which("npx")  or "npx"
 
-    fname  = f"{uuid.uuid4().hex[:8]}.mp4"
+    fname  = f"{secrets.token_urlsafe(16)}.mp4"
     output = VIDEO_DIR / fname
 
     # Build inputProps JSON for Remotion
@@ -443,13 +536,34 @@ async def create_video(data: VideoRequest):
         )
         _, stderr = await asyncio.wait_for(proc.communicate(), timeout=300)
         if proc.returncode != 0:
-            raise HTTPException(500, f"Remotion error: {stderr.decode()[-400:]}")
+            logger.error("Remotion render failed: %s", stderr.decode()[-400:])
+            raise HTTPException(500, "No se pudo renderizar el video.")
         return {"url": f"/static/videos/{fname}"}
     except asyncio.TimeoutError:
         raise HTTPException(504, "Video rendering timed out (>5 min)")
 
 
 # ── NOTEBOOKLM ────────────────────────────────────────────────────────────────
+def _validate_public_url(raw: str) -> str:
+    """Reject non-http(s) schemes and private/link-local hosts (CWE-918 SSRF guard)."""
+    import ipaddress, socket
+    from urllib.parse import urlparse
+
+    parsed = urlparse(raw)
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        raise HTTPException(400, "URL no válida.")
+    host = parsed.hostname
+    try:
+        infos = socket.getaddrinfo(host, None)
+    except socket.gaierror:
+        raise HTTPException(400, "No se pudo resolver el host de la URL.")
+    for info in infos:
+        ip = ipaddress.ip_address(info[4][0])
+        if ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved or ip.is_multicast:
+            raise HTTPException(400, "URL apunta a una dirección interna no permitida.")
+    return raw
+
+
 def _nlm_client():
     """Return an authenticated NotebookLMClient or raise a clear error."""
     try:
@@ -465,8 +579,11 @@ async def nlm_list():
         async with await Client.from_storage() as c:
             nbs = await c.notebooks.list()
             return [{"id": n.id, "title": n.title} for n in nbs]
-    except Exception as e:
-        raise HTTPException(500, str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("notebooklm operation failed")
+        raise HTTPException(500, "Error en la operación de NotebookLM.")
 
 @app.post("/api/notebooklm/notebook")
 async def nlm_create(data: NLMNotebook):
@@ -475,8 +592,11 @@ async def nlm_create(data: NLMNotebook):
         async with await Client.from_storage() as c:
             nb = await c.notebooks.create(data.title)
             return {"id": nb.id, "title": nb.title}
-    except Exception as e:
-        raise HTTPException(500, str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("notebooklm operation failed")
+        raise HTTPException(500, "Error en la operación de NotebookLM.")
 
 @app.post("/api/notebooklm/source")
 async def nlm_add_source(data: NLMSource):
@@ -484,15 +604,18 @@ async def nlm_add_source(data: NLMSource):
     try:
         async with await Client.from_storage() as c:
             if data.source_type == "url":
-                src = await c.sources.add_url(data.notebook_id, data.content)
+                src = await c.sources.add_url(data.notebook_id, _validate_public_url(data.content))
             elif data.source_type == "youtube":
-                src = await c.sources.add_youtube(data.notebook_id, data.content)
+                src = await c.sources.add_youtube(data.notebook_id, _validate_public_url(data.content))
             else:
                 src = await c.sources.add_text(data.notebook_id, data.content,
                                                 title=data.label or "Fuente")
             return {"ok": True, "source_id": getattr(src, "id", None)}
-    except Exception as e:
-        raise HTTPException(500, str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("notebooklm operation failed")
+        raise HTTPException(500, "Error en la operación de NotebookLM.")
 
 @app.post("/api/notebooklm/chat")
 async def nlm_chat(data: NLMChat):
@@ -504,8 +627,11 @@ async def nlm_chat(data: NLMChat):
                 "answer": result.answer,
                 "citations": getattr(result, "citations", []),
             }
-    except Exception as e:
-        raise HTTPException(500, str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("notebooklm operation failed")
+        raise HTTPException(500, "Error en la operación de NotebookLM.")
 
 @app.post("/api/notebooklm/generate")
 async def nlm_generate(data: NLMGenerate):
@@ -525,8 +651,11 @@ async def nlm_generate(data: NLMGenerate):
             return {"ok": True, "artifact_type": art,
                     "content": getattr(completed, "content", None),
                     "url": getattr(completed, "url", None)}
-    except Exception as e:
-        raise HTTPException(500, str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("notebooklm operation failed")
+        raise HTTPException(500, "Error en la operación de NotebookLM.")
 
 
 # ── HEALTH ────────────────────────────────────────────────────────────────────
