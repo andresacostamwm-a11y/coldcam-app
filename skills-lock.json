@@ -73,6 +73,12 @@
       "skillPath": "marketing-skill/skills/analytics-tracking/SKILL.md",
       "computedHash": "2f5e82d073aeceb4aa44c2f2b530f24e33d3f2c91a09fe1a156b9919091d813f"
     },
+    "animation-vocabulary": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/animation-vocabulary/SKILL.md",
+      "computedHash": "39319fc9a33c15be08666b3685f58666f042ff36bb902b7814c0834a5ba99df4"
+    },
     "api-design-reviewer": {
       "source": "Alirezarezvani/claude-skills",
       "sourceType": "github",
@@ -90,6 +96,12 @@
       "sourceType": "github",
       "skillPath": "marketing-skill/skills/app-store-optimization/SKILL.md",
       "computedHash": "dfc5b5ca96b295aeca8162b2332db32883fbdcf2f6ff706108acce894a187e4f"
+    },
+    "apple-design": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/apple-design/SKILL.md",
+      "computedHash": "8b94db67cb9edaad5f1501010804caa610131f1d2dfda0a27664b2e858deade3"
     },
     "apple-hig-expert": {
       "source": "Alirezarezvani/claude-skills",
@@ -127,6 +139,12 @@
       "skillPath": "engineering-team/skills/azure-cloud-architect/SKILL.md",
       "computedHash": "3dac60447a78794cffdde23ba366c1f63c525b47e9906dc0ce6c2f762c9b5473"
     },
+    "banner-design": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/banner-design/SKILL.md",
+      "computedHash": "82c86217829268afd1f86e89390270e35cb3a1761854a0bbe6180929614ae022"
+    },
     "board": {
       "source": "Alirezarezvani/claude-skills",
       "sourceType": "github",
@@ -150,6 +168,12 @@
       "sourceType": "github",
       "skillPath": "c-level-advisor/executive-mentor/skills/board-prep/SKILL.md",
       "computedHash": "0abed2ca274ab85ae169d5fe0018a91de3bc5d1d12cc693262d42b75fb5fc384"
+    },
+    "brand": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/brand/SKILL.md",
+      "computedHash": "3c7acb846082f9e4cc873f1cf85bd57ade027206e18c7c050797f815e3a56af7"
     },
     "brand-guidelines": {
       "source": "Alirezarezvani/claude-skills",
@@ -469,6 +493,18 @@
       "skillPath": "engineering/skills/dependency-auditor/SKILL.md",
       "computedHash": "dc9eb108e0bd8ed4a6810591dedf63f924d15c09e453befa4e11240d139dc858"
     },
+    "design": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/design/SKILL.md",
+      "computedHash": "4e0412d29df74e6153e4944b367459a28cf52e3e81c7f45c1ecf4c2a8b21907c"
+    },
+    "design-system": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/design-system/SKILL.md",
+      "computedHash": "a05715299135276628f53519484e1267ec8ad111e6355a09c2da1cf66aee2cc3"
+    },
     "docker-development": {
       "source": "Alirezarezvani/claude-skills",
       "sourceType": "github",
@@ -486,6 +522,12 @@
       "sourceType": "github",
       "skillPath": "engineering-team/skills/email-template-builder/SKILL.md",
       "computedHash": "b149cb0fa912d4e86e55f17e9f026dd41508c1fb3affddd41edd5f2fe5fafc41"
+    },
+    "emil-design-eng": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "computedHash": "41b0a4dc1a27164fe297845a6c6850a39e9242c42c9be999967fcee9df2c5974"
     },
     "engineering-advanced-skills": {
       "source": "Alirezarezvani/claude-skills",
@@ -558,6 +600,12 @@
       "sourceType": "github",
       "skillPath": "finance/skills/financial-analyst/SKILL.md",
       "computedHash": "b3cb8e8f4f75dd95ddf2dd7ac5ac8b62094f5b63c51fdcecc3356db06dce9baa"
+    },
+    "find-animation-opportunities": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/find-animation-opportunities/SKILL.md",
+      "computedHash": "8fb8492eb8fbed1313cb430b5831d925d9b8964ca24f3c41a6244cbd1fd98732"
     },
     "fix": {
       "source": "Alirezarezvani/claude-skills",
@@ -636,6 +684,18 @@
       "sourceType": "github",
       "skillPath": "engineering/helm-chart-builder/skills/helm-chart-builder/SKILL.md",
       "computedHash": "a93dd9771511bc9b832204075140c20aab6db49b599aacf065790d67b3b55e47"
+    },
+    "huashu-design": {
+      "source": "alchaincyf/huashu-design",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "63b60278d8d61d5e84594a692f97857bc1bfa2a78c9cce86162a2b0dd241ada7"
+    },
+    "improve-animations": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/improve-animations/SKILL.md",
+      "computedHash": "eeb219a407e325b687af88db25771cc3018e3148245604112f5ac6990b6fd79c"
     },
     "incident-commander": {
       "source": "Alirezarezvani/claude-skills",
@@ -865,6 +925,12 @@
       "skillPath": "engineering/skills/performance-profiler/SKILL.md",
       "computedHash": "5d8f2330129b8ba4e7f6054f8dfb5780b930ef0401801034e1e5810a35741b8e"
     },
+    "pick-ui-library": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pick-ui-library/SKILL.md",
+      "computedHash": "f8d4d2cf4677bf54b14f35f62a741add93541bfcb67863315a40164365161b49"
+    },
     "playwright-pro": {
       "source": "Alirezarezvani/claude-skills",
       "sourceType": "github",
@@ -1044,6 +1110,12 @@
       "sourceType": "github",
       "skillPath": "engineering-team/playwright-pro/skills/review/SKILL.md",
       "computedHash": "293152a5037aa448113fd484a6c398d99e451bb984b3a685ab7b687c96592f15"
+    },
+    "review-animations": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/review-animations/SKILL.md",
+      "computedHash": "b9f669af5ae280c19a592a94611520335a81de25c88f225bf60ae4b2d66c8c7c"
     },
     "risk-management-specialist": {
       "source": "Alirezarezvani/claude-skills",
@@ -1249,6 +1321,12 @@
       "skillPath": "engineering/skills/skill-tester/SKILL.md",
       "computedHash": "1c34d565c62f239e7756b2e517072fc5efa2862e5cbd4d5a314514fb718b0610"
     },
+    "slides": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/slides/SKILL.md",
+      "computedHash": "c72a8bcd2ee98a7caab8f00a816c7e7ccfa46bba6682539db2186e71220155f1"
+    },
     "soc2-compliance": {
       "source": "Alirezarezvani/claude-skills",
       "sourceType": "github",
@@ -1380,6 +1458,18 @@
       "sourceType": "github",
       "skillPath": "product-team/skills/ui-design-system/SKILL.md",
       "computedHash": "c7233170249bacc07461840bbfe6391eb029fdc09557d775eba6640b184e1325"
+    },
+    "ui-styling": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-styling/SKILL.md",
+      "computedHash": "c5263c6dd5078d826da829036c2abd3249685e38dae40991a4763b3157017c27"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "f0916ca326ad6dbde1d0770b46956a213406b8ea4a19ed931bb4f2dc7d04c16d"
     },
     "ux-researcher-designer": {
       "source": "Alirezarezvani/claude-skills",
