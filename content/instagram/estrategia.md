@@ -88,6 +88,19 @@ Regla 80/20: 80 % valor y humor, 20 % marca personal/proyectos (ColdCam, agentes
 - Tipografía bold sans-serif para titulares de carrusel; misma plantilla siempre.
 - Memes: formato clásico (plantillas conocidas) — ahí la estética importa menos que el timing.
 
+## 6b. Identidad de voz del avatar
+
+- **Voz base:** clon de la voz real de Andrés ("Andres Avatar" en Higgsfield),
+  creada a partir de su grabación de referencia.
+- **Dirección de acento:** español peninsular con **acento suave de Madrid — leve,
+  no muy marcado**. Natural y cercano, nunca caricaturesco.
+- **Aplicación en producción:** al generar locuciones (TTS con la voz clonada),
+  indicar en el prompt de audio: "acento madrileño suave y natural, dicción clara,
+  ritmo conversacional". Vocabulario neutro comprensible en toda LATAM + España;
+  evitar localismos fuertes de cualquier región.
+- **Tono:** seguro, cercano, didáctico — como un colega senior explicando, no un
+  locutor comercial.
+
 ## 7. Métricas a revisar cada 2 semanas
 
 - Guardados y compartidos (señal nº 1 de que el contenido educativo funciona).
