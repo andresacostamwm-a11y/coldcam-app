@@ -28,13 +28,19 @@ Diferenciador: no eres un divulgador que repite noticias — **construyes agente
 (asistentes personales, agentes de ingeniería nivel doctorado, automatizaciones con
 n8n/MCP). El contenido sale de proyectos reales, no de teoría.
 
-## 2. Audiencia objetivo
+## 2. Audiencia objetivo — nivel INTERMEDIO-AVANZADO
+
+No enseñamos "qué es ChatGPT". Enseñamos a **construir**: arquitecturas de
+agentes, tool use, RAG, MCP, orquestación multi-agente, evals y despliegue.
 
 | Segmento | Dolor | Qué le damos |
 |---|---|---|
-| Profesionales y emprendedores | Tareas repetitivas, sin tiempo | Automatizaciones prácticas paso a paso |
-| Ingenieros y técnicos | Quieren subirse a la IA sin saber por dónde | Conceptos claros: agentes, RAG, MCP |
-| Curiosos de IA | Saturados de hype | Explicaciones honestas de qué sirve y qué no |
+| Devs y builders | Saben programar, no saben diseñar agentes | Arquitecturas, patrones y código real |
+| Automatizadores (n8n/Make) | Dominan flujos, quieren añadir razonamiento | Integración LLM + flujos, MCP, function calling |
+| Consultores/freelancers de IA | Necesitan estar al día para vender | Lo más nuevo, verificado, con criterio de cuándo usarlo |
+
+Regla de nivel: cada pieza asume que el lector ya usa LLMs a diario. Se explica
+el término la primera vez (una línea) y se avanza — sin diluir el contenido.
 
 ## 3. Pilares de contenido (mapeados a la semana)
 

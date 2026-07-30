@@ -1,62 +1,75 @@
-# Miércoles — Carrusel (9 slides)
+# Miércoles — Carrusel (10 slides) · Nivel intermedio-avanzado
 
 ## Slides
 
 **Slide 1 (portada):**
-5 tareas que puedes AUTOMATIZAR HOY con IA
-(sin saber programar) →
+7 PATRONES de diseño de agentes
+Cuál usar y cuándo (con ejemplos reales) →
 
 **Slide 2:**
-① Responder correos repetitivos
-Gmail + IA: clasifica, prioriza y redacta borradores.
-Tú solo revisas y envías. ⏱️ Ahorro: ~45 min/día
+① Tool Use básico
+Un LLM + herramientas + loop acotado.
+✅ Úsalo para: tareas de un dominio (gestionar correo, consultar una API).
+El 80 % de los casos reales se resuelven aquí.
 
 **Slide 3:**
-② Resumir reuniones
-Graba → transcribe → obtén acuerdos y pendientes en tu correo.
-Nunca más "¿quién apuntó eso?"
+② Reflection (auto-crítica)
+El agente genera → otro paso critica → corrige.
+✅ Úsalo para: código, textos legales, cálculos.
+⚠️ Duplica costo. Actívalo solo donde el error es caro.
 
 **Slide 4:**
-③ Publicar en redes sociales
-Escribes las ideas una vez → la IA adapta el texto a cada red → se programa solo.
+③ Planning (planificar-ejecutar)
+Primero descompone el objetivo en pasos, luego ejecuta.
+✅ Úsalo para: tareas largas multi-paso.
+⚠️ Los planes se degradan: re-planifica cada N pasos.
 
 **Slide 5:**
-④ Facturas y recibos
-Foto o PDF → la IA extrae datos → se van directo a tu Excel/contabilidad.
+④ Router / Dispatcher
+Un clasificador barato decide qué agente especialista atiende.
+✅ Úsalo para: sistemas con dominios distintos.
+💡 El router puede ser un modelo pequeño = ahorro brutal.
 
 **Slide 6:**
-⑤ Atención al cliente nivel 1
-Las 20 preguntas de siempre las contesta un bot entrenado con TUS respuestas.
-Tú entras solo en los casos difíciles.
+⑤ Multi-agente jerárquico
+Orquestador + especialistas + verificador.
+✅ Úsalo para: pipelines complejos (yo lo uso con 11 agentes de ingeniería).
+⚠️ Cada agente extra = más latencia y más puntos de fallo.
 
 **Slide 7:**
-¿Con qué herramientas?
-• Zapier / Make / n8n (conectan tus apps)
-• ChatGPT / Claude (el cerebro)
-• Cero código para empezar.
+⑥ Human-in-the-loop
+El agente propone, el humano aprueba lo irreversible.
+✅ Úsalo para: pagos, envíos, publicaciones, producción.
+No es opcional en negocio serio. Es la red de seguridad.
 
 **Slide 8:**
-La regla de oro:
-Si lo haces más de 3 veces por semana
-y sigue pasos predecibles…
-ES AUTOMATIZABLE. ✅
+⑦ Evaluator-Optimizer
+Un agente genera N opciones → un juez puntúa → se itera.
+✅ Úsalo para: calidad máxima (contenido, diseño, estrategias).
+⚠️ El más caro. Resérvalo para el output final.
 
-**Slide 9 (cierre):**
-📌 Guarda este carrusel
-💬 Comenta "AUTO" y te cuento por cuál empezar según tu caso
-➕ Sígueme para más IA sin humo
+**Slide 9:**
+Árbol de decisión rápido:
+• ¿Un dominio, pasos cortos? → ① Tool Use
+• ¿Error caro? → añade ② Reflection
+• ¿Varios dominios? → ④ Router
+• ¿Pipeline complejo? → ⑤ Jerárquico
+• ¿Acciones irreversibles? → ⑥ SIEMPRE
+
+**Slide 10 (cierre):**
+📌 Guarda este carrusel — es tu chuleta de arquitectura
+💬 Comenta "PATRONES" y te mando la versión extendida con diagramas
+➕ Sígueme: cada semana, ingeniería de agentes sin humo
 
 ## Caption
 
-⚡ 5 tareas que puedes automatizar HOY (sin saber programar)
+🏗️ 7 patrones de diseño de agentes: cuál usar y cuándo.
 
-Cada semana pierdes horas en tareas que una IA puede hacer por ti — y montarlo es más fácil de lo que crees.
+Todo el mundo habla de "agentes". Casi nadie te dice que hay patrones concretos — y que elegir mal el patrón es la diferencia entre un sistema que funciona y uno que quema tokens dando vueltas.
 
-Desliza para ver las 5, con qué herramienta se hace cada una, y la regla de oro para saber si una tarea es automatizable. 👉
+Estos 7 los uso a diario construyendo sistemas multi-agente en producción (incluido uno con 11 agentes especialistas de ingeniería). Desliza: cada patrón con su caso de uso y su trampa. 👉
 
-Yo vivo de construir esto para empresas y te aseguro: el nº 1 es el que más vidas cambia.
+💬 Comenta "PATRONES" y te mando la versión extendida con diagramas.
+📌 Guárdalo para tu próxima arquitectura.
 
-💬 Comenta "AUTO" y te digo por cuál empezar según tu situación.
-📌 Guárdalo — lo vas a necesitar.
-
-#Automatizacion #IA #InteligenciaArtificial #Productividad #Emprendimiento #NegociosDigitales #IAparaNegocios #HerramientasIA #NoCode #n8n #TrabajoInteligente #PYMES #Eficiencia
+#AgentesIA #AIEngineering #IA #LLM #ArquitecturaDeSoftware #MachineLearning #MultiAgente #ToolUse #InteligenciaArtificial #DesarrolloDeSoftware #Automatizacion #n8n #TechEnEspañol

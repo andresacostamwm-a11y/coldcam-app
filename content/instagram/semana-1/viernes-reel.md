@@ -1,39 +1,45 @@
-# Viernes — Reel (30–40 s)
+# Viernes — Reel con avatar (35–45 s) · Nivel intermedio-avanzado
+
+## Producción
+Protagonista: **avatar de Andrés** (Higgsfield Soul) — outfit tech-casual, escena 1
+en un estudio oscuro con pantallas; escena 2 primer plano cinemático.
+Intercalar con screen recordings reales del agente ejecutándose (terminal/logs).
 
 ## Guion
 
-**Hook (0–3 s)** — [Tú a cámara o screen recording de la bandeja de entrada llena]
-🗣️ "Le di acceso a mi correo a un agente de IA. Esto fue lo que pasó."
+**Hook (0–3 s)** — [Avatar a cámara, estudio con pantallas]
+🗣️ "Construí un agente con acceso a herramientas en 20 minutos. Y te voy a enseñar el loop de razonamiento en vivo."
 
-**Desarrollo (3–25 s)** — [Screen recording del asistente en acción]
-🗣️ "Todas las mañanas, él lee mis correos nuevos…"
-[pantalla: lista de correos]
-🗣️ "…los clasifica: urgente, importante, basura…"
-[pantalla: etiquetas apareciendo]
-🗣️ "…me redacta las respuestas de los repetitivos…"
-[pantalla: borrador generado]
-🗣️ "…y me manda UN solo resumen con lo que de verdad necesita mi atención."
-[pantalla: resumen final]
+**Desarrollo (3–28 s)** — [Screen recording: logs del agente paso a paso]
+🗣️ "Le doy un objetivo: 'analiza los correos de esta semana y genera un informe'."
+[pantalla: prompt inicial]
+🗣️ "Mira lo que hace: primero RAZONA qué herramienta necesita…"
+[pantalla: bloque de thinking + tool call `search_email`]
+🗣️ "…llama a la herramienta, observa el resultado…"
+[pantalla: respuesta JSON de la tool]
+🗣️ "…y decide el siguiente paso él solo. Eso es el loop: razonar, actuar, observar, repetir."
+[pantalla: segunda tool call + informe generándose]
 
-**Giro (25–32 s)**
-🗣️ "¿Tiempo que me ahorra? Una hora al día. Cinco horas a la semana. Y lo construí con herramientas que ya existen."
+**Giro (28–37 s)** — [Avatar, primer plano cinemático]
+🗣️ "La clave no es el prompt. Son tres cosas: herramientas bien descritas, un límite de iteraciones, y logs de cada decisión. Sin eso, tienes un agente caro dando vueltas."
 
-**CTA (32–38 s)** — [Tú a cámara]
-🗣️ "Si quieres saber qué usé, comenta 'CORREO' y te lo mando. Y sígueme, que cada semana enseño una automatización real."
+**CTA (37–43 s)**
+🗣️ "Comenta 'LOOP' y te mando el desglose de la arquitectura. Cada viernes, una build real."
 
 ## Texto en pantalla
-- Hook: "Un agente de IA gestiona mi correo 🤯"
-- Cierre: "Comenta CORREO 📩"
+- Hook: "Agente con tool use en 20 min ⚙️"
+- Desarrollo: rotular cada fase: RAZONA → ACTÚA → OBSERVA → REPITE
+- Cierre: "Comenta LOOP 🔁"
 
 ## Audio
-Trending suave de fondo (voz en off domina). Volumen música al 10 %.
+Electrónica ambiental de fondo al 10 % — la voz del avatar domina.
 
 ## Caption
 
-📩 Le di mi correo a un agente de IA y recuperé 5 horas a la semana.
+⚙️ Construí un agente con acceso a herramientas en 20 minutos — y esto es lo que casi nadie te enseña: el loop de razonamiento por dentro.
 
-No es magia ni humo: es un flujo que lee, clasifica y redacta borradores — y yo solo superviso.
+Razonar → actuar → observar → repetir. Con límites de iteración y logs, o tu agente se convierte en un quemador de tokens.
 
-Comenta "CORREO" y te cuento exactamente qué herramientas usé. 🚀
+Comenta "LOOP" y te mando el desglose completo de la arquitectura. 🔁
 
-#IA #Automatizacion #AgentesIA #Productividad #InteligenciaArtificial #Reels #HerramientasIA #Emprendimiento #TechEnEspañol #FuturoDelTrabajo
+#AgentesIA #AIEngineering #IA #LLM #ToolUse #InteligenciaArtificial #MachineLearning #Automatizacion #DesarrolloDeSoftware #TechEnEspañol

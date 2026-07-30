@@ -1,29 +1,30 @@
-# Domingo — Meme
+# Domingo — Meme · Nivel intermedio-avanzado
 
 ## Concepto
-Formato de dos paneles (plantilla tipo "explicación incómoda"):
+Formato dos paneles:
 
-**Panel 1:** "Yo explicándole a mi familia que trabajo con Inteligencia Artificial"
-[imagen: persona gesticulando con diagramas]
+**Panel 1:** "Mi agente de IA en la demo" — [imagen: robot elegante, ejecutando pasos perfectos]
+**Panel 2:** "Mi agente a las 3 AM en producción" — [imagen: caos/incendio] + log en pantalla:
+```
+Iteration 47/50: calling tool get_weather
+Iteration 48/50: calling tool get_weather
+Iteration 49/50: calling tool get_weather
+```
 
-**Panel 2:** "Mi familia:" → "¿O sea que hablas con el robot ese? ¿Y te pagan?"
-[imagen: caras confundidas]
+## Alternativa (formato texto sobre fondo oscuro)
 
-## Alternativa (si funciona mejor el formato texto)
-Tweet-style sobre fondo oscuro:
-
-> Mi mamá: ¿y tú qué haces exactamente?
-> Yo: construyo agentes de IA que automatizan procesos empresariales.
-> Mi mamá: …
-> Mi mamá: bueno pero ¿eso da para comer?
+> Nadie:
+> Mi agente con acceso a 15 herramientas:
+> "He decidido llamar a `get_weather` por cuadragésima séptima vez."
 
 ## Caption
 
-😂 Cada reunión familiar, la misma historia.
+😂 El que sabe, sabe. Los límites de iteración no son opcionales.
 
-¿A ti también te pasa que nadie en casa entiende tu trabajo? Etiqueta a alguien que trabaje "con las computadoras" según su familia. 👇
+¿Cuál ha sido el loop más absurdo que te ha hecho un agente? Confiesa en comentarios. 👇
 
-#MemesDeIA #HumorTech #IA #InteligenciaArtificial #MemesEnEspañol #Programacion #TechHumor #Automatizacion #VidaTech
+#MemesDeIA #AgentesIA #HumorTech #AIEngineering #IA #Programacion #MemesEnEspañol #LLM #TechHumor #DevLife
 
 ## Nota de producción
-Generar la imagen con plantilla de meme clásica; mantener texto grande y legible en móvil.
+El log del panel 2 debe verse como terminal real (monospace, fondo negro) — el
+detalle técnico es lo que hace que la audiencia avanzada lo comparta.

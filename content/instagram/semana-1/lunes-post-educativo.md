@@ -1,29 +1,29 @@
-# Lunes — Post educativo (imagen única)
+# Lunes — Post educativo (imagen única) · Nivel intermedio-avanzado
 
 ## Texto para la imagen
-**Titular:** ¿Qué es un AGENTE de IA?
-**Subtítulo:** No es un chatbot. Es un chatbot con manos.
+**Titular:** Anatomía de un AGENTE de IA
+**Subtítulo:** LLM + Herramientas + Loop + Memoria. Si falta uno, es un chatbot.
 
 ## Caption
 
-🤖 ¿Qué es un agente de IA? (y qué NO es)
+🧠 Anatomía de un agente de IA: los 4 componentes que casi nadie explica bien.
 
-Un chatbot te RESPONDE.
-Un agente de IA HACE.
+Un "agente" no es un prompt largo. Es una arquitectura:
 
-La diferencia en 3 puntos:
+1️⃣ **El LLM (cerebro):** decide el siguiente paso. No ejecuta nada — razona y elige.
 
-1️⃣ Un chatbot espera tu pregunta y contesta. Fin.
-2️⃣ Un agente recibe un objetivo ("gestiona mi bandeja de entrada") y decide él solo los pasos: leer, clasificar, responder, avisarte solo de lo importante.
-3️⃣ Un agente usa herramientas: correo, calendario, hojas de cálculo, APIs… como lo haría un asistente humano.
+2️⃣ **Herramientas (manos):** funciones que el modelo puede invocar — APIs, búsqueda, código, tu base de datos. Sin tool use, no hay agente.
 
-Ejemplo real: yo construí un asistente que lee mis correos, redacta respuestas y genera informes. Yo solo superviso.
+3️⃣ **El loop (motor):** observar → razonar → actuar → observar el resultado → repetir. Aquí vive la autonomía… y también los loops infinitos si no pones límites (max_iterations, presupuesto de tokens).
 
-En 2026 la pregunta ya no es "¿sabes usar ChatGPT?"
-Es "¿qué tareas ya delegaste a un agente?" 👀
+4️⃣ **Memoria (contexto):** corto plazo (la conversación), y si lo haces bien, memoria persistente (vector DB) para que no empiece de cero cada vez.
 
-💬 Cuéntame: ¿cuál es la tarea repetitiva que más odias? Te digo si un agente puede hacerla.
+El error clásico: meter 15 herramientas y cero criterio de parada. Resultado: un agente caro que da vueltas.
 
-📌 Guarda este post para explicárselo a alguien que aún cree que la IA es solo "escribir textos".
+Mi regla al construirlos: empieza con 3 herramientas, loop acotado, y logs de cada decisión. Escala solo cuando entiendas por qué falla.
 
-#InteligenciaArtificial #IA #AgentesIA #Automatizacion #Tecnologia #IAgenerativa #ClaudeAI #ChatGPT #FuturoDelTrabajo #Productividad #AprendeIA #TechEnEspañol
+💬 ¿Con qué framework estás construyendo agentes — SDK directo, LangGraph, n8n, otro? Te leo.
+
+📌 Guárdalo: este diagrama te va a servir en tu próxima arquitectura.
+
+#AgentesIA #IA #InteligenciaArtificial #LLM #ToolUse #ArquitecturaDeSoftware #MachineLearning #AIEngineering #Automatizacion #Python #TechEnEspañol #DesarrolloDeSoftware
