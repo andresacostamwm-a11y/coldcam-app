@@ -1,30 +1,38 @@
-# Domingo — Meme · Nivel intermedio-avanzado
+# Domingo — Meme · Semana "Frontera LLM"
 
 ## Concepto
 Formato dos paneles:
 
-**Panel 1:** "Mi agente de IA en la demo" — [imagen: robot elegante, ejecutando pasos perfectos]
-**Panel 2:** "Mi agente a las 3 AM en producción" — [imagen: caos/incendio] + log en pantalla:
+**Panel 1:** "Yo diciendo que solo necesito UNA suscripción de IA"
+[imagen: persona segura, tranquila]
+
+**Panel 2:** "También yo:" 
+[imagen: cartera ardiendo] + lista en pantalla:
 ```
-Iteration 47/50: calling tool get_weather
-Iteration 48/50: calling tool get_weather
-Iteration 49/50: calling tool get_weather
+Claude Pro        ✅
+ChatGPT Plus      ✅
+Gemini Advanced   ✅
+Perplexity Pro    ✅
+Midjourney        ✅
+Higgsfield        ✅
+"para comparar"   🤡
 ```
 
 ## Alternativa (formato texto sobre fondo oscuro)
 
-> Nadie:
-> Mi agente con acceso a 15 herramientas:
-> "He decidido llamar a `get_weather` por cuadragésima séptima vez."
+> Mi cartera: ¿cuál de las 6 suscripciones de IA vas a cancelar este mes?
+> Yo: es que cada una es mejor en una cosa distinta…
+> Mi cartera: 
+> Yo: además lo necesito "para crear contenido"
 
 ## Caption
 
-😂 El que sabe, sabe. Los límites de iteración no son opcionales.
+😂 "Para comparar", dice. Seis suscripciones después…
 
-¿Cuál ha sido el loop más absurdo que te ha hecho un agente? Confiesa en comentarios. 👇
+¿Cuántas herramientas de IA pagas ahora mismo? Confiesa en comentarios — el que más tenga gana (o pierde, según se mire). 👇
 
-#MemesDeIA #AgentesIA #HumorTech #AIEngineering #IA #Programacion #MemesEnEspañol #LLM #TechHumor #DevLife
+#MemesDeIA #HumorTech #IA #InteligenciaArtificial #MemesEnEspañol #Claude #ChatGPT #SuscripcionesIA #TechHumor #VidaTech
 
 ## Nota de producción
-El log del panel 2 debe verse como terminal real (monospace, fondo negro) — el
-detalle técnico es lo que hace que la audiencia avanzada lo comparta.
+La lista del panel 2 en formato checklist/terminal (monospace) — el detalle
+del "para comparar 🤡" al final es el remate que hace compartir.

@@ -1,45 +1,51 @@
-# Viernes — Reel con avatar (35–45 s) · Nivel intermedio-avanzado
+# Viernes — Reel con avatar (40–50 s) · Semana "Frontera LLM"
 
 ## Producción
-Protagonista: **avatar de Andrés** (Higgsfield Soul) — outfit tech-casual, escena 1
-en un estudio oscuro con pantallas; escena 2 primer plano cinemático.
-Intercalar con screen recordings reales del agente ejecutándose (terminal/logs).
+Protagonista: **avatar de Andrés** (Higgsfield Soul).
+- Escena 1: estudio tech oscuro con 6 pantallas (una por modelo), outfit tech-casual.
+- Escena 2: primer plano cinemático para el veredicto, outfit blazer oscuro.
+Intercalar con capturas reales de las 6 respuestas (screen recording).
+
+> ✅ **Verificación:** la tarea se ejecuta DE VERDAD en los 6 modelos el día de
+> producción, con capturas reales. Nada de resultados inventados — ese es el sello
+> de la cuenta.
 
 ## Guion
 
-**Hook (0–3 s)** — [Avatar a cámara, estudio con pantallas]
-🗣️ "Construí un agente con acceso a herramientas en 20 minutos. Y te voy a enseñar el loop de razonamiento en vivo."
+**Hook (0–3 s)** — [Avatar frente a 6 pantallas]
+🗣️ "Le di exactamente la misma tarea a los 6 modelos de IA más potentes del momento. Uno me sorprendió."
 
-**Desarrollo (3–28 s)** — [Screen recording: logs del agente paso a paso]
-🗣️ "Le doy un objetivo: 'analiza los correos de esta semana y genera un informe'."
-[pantalla: prompt inicial]
-🗣️ "Mira lo que hace: primero RAZONA qué herramienta necesita…"
-[pantalla: bloque de thinking + tool call `search_email`]
-🗣️ "…llama a la herramienta, observa el resultado…"
-[pantalla: respuesta JSON de la tool]
-🗣️ "…y decide el siguiente paso él solo. Eso es el loop: razonar, actuar, observar, repetir."
-[pantalla: segunda tool call + informe generándose]
+**Setup (3–10 s)** — [Pantalla: el prompt]
+🗣️ "La tarea: analizar este contrato de 40 páginas, encontrar las 3 cláusulas de riesgo y explicarlas como a un no-abogado. Claude, ChatGPT, Gemini, Grok, DeepSeek y Kimi. Mismo prompt, misma información."
 
-**Giro (28–37 s)** — [Avatar, primer plano cinemático]
-🗣️ "La clave no es el prompt. Son tres cosas: herramientas bien descritas, un límite de iteraciones, y logs de cada decisión. Sin eso, tienes un agente caro dando vueltas."
+**Resultados (10–35 s)** — [Capturas reales, rótulo por modelo, ritmo rápido]
+🗣️ "Claude: las encontró y explicó mejor — pero se tomó su tiempo."
+🗣️ "ChatGPT: el mejor equilibrio entre claridad y velocidad."
+🗣️ "Gemini: tragó las 40 páginas sin despeinarse."
+🗣️ "Grok: correcto, pero se fue por las ramas."
+🗣️ "DeepSeek: 90 % del resultado… a una fracción del costo."
+🗣️ "Kimi: la sorpresa — detectó una cláusula que dos de los grandes pasaron por alto."
 
-**CTA (37–43 s)**
-🗣️ "Comenta 'LOOP' y te mando el desglose de la arquitectura. Cada viernes, una build real."
+**Veredicto (35–44 s)** — [Avatar, primer plano cinemático]
+🗣️ "¿Conclusión? Ya no hay UN ganador. Hay un modelo óptimo por tarea y por presupuesto — y saber cuál es cuál es la nueva ventaja competitiva."
+
+**CTA (44–50 s)**
+🗣️ "Comenta 'BATALLA' y te mando la tabla completa con los resultados. Cada viernes, una prueba real — todo verificado."
 
 ## Texto en pantalla
-- Hook: "Agente con tool use en 20 min ⚙️"
-- Desarrollo: rotular cada fase: RAZONA → ACTÚA → OBSERVA → REPITE
-- Cierre: "Comenta LOOP 🔁"
+- Hook: "6 IAs, la misma tarea 🥊"
+- Un rótulo por modelo durante resultados
+- Cierre: "Comenta BATALLA 📊"
 
 ## Audio
-Electrónica ambiental de fondo al 10 % — la voz del avatar domina.
+Beat electrónico con tensión creciente al 15 % — corte a silencio en el veredicto.
 
 ## Caption
 
-⚙️ Construí un agente con acceso a herramientas en 20 minutos — y esto es lo que casi nadie te enseña: el loop de razonamiento por dentro.
+🥊 La misma tarea real en los 6 LLMs más potentes: Claude, ChatGPT, Gemini, Grok, DeepSeek y Kimi.
 
-Razonar → actuar → observar → repetir. Con límites de iteración y logs, o tu agente se convierte en un quemador de tokens.
+Sin patrocinios y con capturas reales — este experimento lo repito cada vez que sale un modelo nuevo, porque el ranking cambia cada pocas semanas.
 
-Comenta "LOOP" y te mando el desglose completo de la arquitectura. 🔁
+Comenta "BATALLA" y te mando la tabla completa de resultados. 📊
 
-#AgentesIA #AIEngineering #IA #LLM #ToolUse #InteligenciaArtificial #MachineLearning #Automatizacion #DesarrolloDeSoftware #TechEnEspañol
+#IA #LLM #Claude #ChatGPT #Gemini #Grok #DeepSeek #Kimi #InteligenciaArtificial #ComparativaIA #HerramientasIA #TechEnEspañol

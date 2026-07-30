@@ -42,6 +42,22 @@ agentes, tool use, RAG, MCP, orquestación multi-agente, evals y despliegue.
 Regla de nivel: cada pieza asume que el lector ya usa LLMs a diario. Se explica
 el término la primera vez (una línea) y se avanza — sin diluir el contenido.
 
+## 2b. Universo de herramientas que cubrimos (siempre lo más actual)
+
+| Categoría | Herramientas |
+|---|---|
+| **LLMs / Asistentes** | Claude (+ Claude Code, Cowork), ChatGPT, Gemini, Grok, DeepSeek, Kimi, Qwen, Mistral, Microsoft Copilot, Perplexity |
+| **Imagen** | Midjourney, ChatGPT Images, Adobe Firefly, Qwen Image |
+| **Video** | Google Veo, Sora, Runway, Kling, Higgsfield, Seedance |
+| **Programación** | Claude Code, Cursor, GitHub Copilot, ChatGPT |
+| **Productividad / conocimiento** | Notion AI, NotebookLM, Gamma, Canva |
+| **Agentes / automatización** | MCP, n8n, Make, SDKs de agentes |
+
+Regla editorial: solo se publica sobre la **versión/feature más reciente**, y toda
+novedad se **verifica contra fuentes primarias** (changelogs, docs oficiales,
+anuncios) el mismo día de producción del post — este ecosistema cambia semana a
+semana y los títulos del calendario se ajustan a lo que sea "lo último" ese día.
+
 ## 3. Pilares de contenido (mapeados a la semana)
 
 | Día | Formato | Pilar | Objetivo |

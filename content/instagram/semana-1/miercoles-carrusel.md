@@ -1,75 +1,60 @@
-# Miércoles — Carrusel (10 slides) · Nivel intermedio-avanzado
+# Miércoles — Carrusel (10 slides) · Semana "Frontera LLM"
+
+> ✅ **Checklist de verificación (día de publicación):** confirmar que cada función
+> existe con ese nombre y en ese plan (free/plus/pro) en la versión vigente de
+> Claude, ChatGPT y Gemini. Ajustar nombres si la herramienta los renombró.
 
 ## Slides
 
 **Slide 1 (portada):**
-7 PATRONES de diseño de agentes
-Cuál usar y cuándo (con ejemplos reales) →
+9 funciones PRO de Claude, ChatGPT y Gemini
+que el 95 % NO usa →
 
-**Slide 2:**
-① Tool Use básico
-Un LLM + herramientas + loop acotado.
-✅ Úsalo para: tareas de un dominio (gestionar correo, consultar una API).
-El 80 % de los casos reales se resuelven aquí.
+**Slide 2 — Claude ①: Proyectos con conocimiento**
+Sube tus docs a un Proyecto y todas las conversaciones parten de TU contexto.
+💡 Pro: instrucciones de proyecto = un system prompt persistente.
 
-**Slide 3:**
-② Reflection (auto-crítica)
-El agente genera → otro paso critica → corrige.
-✅ Úsalo para: código, textos legales, cálculos.
-⚠️ Duplica costo. Actívalo solo donde el error es caro.
+**Slide 3 — Claude ②: Artifacts interactivos**
+No genera solo texto: apps, dashboards y visualizaciones ejecutables en el chat.
+💡 Pro: pídele "hazlo interactivo" y obtienes una mini-app compartible.
 
-**Slide 4:**
-③ Planning (planificar-ejecutar)
-Primero descompone el objetivo en pasos, luego ejecuta.
-✅ Úsalo para: tareas largas multi-paso.
-⚠️ Los planes se degradan: re-planifica cada N pasos.
+**Slide 4 — Claude ③: Conectores (MCP)**
+Conecta tus herramientas reales (Drive, Notion, GitHub…) y Claude actúa sobre ellas.
+Esto convierte el chat en agente.
 
-**Slide 5:**
-④ Router / Dispatcher
-Un clasificador barato decide qué agente especialista atiende.
-✅ Úsalo para: sistemas con dominios distintos.
-💡 El router puede ser un modelo pequeño = ahorro brutal.
+**Slide 5 — ChatGPT ④: Deep Research**
+Investigación autónoma de minutos con informe citado al final.
+💡 Pro: dale estructura del informe que quieres ANTES de lanzarlo.
 
-**Slide 6:**
-⑤ Multi-agente jerárquico
-Orquestador + especialistas + verificador.
-✅ Úsalo para: pipelines complejos (yo lo uso con 11 agentes de ingeniería).
-⚠️ Cada agente extra = más latencia y más puntos de fallo.
+**Slide 6 — ChatGPT ⑤: Memoria + instrucciones personalizadas**
+Deja de repetir contexto: perfil, estilo y reglas persistentes entre chats.
+💡 Pro: revisa y poda la memoria — la basura acumulada degrada respuestas.
 
-**Slide 7:**
-⑥ Human-in-the-loop
-El agente propone, el humano aprueba lo irreversible.
-✅ Úsalo para: pagos, envíos, publicaciones, producción.
-No es opcional en negocio serio. Es la red de seguridad.
+**Slide 7 — ChatGPT ⑥: Modo voz avanzado**
+Conversación real para practicar idiomas, ensayar presentaciones o pensar en voz alta.
 
-**Slide 8:**
-⑦ Evaluator-Optimizer
-Un agente genera N opciones → un juez puntúa → se itera.
-✅ Úsalo para: calidad máxima (contenido, diseño, estrategias).
-⚠️ El más caro. Resérvalo para el output final.
+**Slide 8 — Gemini ⑦: Contexto masivo**
+Libros y codebases completos, video incluido, en una sola conversación.
+💡 Pro: pídele índice + referencias de dónde salió cada respuesta.
 
-**Slide 9:**
-Árbol de decisión rápido:
-• ¿Un dominio, pasos cortos? → ① Tool Use
-• ¿Error caro? → añade ② Reflection
-• ¿Varios dominios? → ④ Router
-• ¿Pipeline complejo? → ⑤ Jerárquico
-• ¿Acciones irreversibles? → ⑥ SIEMPRE
+**Slide 9 — Gemini ⑧ y ⑨: Google nativo + NotebookLM**
+⑧ Actúa sobre Gmail/Docs/Drive directamente.
+⑨ NotebookLM: tus fuentes → resúmenes, podcast y mapa mental. Combo brutal para estudiar cualquier tema.
 
 **Slide 10 (cierre):**
-📌 Guarda este carrusel — es tu chuleta de arquitectura
-💬 Comenta "PATRONES" y te mando la versión extendida con diagramas
-➕ Sígueme: cada semana, ingeniería de agentes sin humo
+📌 Guarda este carrusel
+💬 Comenta "PRO" y te mando la guía extendida con ejemplos de cada función
+➕ Sígueme: cada semana, lo más nuevo del ecosistema IA — verificado
 
 ## Caption
 
-🏗️ 7 patrones de diseño de agentes: cuál usar y cuándo.
+⚡ 9 funciones PRO de Claude, ChatGPT y Gemini que el 95 % no usa.
 
-Todo el mundo habla de "agentes". Casi nadie te dice que hay patrones concretos — y que elegir mal el patrón es la diferencia entre un sistema que funciona y uno que quema tokens dando vueltas.
+Pagas la suscripción y usas el 20 % de lo que puede hacer. Estas 9 funciones son las que separan a un usuario casual de alguien que multiplica su trabajo con IA.
 
-Estos 7 los uso a diario construyendo sistemas multi-agente en producción (incluido uno con 11 agentes especialistas de ingeniería). Desliza: cada patrón con su caso de uso y su trampa. 👉
+Todas verificadas y en uso diario en mis proyectos. Desliza 👉
 
-💬 Comenta "PATRONES" y te mando la versión extendida con diagramas.
-📌 Guárdalo para tu próxima arquitectura.
+💬 Comenta "PRO" y te mando la guía extendida.
+📌 Guárdalo para tu próxima sesión de trabajo.
 
-#AgentesIA #AIEngineering #IA #LLM #ArquitecturaDeSoftware #MachineLearning #MultiAgente #ToolUse #InteligenciaArtificial #DesarrolloDeSoftware #Automatizacion #n8n #TechEnEspañol
+#IA #Claude #ChatGPT #Gemini #NotebookLM #HerramientasIA #Productividad #InteligenciaArtificial #LLM #TrucosIA #TechEnEspañol #AIEngineering

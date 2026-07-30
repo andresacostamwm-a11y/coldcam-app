@@ -1,29 +1,35 @@
-# Lunes — Post educativo (imagen única) · Nivel intermedio-avanzado
+# Lunes — Post educativo (imagen única) · Semana "Frontera LLM"
+
+> ✅ **Checklist de verificación (día de publicación):** revisar changelogs/anuncios de
+> Anthropic, OpenAI, Google, xAI, DeepSeek, Moonshot (Kimi), Alibaba (Qwen) y Mistral.
+> Ajustar nombres de modelos/versiones a lo vigente ese día.
 
 ## Texto para la imagen
-**Titular:** Anatomía de un AGENTE de IA
-**Subtítulo:** LLM + Herramientas + Loop + Memoria. Si falta uno, es un chatbot.
+**Titular:** ¿Qué LLM usar PARA QUÉ?
+**Subtítulo:** El mapa honesto de 2026 (sin patrocinios)
 
 ## Caption
 
-🧠 Anatomía de un agente de IA: los 4 componentes que casi nadie explica bien.
+🗺️ ¿Qué LLM usar para qué? El mapa honesto, sin patrocinios.
 
-Un "agente" no es un prompt largo. Es una arquitectura:
+Llevo años construyendo con estos modelos a diario. Mi criterio real, por caso de uso:
 
-1️⃣ **El LLM (cerebro):** decide el siguiente paso. No ejecuta nada — razona y elige.
+🧠 **Razonamiento profundo y código serio** → Claude. Su punto fuerte: seguir instrucciones complejas y trabajar con contextos largos sin perderse.
 
-2️⃣ **Herramientas (manos):** funciones que el modelo puede invocar — APIs, búsqueda, código, tu base de datos. Sin tool use, no hay agente.
+⚡ **Uso general + ecosistema** → ChatGPT. La navaja suiza: voz, imágenes, GPTs, memoria. Si solo vas a pagar una, suele ser esta.
 
-3️⃣ **El loop (motor):** observar → razonar → actuar → observar el resultado → repetir. Aquí vive la autonomía… y también los loops infinitos si no pones límites (max_iterations, presupuesto de tokens).
+📚 **Contexto gigante y multimodal** → Gemini. Integración con Google y ventanas de contexto enormes para analizar documentos largos y video.
 
-4️⃣ **Memoria (contexto):** corto plazo (la conversación), y si lo haces bien, memoria persistente (vector DB) para que no empiece de cero cada vez.
+🔍 **Research con fuentes en tiempo real** → Perplexity (y Grok para el pulso de X). Respuestas con citas verificables.
 
-El error clásico: meter 15 herramientas y cero criterio de parada. Resultado: un agente caro que da vueltas.
+💰 **Máximo rendimiento por dólar** → DeepSeek, Qwen, Kimi, Mistral. Los modelos abiertos ya compiten de tú a tú — y para APIs de alto volumen o self-hosting, ganan por costo.
 
-Mi regla al construirlos: empieza con 3 herramientas, loop acotado, y logs de cada decisión. Escala solo cuando entiendas por qué falla.
+💼 **Si vives en Office/Teams** → Microsoft Copilot. No es el mejor modelo; es el mejor colocado en tu flujo de trabajo.
 
-💬 ¿Con qué framework estás construyendo agentes — SDK directo, LangGraph, n8n, otro? Te leo.
+La pregunta correcta nunca es "¿cuál es el mejor?" — es "¿mejor para QUÉ tarea, a qué costo y en qué flujo?".
 
-📌 Guárdalo: este diagrama te va a servir en tu próxima arquitectura.
+💬 ¿Cuál es tu stack actual? Te leo y te digo si hay hueco para optimizar.
 
-#AgentesIA #IA #InteligenciaArtificial #LLM #ToolUse #ArquitecturaDeSoftware #MachineLearning #AIEngineering #Automatizacion #Python #TechEnEspañol #DesarrolloDeSoftware
+📌 Guarda este mapa — lo actualizo cada vez que el ranking cambie de verdad (y cambia cada pocas semanas).
+
+#IA #LLM #Claude #ChatGPT #Gemini #DeepSeek #Mistral #Qwen #Perplexity #InteligenciaArtificial #HerramientasIA #AIEngineering #TechEnEspañol
