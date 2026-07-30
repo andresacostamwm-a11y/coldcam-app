@@ -48,40 +48,42 @@ const FOOT = '<div class="footer"><span class="firma">Ing. Andrés Acosta</span>
 
 const S = [
 ['02', `<div class="center"><div class="kicker">¿Qué es?</div>
-<h2>No es un chat.<br>Es la <span class="ac">3ª pestaña</span> de Claude Desktop.</h2>
-<p class="body">Lanzado en <b>enero 2026</b>: le das una tarea, <b>lee tus archivos</b>, la ejecuta completa y te entrega <b>el trabajo terminado</b>.</p>
+<h2>No es un chat.<br>Es un <span class="ac">empleado digital</span>.</h2>
+<p class="body">Le das una tarea, <b>lee tus archivos</b>, la ejecuta completa y te entrega <b>el trabajo terminado</b>.</p>
 <p class="body mt">Tú defines el objetivo. Él hace el proceso.</p></div>`],
-['03', `<div class="center"><div class="kicker">Lo nuevo · Julio 2026</div>
-<h2>Sale del escritorio:<br><span class="ac2">web y móvil</span></h2>
-<p class="body">En beta para el plan <b>Max</b> (más planes en camino):</p>
-<ul class="list"><li>Lanzas la tarea desde el <b>PC</b></li>
-<li>El resultado te llega al <b>teléfono</b></li>
-<li>Incluso con el ordenador <b>apagado</b></li></ul></div>`],
-['04', `<div class="center"><div class="badge">1</div><div class="kicker">Capacidad clave</div>
-<h2>Acceso a tu <span class="ac">sistema de archivos</span></h2>
-<p class="body">Trabaja sobre tus carpetas reales: organiza, renombra, <b>extrae datos de PDFs</b>, consolida planillas.</p>
-<p class="body mt">Sin copiar y pegar <b>nada</b> al chat.</p></div>`],
-['05', `<div class="center"><div class="badge">2</div><div class="kicker">Capacidad clave</div>
-<h2>Tareas <span class="ac">programadas</span></h2>
-<p class="body">"Cada lunes a las 8:00, genera el informe de ventas con los CSV de esta carpeta."</p>
-<p class="body mt">Se ejecuta <b>solo</b>, de forma recurrente. Tú solo revisas el resultado.</p></div>`],
-['06', `<div class="center"><div class="badge">3</div><div class="kicker">Capacidad clave</div>
-<h2>Instrucciones <span class="ac">por carpeta</span></h2>
-<p class="body">Reglas persistentes globales y por proyecto — como un <b>system prompt</b> para cada carpeta de tu trabajo.</p>
-<p class="body mt">Se acabó repetir el contexto en cada tarea.</p></div>`],
-['07', `<div class="center"><div class="badge">4</div><div class="kicker">Capacidad clave</div>
-<h2>Plugins + <span class="ac">Dispatch</span></h2>
-<p class="body"><b>Marketplace de plugins</b> por rol (marketing, finanzas, legal…) con flujos ya montados.</p>
-<p class="body mt">Y <b>Dispatch</b>: computer use — usa el ordenador por ti cuando la tarea lo exige.</p></div>`],
-['08', `<div class="center"><div class="kicker">Datos reales de uso</div>
-<div class="h1big">33%</div><div class="div"></div>
-<p class="body">de las sesiones son <b>operación de procesos de negocio</b>:</p>
-<ul class="list" style="margin-top:26px;"><li>Consolidar actualizaciones en <b>un informe</b></li>
-<li>Listas de <b>onboarding</b> de empleados</li><li><b>Conciliar</b> planillas</li></ul></div>`],
-['09', `<div class="center"><div class="kicker">Mi lectura</div>
-<p class="bq">Esto no es "chatear con una IA".<br><br>Es <span style="color:#22D3EE;">delegación asíncrona</span>.</p>
+['03', `<div class="center"><div class="kicker">Dónde está</div>
+<h2>La pestaña <span class="ac2">Cowork</span> de Claude Desktop</h2>
+<ul class="list"><li>Mac y <b>Windows</b> — y ya también en <b>web y móvil</b></li>
+<li>Disponible en <b>todos los planes de pago</b>, desde Pro</li>
+<li>Si no la ves: <b>actualiza</b> la app</li></ul></div>`],
+['04', `<div class="center"><div class="badge">1</div><div class="kicker">Paso 1</div>
+<h2>Conecta <span class="ac">una carpeta</span></h2>
+<p class="body">Tú eliges qué carpeta puede tocar: Claude solo <b>lee, edita y crea archivos</b> dentro de lo que autorices.</p>
+<p class="body mt">Tip: empieza con una <b>carpeta de prueba</b>.</p></div>`],
+['05', `<div class="center"><div class="badge">2</div><div class="kicker">Paso 2</div>
+<h2>Describe la tarea <span class="ac">como a un empleado</span></h2>
+<p class="body">"Extrae importe, fecha y proveedor de estas 30 facturas PDF y móntame un <b>Excel con totales por mes</b>."</p>
+<p class="body mt"><b>Contexto + resultado esperado + formato</b> = oro.</p></div>`],
+['06', `<div class="center"><div class="badge">3</div><div class="kicker">Paso 3</div>
+<h2>Déjalo trabajar <span class="ac">(y revisa)</span></h2>
+<p class="body">Te enseña su <b>plan</b>, avanza solo y te pide <b>aprobación</b> en los pasos sensibles.</p>
+<p class="body mt">No micro-gestiones: <b>valida el resultado final</b>.</p></div>`],
+['07', `<div class="center"><div class="badge">4</div><div class="kicker">Paso 4</div>
+<h2>Prográmalo: tareas <span class="ac">recurrentes</span></h2>
+<p class="body">"Cada lunes a las 8:00, genera el informe semanal."</p>
+<p class="body mt">Se ejecuta <b>en remoto</b>, incluso con tu equipo apagado — usa tus <b>conectores</b> y los archivos de tu cuenta.</p></div>`],
+['08', `<div class="center"><div class="badge">5</div><div class="kicker">Paso 5</div>
+<h2>Escálalo: <span class="ac">reglas, plugins y Dispatch</span></h2>
+<ul class="list"><li><b>Instrucciones por carpeta</b>: reglas persistentes, tipo system prompt</li>
+<li><b>Plugins por rol</b>: marketing, finanzas, legal…</li>
+<li><b>Dispatch</b>: computer use cuando la tarea lo exige</li></ul></div>`],
+['09', `<div class="center"><div class="kicker">Para empezar hoy</div>
+<h2>3 tareas de <span class="ac">bajo riesgo</span></h2>
+<ul class="list" style="margin-top:10px;"><li>Ordenar tu carpeta de <b>Descargas</b></li>
+<li>Extraer datos de <b>PDFs a un Excel</b></li>
+<li>Informe semanal <b>automático</b></li></ul>
 <div class="div"></div>
-<p class="body">La habilidad clave ya no es el prompt: es <b>definir la tarea como a un empleado</b> — contexto, criterio de "terminado" y checkpoints.</p></div>`],
+<p class="body">Regla: delega primero lo <b>aburrido y repetitivo</b>.</p></div>`],
 ['10', `<div class="center"><h2>¿Te sirvió?</h2>
 <ul class="list" style="margin-top:16px;"><li>📌 <b>Guarda</b> este carrusel</li>
 <li>💬 Comenta <b>"COWORK"</b> y te mando la guía de primeros pasos</li>

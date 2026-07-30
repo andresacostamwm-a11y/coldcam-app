@@ -1,44 +1,55 @@
-# Carrusel — Claude Cowork (10 slides) · Verificado 2026-07-30
+# Carrusel — Claude Cowork: cómo se usa paso a paso (10 slides) · Verificado 2026-07-30
 
-> ✅ Verificado contra cobertura de prensa del lanzamiento web/móvil (julio 2026):
-> Infobae, Notebookcheck, InfoQ. Datos: 3ª pestaña de Claude Desktop (ene 2026),
-> web+móvil en beta para plan Max (jul 2026), acceso a archivos, tareas
-> programadas, instrucciones por carpeta, plugins, Dispatch; 33 % de sesiones =
-> procesos de negocio.
+> ✅ Verificado contra fuentes primarias (support.claude.com y claude.com, 30-jul-2026):
+> - "Get started with Claude Cowork": pestaña Cowork en Claude Desktop; Claude puede
+>   leer, editar y crear archivos SOLO en las carpetas que autorices.
+> - Disponible en todos los planes de pago (Pro, Max, Team, Enterprise).
+> - "Use Claude Cowork on web, desktop, and mobile": lanzas tareas desde web/móvil;
+>   una sesión remota solo alcanza tus archivos locales con la app de escritorio abierta.
+> - "Schedule recurring tasks": las tareas programadas se ejecutan EN REMOTO, sin
+>   equipo encendido; usan conectores y archivos de tu cuenta (no carpetas locales).
+> - Plugins por rol y Dispatch (computer use); 33 % de sesiones = procesos de negocio.
 
 ## Slides
 
 **S1 (portada):** CLAUDE COWORK — El "empleado digital" de Anthropic ya trabaja mientras duermes → (Actualizado · julio 2026)
 
-**S2 — ¿Qué es?** La tercera pestaña de Claude Desktop (ene 2026): no es un chat — lee tus archivos, ejecuta la tarea completa y te entrega el trabajo terminado.
+**S2 — ¿Qué es?** No es un chat: le das una tarea, lee tus archivos, la ejecuta completa y te entrega el trabajo terminado. Tú defines el objetivo; él hace el proceso.
 
-**S3 — Lo nuevo (jul 2026):** Cowork llega a web y móvil (beta, plan Max): lanzas la tarea en el PC y recibes el resultado en el teléfono. Incluso con el ordenador apagado.
+**S3 — Dónde está:** Es la pestaña Cowork de Claude Desktop (Mac/Windows) — y ya también en web y móvil. Disponible en todos los planes de pago, desde Pro.
 
-**S4 — ① Sistema de archivos:** Trabaja sobre tus carpetas reales: organiza, renombra, extrae datos de PDFs, consolida planillas. Sin copiar/pegar nada al chat.
+**S4 — Paso 1 · Conecta una carpeta:** Eliges qué carpeta puede tocar. Claude solo lee, edita y crea archivos dentro de lo que autorices. Empieza con una carpeta de prueba.
 
-**S5 — ② Tareas programadas:** Recurrentes: "cada lunes 8:00, informe de ventas con los CSV de esta carpeta". Se genera solo. Tú solo revisas.
+**S5 — Paso 2 · Describe la tarea como a un empleado:** "Extrae importe, fecha y proveedor de estas 30 facturas PDF y móntame un Excel con totales por mes." Contexto + resultado esperado + formato = oro.
 
-**S6 — ③ Instrucciones por carpeta:** Reglas persistentes globales y por proyecto — como un system prompt para cada carpeta de tu trabajo. Se acabó repetir contexto.
+**S6 — Paso 3 · Déjalo trabajar (y revisa):** Te enseña su plan, avanza solo y te pide aprobación en pasos sensibles. Tú no micro-gestionas: validas el resultado final.
 
-**S7 — ④ Plugins + Dispatch:** Marketplace de plugins por rol y Dispatch (computer use): Cowork usa el ordenador por ti cuando la tarea lo exige.
+**S7 — Paso 4 · Prográmalo:** "Cada lunes a las 8:00, genera el informe semanal." Se ejecuta en remoto aunque tu equipo esté apagado — usa tus conectores y los archivos de tu cuenta.
 
-**S8 — ¿Para qué lo usa la gente?** El 33 % de las sesiones: operar procesos de negocio — consolidar actualizaciones dispersas en un informe, listas de onboarding, conciliar planillas.
+**S8 — Paso 5 · Escálalo:** Instrucciones por carpeta (reglas persistentes tipo system prompt), plugins por rol (marketing, finanzas, legal…) y Dispatch: computer use cuando la tarea lo exige.
 
-**S9 — Mi lectura:** Esto no es "chatear con una IA". Es delegación asíncrona. La habilidad clave ya no es el prompt: es definir la tarea como a un empleado — contexto, criterio de "terminado" y checkpoints.
+**S9 — 3 tareas para empezar hoy:** ① Ordenar tu carpeta de Descargas ② Extraer datos de PDFs a un Excel ③ Informe semanal automático. Regla: empieza por tareas aburridas y de bajo riesgo.
 
 **S10 (cierre):** 📌 Guarda este carrusel · 💬 Comenta "COWORK" y te mando la guía de primeros pasos · ➕ Sígueme: lo más nuevo de IA, verificado.
 
 ## Caption
 
-🧑‍💻 Claude Cowork: el "empleado digital" de Anthropic acaba de salir de tu escritorio — y ya trabaja aunque tú duermas.
+🧑‍💻 Claude Cowork: el "empleado digital" de Anthropic — y aquí tienes CÓMO usarlo, paso a paso.
 
-Desde enero era la tercera pestaña de Claude Desktop. Desde este mes está en web y móvil (beta para plan Max): lanzas la tarea en el PC y el resultado te llega al teléfono, con el ordenador apagado.
+No es un chat: le das una tarea, trabaja sobre tus carpetas reales y te entrega el trabajo terminado. Ya está en escritorio, web y móvil, y disponible en todos los planes de pago (desde Pro).
 
-En este carrusel: qué es exactamente, sus 4 capacidades clave (archivos, tareas programadas, instrucciones por carpeta, plugins + Dispatch), para qué lo está usando la gente de verdad, y mi lectura como alguien que construye agentes a diario. 👉
+En este carrusel, el método completo en 5 pasos:
+1️⃣ Conecta una carpeta (solo toca lo que autorices)
+2️⃣ Describe la tarea como a un empleado
+3️⃣ Déjalo trabajar y aprueba los pasos sensibles
+4️⃣ Prográmalo — se ejecuta en remoto, incluso con tu equipo apagado
+5️⃣ Escálalo con instrucciones por carpeta, plugins y Dispatch
 
-Todo verificado a fecha de hoy — este ecosistema cambia cada semana.
+Y 3 tareas concretas para empezar hoy mismo. 👉
+
+Todo verificado hoy contra la documentación oficial de Anthropic — este ecosistema cambia cada semana.
 
 💬 Comenta "COWORK" y te mando la guía de primeros pasos.
-📌 Guárdalo para cuando te den acceso.
+📌 Guárdalo para tu primera tarea.
 
 #Claude #ClaudeCowork #Anthropic #IA #InteligenciaArtificial #AgentesIA #Productividad #Automatizacion #HerramientasIA #FuturoDelTrabajo #TechEnEspañol #AIEngineering
