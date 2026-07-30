@@ -1,4 +1,5 @@
 // Carruseles diarios 31 jul - 4 ago (identidad v2, sin solapes, outfits rotados).
+// v2 PRO: contenido intermedio-avanzado, datos re-verificados 30-jul-2026.
 // Uso: node gen-diarios.cjs <cc|ag|sk|gpt|vs>  → renderiza <dia>-s01.png ... <dia>-s10.png
 const { chromium } = require('playwright');
 
@@ -48,25 +49,25 @@ svg.net { position:absolute; inset:0; }
 .countR { position:absolute; top:46px; right:50px; background:rgba(10,14,24,0.85);
   border-radius:999px; padding:11px 26px; font-size:29px; font-weight:700; color:#EAF2FA; z-index:3; }
 .tgold { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
-  font-size:72px; line-height:1.04; letter-spacing:1px;
+  font-size:66px; line-height:1.04; letter-spacing:1px;
   background:linear-gradient(180deg,#F8E2A6 8%,#E9B95B 55%,#C08A2E 100%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
   filter:drop-shadow(0 4px 18px rgba(0,0,0,0.85)); }
-.tsub { font-size:32px; color:#E9EFF6; margin-top:12px; line-height:1.32;
+.tsub { font-size:30px; color:#E9EFF6; margin-top:12px; line-height:1.3;
   text-shadow:0 2px 12px rgba(0,0,0,0.7); }
 .tsub b { color:#F0B54A; }
 .cap { display:inline-flex; align-items:center; gap:10px; border:2px solid #E8A33D; border-radius:12px;
-  padding:11px 22px; margin:22px 0 24px; font-family:'Oswald',sans-serif; font-size:26px; font-weight:600;
+  padding:10px 20px; margin:20px 0 22px; font-family:'Oswald',sans-serif; font-size:25px; font-weight:600;
   letter-spacing:2px; text-transform:uppercase; color:#F0B54A; align-self:flex-start;
   background:rgba(232,163,61,0.07); }
 .card { display:flex; align-items:flex-start; gap:18px; border:2px solid rgba(232,163,61,0.6);
-  border-radius:18px; background:rgba(10,16,28,0.78); padding:18px 20px; margin-bottom:14px; }
-.hex { min-width:60px; height:60px; display:flex; align-items:center; justify-content:center;
-  font-size:27px; color:#F0B54A; border:2px solid #C9932F; border-radius:13px;
+  border-radius:18px; background:rgba(10,16,28,0.78); padding:17px 19px; margin-bottom:13px; }
+.hex { min-width:58px; height:58px; display:flex; align-items:center; justify-content:center;
+  font-size:26px; color:#F0B54A; border:2px solid #C9932F; border-radius:13px;
   background:rgba(232,163,61,0.09); }
-.card h3 { font-family:'Oswald',sans-serif; font-size:27px; font-weight:600; color:#F0B54A;
+.card h3 { font-family:'Oswald',sans-serif; font-size:26px; font-weight:600; color:#F0B54A;
   letter-spacing:1px; margin-bottom:5px; text-transform:uppercase; }
-.card p { font-size:24px; line-height:1.36; color:#E7EDF4; }
+.card p { font-size:23px; line-height:1.34; color:#E7EDF4; }
 .card p b { color:#fff; }
 .h1 { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
   font-size:84px; line-height:1.05; text-shadow:0 4px 24px rgba(0,0,0,0.85); }
@@ -77,7 +78,7 @@ svg.net { position:absolute; inset:0; }
 .pill { display:inline-block; padding:11px 24px; border:2px solid #E8A33D; border-radius:999px;
   color:#F0B54A; font-size:25px; font-weight:700; letter-spacing:2px; margin-bottom:30px;
   align-self:flex-start; text-transform:uppercase; }
-p.body { font-size:33px; line-height:1.42; color:#E6EDF5; text-shadow:0 2px 12px rgba(0,0,0,0.7); }
+p.body { font-size:32px; line-height:1.4; color:#E6EDF5; text-shadow:0 2px 12px rgba(0,0,0,0.7); }
 p.body b { color:#F0B54A; }
 .mt { margin-top:18px; }
 .vcenter { flex:1; display:flex; flex-direction:column; justify-content:center; }
@@ -93,178 +94,178 @@ const card = (ico, t, p) => `<div class="card"><div class="hex">${ico}</div><div
 const av = (k) => `<div class="avbox"><img src="${AV[k]}"></div>`;
 const cover = (n, o, pill, h1, sub, body) => `${NET}${av(o)}<div class="slide"><div class="countR">${n}/10</div>
 <div class="col vcenter"><div class="pill">${pill}</div><div class="h1">${h1}</div><div class="sub">${sub}</div>
-<p class="body mt" style="font-size:35px;">${body}</p></div>${FOOT}</div>`;
+<p class="body mt" style="font-size:34px;">${body}</p></div>${FOOT}</div>`;
 const stmt = (n, o, h1, bodies) => `${NET}${av(o)}<div class="slide"><div class="countR">${n}/10</div>
-<div class="col vcenter"><div class="h1" style="font-size:70px;">${h1}</div>${bodies.map(b => `<p class="body mt">${b}</p>`).join('')}</div>${FOOT}</div>`;
+<div class="col vcenter"><div class="h1" style="font-size:66px;">${h1}</div>${bodies.map(b => `<p class="body mt">${b}</p>`).join('')}</div>${FOOT}</div>`;
 const cards = (n, o, title, sub, cap, cs) => `${NET}${av(o)}<div class="slide"><div class="col">
 <div class="countL">${n}/10</div><div class="tgold">${title}</div><div class="tsub">${sub}</div>
 <div class="cap">${cap}</div>${cs.map(c => card(...c)).join('')}<div class="grow"></div>${FOOT}</div></div>`;
 
 const DAYS = {
 cc: { out: ['traje','azulcielo','tablet','negrabeige','blancamarino','burdeos','grisperla','marinocrema','gris','camel'], S: [
-cover('1','traje','Actualizado · Julio 2026','CLAUDE<br><span class="gold">CODE</span>','La terminal que<br>programa por ti','Puesta al día completa: qué es, cómo empezar y <b>lo nuevo de julio</b>.'),
-stmt('2','azulcielo','NO ES AUTO-COMPLETADO.<br><span class="gold">ES UN AGENTE EN TU TERMINAL.</span>',['Lee tu repo, <b>planifica</b>, edita archivos, corre tests y hace commits — tú apruebas.','<span class="cyan">Ahora con Opus 5: 1M de contexto y pensamiento adaptativo.</span>']),
-cards('3','tablet','QUÉ ES','El agente de código de Anthropic, donde tú trabajas.','⚡ Terminal primero',[
-['🖥️','CLI + IDE','Terminal, <b>VS Code y JetBrains</b>, web y app de escritorio.'],
-['🧠','Motor: Opus 5','<b>1M de contexto</b>, 128K de salida, $5/$25 por millón (24 jul).'],
-['🔁','Loop completo','Lee → planifica → edita → <b>testea → commit</b>.']]),
-cards('4','negrabeige','EMPIEZA ASÍ','Setup en 2 minutos, de cero a primer commit.','🚀 Quickstart',[
-['📦','Instala','<b>npm install -g @anthropic-ai/claude-code</b>'],
-['🔑','Autentica','Ejecuta <b>claude</b> e inicia sesión con tu plan o API key.'],
-['📁','CLAUDE.md','Contexto persistente del repo: <b>reglas, comandos, estilo</b>.']]),
-cards('5','blancamarino','LO NUEVO','Julio 2026 vino cargado.','🆕 Este mes',[
-['⚙️','Control fino','Subagentes, <b>presupuestos</b> y sesiones en segundo plano.'],
-['🛡️','Fallback de modelo','Respaldo automático (beta) + <b>cambio de herramientas</b> en sesión.'],
-['🔌','MCP 2026-07-28','OAuth/OIDC reforzado y <b>Apps y Tasks</b> versionados.']]),
-cards('6','burdeos','SUBAGENTES','Trabajo en paralelo, cada uno con su contexto.','🤖 Los 3 tipos',[
-['🧰','general-purpose','Todas las herramientas, para <b>tareas completas</b>.'],
-['🔍','Explore','<b>Solo lectura</b>, rápido y barato: entender el código.'],
-['📐','Plan','Arquitectura y diseño <b>antes de tocar nada</b>.']]),
-cards('7','grisperla','FLUJO PRO','Cómo sacarle el máximo cada día.','🧩 Mi método',[
-['🗺️','Plan mode primero','Que proponga el plan; <b>tú lo apruebas</b> y luego edita.'],
-['🧠','Skills y hooks','Tu forma de trabajar, <b>cargada automáticamente</b>.'],
-['✅','Verificación','Opus 5 <b>verifica su propio trabajo</b> antes de entregarlo.']]),
-cards('8','marinocrema','ERRORES TÍPICOS','Lo que separa juniors de seniors usándolo.','❌ Evita esto',[
-['🧨','Todo en un prompt','Divide en tareas con <b>criterio de "terminado"</b>.'],
-['👀','No revisar diffs','Tú eres el senior: <b>revisa antes de aprobar</b>.'],
-['📄','Ignorar CLAUDE.md','Sin contexto persistente, <b>calidad aleatoria</b>.']]),
-cards('9','gris','EMPIEZA HOY','3 tareas reales para tu primer día.','✅ Bajo riesgo',[
-['1️⃣','Explica un repo','Modo <b>Explore</b> sobre un proyecto que no conozcas.'],
-['2️⃣','Tests faltantes','Cobertura de <b>un módulo</b> sin tests.'],
-['3️⃣','Refactor multi-archivo','Su especialidad con <b>1M de contexto</b>.']]),
-stmt('10','camel','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"CODE"</b> y te mando el quickstart','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">LLMs · agentes · imagen · video — sin humo.</span>']),
+cover('1','traje','Verificado · 30 jul 2026','CLAUDE<br><span class="gold">CODE</span>','Guía PRO: subagentes,<br>hooks y MCP','Arquitectura, novedades de julio y patrones de equipos senior — <b>con datos verificados</b>.'),
+stmt('2','azulcielo','UN HARNESS DE AGENTES.<br><span class="gold">NO UN AUTOCOMPLETE.</span>',['Orquesta Opus 5 con herramientas reales: archivos, bash, web, MCP — con <b>verificación propia</b> antes de entregar.','<span class="cyan">Opus 5: 97.0% en SWE-bench Verified — nº1 del leaderboard (jul 2026).</span>']),
+cards('3','tablet','MOTOR: OPUS 5','Qué significan las specs en tu trabajo diario.','⚙️ 24 · Jul · $5/$25',[
+['🧠','Contexto 1M','Monorepos completos en sesión: código + docs + diffs, <b>sin RAG improvisado</b>.'],
+['⚡','Salida 128K','Refactors multi-archivo <b>en una sola respuesta</b>, sin trocear entregas.'],
+['🎚️','Razonamiento adaptativo','Asigna esfuerzo según dificultad: <b>pagas pensamiento solo cuando aporta</b>.']]),
+cards('4','negrabeige','SUBAGENTES 2.0','Novedad de julio: anidamiento hasta profundidad 3 (antes 1).','🤖 Orquestación',[
+['🌳','Anidados ×3','Tu orquestador lanza especialistas que <b>lanzan sus propios subagentes</b>.'],
+['🧵','Background robusto','Sobreviven <b>reinicios y upgrades</b>; watchdog de stream de 5 min por defecto.'],
+['📐','Tipos base','Explore (solo lectura), Plan (arquitectura), <b>general-purpose</b> (ejecución).']]),
+cards('5','blancamarino','AGENTES A MEDIDA','Defínelos como archivos versionados en .claude/agents/*.md.','🛠️ Config declarativa',[
+['📄','Frontmatter YAML','name, description, <b>tools y model</b> por agente — review como código.'],
+['🎚️','Effort y budget','Esfuerzo de razonamiento y <b>presupuesto de tokens</b> por tarea.'],
+['🔀','Model fallback (beta)','Conmutación automática de modelo <b>si el primario se degrada</b>.']]),
+cards('6','burdeos','MCP 2026-07-28','La spec nueva que cambia las integraciones enterprise.','🔌 Protocolo',[
+['🔐','OAuth + OIDC','Identidad federada: servidores MCP <b>con el SSO de tu empresa</b>.'],
+['🧩','Apps y Tasks','Primitivas versionadas para <b>UI embebida y trabajos largos</b>.'],
+['♻️','Reconexión sólida','Retries y re-auth <b>sin tumbar la sesión</b> (fixes de julio).']]),
+cards('7','grisperla','CONTEXT ENGINEERING','El cuello de botella no es el modelo: es tu contexto.','🧠 Las 3 capas',[
+['📄','CLAUDE.md','Reglas, comandos y arquitectura del repo — <b>siempre en contexto</b>.'],
+['🪝','Hooks','Scripts pre/post tool-use: lint, tests y <b>guardarraíles automáticos</b>.'],
+['🎯','Skills','Procedimientos bajo demanda con <b>progressive disclosure</b> (~100 tokens).']]),
+cards('8','marinocrema','PIPELINE SENIOR','De prompt suelto a flujo reproducible y auditable.','🧩 Método',[
+['🗺️','Plan → diff → apruebas','Plan mode primero; el diff <b>se revisa como un PR</b>.'],
+['🧪','Verificación propia','Corre tests y <b>verifica su trabajo</b> antes de entregártelo.'],
+['📊','Headless + stream-json','Salida estructurada para CI: <b>--forward-subagent-text</b> incluido.']]),
+cards('9','gris','ÚSALO ESTA SEMANA','Tres tareas de nivel intermedio-avanzado con ROI directo.','✅ Ponlo a prueba',[
+['1️⃣','Auditoría de deuda','Explore + Plan sobre tu repo: <b>mapa de deuda técnica</b> con referencias.'],
+['2️⃣','Migración paralela','Refactor multi-archivo con subagentes <b>repartidos por módulo</b>.'],
+['3️⃣','CI agéntico','Claude Code headless en tu pipeline: <b>triaje automático de fallos</b>.']]),
+stmt('10','camel','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"CODE"</b> y te mando la guía de subagentes','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Mañana: agentes con Claude — SDK, memoria y orquestación.</span>']),
 ]},
 ag: { out: ['blancamarino','burdeos','holo','grisperla','marinocrema','azulcielo','negrabeige','bomber','chaleco','traje'], S: [
-cover('1','blancamarino','Actualizado · Agosto 2026','AGENTES<br><span class="gold">CON CLAUDE</span>','De chats a<br>empleados digitales','Las 3 vías para construir agentes <b>reales</b> — y cuándo usar cada una.'),
-stmt('2','burdeos','UN AGENTE NO RESPONDE.<br><span class="gold">DECIDE, EJECUTA Y VERIFICA.</span>',['El loop: objetivo → plan → <b>herramientas</b> → verificación → resultado.','<span class="cyan">Es el mismo motor de Claude Code — disponible para tu código.</span>']),
-cards('3','holo','LAS 3 VÍAS','Elige según control vs. velocidad de despliegue.','🧭 Tu nivel',[
-['🧱','API + tool use','Control total del loop: <b>tú orquestas todo</b>.'],
-['🛠️','Agent SDK','Python/TS: el <b>loop de Claude Code</b> listo para usar.'],
-['☁️','Managed Agents','Estado, memoria y orquestación <b>gestionados</b> (mayo 2026).']]),
-cards('4','grisperla','AGENT SDK','El motor de Claude Code en tu aplicación.','⚙️ npm / pip install',[
-['🔁','Mismo bucle','Agente + <b>herramientas integradas</b> (archivos, bash, web).'],
-['🧠','Contexto gestionado','Compactación automática: <b>sesiones largas</b> sin dolor.'],
-['🚀','A producción','De script local a <b>servicio desplegado</b> con el mismo código.']]),
-cards('5','marinocrema','SUBAGENTES','Divide y vencerás, en paralelo.','🤖 Orquestación',[
-['🎯','Orquestador','Un agente principal <b>reparte el trabajo</b>.'],
-['🧪','Especialistas','Cada subagente con <b>contexto y herramientas propios</b>.'],
-['📐','Patrones','Explore (leer), Plan (diseñar), <b>general</b> (ejecutar).']]),
-cards('6','azulcielo','MCP','Las manos de tu agente.','🔌 Conecta todo',[
-['📬','Tus sistemas','Gmail, Slack, bases de datos, <b>APIs internas</b>.'],
-['🔐','Spec 2026-07-28','OAuth + OIDC y <b>Apps y Tasks</b> versionados.'],
-['♻️','Reutilizable','Un servidor MCP sirve a <b>todos tus agentes</b>.']]),
-cards('7','negrabeige','MEMORIA Y ESTADO','Lo que separa demo de producción.','🧠 Managed Agents',[
-['💾','Sesiones persistentes','El agente <b>retoma donde quedó</b>.'],
-['🗂️','Memoria integrada','Contexto a largo plazo <b>sin montar tu vector DB</b>.'],
-['📊','Monitoreo','Trazas y observabilidad <b>de serie</b>.']]),
-cards('8','bomber','DISEÑA BIEN','Reglas de oro para que no se te desmadre.','📐 Criterio senior',[
-['🎯','Objetivos, no tareas','Define el <b>criterio de "terminado"</b>, no cada paso.'],
-['🛡️','Checkpoints','Aprobación humana en pasos <b>irreversibles</b>.'],
-['🧪','Evals primero','Mide con casos reales <b>antes de escalar</b>.']]),
-cards('9','chaleco','EMPIEZA HOY','3 agentes de bajo riesgo para esta semana.','✅ Reversible',[
-['1️⃣','Triaje de inbox','Clasifica y prioriza tu correo <b>cada mañana</b>.'],
-['2️⃣','Resumen de commits','Digest diario de tu repo <b>en Slack</b>.'],
-['3️⃣','Research con MCP','Investiga y entrega <b>informe con fuentes</b>.']]),
-stmt('10','traje','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"AGENTE"</b> y te mando la guía del SDK','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Construyo agentes a diario — esto sale de proyectos reales.</span>']),
+cover('1','blancamarino','Verificado · 30 jul 2026','AGENTES<br><span class="gold">CON CLAUDE</span>','API · Agent SDK ·<br>Managed Agents','Arquitectura, memoria persistente y orquestación — <b>lo que llega a producción en 2026</b>.'),
+stmt('2','burdeos','EL LOOP YA ES COMMODITY.<br><span class="gold">EL ESTADO ES EL FOSO.</span>',['Objetivo → plan → herramientas → verificación: eso <b>ya te lo da el SDK</b>.','<span class="cyan">Lo que diferencia producción de demo: memoria, contexto y evals.</span>']),
+cards('3','holo','LAS 3 VÍAS','Control total vs. velocidad de despliegue: elige con criterio.','🧭 Arquitectura',[
+['🧱','API + tool use','Loop artesanal: máxima flexibilidad, <b>máximo trabajo de plomería</b>.'],
+['🛠️','Agent SDK (Py/TS)','El loop de Claude Code <b>embebido en tu aplicación</b>.'],
+['☁️','Managed Agents','Sandbox, estado, memoria y trazas <b>gestionados por Anthropic</b>.']]),
+cards('4','grisperla','AGENT SDK','Qué resuelve de serie y qué sigue siendo tu responsabilidad.','⚙️ Honesto',[
+['✅','Incluye','Loop de agente, tool use, streaming y <b>compactación de contexto</b>.'],
+['🧰','Herramientas','Archivos, bash, web y <b>subagentes</b> — paridad con Claude Code.'],
+['🧗','Tu parte','Observabilidad fina, hardening y <b>orquestación multi-agente compleja</b>.']]),
+cards('5','marinocrema','MEMORIA PERSISTENTE','Public beta desde abril: archivos que sobreviven sesiones.','💾 Managed Agents',[
+['🗂️','Memory stores','Colección por workspace, <b>montada como filesystem</b> en el sandbox.'],
+['🧾','Auditable','Cada escritura genera versión inmutable: <b>rollback y redacción</b> puntual.'],
+['🤝','Compartible','Lo aprendido por un agente <b>lo hereda otro</b> del mismo workspace.']]),
+cards('6','azulcielo','CONTEXT EDITING','El benchmark interno que justifica la arquitectura.','📉 Datos Anthropic',[
+['✂️','Poda automática','Limpia tool results viejos; la memoria <b>retiene lo esencial</b>.'],
+['📊','−84% tokens','Medido en una tarea de <b>100 turnos</b> con búsqueda web.'],
+['📈','+39% rendimiento','Menos ruido en contexto = <b>mejor resultado</b>, no peor.']]),
+cards('7','negrabeige','ORQUESTACIÓN','Patrones multi-agente que escalan sin desmadrarse.','🤖 3 patrones',[
+['🎯','Orquestador-worker','Uno reparte; N especialistas ejecutan <b>con contexto propio</b>.'],
+['🧵','Pipeline sin barreras','Etapas encadenadas por ítem: <b>máximo paralelismo real</b>.'],
+['⚖️','Verificador adversario','Agentes que intentan <b>refutar</b> el resultado antes de aceptarlo.']]),
+cards('8','bomber','MCP + EVALS','Integración y medición: lo no negociable en producción.','📐 Producción',[
+['🔌','MCP 2026-07-28','OAuth/OIDC: conecta sistemas internos <b>con SSO corporativo</b>.'],
+['🧪','Evals con casos reales','Mide <b>tarea terminada</b>, no impresiones — antes de escalar.'],
+['🛡️','Checkpoints humanos','Aprobación explícita en pasos <b>irreversibles</b>: pagos, deploys, emails.']]),
+cards('9','chaleco','CONSTRUYE ESTA SEMANA','Tres agentes con memoria y orquestación reales.','✅ 3 builds',[
+['1️⃣','Triaje con memoria','Agente de inbox que <b>aprende tus criterios</b> semana a semana.'],
+['2️⃣','Research multi-agente','Fan-out de lectores en paralelo + <b>sintetizador con fuentes</b>.'],
+['3️⃣','Agente de repo','SDK + MCP de GitHub: digest diario y <b>PRs de mantenimiento</b>.']]),
+stmt('10','traje','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"AGENTE"</b> y te mando la arquitectura de referencia','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Construyo agentes a diario — esto sale de proyectos reales.</span>']),
 ]},
 sk: { out: ['grisperla','marinocrema','tablet','azulcielo','burdeos','negrabeige','blancamarino','camel','gris','brazos'], S: [
-cover('1','grisperla','Actualizado · Agosto 2026','SKILLS<br><span class="gold">DE CLAUDE</span>','Enséñale tu método<br>una sola vez','La función más infravalorada del ecosistema Claude, <b>explicada a fondo</b>.'),
-stmt('2','marinocrema','DEJA DE REPETIR PROMPTS.<br><span class="gold">CONVIÉRTELOS EN SKILLS.</span>',['Una skill es <b>una carpeta con instrucciones</b> que Claude carga solo cuando toca.','<span class="cyan">Tu conocimiento, empaquetado y reutilizable para siempre.</span>']),
-cards('3','tablet','QUÉ ES','La unidad mínima de conocimiento para Claude.','📁 Una carpeta',[
-['📄','SKILL.md','Unidad de instrucciones <b>con nombre y versión</b>.'],
-['🏷️','Frontmatter YAML','Mínimo obligatorio: <b>name + description</b>.'],
-['📝','Markdown debajo','Pasos, reglas y criterios <b>en lenguaje natural</b>.']]),
-cards('4','azulcielo','ACTIVACIÓN','No la invocas: aparece cuando hace falta.','✨ Automática',[
-['🔎','Escaneo','Claude revisa tus skills <b>en cada prompt</b>.'],
-['🎯','Match','La <b>descripción</b> es el disparador: si aplica, la carga.'],
-['🪶','Solo lo necesario','No infla el contexto: <b>carga bajo demanda</b>.']]),
-cards('5','burdeos','DÓNDE FUNCIONAN','Un formato, todo el ecosistema.','🌍 Portables',[
-['💻','Claude Code','Carpeta <b>.claude/skills</b> del repo o vía plugin.'],
-['🔌','API','Skills de Anthropic + <b>las tuyas subidas por API</b>.'],
-['🖥️','Apps de Claude','El mismo método en <b>desktop y web</b>.']]),
-cards('6','negrabeige','ANATOMÍA','SKILL.md por dentro, sin misterio.','🧬 Estructura',[
-['1️⃣','Metadatos','--- name: … / description: … --- <b>(YAML)</b>'],
-['2️⃣','Instrucciones','Proceso paso a paso + <b>criterios de calidad</b>.'],
-['3️⃣','Recursos','Scripts, plantillas y referencias <b>en la carpeta</b>.']]),
-cards('7','blancamarino','BUENAS PRÁCTICAS','La diferencia entre skill que dispara y skill muerta.','📐 Nivel pro',[
-['🗣️','Disparadores claros','"Úsala cuando el usuario mencione…" — <b>sé literal</b>.'],
-['🎯','Una skill, una tarea','Pequeñas y componibles > <b>una skill gigante</b>.'],
-['🧪','Prueba y versiona','Casos reales + <b>itera la descripción</b>.']]),
-cards('8','camel','IDEAS PARA TI','Las que más retorno dan desde el día 1.','💡 Mi stack',[
-['📊','Informes','Tu formato exacto de reporte, <b>siempre igual</b>.'],
-['🔍','Code review','Tu checklist de revisión <b>aplicado automáticamente</b>.'],
-['🎨','Marca','Colores, tono y plantillas — <b>así hago estos carruseles</b>.']]),
-cards('9','gris','EMPIEZA HOY','De prompt repetido a activo permanente.','✅ 30 minutos',[
-['1️⃣','Detecta','Tu prompt <b>más repetido</b> de esta semana.'],
-['2️⃣','Empaqueta','Carpeta + SKILL.md con <b>name y description</b>.'],
-['3️⃣','Comparte','Súbela al repo del equipo: <b>conocimiento común</b>.']]),
-stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"SKILL"</b> y te mando una plantilla de SKILL.md','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Si lo explicaste dos veces, es una skill.</span>']),
+cover('1','grisperla','Estándar abierto · 26+ plataformas','SKILLS<br><span class="gold">DE CLAUDE</span>','Conocimiento como<br>infraestructura','Progressive disclosure, anatomía del SKILL.md y patrones de diseño — <b>a fondo</b>.'),
+stmt('2','marinocrema','TU PROMPT REPETIDO<br><span class="gold">ES DEUDA TÉCNICA.</span>',['Una skill lo convierte en un <b>módulo versionado</b> que Claude carga solo cuando aplica.','<span class="cyan">Estándar abierto (dic 2025): funciona también en Codex, Gemini CLI, Cursor y VS Code.</span>']),
+cards('3','tablet','PROGRESSIVE DISCLOSURE','Por qué 100 skills instaladas no inflan tu contexto.','🧠 3 niveles de carga',[
+['1️⃣','Arranque','Solo name + description: <b>~100 tokens por skill</b>.'],
+['2️⃣','Activación','El body completo entra al contexto: <b>recomendado &lt;5K tokens</b>.'],
+['3️⃣','Recursos','Scripts y referencias de la carpeta: <b>solo si la tarea los pide</b>.']]),
+cards('4','azulcielo','ANATOMÍA','SKILL.md: qué es obligatorio y qué es opcional.','🧬 Frontmatter YAML',[
+['🏷️','Obligatorio','name + description — y la <b>description es el matcher</b>.'],
+['🔒','allowed-tools','Restringe herramientas <b>mientras la skill está activa</b>.'],
+['🎛️','model','Fuerza un modelo concreto <b>para esa tarea</b> (opcional).']]),
+cards('5','burdeos','ÁMBITOS','Dónde vive cada skill y quién la hereda.','📁 3 scopes',[
+['👤','Personal','~/.claude/skills: <b>tu método</b>, disponible en todos tus repos.'],
+['📦','Proyecto','.claude/skills del repo: del equipo, <b>versionada en git</b>.'],
+['🔌','Plugin / API','Distribución por marketplace o <b>subida programática por API</b>.']]),
+cards('6','negrabeige','DESCRIPTIONS QUE DISPARAN','El 90% de las skills muertas fallan exactamente aquí.','🎯 Triggers',[
+['🗣️','Sé literal','"Úsala cuando pidan X, Y o Z" — el matcher <b>no adivina intenciones</b>.'],
+['🚫','Anti-triggers','Di también <b>cuándo NO usarla</b>: elimina falsos positivos.'],
+['🧪','Itera como prompt','Si no dispara, reescribe la description: <b>es prompt engineering</b>.']]),
+cards('7','blancamarino','COMPOSICIÓN','Skills pequeñas y componibles > una skill dios.','📐 Diseño',[
+['🧩','Una tarea, una skill','Claude puede cargar <b>varias a la vez</b> si la tarea lo pide.'],
+['📎','Recursos anexos','Plantillas y scripts en la carpeta, <b>referenciados desde el body</b>.'],
+['🔁','Review como código','Van a git y pasan PR review — <b>porque son código</b>.']]),
+cards('8','camel','CASOS PRO','Donde las skills devuelven horas cada semana.','💡 ROI real',[
+['📊','Runbooks','Despliegues e incidentes: procedimiento exacto, <b>sin improvisar</b>.'],
+['🔍','Code review','Tu checklist aplicado <b>idéntico en cada PR</b>.'],
+['🎨','Pipelines de marca','Estos carruseles salen de una skill: <b>diseño + reglas + QA</b>.']]),
+cards('9','gris','IMPLEMENTA HOY','De prompt repetido a activo permanente en 30 minutos.','✅ Checklist',[
+['1️⃣','Mina tu historial','Tu prompt más repetido de la semana <b>es la candidata</b>.'],
+['2️⃣','Empaqueta','Carpeta + SKILL.md con <b>triggers literales</b> en la description.'],
+['3️⃣','Testea el disparo','5 prompts reales: ¿carga cuando debe <b>y solo cuando debe</b>?']]),
+stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"SKILL"</b> y te mando mi plantilla de SKILL.md','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Si lo explicaste dos veces, es una skill.</span>']),
 ]},
 gpt: { out: ['negrabeige','blancamarino','holo','marinocrema','grisperla','azulcielo','burdeos','traje','bomber','chaleco'], S: [
-cover('1','negrabeige','Lanzado · 9 julio 2026','GPT-5.6<br><span class="gold">SOL · TERRA · LUNA</span>','La nueva familia<br>de OpenAI','Tres inteligencias, tres precios — <b>cuál usar y para qué</b>.'),
-stmt('2','blancamarino','YA NO ES UN MODELO.<br><span class="gold">ES UNA FAMILIA DE TRES.</span>',['Presentada el 26 de junio, pública desde el <b>9 de julio</b>: tiers con nombre propio que evolucionan por separado.','<span class="cyan">Sol = máxima capacidad · Terra = equilibrio · Luna = velocidad.</span>']),
-cards('3','holo','SOL','El buque insignia: razonamiento de frontera.','☀️ Máxima capacidad',[
-['🧠','Para qué','Razonamiento frontier y <b>agentes de larga duración</b>.'],
-['⚡','Modo Max','Ajuste de razonamiento <b>al límite</b> para problemas duros.'],
-['💰','Precio API','<b>$5 / $30</b> por millón de tokens (entrada/salida).']]),
-cards('4','marinocrema','TERRA','El caballo de batalla del día a día.','🌍 Equilibrio',[
-['⚖️','Rendimiento','Compite con GPT-5.5 <b>a la mitad de coste</b>.'],
-['🏗️','Para qué','Features de producto, asistentes, <b>trabajo diario</b>.'],
-['💰','Precio API','<b>$2.50 / $15</b> por millón de tokens.']]),
-cards('5','grisperla','LUNA','Cuando la latencia importa más que la profundidad.','🌙 Velocidad',[
-['🚀','El más rápido','Alto volumen, respuestas <b>en tiempo real</b>.'],
-['🏷️','Para qué','Clasificación, resúmenes, <b>routing y soporte</b>.'],
-['💰','Precio API','<b>$1 / $6</b> por millón de tokens.']]),
-cards('6','azulcielo','LO NUEVO','Más allá de los tres tiers.','🆕 Capacidades',[
-['🕸️','Ultra Mode','Coordinación de <b>agentes en paralelo</b>.'],
-['🧑‍💻','Programmatic Tool Calling','El modelo <b>escribe JS</b> para orquestar herramientas.'],
-['🤖','Multi-agent beta','Orquestación nativa en la <b>Responses API</b>.']]),
-cards('7','burdeos','CUÁL USAR','Mi criterio de enrutado, tarea por tarea.','🧭 Decisión',[
-['☀️','Sol','Estrategia, análisis complejo, <b>agentes largos</b>.'],
-['🌍','Terra','El 80% de tu trabajo <b>diario</b>.'],
-['🌙','Luna','Todo lo que necesite <b>volumen o velocidad</b>.']]),
-cards('8','traje','VS CLAUDE','El contexto competitivo que nadie te cuenta.','⚖️ Julio 2026',[
-['🟣','Opus 5 (24 jul)','<b>1M de contexto</b>, $5/$25, verificación de agentes.'],
-['🥊','La pelea real','Agentes y <b>coste por resultado</b>, no benchmarks.'],
-['🎯','Mi regla','Usa cada modelo <b>donde gana</b> — no por fanatismo.']]),
-cards('9','bomber','EMPIEZA HOY','Convierte los tiers en ahorro real.','✅ Práctico',[
-['1️⃣','Mapea','Tus tareas frecuentes → <b>Sol, Terra o Luna</b>.'],
-['2️⃣','Mide','Coste por <b>tarea terminada</b>, no por token.'],
-['3️⃣','Enruta','Un router simple que elija tier <b>automáticamente</b>.']]),
-stmt('10','chaleco','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"GPT"</b> y te mando la tabla comparativa','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Mañana: Claude Code vs Codex — la batalla.</span>']),
+cover('1','negrabeige','Lanzado · 9 julio 2026','GPT-5.6<br><span class="gold">SOL · TERRA · LUNA</span>','Análisis técnico<br>para builders','Precios API, Ultra Mode y Programmatic Tool Calling — <b>con números verificados</b>.'),
+stmt('2','blancamarino','TRES TIERS.<br><span class="gold">EL ROUTER ERES TÚ.</span>',['Rollout global en <b>6 minutos</b> el 9 de julio. Cada tier evoluciona por separado.','<span class="cyan">Sol: frontier · Terra: ≈GPT-5.5 a mitad de coste · Luna: volumen y latencia.</span>']),
+cards('3','holo','SOL — $5 / $30','El flagship: razonamiento frontier y agentes largos.','☀️ + Ultra Mode',[
+['🧠','Capacidad','<b>96.2% SWE-bench Verified</b>; hecho para agentes de larga duración.'],
+['⚡','Ultra Mode','Más cómputo por request: Terminal-Bench 2.1 <b>91.9% vs 88.8% base</b>.'],
+['🎯','Cuándo','Estrategia, análisis complejo y <b>orquestación de agentes</b>.']]),
+cards('4','marinocrema','TERRA — $2.50 / $15','El workhorse: rendimiento de flagship anterior a mitad de precio.','🌍 Sweet spot',[
+['⚖️','Rendimiento','Compite con GPT-5.5 <b>a ~50% del coste</b>.'],
+['🏗️','Cuándo','Features de producto, asistentes y <b>agentes de negocio</b>.'],
+['📊','Regla','Tier por defecto para <b>el 80% de tu tráfico</b>.']]),
+cards('5','grisperla','LUNA — $1 / $6','Cuando latencia y volumen mandan sobre la profundidad.','🌙 Alto volumen',[
+['🚀','Latencia','El más rápido de la familia: <b>casos en tiempo real</b>.'],
+['🏷️','Cuándo','Clasificación, extracción, resúmenes y <b>routing</b>.'],
+['💸','Economía','Pipelines de <b>millones de llamadas</b> sin romper el presupuesto.']]),
+cards('6','azulcielo','PROGRAMMATIC TOOL CALLING','La feature técnica más importante del lanzamiento.','🧑‍💻 Responses API',[
+['📜','Cómo funciona','El modelo <b>escribe JavaScript</b> que orquesta tus tools y filtra resultados.'],
+['🔒','Sandbox V8','Runtime aislado <b>sin acceso a red</b>; compatible Zero Data Retention.'],
+['📉','Por qué importa','Menos round-trips al modelo: <b>menos tokens y menos latencia</b>.']]),
+cards('7','burdeos','MULTI-AGENTE (BETA)','Orquestación nativa desde la API, sin framework externo.','🕸️ Fan-out',[
+['🤖','Nativo','Coordinación de agentes en paralelo <b>desde la Responses API</b>.'],
+['🧵','Con PTC','El código del modelo orquesta el fan-out: <b>determinista, no vibes</b>.'],
+['⚠️','Es beta','La interfaz cambiará: <b>abstráela</b> tras tu propia capa.']]),
+cards('8','traje','VS OPUS 5','El contexto competitivo, con números de julio.','⚖️ Head to head',[
+['🟣','Opus 5','<b>97.0% SWE-bench Verified</b> · 1M contexto · $5/$25 (−17% salida).'],
+['🟠','Sol','96.2% + Ultra <b>91.9% Terminal-Bench</b>: gana en shell puro.'],
+['🎯','Criterio','Enruta por tarea y mide <b>coste por resultado</b>, no lealtad de marca.']]),
+cards('9','bomber','MONTA TU ROUTER','Convierte los tres tiers en ahorro medible.','✅ Esta semana',[
+['1️⃣','Clasifica tráfico','Etiqueta una semana de requests: <b>Sol, Terra o Luna</b>.'],
+['2️⃣','Router barato','Un clasificador en Luna decide el tier <b>antes de cada request</b>.'],
+['3️⃣','Evalúa PTC','Si encadenas 3+ tools por request, <b>PTC te quita latencia y coste</b>.']]),
+stmt('10','chaleco','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"GPT"</b> y te mando la tabla comparativa completa','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Mañana: Claude Code vs Codex — con benchmarks independientes.</span>']),
 ]},
 vs: { out: ['burdeos','grisperla','tablet','blancamarino','azulcielo','marinocrema','negrabeige','gris','camel','brazos'], S: [
-cover('1','burdeos','Actualizado · Agosto 2026','CLAUDE CODE<br><span class="gold">VS CODEX</span>','La batalla de los<br>agentes de código','Benchmarks, calidad, coste y <b>cuándo usar cada uno</b> — con datos.'),
-stmt('2','grisperla','NO HAY GANADOR ÚNICO.<br><span class="gold">HAY GANADOR PARA TU CASO.</span>',['Los dos son agentes de terminal. Cambian <b>filosofía, coste y fortalezas</b>.','<span class="cyan">Esto es lo que dicen los datos de 2026 — no el hype.</span>']),
-cards('3','tablet','FILOSOFÍA','Dos formas de entender el mismo trabajo.','🧠 Enfoques',[
-['🟣','Claude Code','<b>Developer-in-the-loop</b>: local, tú apruebas cada paso.'],
-['🟢','Codex','Delegación <b>autónoma</b>, local y en la nube.'],
-['🖥️','En común','Terminal primero, <b>IDE y nube</b> después.']]),
-cards('4','blancamarino','BENCHMARKS','Los números de 2026, sin marketing.','📊 Datos',[
-['🟢','Codex gana','<b>88.7%</b> SWE-bench Verified · 82% Terminal-Bench.'],
-['🟣','Claude gana','<b>SWE-bench Pro (64.3%)</b> y refactors multi-archivo.'],
-['⚠️','Ojo','Benchmark ≠ tu repo: <b>mide en tu caso real</b>.']]),
-cards('5','azulcielo','CALIDAD','Lo que ven los revisores, no los benchmarks.','🏆 Código limpio',[
-['👥','Revisión ciega','<b>67%</b> prefirió el código de Claude Code (vs 25%).'],
-['🧵','Contexto 1M','Codebases grandes <b>en una sola sesión</b>.'],
-['📉','Menos deuda','PRs largos con <b>menos retrabajo</b> después.']]),
-cards('6','marinocrema','VELOCIDAD Y COSTE','Donde Codex pega fuerte.','⚡ Su terreno',[
-['🚀','Ejecución','Más rápido y <b>más eficiente en tokens</b>.'],
-['💳','Precio','Incluido en <b>todos los planes de ChatGPT</b> (hasta Free).'],
-['🖥️','Terminal puro','Tareas de shell <b>cortas y autónomas</b>.']]),
-cards('7','negrabeige','ELIGE CLAUDE CODE','Si esto te describe, no lo dudes.','🟣 Cuándo',[
-['🏗️','Refactors grandes','Multi-archivo y <b>codebases enormes</b>.'],
-['🔍','Calidad exigente','Code review estricto y <b>producción seria</b>.'],
-['🧩','Ecosistema','MCP + <b>skills + subagentes</b> + CLAUDE.md.']]),
-cards('8','gris','ELIGE CODEX','Su caso de uso legítimo — sin fanatismos.','🟢 Cuándo',[
-['⚡','Prototipos','Scripts y pruebas <b>rápidas</b>.'],
-['💳','Ya pagas ChatGPT','Coste marginal <b>cero</b>.'],
-['☁️','Delegación en nube','Tareas autónomas <b>sin supervisión fina</b>.']]),
-cards('9','camel','MI VEREDICTO','Después de usarlos a diario en proyectos reales.','⚖️ Honesto',[
-['🤝','Usa ambos','Codex para velocidad, <b>Claude Code para calidad</b>.'],
-['💰','Coste real','Lo que importa: coste por <b>tarea terminada</b>.'],
-['🎯','La habilidad','Definir bien la tarea <b>vale en los dos</b>.']]),
-stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"VS"</b> y te mando la comparativa completa','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Yo los uso los dos — esto sale de práctica real.</span>']),
+cover('1','burdeos','Datos · Julio 2026','CLAUDE CODE<br><span class="gold">VS CODEX</span>','Benchmarks independientes,<br>no opiniones','SWE-bench, Terminal-Bench, Coding Agent Index y coste — <b>criterio por caso de uso</b>.'),
+stmt('2','grisperla','EMPATE TÉCNICO ARRIBA.<br><span class="gold">DIFERENCIAS DONDE IMPORTA.</span>',['SWE-bench Verified: Opus 5 <b>97.0%</b> vs GPT-5.6 Sol <b>96.2%</b>. Décimas.','<span class="cyan">La elección real está en filosofía, ecosistema y coste por tarea terminada.</span>']),
+cards('3','tablet','FILOSOFÍA','Dos modelos de trabajo sobre el mismo problema.','🧠 Enfoques',[
+['🟣','Claude Code','Developer-in-the-loop: <b>plan → diff → apruebas</b>. Local primero.'],
+['🟢','Codex','Delegación autónoma <b>local y en la nube</b>, integrada en ChatGPT.'],
+['🔁','Convergen','Ambos ya cubren terminal, IDE, <b>background y CI</b>.']]),
+cards('4','blancamarino','BENCHMARKS','Lo que dicen los evaluadores independientes en julio.','📊 Artificial Analysis',[
+['🟣','Opus 5','<b>97.0% SWE-bench Verified</b>; lidera 9 de 12 benchmarks.'],
+['🟢','Sol + Codex','Coding Agent Index <b>80 vs 77</b>; Terminal-Bench Ultra 91.9%.'],
+['⚠️','Lectura correcta','Décimas de diferencia: <b>mide en TU repo</b>, no en el leaderboard.']]),
+cards('5','azulcielo','DÓNDE GANA CLAUDE CODE','Fortalezas medibles, no marketing.','🟣 Su terreno',[
+['🧵','Contexto 1M','Monorepos y <b>refactors multi-archivo</b> en una sola sesión.'],
+['📐','SWE-bench Pro','Lidera con <b>+14.6 puntos</b>: tareas largas y difíciles.'],
+['🧩','Ecosistema','MCP + skills + <b>subagentes anidados ×3</b> + hooks.']]),
+cards('6','marinocrema','DÓNDE GANA CODEX','Su caso legítimo — sin fanatismos.','🟢 Su terreno',[
+['⚡','Shell puro','Terminal-Bench 2.1: <b>91.9% con Sol Ultra</b>.'],
+['💳','Distribución','Incluido en <b>todos los planes de ChatGPT</b>.'],
+['☁️','Cloud tasks','Delegación asíncrona <b>sin supervisión fina</b>.']]),
+cards('7','negrabeige','COSTE REAL','La comparación que casi nadie hace bien.','💰 Economía',[
+['💵','API','Opus 5 <b>$5/$25</b> vs Sol $5/$30: −17% en salida.'],
+['📦','Suscripción','Codex sin coste extra si ya pagas ChatGPT; Claude Code <b>por plan o API</b>.'],
+['🎯','La métrica','Coste por <b>tarea terminada</b>: tokens baratos que reintentan salen caros.']]),
+cards('8','gris','STACK HÍBRIDO','Cómo los combino en proyectos reales.','⚖️ Mi setup',[
+['🟣','Claude Code','Producción, refactors grandes y <b>review estricto</b>.'],
+['🟢','Codex','Prototipos, scripts y <b>tareas shell autónomas</b>.'],
+['🔀','Interop','Skills es estándar abierto: <b>tu método sirve en ambos</b>.']]),
+cards('9','camel','DECIDE CON DATOS','Framework de evaluación en 3 pasos.','✅ Esta semana',[
+['1️⃣','Piloto A/B','La misma tarea real en ambos: <b>mide retrabajo</b>, no velocidad bruta.'],
+['2️⃣','Audita ecosistema','¿Usas MCP, skills, subagentes? <b>Ahí está la brecha</b>.'],
+['3️⃣','TCO a 90 días','Suscripciones + API + <b>tiempo humano de review</b>.']]),
+stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel','💬 Comenta <b>"VS"</b> y te mando la comparativa completa','➕ <b>Sígueme</b>: IA verificada, cada semana','<span class="cyan">Uso los dos a diario — esto sale de práctica real.</span>']),
 ]},
 };
 
@@ -285,16 +286,17 @@ stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda
     const m = await p.evaluate(() => {
       const img = document.querySelector('.avbox img');
       const ir = img.getBoundingClientRect();
-      let maxRight = 0;
+      let maxRight = 0, maxBottom = 0;
       document.querySelectorAll('.slide .col, .slide .col *, .slide > div[style]').forEach(el => {
         const r = el.getBoundingClientRect();
         if (r.width === 0 || r.height === 0) return;
         if (r.bottom > ir.top && r.right > maxRight) maxRight = r.right;
+        if (r.bottom > maxBottom) maxBottom = r.bottom;
       });
-      return { loaded: img.naturalWidth > 0, imgLeft: Math.round(ir.left), textMaxRight: Math.round(maxRight) };
+      return { loaded: img.naturalWidth > 0, imgLeft: Math.round(ir.left), textMaxRight: Math.round(maxRight), maxBottom: Math.round(maxBottom) };
     });
     await p.screenshot({ path: `${day}-s${n}.png` });
-    console.log(day, n, JSON.stringify(m), m.loaded && m.textMaxRight <= m.imgLeft ? 'OK' : 'FAIL');
+    console.log(day, n, JSON.stringify(m), m.loaded && m.textMaxRight <= m.imgLeft && m.maxBottom <= 1350 ? 'OK' : 'FAIL');
   }
   await b.close();
 })();
