@@ -1,6 +1,7 @@
 // Carruseles diarios 31 jul - 4 ago (identidad v2, sin solapes, outfits rotados).
-// v3 PRINCIPIANTES: lenguaje sencillo, mas informacion por slide, terminos explicados.
-// Datos re-verificados 30-jul-2026. Uso: node gen-diarios.cjs <cc|ag|sk|gpt|vs>
+// v4 PRINCIPIANTES + AVATAR XL: imagen de Andres mas grande (505px) e integrada
+// con el diseno (aura, anillos holograficos, red neuronal por detras); el texto
+// nunca la cubre. Datos re-verificados 30-jul-2026. Uso: node gen-diarios.cjs <cc|ag|sk|gpt|vs>
 const { chromium } = require('playwright');
 
 const AV = {
@@ -37,15 +38,22 @@ html,body { width:1080px; height:1350px; }
 body { font-family:'Roboto',sans-serif; position:relative; overflow:hidden; color:#fff;
   background:linear-gradient(160deg,#05080F 0%,#0A1220 55%,#060B14 100%); }
 svg.net { position:absolute; inset:0; }
-.avbox { position:absolute; right:0; bottom:0; width:428px; height:980px;
+.avbox { position:absolute; right:0; bottom:0; width:505px; height:1180px;
   display:flex; align-items:flex-end; justify-content:flex-end; z-index:1; }
-.avbox img { max-width:428px; max-height:980px; object-fit:contain; object-position:bottom right;
-  filter:drop-shadow(-14px 0 45px rgba(0,0,0,0.8)); }
-.slide { position:absolute; inset:0; padding:56px 60px 48px; display:flex; flex-direction:column; z-index:2; }
-.col { width:560px; display:flex; flex-direction:column; flex:1; }
+.avbox img { position:relative; z-index:2; max-width:505px; max-height:1180px;
+  object-fit:contain; object-position:bottom right;
+  filter:drop-shadow(-16px 0 50px rgba(0,0,0,0.82)); }
+.aura { position:absolute; right:-70px; bottom:-40px; width:660px; height:920px;
+  background:radial-gradient(ellipse at 60% 68%, rgba(232,163,61,0.26) 0%, rgba(53,199,232,0.12) 45%, transparent 72%); }
+.ring { position:absolute; border-radius:50%; }
+.r1 { right:28px; bottom:16px; width:440px; height:102px;
+  border:2px solid rgba(53,199,232,0.5); box-shadow:0 0 36px rgba(53,199,232,0.3); }
+.r2 { right:62px; bottom:34px; width:372px; height:80px; border:2px solid rgba(232,163,61,0.55); }
+.slide { position:absolute; inset:0; padding:48px 60px 44px 42px; display:flex; flex-direction:column; z-index:2; }
+.col { width:528px; display:flex; flex-direction:column; flex:1; }
 .countL { display:inline-block; border:2px solid #C9932F; border-radius:14px; padding:7px 20px;
   font-family:'Oswald',sans-serif; font-size:27px; font-weight:600; color:#F0D9A6;
-  align-self:flex-start; margin-bottom:20px; }
+  align-self:flex-start; margin-bottom:14px; }
 .countR { position:absolute; top:46px; right:50px; background:rgba(10,14,24,0.85);
   border-radius:999px; padding:11px 26px; font-size:29px; font-weight:700; color:#EAF2FA; z-index:3; }
 .tgold { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
@@ -57,17 +65,17 @@ svg.net { position:absolute; inset:0; }
   text-shadow:0 2px 12px rgba(0,0,0,0.7); }
 .tsub b { color:#F0B54A; }
 .cap { display:inline-flex; align-items:center; gap:10px; border:2px solid #E8A33D; border-radius:12px;
-  padding:8px 18px; margin:16px 0 18px; font-family:'Oswald',sans-serif; font-size:23px; font-weight:600;
+  padding:8px 18px; margin:12px 0 14px; font-family:'Oswald',sans-serif; font-size:23px; font-weight:600;
   letter-spacing:2px; text-transform:uppercase; color:#F0B54A; align-self:flex-start;
   background:rgba(232,163,61,0.07); }
 .card { display:flex; align-items:flex-start; gap:16px; border:2px solid rgba(232,163,61,0.6);
-  border-radius:16px; background:rgba(10,16,28,0.78); padding:14px 17px; margin-bottom:12px; }
+  border-radius:16px; background:rgba(10,16,28,0.78); padding:13px 16px; margin-bottom:10px; }
 .hex { min-width:50px; height:50px; display:flex; align-items:center; justify-content:center;
   font-size:23px; color:#F0B54A; border:2px solid #C9932F; border-radius:12px;
   background:rgba(232,163,61,0.09); }
 .card h3 { font-family:'Oswald',sans-serif; font-size:24px; font-weight:600; color:#F0B54A;
   letter-spacing:1px; margin-bottom:4px; text-transform:uppercase; }
-.card p { font-size:22px; line-height:1.32; color:#E7EDF4; }
+.card p { font-size:21px; line-height:1.3; color:#E7EDF4; }
 .card p b { color:#fff; }
 .h1 { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
   font-size:82px; line-height:1.05; text-shadow:0 4px 24px rgba(0,0,0,0.85); }
@@ -78,7 +86,7 @@ svg.net { position:absolute; inset:0; }
 .pill { display:inline-block; padding:11px 24px; border:2px solid #E8A33D; border-radius:999px;
   color:#F0B54A; font-size:25px; font-weight:700; letter-spacing:2px; margin-bottom:30px;
   align-self:flex-start; text-transform:uppercase; }
-p.body { font-size:31px; line-height:1.4; color:#E6EDF5; text-shadow:0 2px 12px rgba(0,0,0,0.7); }
+p.body { font-size:30px; line-height:1.38; color:#E6EDF5; text-shadow:0 2px 12px rgba(0,0,0,0.7); }
 p.body b { color:#F0B54A; }
 .mt { margin-top:18px; }
 .vcenter { flex:1; display:flex; flex-direction:column; justify-content:center; }
@@ -89,9 +97,9 @@ p.body b { color:#F0B54A; }
 .rol { font-size:20px; letter-spacing:3px; color:#9FB2C8; text-transform:uppercase; margin-top:2px; }
 `;
 
-const FOOT = `<div style="width:560px;"><div class="firma">Ing. Andrés Acosta</div><div class="rol">IA &amp; Automatización</div></div>`;
+const FOOT = `<div style="width:528px;"><div class="firma">Ing. Andrés Acosta</div><div class="rol">IA &amp; Automatización</div></div>`;
 const card = (ico, t, p) => `<div class="card"><div class="hex">${ico}</div><div><h3>${t}</h3><p>${p}</p></div></div>`;
-const av = (k) => `<div class="avbox"><img src="${AV[k]}"></div>`;
+const av = (k) => `<div class="avbox"><div class="aura"></div><div class="ring r1"></div><div class="ring r2"></div><img src="${AV[k]}"></div>`;
 const cover = (n, o, pill, h1, sub, body) => `${NET}${av(o)}<div class="slide"><div class="countR">${n}/10</div>
 <div class="col vcenter"><div class="pill">${pill}</div><div class="h1">${h1}</div><div class="sub">${sub}</div>
 <p class="body mt" style="font-size:33px;">${body}</p></div>${FOOT}</div>`;
