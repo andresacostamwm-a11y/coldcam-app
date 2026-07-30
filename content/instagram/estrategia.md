@@ -82,10 +82,23 @@ Regla 80/20: 80 % valor y humor, 20 % marca personal/proyectos (ColdCam, agentes
 **Set B — negocio/productividad:** #Productividad #Emprendimiento #NegociosDigitales #IAparaNegocios #Automatiza #HerramientasIA #TrabajoInteligente #MarketingDigital #Eficiencia #PYMES
 **Set C — técnico:** #AgentesIA #MachineLearning #NoCode #n8n #Python #DesarrolloDeSoftware #APIs #TechEnEspañol #Programacion #DataScience
 
-## 6. Identidad visual
+## 6. Identidad visual (OFICIAL — elegida por Andrés, jul 2026)
 
-- Paleta: fondo oscuro (#0D1117), acento eléctrico (#3B82F6 o #22D3EE), texto blanco.
-- Tipografía bold sans-serif para titulares de carrusel; misma plantilla siempre.
+**Dos paletas en rotación:**
+- **Paleta C — Crema + Marino** (fondo #F4EFE6, texto #101E38, acentos #1D3A6E y #8C6D3F):
+  para carruseles educativos/tutoriales. Destaca en el feed por ser clara.
+- **Paleta D — Azul Eléctrico** (fondo #0D1117, texto blanco, acentos #3B82F6 y #22D3EE):
+  para novedades y contenido técnico/agentes.
+
+**Tipografías:** Playfair Display 700/800 (titulares, serif editorial) +
+Montserrat 400/500/700 (cuerpo). Alternativa premium disponible: Cormorant
+Garamond + Raleway.
+
+**Sello en cada slide:** emblema de red neuronal (SVG, en color de acento) +
+firma caligráfica **"Ing. Andrés Acosta"** (Dancing Script 700, A mayúsculas
+claras) en el pie izquierdo; "IA & AUTOMATIZACIÓN" en el pie derecho.
+
+- Plantilla generada por código (HTML+Playwright, 1080×1350) — ver scripts en el repo.
 - Memes: formato clásico (plantillas conocidas) — ahí la estética importa menos que el timing.
 
 ## 6b. Identidad de voz del avatar
