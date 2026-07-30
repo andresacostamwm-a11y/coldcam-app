@@ -1,13 +1,15 @@
-# Carruseles diarios — Semana 2 (vie 31 jul → mar 4 ago 2026) · Versión PRINCIPIANTES v3
+# Carruseles diarios — Semana 2 (vie 31 jul → mar 4 ago 2026) · Versión PRINCIPIANTES v4 · AVATAR XL
 
-Generados con `gen-diarios.cjs` @ 9dc7772 (plantilla OFICIAL v2). Contenido
+Generados con `gen-diarios.cjs` @ 1be4002 (plantilla OFICIAL v2 + avatar XL:
+imagen de Andrés de 505px integrada con aura dorada/cian, anillos holográficos
+y red neuronal por detrás). Contenido
 para principiantes: lenguaje sencillo, cada término técnico explicado
 (terminal, contexto, agente, token, MCP, skill…), más información por slide.
 Datos verificados contra fuentes primarias el 30-jul-2026.
 
 Verificación programática en las 50 slides: avatar en columna derecha sin
-solapes (textMaxRight 620 ≤ imgLeft 652) y sin desborde vertical
-(maxBottom 1302 ≤ 1350). Outfit elegante distinto en cada slide.
+solapes (textMaxRight 570 ≤ imgLeft 575) y sin desborde vertical
+(maxBottom 1306 ≤ 1350). Outfit elegante distinto en cada slide.
 Integridad CDN verificada: 50/50 archivos > 100 KB.
 
 Base CDN: `https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/<id>.png`
@@ -15,16 +17,16 @@ Base CDN: `https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UO
 ## Viernes 31 julio — ¿Qué es Claude Code? (desde cero)
 
 Slides s01→s10:
-1. 4a1eef93-2314-4538-a06c-d763bbb2e9ff
-2. 85932223-daf1-4caf-99b9-093269e41cdd
-3. 14a9f9f6-939e-48dc-8288-ba9269e9088f
-4. 1a785f79-7e82-43f1-8adc-0e67a18625ff
-5. 5139ffcd-8bea-4ec8-93a3-fb3125064aa6
-6. 36be104f-f960-4e6e-82f9-0a3fda5bfb0f
-7. 4a9e3b94-584a-475a-bc14-d13a0c34682b
-8. 3dab2bbb-db92-45d1-b7dd-9c55622e3a1a
-9. 36d26e65-ec76-4956-9c39-5012707a3ec4
-10. 520d5d14-3128-42be-b531-7f7a8cac4d3e
+1. eaad0fc6-a2ea-4a50-991d-722e4193dcc1
+2. ac546f6a-0e6e-45a9-b244-11a9af720dd4
+3. 19b7d947-0c8b-46a0-81f6-cfd32eacfadf
+4. 5270b754-e308-4e70-bf1e-b7e999f4c6da
+5. 471e3013-7d12-49c5-a704-bc72940b3302
+6. 4fbaddbd-7faf-43d1-a771-d745c2bd0d08
+7. bbeb50d4-8e9c-4d84-8a25-3c4995427575
+8. 1d61d27f-a0d9-4e57-a231-759504779c08
+9. 8734c5f3-7482-45a7-9b98-7ebaad1ccf02
+10. 8c2aec29-bf69-4085-a657-4d2c11f697dc
 
 **Caption:**
 ¿Has oído hablar de Claude Code y no sabes qué es? Te lo explico desde cero, sin tecnicismos 🤖
@@ -46,16 +48,16 @@ Fuentes: documentación oficial de Anthropic (verificado 30-jul-2026).
 ## Sábado 1 agosto — Agentes de IA explicados fácil
 
 Slides s01→s10:
-1. 05c344fe-57b2-4707-b844-c55ec88be90a
-2. 81256f06-ae76-4331-a42a-0fcfb4fb9bf6
-3. d5105959-e601-40b8-8cdc-c7c53352b8af
-4. 59109473-1e67-4cc0-b5f2-6361a5963c5d
-5. c5afb3a5-3566-4533-9e7b-b2c6f9c1bea0
-6. a6d58606-1ef3-4742-8558-9a56cf0b84b8
-7. f3daf806-8a3d-4f61-9e46-13b5590b57eb
-8. 19e65a6d-e02a-4919-8ac6-63c0552b1b2e
-9. d3942af7-5164-403b-853f-6c4dbca6c57a
-10. 18b6d2b8-929c-483e-bdaa-0de74899ea04
+1. 94dd05ab-529f-42b6-8f97-698c8c41ea4d
+2. ce979cae-ee45-4acb-a307-aaafb8f0942e
+3. 2cedb60a-5416-4ab9-ad9f-d652736795fc
+4. 1d014e98-7bc6-4ff6-8ee8-8ee43eeca0b1
+5. 92e85a73-213b-44ec-92c3-df4547288c86
+6. d1ac8887-4cd8-4dbc-ad62-3e96d2807f7d
+7. 38fcd173-a361-42c7-b671-a6d38610e825
+8. 6c63eec6-ee70-4819-bb89-a50612466f60
+9. b6662cce-7e4c-4ff8-abc9-ec2ee94d6f25
+10. f7580718-13b6-4ac7-bd78-f0ba66f5e34f
 
 **Caption:**
 "Agente de IA" es la palabra de moda… pero ¿qué significa de verdad? 🧠
@@ -77,16 +79,16 @@ Fuentes: documentación oficial de Anthropic (verificado 30-jul-2026).
 ## Domingo 2 agosto — Skills de Claude para principiantes
 
 Slides s01→s10:
-1. 00d216b9-7eb6-468d-99c6-2c9afd1b5ff4
-2. 091751b1-9d09-4ce7-9a84-229126b782d3
-3. 3a3c7831-eb85-4ed2-9463-2575aa3a66ce
-4. 8df9f66e-f840-4fe3-bf9f-519067770703
-5. 57ede90a-7af9-4fbb-a72c-ff5d0b342e43
-6. b308b8ba-4207-4f8d-8c94-aa131f126463
-7. 8753132e-1df0-4e27-8b7b-03e986161e5b
-8. 692a7687-ff57-45b8-994d-878664aa3b53
-9. bc63834f-c08e-4b1a-85c7-4f2c3677ac73
-10. b4ade003-62ef-42e7-aaaf-d004918cd794
+1. ea0114c2-ad4b-4b61-baed-1a1bc5baceca
+2. ae882093-d12d-4214-aef7-adc21a01817b
+3. 06febe0f-f028-4b97-b0b7-076c1caefdba
+4. bef2d012-0408-48e1-965a-4fe6d05185de
+5. 68568bb5-e837-46b1-9955-cd964e03fa61
+6. 26006e00-db71-4d27-a7be-48cef31dbaf7
+7. dcbf19f8-bee8-4772-9a61-0fb6afd09dbb
+8. 8e811252-5e45-4332-97a2-38264c957aa1
+9. 101b9aa9-e838-468a-a6ce-949929415ba1
+10. d3311536-e2ab-43bd-9027-33f15679115d
 
 **Caption:**
 ¿Repites las mismas instrucciones a la IA una y otra vez? Las skills son la solución 🧩
@@ -108,16 +110,16 @@ Fuentes: documentación oficial de Anthropic (verificado 30-jul-2026).
 ## Lunes 3 agosto — GPT-5.6: Sol, Terra y Luna explicados fácil
 
 Slides s01→s10:
-1. 803d2c5c-4d19-4582-98aa-b25f1e0eff7a
-2. f3f1c63e-1aa7-41a4-a62d-9639aeddc1d5
-3. 3f74e397-e126-496c-a681-283feebf4137
-4. 74f31400-6cb1-4a1a-aed5-f1075edab9af
-5. b426ffe9-3d8b-4672-bb72-94399bd1cd1c
-6. c0258f9e-75f4-4237-b899-9c92c9d12229
-7. 3b3db643-e8cb-4a6a-a8a6-bd6859104eca
-8. 95d50b92-cff8-4538-b5a2-d9560d4997b3
-9. 3e52ec43-a141-4302-9c74-5dec6d3d99e9
-10. 0ddc6d53-1d67-46a4-aa36-7d7b3d471a2b
+1. 4cd6a6e5-131d-46c3-874a-6df4283aaaf8
+2. 39d782b3-640c-43b3-af02-4869a390f909
+3. 9366493d-1fdd-4c20-87a0-b78ea941025f
+4. 631ab196-89ee-4471-aafb-4524d8976f26
+5. 16cf1e03-3d70-4ffc-a0fa-2730bd201450
+6. dc0547d5-db59-461c-a5cd-4559057f8eb2
+7. 37ec1dfd-cb05-45d2-b9df-2e36eed06691
+8. 56f464cf-955a-40da-9668-1a52760c4b2a
+9. 66734110-303d-4143-883e-8e4b69514ca5
+10. e748938c-b676-4506-aaf0-e194cf5e86e4
 
 **Caption:**
 GPT-5.6 llegó con 3 versiones: Sol ☀️, Terra 🌍 y Luna 🌙. ¿Cuál te conviene? Te lo explico fácil.
@@ -140,16 +142,16 @@ Fuentes: anuncio y documentación oficial de OpenAI (verificado 30-jul-2026).
 ## Martes 4 agosto — Claude Code vs Codex: ¿cuál elegir?
 
 Slides s01→s10:
-1. 68c59558-679d-493b-bb96-d93e8b971ade
-2. f8d51f00-3cbb-41ef-8de6-93980c76b351
-3. 00ebacaf-f5ae-4c62-a730-1f5926b1dfc1
-4. 20c84838-b529-4ecd-af53-62a9132e95d9
-5. eeb43a32-19f7-487d-a87b-b0b09b841888
-6. ae28258f-be3b-4423-acdf-271c7c6925e8
-7. 01b8f547-0974-4e85-972c-456380038a08
-8. 984a2c03-4b44-497c-9b3c-a0be14656f7b
-9. 5a67c005-121f-4a89-9621-e405687cd2fb
-10. fcc4b852-5658-459d-8644-78e61a26e605
+1. 35f503bf-d374-4f2f-af11-414bcd523157
+2. 8248f750-a73c-4e52-bbee-1abb3e42173f
+3. c545eabe-802e-485e-af4b-7cd42cbe5657
+4. 42c71aa9-7d61-4117-93da-838834eaf784
+5. 295aac11-253f-47ab-a6ab-c3277461c811
+6. 4546ef19-cc22-465f-a50f-d86d75bcc08f
+7. 7819a82b-f9fa-40c6-b276-079f61327ef4
+8. 0b8486a8-091d-4db3-af9f-977f87a3a937
+9. 046844de-4e78-44ae-8ae2-4ab0f4f6718e
+10. 66346d48-47ca-424e-b85b-60b34eb8ecf6
 
 **Caption:**
 Claude Code vs Codex: la comparación honesta que necesitabas, sin fanatismos ⚔️
