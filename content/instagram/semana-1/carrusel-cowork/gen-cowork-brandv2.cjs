@@ -197,8 +197,23 @@ ${card('3️⃣', 'Informe semanal', 'Resumen recurrente <b>cada lunes a primera
 <style>${CSS}</style></head><body>${body}</body></html>`;
     await p.setContent(html, { waitUntil: 'networkidle' });
     await p.waitForTimeout(1500);
+    // Verificación de reglas: avatar presente y ningún texto/tarjeta lo invade.
+    const m = await p.evaluate(() => {
+      const img = document.querySelector('.avbox img');
+      const ir = img.getBoundingClientRect();
+      let maxRight = 0, worst = '';
+      document.querySelectorAll('.slide .col, .slide .col *, .slide > div[style]').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) return;
+        if (r.bottom > ir.top && r.right > maxRight) { maxRight = r.right; worst = (el.className || el.tagName).toString().slice(0, 20); }
+      });
+      return { loaded: img.naturalWidth > 0, imgLeft: Math.round(ir.left), imgTop: Math.round(ir.top),
+               imgRight: Math.round(ir.right), imgBottom: Math.round(ir.bottom),
+               textMaxRight: Math.round(maxRight), worst };
+    });
+    const pass = m.loaded && m.textMaxRight <= m.imgLeft;
     await p.screenshot({ path: `cw-s${n}.png` });
-    console.log('ok', n);
+    console.log(n, JSON.stringify(m), pass ? 'OK' : 'FAIL');
   }
   await b.close();
 })();
