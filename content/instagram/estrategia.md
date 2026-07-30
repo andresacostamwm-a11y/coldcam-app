@@ -82,23 +82,35 @@ Regla 80/20: 80 % valor y humor, 20 % marca personal/proyectos (ColdCam, agentes
 **Set B — negocio/productividad:** #Productividad #Emprendimiento #NegociosDigitales #IAparaNegocios #Automatiza #HerramientasIA #TrabajoInteligente #MarketingDigital #Eficiencia #PYMES
 **Set C — técnico:** #AgentesIA #MachineLearning #NoCode #n8n #Python #DesarrolloDeSoftware #APIs #TechEnEspañol #Programacion #DataScience
 
-## 6. Identidad visual (OFICIAL — elegida por Andrés, jul 2026)
+## 6. Identidad visual (OFICIAL v2 — alineada al feed actual, jul 2026)
 
-**Dos paletas en rotación:**
-- **Paleta C — Crema + Marino** (fondo #F4EFE6, texto #101E38, acentos #1D3A6E y #8C6D3F):
-  para carruseles educativos/tutoriales. Destaca en el feed por ser clara.
-- **Paleta D — Azul Eléctrico** (fondo #0D1117, texto blanco, acentos #3B82F6 y #22D3EE):
-  para novedades y contenido técnico/agentes.
+Basada en las publicaciones ya activas del feed (@andrescostavertexaiengineering):
 
-**Tipografías:** Playfair Display 700/800 (titulares, serif editorial) +
-Montserrat 400/500/700 (cuerpo). Alternativa premium disponible: Cormorant
-Garamond + Raleway.
+**Paleta única de marca:**
+- Fondo: negro azulado profundo **#05080F → #0A1220** (degradado sutil).
+- Red neuronal de partículas de fondo: nodos y líneas **doradas #E8A33D** (cluster
+  superior derecho) y **azul/cian #35C7E8 / #2E6BD6** (inferior izquierdo), baja opacidad.
+- Jerarquía de texto: **blanco #FFFFFF** (base) + **dorado #F0B54A** (palabra clave
+  del titular) + **cian #35C7E8** (subtítulo/acento secundario).
 
-**Sello en cada slide:** emblema de red neuronal (SVG, en color de acento) +
-firma caligráfica **"Ing. Andrés Acosta"** (Dancing Script 700, A mayúsculas
-claras) en el pie izquierdo; "IA & AUTOMATIZACIÓN" en el pie derecho.
+**Tipografía:** sans condensada BOLD en MAYÚSCULAS para titulares (Oswald 600/700)
++ sans limpia para cuerpo (Roboto/Inter 400/500; negritas doradas para resaltar).
+
+**El avatar ES la marca:** el avatar IA fotorrealista de Andrés (traje oscuro /
+cuello alto negro) aparece integrado en las slides, normalmente anclado a la
+derecha, recortado sin fondo sobre la red neuronal. Recortes reutilizables en
+`content/instagram/marca/` (avatar-traje, avatar-brazos) + versiones sin fondo
+en Higgsfield.
+
+**Elementos recurrentes:**
+- Badge numerado: cuadrado redondeado **dorado** con número oscuro (esquina sup. izq.).
+- Contador "N/10" tipo pill oscuro (esquina sup. der.).
+- Iconos line-art neón (cerebro, bombilla, cohete) en dorado/cian cuando aportan.
+- Sello/pie: firma caligráfica **"Ing. Andrés Acosta"** (Dancing Script 700) +
+  "IA & AUTOMATIZACIÓN".
 
 - Plantilla generada por código (HTML+Playwright, 1080×1350) — ver scripts en el repo.
+- Paletas legacy C (crema/marino) y D (azul eléctrico) quedan como secundarias.
 - Memes: formato clásico (plantillas conocidas) — ahí la estética importa menos que el timing.
 
 ## 6b. Identidad de voz del avatar
