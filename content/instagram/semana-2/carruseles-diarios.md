@@ -1,139 +1,153 @@
-# Carruseles diarios — Semana 2 (vie 31 jul → mar 4 ago 2026)
+# Carruseles diarios — Semana 2 (vie 31 jul → mar 4 ago 2026) · Versión PRO
 
-Generados con `gen-diarios.cjs` (plantilla OFICIAL v2, verificación programática
-de composición: avatar en columna derecha, texto ≤620px, sin solapes — 50/50 OK).
-Contenido verificado contra fuentes primarias (Anthropic/OpenAI) el 30-jul-2026.
-Outfit distinto en cada slide (rotación por día, camisa+pantalón de vestir).
+Generados con `gen-diarios.cjs` @ 79ce258 (plantilla OFICIAL v2). Contenido
+intermedio-avanzado, datos re-verificados contra fuentes primarias e
+independientes el 30-jul-2026. Verificación programática en las 50 slides:
+avatar en columna derecha sin solapes (textMaxRight 620 ≤ imgLeft 652) y sin
+desborde vertical (maxBottom 1298 ≤ 1350). Outfit distinto en cada slide.
 
 Base CDN: `https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/<id>.png`
 
-## Viernes 31 julio — Claude Code (novedades julio 2026)
+## Viernes 31 julio — Claude Code PRO (subagentes, hooks, MCP)
 
 Slides s01→s10:
-1. d481c22b-ba61-48f3-a1d2-a02deb64f3a7
-2. b5d458a5-a7ef-4d09-8f01-d12cc71eb732
-3. f57b49bc-ac6d-4059-98c3-d46a4605b01a
-4. 75034f63-fbcf-413a-a4de-63401dcd4cbd
-5. 33910fc2-22f4-47c3-b555-bb08f00d4a10
-6. d0506fb2-eeca-4785-bc9e-be56595a7c2f
-7. b3e3c6d7-979e-4f0f-8c9e-881087e7ca78
-8. 3c9df6eb-fe8e-4911-8070-cd1eea8d1bbc
-9. 97b646c9-0a25-4bda-80b6-77bfca86721e
-10. 5fef086d-1199-490a-af83-223b1c377b51
+1. cbdb7d0a-ad60-4b0d-9976-3f24cea07fc1
+2. 3e803dc5-c155-4b0b-ac44-c4ba40f3913f
+3. 9d1d0965-7d3d-4708-947e-372e10cc70ad
+4. c7aa1d39-26a1-400c-b75c-6bc9fb67a266
+5. 447ad9d5-b3f7-4b6f-bea7-6db61c5042d5
+6. b46582a4-26ff-4fd4-8863-666fa0a5347b
+7. a2f11a67-6664-4e87-8fba-c51355ff26f2
+8. 5d4cc2c3-8942-442b-a1ad-92024fc49805
+9. c1c3ee27-6cfd-4077-8374-f02a00b2d441
+10. 203390c7-5939-4e02-9085-bf60a61879ad
 
 **Caption:**
-Claude Code en julio 2026 ya no es un asistente: es una plataforma de agentes en tu terminal 🤖
+Claude Code en julio 2026 no es un asistente: es un harness de agentes en tu terminal 🤖
 
-En este carrusel te enseño lo nuevo que cambia cómo programamos:
-⚡ Opus 5 con 1M de contexto y 128K de salida
-⚡ Subagentes con presupuesto y ejecución en background
-⚡ Fallback de modelo y cambio de herramientas a mitad de sesión
-⚡ MCP spec 2026-07-28: OAuth/OIDC + Apps & Tasks
+Guía PRO con lo que cambia tu forma de trabajar:
+⚡ Opus 5: 1M de contexto, 128K de salida, 97.0% SWE-bench Verified (nº1)
+⚡ Subagentes anidados hasta profundidad 3 + background que sobrevive reinicios
+⚡ Agentes a medida en .claude/agents/*.md: tools, model, effort y budget por YAML
+⚡ MCP 2026-07-28: OAuth/OIDC + Apps y Tasks versionados
+⚡ Context engineering: CLAUDE.md + hooks + skills con progressive disclosure
 
-Guárdalo 📌 y comenta "CODE" si quieres la guía completa.
-Fuentes: docs y changelog oficiales de Anthropic (verificado 30-jul-2026).
+Guárdalo 📌 y comenta "CODE" para la guía de subagentes.
+Fuentes: changelog y docs oficiales de Anthropic + leaderboards independientes (verificado 30-jul-2026).
 
 #ClaudeAI #ClaudeCode #AgentesIA #IA #InteligenciaArtificial #Programacion #DesarrolloDeSoftware #Automatizacion #TechEnEspañol #APIs #MachineLearning #AprendeIA
 
-## Sábado 1 agosto — Agentes con Claude (Agent SDK + Managed Agents)
+## Sábado 1 agosto — Agentes con Claude (SDK, memoria, orquestación)
 
 Slides s01→s10:
-1. 4f2fe897-f49f-46a8-bb86-96b0bf1c31a4
-2. c94f37a1-256d-4161-acd2-68f8b3b93456
-3. 5b23495f-9c94-47e9-a2ed-c75c29164a6d
-4. 48362ba2-999b-4eb0-b978-a524bb664dd3
-5. f385776c-bb71-4b20-a2f6-71e8136848ba
-6. 24cdbf56-381c-4a51-a2ad-8e38c01b4671
-7. 0a464188-710b-45f6-b8d2-e7ee3f41e9fe
-8. 345cf99b-8756-45f4-ad70-da0cb1e1fc24
-9. 4ea821e3-9406-4357-ac25-08c4eafaa20f
-10. fc76f9b2-71db-43ae-8532-fdb9e7afc53a
+1. 6d1c7b98-687f-4934-8821-531fc1cc6199
+2. 971a259b-f8fd-44de-86a9-76050ac10b02
+3. 79314f26-a7e0-4012-8fff-4c6e9fc50a85
+4. a6b1775a-f760-4358-b151-d46d0ebbb482
+5. 76f4e4ff-af76-4235-9aa6-4c02c51afcda
+6. 296132ab-4577-4f4a-b642-6bf0dc558f5e
+7. 74a1d15a-e3ca-4c26-9bb6-e0b04f110100
+8. e1a072dc-3a76-4f3a-a63a-89eab55170b9
+9. 0cd35c3d-e5db-4d75-a5d9-9e0d67d059b8
+10. 6321688d-6661-4004-a447-3e64f159fffe
 
 **Caption:**
-¿Quieres construir agentes de IA de verdad (no chatbots)? Esto es lo que usaría hoy 👇
+El loop de agente ya es commodity. El foso competitivo está en el estado 🧠
 
-En el carrusel: cómo montar tu primer agente con el Agent SDK de Anthropic (Python/TS), qué son los Managed Agents con sandbox gestionado, tool use, memoria y orquestación multi-agente — con arquitectura y pasos reales.
+Análisis técnico de las 3 vías para construir agentes con Claude:
+🧱 API + tool use vs 🛠️ Agent SDK (Py/TS) vs ☁️ Managed Agents
+💾 Memory stores: filesystem montado, escrituras versionadas, rollback y auditoría
+📉 Context editing: −84% tokens y +39% rendimiento en tareas de 100 turnos (benchmark interno de Anthropic)
+🤖 Patrones: orquestador-worker, pipeline sin barreras, verificador adversario
 
-Guárdalo 📌 y comenta "AGENTE" si quieres el código de ejemplo.
+Guárdalo 📌 y comenta "AGENTE" para la arquitectura de referencia.
+Fuentes: docs oficiales de Anthropic (verificado 30-jul-2026).
+
+#AgentesIA #ClaudeAI #IA #InteligenciaArtificial #Automatizacion #Python #APIs #DesarrolloDeSoftware #MachineLearning #TechEnEspañol #RAG #AprendeIA
+
+## Domingo 2 agosto — Skills de Claude (estándar abierto, a fondo)
+
+Slides s01→s10:
+1. 6949b9d1-7ab5-4e50-ba7a-0ed7a346d729
+2. 29dcac72-642c-4be9-a6e3-1f4a65188eb2
+3. ef6ad433-3d26-422d-8710-2a8c4e1e3824
+4. b19c77cd-9b3c-4d15-a779-5bfb164466d3
+5. 6cf913f5-fcbf-4c2c-aa4e-ab2c5babd669
+6. ea175c49-fb9d-415b-9d1a-b586bb034390
+7. 917a72cb-4fa8-425d-b799-cd53fb4e531d
+8. df281457-f147-4d52-9d34-21a72e5694ea
+9. 39acf05b-ee9c-40da-b2cd-41c775908441
+10. 8e769abb-5d3f-40ca-80bb-3509581854ee
+
+**Caption:**
+Tu prompt repetido es deuda técnica. Una skill lo convierte en infraestructura 🧩
+
+A fondo, nivel pro:
+📁 Progressive disclosure en 3 niveles: ~100 tokens por skill en arranque, body <5K al activar, recursos bajo demanda
+🧬 Frontmatter: name + description obligatorios; allowed-tools y model opcionales
+🎯 Descriptions que disparan: triggers literales + anti-triggers
+🌍 Estándar abierto (dic 2025), adoptado por 26+ plataformas: Codex, Gemini CLI, Cursor, VS Code
+
+Guárdalo 📌 y comenta "SKILL" para mi plantilla de SKILL.md.
 Fuentes: documentación oficial de Anthropic (verificado 30-jul-2026).
 
-#AgentesIA #ClaudeAI #IA #InteligenciaArtificial #Automatizacion #Python #APIs #DesarrolloDeSoftware #MachineLearning #TechEnEspañol #NoCode #AprendeIA
+#ClaudeAI #Skills #IA #InteligenciaArtificial #Automatizacion #Productividad #HerramientasIA #TechEnEspañol #AprendeIA #AgentesIA #DesarrolloDeSoftware #NoCode
 
-## Domingo 2 agosto — Skills de Claude
-
-Slides s01→s10:
-1. e6659932-4b12-444a-8287-799b54675aa1
-2. 312793fc-86c2-48a0-b5ed-5946d241de9e
-3. 5fa27978-b84c-42c4-bbb2-1cbbf4517c28
-4. 8232095e-d5e1-4482-b05f-1d8ad73c8984
-5. 4985b480-415b-4c0a-8a8d-794303afe558
-6. 08f0ba9f-64c5-49c8-a0bd-a5f7e95b0148
-7. 0933123a-8cf8-4f4e-8494-fccfb849c087
-8. e8a076b1-4081-4370-9d51-bcd2a9e0c11a
-9. c223cb31-80df-4647-b3f9-974a185952f6
-10. 5ffde90c-263a-4522-9e13-05c6e70004e7
-
-**Caption:**
-Los Skills son la forma más fácil de darle superpoderes a Claude — y casi nadie los usa bien 🧠
-
-En el carrusel: qué es un Skill (carpeta + SKILL.md), cómo se activan solos por contexto, cómo escribir el frontmatter (name + description) para que Claude los encuentre, y ejemplos reales para tu trabajo diario.
-
-Guárdalo 📌 y comenta "SKILL" si quieres mi plantilla.
-Fuentes: documentación oficial de Anthropic (verificado 30-jul-2026).
-
-#ClaudeAI #Skills #IA #InteligenciaArtificial #Automatizacion #Productividad #HerramientasIA #TechEnEspañol #AprendeIA #AgentesIA #TrabajoInteligente #NoCode
-
-## Lunes 3 agosto — ChatGPT / GPT-5.6: Sol · Terra · Luna
+## Lunes 3 agosto — GPT-5.6: Sol · Terra · Luna (análisis técnico)
 
 Slides s01→s10:
-1. fac23180-1fd4-4811-8f9f-79853939bc9e
-2. 11dcb8fe-6bdd-4585-b6ed-907a8338d787
-3. 224c703e-0a5b-487f-a048-985e2651f2fb
-4. 74ffd410-52fb-4dcb-8481-2331ab938a5a
-5. 184e2b7e-89b4-4626-83cb-1cda45597f22
-6. 89a77052-75ab-42f7-9cd3-f46589b1ff9f
-7. a5ac82fe-60df-4aa0-8649-1eebc803e91c
-8. 38472197-38f3-4329-98d6-b444d3bd67b3
-9. e34928fd-5db7-4697-bcd2-f97d62349d31
-10. 98716647-6fdf-44c3-a38b-3ad61c4ae41e
+1. 77559e92-5cbb-409a-82c7-cd8710b32c31
+2. 7656ee17-49fc-4b4b-9c2d-67aed1662989
+3. b9c50cfc-c8ef-4f33-b090-e6faa1e5de7c
+4. 43faae5b-292a-4f38-b555-d6ef3fca8bb5
+5. 27801425-6a67-4edb-a8e5-966a3d33000d
+6. 121f647e-1a66-44de-9805-883abdb5eb65
+7. 39b9ae92-dfe9-412d-80e0-771d38a2c739
+8. b8d6129e-5634-48a9-83b0-549ab5851aa0
+9. eddf6d69-f8ad-48a5-9b4b-975f11d6ec5f
+10. 5b79961f-662c-4077-b89c-4cd516a026ad
 
 **Caption:**
-GPT-5.6 llegó con 3 "inteligencias": Sol, Terra y Luna ☀️🌍🌙 — ¿cuál te conviene?
+GPT-5.6 tiene 3 tiers — y el router eres tú ☀️🌍🌙
 
-En el carrusel te explico las diferencias reales:
-☀️ Sol ($5/$30): máximo razonamiento + Ultra Mode
-🌍 Terra ($2.50/$15): el equilibrio para el día a día
-🌙 Luna ($1/$6): rápido y barato para volumen
-Además: Programmatic Tool Calling y el modo multi-agente en beta.
+Análisis para builders, con números verificados:
+☀️ Sol ($5/$30): 96.2% SWE-bench Verified; Ultra Mode sube Terminal-Bench 2.1 de 88.8% a 91.9%
+🌍 Terra ($2.50/$15): rendimiento ≈GPT-5.5 a mitad de coste — el tier por defecto
+🌙 Luna ($1/$6): latencia mínima para clasificación, extracción y routing
+🧑‍💻 Programmatic Tool Calling: el modelo escribe JS en un V8 aislado sin red (ZDR-compatible) — menos round-trips, menos tokens
+🕸️ Multi-agente beta nativo en la Responses API
 
-Guárdalo 📌 y comenta "GPT" si quieres la comparativa completa.
-Fuentes: anuncio y documentación oficiales de OpenAI (verificado 30-jul-2026).
+Guárdalo 📌 y comenta "GPT" para la comparativa completa.
+Fuentes: anuncio y docs oficiales de OpenAI + evaluaciones independientes (verificado 30-jul-2026).
 
-#ChatGPT #GPT56 #OpenAI #IA #InteligenciaArtificial #IAgenerativa #Tecnologia #Productividad #HerramientasIA #TechEnEspañol #AprendeIA #Automatizacion
+#ChatGPT #GPT56 #OpenAI #IA #InteligenciaArtificial #IAgenerativa #APIs #Programacion #HerramientasIA #TechEnEspañol #AprendeIA #Automatizacion
 
-## Martes 4 agosto — Claude Code vs Codex
+## Martes 4 agosto — Claude Code vs Codex (benchmarks independientes)
 
 Slides s01→s10:
-1. 224fb8f9-a04a-42bb-9f65-5ee6bd2a9e45
-2. 72253abe-e68d-4c2f-b953-dc84c6efb842
-3. c5d067dc-70a1-4712-83f8-8f9d65a02c6d
-4. 7e2e7557-d0cc-4d5d-832d-311942b47376
-5. 1b0c2409-be7c-4094-8c8b-e561819a9457
-6. b72bd8a0-7693-4872-a1b8-7bc9270992d6
-7. fa39c0db-629d-4c09-920c-baec78ced5e5
-8. e81fd954-51bc-419f-9eef-4fb3736692a2
-9. 5ddcdcd0-48c5-4d50-89c5-0a7f1f979f78
-10. d3981358-1229-4818-a785-7290126d7cb3
+1. a2ed17f1-7b22-4d2a-b0d5-66b89ad8c5bc
+2. 44337fca-7008-46ec-bb0b-b5ae281df046
+3. 21ae310a-ad36-4e58-a4bd-011ae543b290
+4. 2182ba37-53ea-4e51-ba71-467903544273
+5. 4003f766-ab84-4ca1-874c-a6222eda94e9
+6. a7bba50e-403f-4b5e-84fd-67a8180a9995
+7. 9ce36e6e-1fbb-4d22-adaa-57f35abf4752
+8. b8aca810-3878-4eb5-b50f-a9cb2b4fd043
+9. 789ef75b-ee4c-45b2-a968-dcb134c64443
+10. e4e035cc-c37b-489d-ba81-132b73de1d16
 
 **Caption:**
-Claude Code vs Codex: la batalla de los agentes de código en 2026 ⚔️
+Claude Code vs Codex: empate técnico arriba, diferencias donde importa ⚔️
 
-Datos, no opiniones:
-🟠 Codex: 88.7% SWE-bench Verified, 82% Terminal-Bench, incluido en todos los planes de ChatGPT
-🟣 Claude Code: gana en SWE-bench Pro (64.3%), refactors multi-archivo y 67% de preferencia en revisión ciega
-En el carrusel: cuándo usar cada uno según tu caso real.
+Datos independientes de julio 2026, no opiniones:
+🟣 Opus 5: 97.0% SWE-bench Verified; lidera 9 de 12 benchmarks (SWE-bench Pro +14.6 pts); 1M de contexto; $5/$25
+🟢 GPT-5.6 Sol + Codex: Coding Agent Index 80 vs 77; Terminal-Bench 2.1 con Ultra 91.9%; incluido en todos los planes de ChatGPT
+🎯 La métrica correcta: coste por tarea terminada, no por token
+🔀 Bonus: Skills es estándar abierto — tu método sirve en ambos
+
+En el carrusel: cuándo elegir cada uno + framework de decisión en 3 pasos.
 
 Guárdalo 📌 y comenta "VS" con tu favorito.
-Fuentes: benchmarks y anuncios oficiales de OpenAI y Anthropic (verificado 30-jul-2026).
+Fuentes: Artificial Analysis, leaderboards SWE-bench y anuncios oficiales (verificado 30-jul-2026).
 
 #ClaudeCode #Codex #ChatGPT #ClaudeAI #IA #Programacion #DesarrolloDeSoftware #InteligenciaArtificial #AgentesIA #TechEnEspañol #MachineLearning #AprendeIA
