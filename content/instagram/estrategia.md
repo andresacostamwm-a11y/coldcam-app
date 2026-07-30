@@ -5,6 +5,19 @@
 **Formatos:** posts educativos, carruseles, Reels y memes del sector
 **Idioma:** español (audiencia LATAM + España)
 
+## ⭐ Enfoque diferenciador: avatar propio + video espectacular
+
+1. **Lo más actual de IA** — agentes, automatizaciones y herramientas nuevas,
+   con la información **siempre verificada** antes de publicar (fuentes citadas
+   en el caption cuando aplique; nada de rumores ni hype sin confirmar).
+2. **Videos protagonizados por el avatar de Andrés** — generados con IA
+   (Higgsfield Soul + Cinema): mismo rostro reconocible en cada video, pero en
+   **diferentes escenas, estilos y outfits** (futurista, oficina, urbano,
+   cinemático…). El avatar ES la marca: la gente sigue a una cara, no a un logo.
+3. **Producción de vanguardia** — usar los modelos de video más nuevos
+   disponibles; el propio contenido demuestra el nivel de lo que la IA puede
+   hacer hoy ("predico con el ejemplo").
+
 ---
 
 ## 1. Posicionamiento
