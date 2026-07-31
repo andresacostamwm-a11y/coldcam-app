@@ -426,12 +426,29 @@ footer b{color:var(--ink-2)}
 /* ── Video demo interactivo ── */
 .player{max-width:880px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
 .pl-screen{position:relative;aspect-ratio:16/9;background:linear-gradient(125deg,#0A1E4E 0%,#12377F 48%,#1E63C8 100%);overflow:hidden;color:#fff}
-.scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:opacity .5s ease;padding:24px}
+.scene{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .5s ease;overflow:hidden}
+.stage{position:absolute;left:50%;top:50%;width:960px;height:540px;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;transform:translate(-50%,-50%) scale(var(--ps,1));transform-origin:center center}
+.mk-plans{display:flex;gap:14px;align-items:stretch}
+.mk-plan{background:#fff;border-radius:16px;padding:18px 20px;min-width:180px;text-align:center;color:var(--ink);box-shadow:0 14px 34px rgba(3,12,35,.4);position:relative}
+.mk-plan.best{border:2px solid var(--accent);transform:scale(1.08)}
+.mk-plan b{display:block;font-size:17px}
+.mk-plan .pv{display:block;font-size:30px;font-weight:800;letter-spacing:-1px;margin:6px 0 4px}
+.mk-plan i{font-style:normal;font-size:12.5px;color:var(--ink-2)}
+.flagm{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:10.5px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:4px 12px;white-space:nowrap}
+.mk-resume{background:var(--accent-soft);border-radius:11px;padding:10px 13px;font-size:13px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.mk-resume span{font-weight:800}
+.mk-drop{border:2px dashed var(--line);border-radius:12px;padding:14px;text-align:center;font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:10px}
+.scene.on .mk-plan{animation:mkIn .5s both}
+.scene.on .mk-plan:nth-child(1){animation-delay:calc(var(--vs,1)*.4s)}
+.scene.on .mk-plan:nth-child(2){animation-delay:calc(var(--vs,1)*.9s)}
+.scene.on .mk-plan:nth-child(3){animation-delay:calc(var(--vs,1)*1.4s)}
 .scene.on{opacity:1;pointer-events:auto}
 .sc-logo{width:84px;height:84px;border-radius:26px;background:linear-gradient(135deg,var(--lilac),var(--sky),var(--mint));display:grid;place-items:center;font-size:40px;box-shadow:0 16px 40px rgba(3,12,35,.5);animation:orbFloat 2.4s ease-in-out infinite}
-.scene h3{font-size:clamp(20px,3.4vw,32px);letter-spacing:-.8px;text-align:center;text-shadow:0 2px 20px rgba(3,12,35,.5)}
-.scene>p{color:rgba(220,234,255,.9);font-size:clamp(13px,1.8vw,17px);text-align:center;max-width:52ch}
-.mock{background:#fff;border-radius:16px;box-shadow:0 22px 55px rgba(3,12,35,.5);color:var(--ink);padding:18px 20px;width:min(400px,88%);text-align:left}
+.scene h3{font-size:34px;letter-spacing:-.9px;text-align:center;text-shadow:0 2px 20px rgba(3,12,35,.5)}
+.stage>p{color:rgba(220,234,255,.92);font-size:18px;text-align:center;max-width:52ch}
+.mock{background:#fff;border-radius:16px;box-shadow:0 22px 55px rgba(3,12,35,.5);color:var(--ink);padding:18px 20px;width:400px;text-align:left;flex:none}
 .mk-title{font-weight:800;font-size:14px;margin-bottom:10px}
 .mk-prog{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:12px}
 .mk-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--mint));border-radius:99px}
@@ -473,8 +490,6 @@ footer b{color:var(--ink-2)}
 .scene.on .mk-key{animation:mkIn .5s calc(var(--vs,1)*2.2s) both}
 .mk-ok{font-size:12.5px;font-weight:800;background:var(--mint-soft);color:#1d6b48;border-radius:99px;padding:6px 14px;opacity:0}
 .scene.on .mk-ok{animation:mkIn .5s calc(var(--vs,1)*3.4s) both}
-.pl-caption{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;pointer-events:none;padding:0 20px}
-.pl-caption span{background:rgba(6,16,42,.78);backdrop-filter:blur(6px);color:#fff;font-size:clamp(12px,1.7vw,15px);font-weight:600;padding:8px 16px;border-radius:11px;max-width:64ch;text-align:center;line-height:1.4}
 .pl-bigplay{position:absolute;inset:0;margin:auto;width:86px;height:86px;border-radius:50%;background:rgba(255,255,255,.97);color:var(--accent-deep);font-size:32px;display:grid;place-items:center;box-shadow:0 18px 50px rgba(3,12,35,.55),0 0 0 9999px rgba(7,20,52,.42);transition:transform .15s;z-index:5}
 .pl-bigplay:hover{transform:scale(1.08)}
 .pl-bigplay.hide{display:none}
@@ -581,8 +596,8 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
     <h1>Bienvenido a tu estudio de chatbots</h1>
     <p class="sub" style="margin-bottom:22px">Chatbots profesionales para todas las áreas de tu empresa. Mira el video, prueba gratis y entra con tu clave.</p>
     <div style="margin:6px 0 14px;text-align:center">
-      <h2 style="color:#fff;font-size:clamp(20px,3vw,28px);letter-spacing:-.6px">🎬 Aprende a usar la app en 1 minuto</h2>
-      <p style="color:rgba(224,236,255,.85);font-size:14px;margin-top:6px">Guía paso a paso con narración — cambia la voz o siléncialA con el botón del reproductor</p>
+      <h2 style="color:#fff;font-size:clamp(20px,3vw,28px);letter-spacing:-.6px">🎬 Cómo tener tu chatbot en 5 minutos</h2>
+      <p style="color:rgba(224,236,255,.85);font-size:14px;margin-top:6px">Con narración en tu idioma — cámbiala o siléncialA con el botón del reproductor</p>
     </div>
     <div id="gate-player-slot" style="text-align:left;margin-bottom:34px"></div>
     <div style="margin-bottom:14px;text-align:center">
@@ -658,70 +673,83 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
   <section class="section wrap" id="video-sec">
     <div class="sec-head">
       <span class="kicker">Video demo</span>
-      <h2>Aprende a usar la app en 1 minuto</h2>
-      <p>Tutorial guiado: cada paso te enseña qué botón pulsar. Salta al capítulo que necesites.</p>
+      <h2>Cómo tener tu chatbot en 5 minutos</h2>
+      <p>Elige tu plan, paga, crea tu bot y ponlo a atender: te lo enseñamos paso a paso. Salta al capítulo que necesites.</p>
     </div>
     <div id="home-player-slot">
     <div class="player">
       <div class="pl-screen" id="pl-screen">
-        <div class="scene on" id="sc-0">
+        <div class="scene on" id="sc-0"><div class="stage">
           <div class="sc-logo">✦</div>
-          <h3>Aprende a usar LumiBots en 1 minuto</h3>
-          <p>Guía paso a paso: crear, entrenar, probar, medir y vender</p>
-        </div>
-        <div class="scene" id="sc-1">
+          <h3>Tu asistente propio en 5 minutos</h3>
+          <p>Atiende, agenda y capta clientes por ti — las 24 horas</p>
+        </div></div>
+        <div class="scene" id="sc-1"><div class="stage">
+          <div class="mk-plans">
+            <div class="mk-plan"><b>Gratis</b><span class="pv">$0</span><i>1 bot de prueba</i></div>
+            <div class="mk-plan best"><span class="flagm">Más elegido</span><b>Pro</b><span class="pv">$999</span><i>5 bots · todos los canales</i></div>
+            <div class="mk-plan"><b>Empresa</b><span class="pv">$2,499</span><i>Bots ilimitados</i></div>
+          </div>
+          <div class="mk-btn" style="width:260px">🎁 Empezar gratis</div>
+        </div></div>
+        <div class="scene" id="sc-2"><div class="stage">
+          <div class="mock" style="width:420px">
+            <div class="mk-title">💳 Finalizar compra</div>
+            <div class="mk-resume">Plan <b>Pro</b> · anual (2 meses gratis)<span>$9,990 MXN</span></div>
+            <div class="mk-field f1">👤 Tu nombre y tu correo</div>
+            <div class="mk-field f2">💳 4242 4242 4242 4242 · 12/28 · •••</div>
+            <div class="mk-btn">Pagar $9,990 MXN</div>
+          </div>
+          <div class="mk-key">LUMI-8Q4D-M2XK</div>
+          <div class="mk-ok">✓ Pago aprobado · licencia activa</div>
+        </div></div>
+        <div class="scene" id="sc-3"><div class="stage">
           <div class="mock">
-            <div class="mk-title">🪄 Asistente de creación guiada</div>
+            <div class="mk-title">🪄 Crear bot — asistente guiado</div>
             <div class="mk-prog"><i></i></div>
-            <div class="mk-row"><span class="mk-chip c1">🍽️ Restaurante</span><span class="mk-chip c2">💰 Finanzas</span><span class="mk-chip c3">🔧 Mantenimiento</span></div>
-            <div class="mk-field f1">🏢 Clínica Dental Sonría</div>
+            <div class="mk-row"><span class="mk-chip c1">🍽️ Restaurante</span><span class="mk-chip c2">🩺 Clínica</span><span class="mk-chip c3">🏠 Inmobiliaria</span></div>
+            <div class="mk-field f1">🏢 Mi empresa</div>
             <div class="mk-field f2">🕐 Lun a Sáb 9:00–19:00</div>
             <div class="mk-btn">🚀 Crear mi chatbot</div>
           </div>
-        </div>
-        <div class="scene" id="sc-2">
+        </div></div>
+        <div class="scene" id="sc-4"><div class="stage">
           <div class="mock">
             <div class="mk-title">📎 Subir archivos de mi empresa</div>
-            <div class="drop" style="padding:14px 12px;margin-bottom:10px;pointer-events:none"><span class="em" style="font-size:24px;margin-bottom:4px">📂</span><b style="font-size:13px">Arrastra tus documentos aquí</b></div>
-            <div class="file-row mk-field f1" style="margin-bottom:7px;opacity:0"><span class="fi">📕</span><span class="fn">politicas.pdf</span><span class="fb ok">✓ 24 fragmentos</span></div>
-            <div class="file-row mk-field f2" style="margin-bottom:7px;opacity:0"><span class="fi">📘</span><span class="fn">manual.docx</span><span class="fb ok">✓ 38 fragmentos</span></div>
+            <div class="mk-drop">📂 Arrastra tus documentos aquí</div>
+            <div class="file-row mk-field f1" style="margin-bottom:7px"><span class="fi">📕</span><span class="fn">catalogo.pdf</span><span class="fb ok">✓ 24 respuestas</span></div>
+            <div class="file-row mk-field f2" style="margin-bottom:7px"><span class="fi">📗</span><span class="fn">precios.xlsx</span><span class="fb ok">✓ 38 respuestas</span></div>
             <div class="mk-btn">🧠 Agregar al conocimiento</div>
           </div>
-        </div>
-        <div class="scene" id="sc-3">
+        </div></div>
+        <div class="scene" id="sc-5"><div class="stage">
           <div class="mock mk-chat">
-            <div class="mk-title">💬 Luna · en vivo</div>
-            <div class="mk-msg b m1">¡Hola! 🦷 ¿Te ayudo a agendar una cita?</div>
-            <div class="mk-msg u m2">Sí, ¿cuánto cuesta la limpieza?</div>
+            <div class="mk-title">💬 Tu bot en vivo</div>
+            <div class="mk-msg b m1">¡Hola! ¿Te ayudo a agendar una cita?</div>
+            <div class="mk-msg u m2">Sí, ¿cuánto cuesta la consulta?</div>
             <div class="mk-msg b m3">$650 con revisión incluida ✨ ¿Me das tu nombre y teléfono?</div>
             <div class="mk-msg u m4">Ana López · 55 1234 5678</div>
-            <div class="mk-msg b m5">¡Listo, Ana! Cita el viernes 10:00 📅</div>
-            <div class="mk-badge">📥 Información capturada y almacenada</div>
+            <div class="mk-msg b m5">¡Listo, Ana! Cita el viernes a las 10:00 📅</div>
+            <div class="mk-badge">📥 Cliente captado y guardado</div>
           </div>
-        </div>
-        <div class="scene" id="sc-4">
-          <div class="mock">
-            <div class="mk-title">📊 Dashboard en tiempo real</div>
+        </div></div>
+        <div class="scene" id="sc-6"><div class="stage">
+          <div class="mock" style="width:440px">
+            <div class="mk-title">📊 Tu panel de resultados</div>
             <div class="mk-tiles">
               <div class="mk-tile"><b data-count="1118">0</b><span>Conversaciones</span></div>
-              <div class="mk-tile"><b data-count="167">0</b><span>Registros</span></div>
+              <div class="mk-tile"><b data-count="167">0</b><span>Clientes captados</span></div>
               <div class="mk-tile"><b data-count="15" data-suffix="%">0</b><span>Conversión</span></div>
             </div>
             <div class="mk-bars"><i class="mk-bar" data-h="52"></i><i class="mk-bar" data-h="70"></i><i class="mk-bar" data-h="44"></i><i class="mk-bar" data-h="88"></i><i class="mk-bar" data-h="62"></i><i class="mk-bar" data-h="96"></i></div>
+            <div class="mk-btn" style="margin-top:10px">⬇ Descargar mis clientes (CSV)</div>
           </div>
-        </div>
-        <div class="scene" id="sc-5">
-          <h3>Véndelo a tus clientes</h3>
-          <p>Compran su plan en línea y su licencia se activa al instante — tú conservas el control total.</p>
-          <div class="mk-key">LUMI-8Q4D-M2XK</div>
-          <div class="mk-ok">✓ Licencia activa · Plan Pro</div>
-        </div>
-        <div class="scene" id="sc-6">
-          <h3>Crea tu primer chatbot hoy</h3>
-          <p>Gratis, sin tarjeta y en unos 5 minutos.</p>
-          <button class="btn btn-primary" data-go="wizard" style="position:relative;z-index:6">✨ Empezar ahora</button>
-        </div>
-        <div class="pl-caption" id="pl-caption"><span id="pl-caption-txt"></span></div>
+        </div></div>
+        <div class="scene" id="sc-7"><div class="stage">
+          <h3>Empieza hoy mismo</h3>
+          <p>Elige tu plan y ten tu asistente atendiendo en 5 minutos</p>
+          <button class="btn btn-primary" data-go="planes" style="position:relative;z-index:6">💳 Ver planes y empezar</button>
+        </div></div>
         <button class="pl-bigplay" id="pl-bigplay" aria-label="Reproducir video">▶</button>
       </div>
       <div class="pl-bar">
@@ -2747,7 +2775,7 @@ function voiceReady(){ /* narración lista: 13 clips sueltos o un archivo dividi
   for(let i=0;i<PL_CAP.length;i++)if(!VOICE[lang+"-"+i])return false;
   return true;
 }
-const CH_CAP=[0,2,4,6,8,10,12]; /* qué frase abre cada capítulo */
+const CH_CAP=[0,2,4,6,8,9,11,12]; /* qué frase abre cada capítulo */
 let VOICE_D={};
 try{VOICE_D=JSON.parse(localStorage.getItem("lumibots_voice_d")||"{}")}catch(e){VOICE_D={}}
 function narrOn(){return voiceMode==="mine"&&voiceReady()}
@@ -2778,41 +2806,42 @@ async function measureAll(){
 }
 function trackEl(){return null}
 const PL_CH=[
- {t:0,es:"Empieza aquí",en:"Start here"},
- {t:11,es:"1 · Crear el bot",en:"1 · Create the bot"},
- {t:23,es:"2 · Subir archivos",en:"2 · Upload files"},
- {t:35,es:"3 · Probarlo",en:"3 · Test it"},
- {t:47,es:"4 · Dashboard",en:"4 · Dashboard"},
- {t:57,es:"5 · Vender licencias",en:"5 · Sell licenses"},
- {t:66,es:"Empieza gratis",en:"Start free"}
+ {t:0,es:"Qué obtienes",en:"What you get"},
+ {t:9,es:"1 · Elige tu plan",en:"1 · Choose your plan"},
+ {t:20,es:"2 · Paga y entra",en:"2 · Pay and sign in"},
+ {t:32,es:"3 · Crea tu bot",en:"3 · Create your bot"},
+ {t:43,es:"4 · Entrénalo",en:"4 · Train it"},
+ {t:50,es:"5 · Pruébalo",en:"5 · Test it"},
+ {t:61,es:"6 · Tus resultados",en:"6 · Your results"},
+ {t:68,es:"Empieza ya",en:"Start now"}
 ];
 const PL_CAP=[
- {t:0,es:"Bienvenido a LumiBots Studio. En un minuto aprendes a crear tu primer chatbot.",
-    en:"Welcome to LumiBots Studio. In one minute you will learn to build your first chatbot."},
- {t:5,es:"Para entrar escribe tu nombre y tu clave. Si aún no tienes acceso, crea una cuenta gratis desde Planes.",
-    en:"To sign in, enter your name and your key. No access yet? Create a free account from Plans."},
- {t:11,es:"Paso 1: pulsa Crear bot y elige si es para tus clientes o para un área interna de tu empresa.",
-    en:"Step 1: tap Create bot and choose whether it serves your customers or an internal area."},
- {t:17,es:"Escribe el nombre de tu empresa, el giro o departamento, horarios y servicios. El asistente arma el conocimiento por ti.",
-    en:"Enter your company name, industry or department, hours and services. The wizard builds the knowledge for you."},
- {t:23,es:"Paso 2: pulsa Subir archivos de mi empresa y arrastra tus PDF, Word, Excel o páginas web.",
-    en:"Step 2: tap Upload my company files and drop in your PDF, Word, Excel or web pages."},
- {t:29,es:"LumiBots extrae el texto y lo convierte en respuestas. Un Excel con columnas Pregunta y Respuesta se importa tal cual.",
-    en:"LumiBots extracts the text and turns it into answers. An Excel with Question and Answer columns imports as-is."},
- {t:35,es:"Paso 3: pulsa Probar bot y conversa con él igual que lo haría un cliente.",
-    en:"Step 3: tap Test bot and chat with it exactly as a customer would."},
- {t:41,es:"Cuando alguien pide una cita o una cotización, el bot recoge los datos que tú definiste y los guarda al instante.",
-    en:"When someone asks for an appointment or a quote, the bot collects the fields you defined and saves them instantly."},
- {t:47,es:"Paso 4: abre el Dashboard para ver conversaciones, embudo de conversión y todos los registros capturados.",
-    en:"Step 4: open the Dashboard to see conversations, the conversion funnel and every captured record."},
- {t:52,es:"Filtra por siete, catorce o treinta días y exporta tus registros a CSV con un clic.",
-    en:"Filter by seven, fourteen or thirty days and export your records to CSV in one click."},
- {t:57,es:"Paso 5: si quieres vender la plataforma, tus clientes compran su plan y tú autorizas su licencia desde el panel Admin.",
-    en:"Step 5: to resell the platform, your clients buy a plan and you approve their license from the Admin panel."},
- {t:62,es:"Cada cliente trabaja en su propio espacio y tú conservas el control de todo.",
-    en:"Each client works in their own workspace and you keep control of everything."},
- {t:66,es:"Eso es todo. Pulsa Crear bot y ten tu primer asistente funcionando en cinco minutos.",
-    en:"That is all. Tap Create bot and have your first assistant running in five minutes."}
+ {t:0,es:"Con LumiBots tu empresa tiene un asistente que atiende a tus clientes las veinticuatro horas.",
+    en:"With LumiBots your company gets an assistant that serves your customers twenty-four hours a day."},
+ {t:5,es:"Responde preguntas, agenda citas y recoge los datos de cada cliente, sin que tú tengas que estar.",
+    en:"It answers questions, books appointments and collects every customer's details, without you being there."},
+ {t:9,es:"Paso uno: entra a Planes y elige el tuyo. Puedes empezar gratis, sin tarjeta.",
+    en:"Step one: go to Plans and choose yours. You can start free, no card needed."},
+ {t:14,es:"Si necesitas más bots y más canales, elige Starter, Pro o Empresa, en pago mensual o anual con dos meses gratis.",
+    en:"If you need more bots and channels, pick Starter, Pro or Empresa, billed monthly or yearly with two months free."},
+ {t:20,es:"Paso dos: paga con tu tarjeta en la misma pantalla. Escribe tu nombre, tu correo y los datos de la tarjeta.",
+    en:"Step two: pay by card on the same screen. Enter your name, your email and your card details."},
+ {t:26,es:"Al confirmarse el pago recibes tu clave de acceso y tu licencia queda activa al instante.",
+    en:"Once the payment goes through you receive your access key and your license activates instantly."},
+ {t:32,es:"Paso tres: entra con tu nombre y tu clave, y pulsa Crear bot.",
+    en:"Step three: sign in with your name and your key, and tap Create bot."},
+ {t:36,es:"Elige el giro de tu negocio o el área de tu empresa, escribe tus horarios y servicios, y el asistente arma el bot por ti.",
+    en:"Choose your industry or a department, enter your hours and services, and the wizard builds the bot for you."},
+ {t:43,es:"Paso cuatro: sube los archivos de tu empresa, en PDF, Word o Excel, y tu bot aprende a responder con tu propia información.",
+    en:"Step four: upload your company files in PDF, Word or Excel, and your bot learns to answer with your own information."},
+ {t:50,es:"Paso cinco: pruébalo. Conversa con él igual que lo haría un cliente y comprueba cómo responde.",
+    en:"Step five: test it. Chat with it just like a customer would and check how it answers."},
+ {t:55,es:"Cuando alguien pide una cita o una cotización, el bot recoge sus datos y los guarda al instante.",
+    en:"When someone asks for an appointment or a quote, the bot collects their details and saves them instantly."},
+ {t:61,es:"Paso seis: en tu panel ves todas las conversaciones, los clientes captados y puedes descargarlos cuando quieras.",
+    en:"Step six: your dashboard shows every conversation and captured customer, ready to download whenever you want."},
+ {t:68,es:"Empieza hoy: elige tu plan y ten a tu asistente atendiendo en cinco minutos.",
+    en:"Start today: choose your plan and have your assistant working in five minutes."}
 ];
 const PL={t:0,playing:false,cur:0,last:0,ended:false,capIdx:-1};
 function plFmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
@@ -2825,10 +2854,10 @@ function plActivate(i,force){
     if(k===i){void s.offsetWidth;s.classList.add("on")}
   });
   document.querySelectorAll(".pl-chap").forEach((c,k)=>c.classList.toggle("on",k===i));
-  if(i===4)plCounts();
+  if(i===6)plCounts();
 }
 function plCounts(){
-  document.querySelectorAll("#sc-4 [data-count]").forEach(el=>{
+  document.querySelectorAll("#sc-6 [data-count]").forEach(el=>{
     const target=+el.dataset.count,suf=el.dataset.suffix||"";
     const t0=performance.now();
     (function step(now){
@@ -2837,7 +2866,7 @@ function plCounts(){
       if(p<1)requestAnimationFrame(step);
     })(t0);
   });
-  document.querySelectorAll("#sc-4 .mk-bar").forEach((b,k)=>{
+  document.querySelectorAll("#sc-6 .mk-bar").forEach((b,k)=>{
     b.style.height="0";
     setTimeout(()=>{b.style.height=b.dataset.h+"%"},(250+k*160)*plScale());
   });
@@ -2862,16 +2891,19 @@ function plCaption(force){
   let idx=0;
   const ct=capTimes();for(let i=0;i<PL_CAP.length;i++)if(PL.t>=ct[i])idx=i;
   const cap=PL_CAP[idx];
-  const el=document.getElementById("pl-caption-txt");
   const txt=lang==="en"?cap.en:cap.es;
-  if(el.textContent!==txt)el.textContent=txt;
   if(PL.playing&&(idx!==PL.capIdx||force)){PL.capIdx=idx;plSpeak(txt,idx)}
   else if(idx!==PL.capIdx)PL.capIdx=idx;
 }
 function plRender(){
   document.getElementById("pl-fill").style.width=(PL.t/plDur()*100)+"%";
   document.getElementById("pl-time").textContent=plFmt(PL.t)+" / "+plFmt(plDur());
-  const pw=document.querySelector(".player");if(pw)pw.style.setProperty("--vs",plScale().toFixed(3));
+  const pw=document.querySelector(".player");
+  if(pw){
+    pw.style.setProperty("--vs",plScale().toFixed(3));
+    const sc=document.getElementById("pl-screen");
+    if(sc&&sc.clientWidth)pw.style.setProperty("--ps",(sc.clientWidth/960).toFixed(4));
+  }
   if(PL.marks){const ct=chapTimes(),d=plDur();PL.marks.forEach((m,k)=>{m.style.left=(ct[k]/d*100)+"%";m.style.display=k?"":"none"})}
   plActivate(plSceneIdx(PL.t));
   plCaption();
@@ -2943,6 +2975,7 @@ function plInit(){
     PL.playing?plPause():plPlay();
   });
   plCaption();plSoundLabel();plRender();
+  addEventListener("resize",()=>plRender());
 }
 function plSoundLabel(){
   const b=document.getElementById("pl-sound");if(!b)return;
@@ -3264,10 +3297,10 @@ const I18N_TEXT={
 "giros de negocio":"business industries","áreas internas especialistas":"specialist internal areas","tipos de dato capturables":"capturable data types","conocimiento por volumen":"bulk knowledge",
 "● En línea — responde al instante":"● Online — instant replies",
 /* video demo */
-"Video demo":"Video demo","Aprende a usar la app en 1 minuto":"Learn to use the app in 1 minute",
-"🎬 Aprende a usar la app en 1 minuto":"🎬 See how it works in 1 minute",
-"Guía paso a paso con narración — cambia la voz o siléncialA con el botón del reproductor":"🎙️ Narrated by Andrés Acosta — switch or mute the narration with the player button",
-"Tutorial guiado: cada paso te enseña qué botón pulsar. Salta al capítulo que necesites.":"Guided tutorial: each step shows you which button to tap. Jump to the chapter you need.",
+"Video demo":"Video demo","Cómo tener tu chatbot en 5 minutos":"How to get your chatbot in 5 minutes",
+"🎬 Cómo tener tu chatbot en 5 minutos":"🎬 See how it works in 1 minute",
+"Con narración en tu idioma — cámbiala o siléncialA con el botón del reproductor":"🎙️ Narrated by Andrés Acosta — switch or mute the narration with the player button",
+"Elige tu plan, paga, crea tu bot y ponlo a atender: te lo enseñamos paso a paso. Salta al capítulo que necesites.":"Choose your plan, pay, build your bot and put it to work — we walk you through every step. Jump to any chapter.",
 "Chatbots que atienden, venden y organizan tu empresa — 24/7":"Chatbots that serve, sell and organize your company — 24/7",
 "🪄 Asistente de creación guiada":"🪄 Guided creation wizard",
 "💬 Luna · en vivo":"💬 Luna · live",
@@ -3395,7 +3428,22 @@ const I18N_TEXT={
 "🎙️ Grabar la narración del tutorial":"🎙️ Record the tutorial narration",
 "Grabación que subiste, ya masterizada (34 s). Se conserva como referencia para futuros videos; no narra el tutorial porque su contenido no corresponde a los pasos.":"The recording you uploaded, already mastered (34 s). Kept as a reference for future videos; it does not narrate the tutorial because its content does not match the steps.",
 "📎 Subir archivos de mi empresa":"📎 Upload my company files","Arrastra tus documentos aquí":"Drop your documents here","🧠 Agregar al conocimiento":"🧠 Add to knowledge",
-"Aprende a usar LumiBots en 1 minuto":"Learn to use LumiBots in 1 minute","Guía paso a paso: crear, entrenar, probar, medir y vender":"Step by step: create, train, test, measure and sell","＋ Agregar otra pregunta":"＋ Add another question",
+"Tu asistente propio en 5 minutos":"Your own assistant in 5 minutes",
+"Atiende, agenda y capta clientes por ti — las 24 horas":"It serves, books and captures customers for you — 24 hours a day",
+"1 bot de prueba":"1 trial bot","5 bots · todos los canales":"5 bots · every channel","Bots ilimitados":"Unlimited bots",
+"💳 Finalizar compra":"💳 Complete your purchase","👤 Tu nombre y tu correo":"👤 Your name and email",
+"Pagar $9,990 MXN":"Pay $9,990 MXN","✓ Pago aprobado · licencia activa":"✓ Payment approved · license active",
+"🪄 Crear bot — asistente guiado":"🪄 Create bot — guided wizard","🏢 Mi empresa":"🏢 My company",
+"📂 Arrastra tus documentos aquí":"📂 Drop your documents here","✓ 24 respuestas":"✓ 24 answers","✓ 38 respuestas":"✓ 38 answers",
+"💬 Tu bot en vivo":"💬 Your bot live","¡Hola! ¿Te ayudo a agendar una cita?":"Hi! Can I help you book an appointment?",
+"Sí, ¿cuánto cuesta la consulta?":"Yes, how much is a consultation?",
+"$650 con revisión incluida ✨ ¿Me das tu nombre y teléfono?":"$650 with a check-up included ✨ Your name and phone?",
+"¡Listo, Ana! Cita el viernes a las 10:00 📅":"Done, Ana! Friday at 10:00 📅",
+"📥 Cliente captado y guardado":"📥 Customer captured and saved",
+"📊 Tu panel de resultados":"📊 Your results dashboard","Clientes captados":"Customers captured",
+"⬇ Descargar mis clientes (CSV)":"⬇ Download my customers (CSV)",
+"Empieza hoy mismo":"Start today","Elige tu plan y ten tu asistente atendiendo en 5 minutos":"Choose your plan and have your assistant working in 5 minutes",
+"💳 Ver planes y empezar":"💳 See plans and start","Más elegido":"Most popular","＋ Agregar otra pregunta":"＋ Add another question",
 "📥 ¿Qué información capturará y almacenará?":"📥 What information will it capture and store?",
 "💡 Consejo: de 3 a 5 datos es el punto dulce — suficientes para dar seguimiento sin cansar a quien escribe. Todos los registros se pueden exportar a CSV.":"💡 Tip: 3 to 5 fields is the sweet spot — enough to follow up without tiring the person. All records can be exported to CSV.",
 "🎨 Canales, estilo y ¡despegue!":"🎨 Channels, style and liftoff!",

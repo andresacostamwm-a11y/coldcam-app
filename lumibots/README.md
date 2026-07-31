@@ -64,27 +64,23 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   de registros con exportación a CSV.
 - **Multicanal**: Web, WhatsApp, Instagram, Messenger y Telegram; código de
   instalación para sitios web y exportación del bot en JSON.
-- **Video tutorial narrado** en la pantalla de entrada (visible sin
-  contraseña): 7 capítulos y 13 frases que enseñan paso a paso a entrar, crear
-  un bot, entrenarlo con archivos, probarlo, leer el dashboard y vender
-  licencias. Subtítulos bilingües y dos modos de narración:
-  1. 🔊 Narración automática del navegador, sincronizada con cada paso
-     (preferencia de voz `es-ES` / `en-GB`, ritmo narrativo).
-  2. 🎙️ **Narración propia** — se activa al completar las 13 frases, ya sea
-     grabándolas con el micrófono desde el teleprompter integrado o
-     **importando audios de un locutor profesional** (por ejemplo la voz
-     Gabriel Blanco de ElevenLabs, `RwzBDEn5f6FIgpAjH9YN`) con
-     🎧 Importar audios: acepta 13 archivos numerados **o un único archivo con
-     toda la narración**, que se divide automáticamente detectando las pausas
-     (envolvente RMS suavizada y búsqueda del umbral/pausa que produce
-     exactamente 13 bloques). El guion completo está en `GUION-NARRACION.md` y se
-     copia al portapapeles con un botón.
-     Al importar, la app **mide la duración real de cada clip y reconstruye la
-     línea de tiempo del video**: capítulos, subtítulos y animaciones se ajustan
-     para que cada escena dure exactamente lo que dura su frase. Todos los
-     clips pasan por una cadena de masterización de locución en tiempo real:
-     paso alto 85 Hz, corte de medios bajos, presencia en 3.4 kHz, de-esser,
-     aire, compresión 3.2:1 y nivelado automático.
+- **Video explicativo narrado** en la pantalla de entrada (visible sin
+  contraseña), escrito desde la perspectiva del **cliente que contrata**:
+  8 capítulos y 13 frases que recorren qué obtiene, cómo elige su plan, cómo
+  paga con tarjeta y recibe su clave, cómo crea y entrena su bot con sus
+  archivos, cómo lo prueba y dónde ve sus resultados. Sin subtítulos en
+  pantalla: el visitante elige el idioma y la narración se reproduce en él.
+  Cada escena se dibuja en un lienzo fijo de 960×540 que se escala al ancho del
+  reproductor, así el contenido siempre se ve completo en cualquier pantalla.
+  Dos modos de narración:
+  1. 🔊 Narración automática del navegador (`es-ES` / `en-GB`, ritmo narrativo).
+  2. 🎙️ **Narración propia** — grabando las frases con el micrófono desde el
+     teleprompter integrado o **importando audios de un locutor profesional**
+     (por ejemplo la voz Gabriel Blanco de ElevenLabs,
+     `RwzBDEn5f6FIgpAjH9YN`): acepta 13 archivos numerados **o un único archivo
+     con toda la narración**, que se divide automáticamente detectando las
+     pausas. La línea de tiempo se reconstruye con las duraciones reales y cada
+     clip pasa por una cadena de masterización de locución.
   3. 🔇 Sin narración.
   La grabación de referencia del propietario (`voz-original-andres.m4a` y su
   versión masterizada `voz-narracion-andres.webm`) se conserva en el
