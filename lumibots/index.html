@@ -2365,7 +2365,7 @@ function stripeLink(plan,periodo,moneda){
   return (moneda==="EUR"?(e.eur||e.mxn):(e.mxn||e.eur))||"";
 }
 function paypalCfg(){return Object.assign({},DEFAULT_PAY.paypal,(state.config&&state.config.paypal)||{})}
-function paypalLink(plan,periodo,moneda,ref){
+function paypalLink(plan,periodo,moneda,ref,unico){
   const c=paypalCfg(); if(!c.email&&!c.link) return "";
   const p=PLANES.find(x=>x.id===plan); if(!p) return "";
   const monto=(moneda==="EUR"?p.eur:p)[periodo==="anual"?"anual":"precio"];
@@ -2376,20 +2376,25 @@ function paypalLink(plan,periodo,moneda,ref){
   const base="https://www.paypal.com/cgi-bin/webscr?";
   const q={business:c.email,currency_code:moneda,item_name:"LumiBots · plan "+p.n+" ("+periodo+")",
            custom:ref||"",no_shipping:"1",no_note:"1"};
-  if(c.recurrente===false){Object.assign(q,{cmd:"_xclick",amount:String(monto)});}
+  if(unico||c.recurrente===false){Object.assign(q,{cmd:"_xclick",amount:String(monto)});}
   else{Object.assign(q,{cmd:"_xclick-subscriptions",a3:String(monto),p3:"1",
         t3:(periodo==="anual"?"Y":"M"),src:"1"});}
   return base+Object.keys(q).map(k=>k+"="+encodeURIComponent(q[k])).join("&");
 }
+function viaTarjeta(plan,periodo,moneda){
+  if(stripeLink(plan,periodo,moneda))return "stripe";
+  const c=paypalCfg(); if(c.email||c.link)return "paypal";
+  return "";
+}
 function metodoDisponible(m,plan,periodo,moneda){
-  if(m==="tarjeta")return !!stripeLink(plan,periodo,moneda);
-  if(m==="paypal")return !!paypalLink(plan,periodo,moneda,"x");
+  if(m==="tarjeta")return !!viaTarjeta(plan,periodo,moneda);
+  if(m==="paypal")return !!paypalLink(plan,periodo,moneda,"x",false);
   return true; /* transferencia siempre disponible: genera solicitud */
 }
 function stripeListo(){return Object.keys(stripeLinks()).some(k=>{const e=stripeLinks()[k];return e&&(e.mxn||e.eur)})}
 let payMethod="tarjeta";
 const METODOS=[
- {id:"tarjeta",t:"💳 Tarjeta",d:"Crédito o débito · pasarela segura de Stripe"},
+ {id:"tarjeta",t:"💳 Tarjeta",d:"Crédito o débito · sin necesidad de cuenta"},
  {id:"paypal", t:"🅿️ PayPal", d:"Con tu saldo de PayPal o tu tarjeta"},
  {id:"transfer",t:"🏦 Transferencia",d:"El propietario te envía los datos y te activa"}
 ];
@@ -2405,17 +2410,20 @@ function renderMetodos(){
     payMethod=b.dataset.pm;renderMetodos();
   }));
   const p=PLANES.find(x=>x.id===buyPlan)||{n:""};
+  const via=payMethod==="tarjeta"?viaTarjeta(buyPlan,billPeriod,currency):"";
   const btn=document.getElementById("buy-send");
   const box=document.getElementById("stripe-box"),falta=document.getElementById("stripe-falta");
   if(payMethod==="transfer"){
     btn.textContent="Solicitar el plan "+p.n;
     box.style.display="none";falta.style.display="none";
   }else{
-    const nom=payMethod==="paypal"?"PayPal":"Stripe";
+    const nom=payMethod==="paypal"?"PayPal":(via==="stripe"?"Stripe":"PayPal");
     btn.textContent="🔒 Pagar "+money(planPrecio(p))+" "+currency+" con "+nom;
     box.style.display="";falta.style.display="none";
     document.getElementById("pay-box-t").textContent="Pagas en la pasarela segura de "+nom;
-    document.getElementById("pay-box-p").textContent="Al pulsar el botón te llevamos a "+nom+", donde completas el pago. Tus datos bancarios nunca pasan por esta página. Cuando el pago se confirme recibirás tu clave de acceso en el correo que escribiste.";
+    document.getElementById("pay-box-p").textContent="Al pulsar el botón te llevamos a "+nom+", donde escribes tu tarjeta. "
+      +(payMethod==="tarjeta"&&via==="paypal"?"No necesitas tener cuenta de PayPal: elige «Pagar con tarjeta de débito o crédito». ":"")
+      +"Tus datos de tarjeta nunca pasan por esta página. Cuando el pago se confirme recibirás tu clave de acceso en el correo que escribiste.";
   }
 }
 document.getElementById("buy-close").addEventListener("click",()=>document.getElementById("buy-overlay").classList.remove("on"));
@@ -2459,15 +2467,18 @@ document.getElementById("buy-send").addEventListener("click",()=>{
   state.licenses.unshift(l);save();lastKey=l.key;
   if(esOwner())renderAdmin();
 
-  const url=payMethod==="transfer"?"":(payMethod==="paypal"?paypalLink(buyPlan,billPeriod,currency,ref):stripeLink(buyPlan,billPeriod,currency));
-  l.fact.marca=payMethod==="paypal"?"PayPal":(payMethod==="transfer"?"Transferencia":"Stripe");
+  const via=payMethod==="tarjeta"?viaTarjeta(buyPlan,billPeriod,currency):payMethod;
+  const url=payMethod==="transfer"?"":
+    (via==="stripe"?stripeLink(buyPlan,billPeriod,currency)
+                   :paypalLink(buyPlan,billPeriod,currency,ref,payMethod==="tarjeta"));
+  l.fact.marca=payMethod==="transfer"?"Transferencia":(via==="stripe"?"Stripe":(payMethod==="tarjeta"?"Tarjeta (PayPal)":"PayPal"));
   l.metodo=payMethod;save();
   document.getElementById("buy-form").style.display="none";
   document.getElementById("buy-ok").style.display="";
   const key=document.getElementById("buy-ok-key");
   if(url){
     let dest=url;
-    if(payMethod==="tarjeta"){ /* parámetros propios de Stripe */
+    if(via==="stripe"){ /* parámetros propios de Stripe */
       const sep=url.includes("?")?"&":"?";
       dest=url+sep+"prefilled_email="+encodeURIComponent(m)+"&client_reference_id="+encodeURIComponent(ref);
     }
