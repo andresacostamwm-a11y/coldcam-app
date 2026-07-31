@@ -487,6 +487,36 @@ footer b{color:var(--ink-2)}
 .pl-chap{border:1.5px solid var(--line);border-radius:99px;padding:6px 13px;font-size:12.5px;font-weight:700;color:var(--ink-2);background:#FDFCFA}
 .pl-chap.on{background:var(--accent);border-color:var(--accent);color:#fff}
 
+/* ── Entrenar con archivos ── */
+.drop{border:2px dashed var(--line);border-radius:16px;padding:26px 20px;text-align:center;background:#FDFCFA;transition:all .18s;cursor:pointer}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop .em{font-size:34px;display:block;margin-bottom:8px}
+.drop b{font-size:15px}
+.drop span{display:block;font-size:13px;color:var(--ink-2);margin-top:5px}
+.file-list{display:flex;flex-direction:column;gap:8px;margin-top:14px;max-height:230px;overflow-y:auto}
+.file-row{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:12px;padding:10px 13px;background:#fff;font-size:13.5px}
+.file-row .fi{font-size:19px;flex:none}
+.file-row .fn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.file-row .fs{font-size:12px;color:var(--ink-2);white-space:nowrap}
+.file-row .fb{font-size:11.5px;font-weight:800;border-radius:99px;padding:4px 10px;white-space:nowrap}
+.fb.ok{background:var(--mint-soft);color:#1d6b48}
+.fb.work{background:var(--sky-soft);color:#2b5d86}
+.fb.err{background:var(--rose-soft);color:#B3475F}
+.doc-chip{font-size:12px;font-weight:700;background:var(--peach-soft);color:#8a5a17;border-radius:8px;padding:4px 10px;display:inline-flex;align-items:center;gap:6px}
+/* ── Grabador de voz ── */
+.rec-list{display:flex;flex-direction:column;gap:9px;max-height:340px;overflow-y:auto;margin:14px 0}
+.rec-row{display:grid;grid-template-columns:28px 1fr auto;gap:11px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:#FDFCFA}
+.rec-row.done{background:var(--mint-soft);border-color:#BFE8D4}
+.rec-row.rec{background:var(--rose-soft);border-color:#E3A4B4}
+.rec-num{width:26px;height:26px;border-radius:50%;background:var(--paper);display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--ink-2)}
+.rec-row.done .rec-num{background:var(--good);color:#fff}
+.rec-txt{font-size:13px;line-height:1.4}
+.rec-acts{display:flex;gap:6px}
+.rec-btn{width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font-size:14px}
+.rec-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.rec-btn.on{background:#B3475F;border-color:#B3475F;color:#fff}
+.rec-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--ink-2);font-weight:700}
+
 /* ── Tema azul futurista (hero, gate, cta) ── */
 .net-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .gate .net-canvas{position:fixed}
@@ -664,6 +694,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <span class="pl-time" id="pl-time">0:00 / 1:12</span>
       </div>
       <div class="pl-chaps" id="pl-chaps"></div>
+      <div style="padding:0 16px 16px;text-align:center"><button class="mini-btn" id="btn-voice" style="display:none">🎙️ Grabar mi voz</button></div>
     </div>
     </div>
   </section>
@@ -940,6 +971,47 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
     <div class="code-actions">
       <button class="mini-btn" id="lic-close">Cancelar</button>
       <button class="mini-btn solid" id="lic-create">Crear licencia</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- entrenar con archivos -->
+<div class="overlay" id="docs-overlay" role="dialog" aria-modal="true" aria-label="Entrenar con archivos">
+  <div class="code-modal">
+    <h3>📎 Entrena tu bot con archivos de tu empresa</h3>
+    <p>Sube tus documentos y extraemos su contenido para que el bot pueda responder con esa información. Formatos: <b>PDF, Word (.docx), Excel (.xlsx), PowerPoint (.pptx), HTML, TXT, CSV y JSON</b>.</p>
+    <div class="drop" id="docs-drop">
+      <span class="em">📂</span>
+      <b>Arrastra tus archivos aquí o haz clic para elegirlos</b>
+      <span>Puedes subir varios a la vez</span>
+      <input type="file" id="docs-input" multiple accept=".pdf,.docx,.xlsx,.pptx,.html,.htm,.txt,.csv,.json,.md" style="display:none">
+    </div>
+    <div class="file-list" id="docs-list"></div>
+    <p class="pay-note" id="docs-note" style="display:none"></p>
+    <div class="code-actions">
+      <button class="mini-btn" id="docs-close">Cancelar</button>
+      <button class="mini-btn solid" id="docs-add">Agregar al conocimiento</button>
+    </div>
+  </div>
+</div>
+
+<!-- grabar narración con tu voz -->
+<div class="overlay" id="voice-overlay" role="dialog" aria-modal="true" aria-label="Grabar narración">
+  <div class="code-modal">
+    <h3>🎙️ Narra el video con tu voz</h3>
+    <p>Graba cada frase con tu propia voz. El video la reproducirá en lugar de la voz automática. Puedes regrabar las veces que quieras.</p>
+    <div class="rec-bar">
+      <span id="voice-count">0 de 0 grabadas</span>
+      <span style="flex:1"></span>
+      <button class="mini-btn" id="voice-export">⬇ Exportar narración</button>
+      <label class="mini-btn" style="cursor:pointer">⬆ Importar<input type="file" id="voice-import" accept="application/json" style="display:none"></label>
+      <button class="mini-btn" id="voice-clear">🗑 Borrar todo</button>
+    </div>
+    <div class="rec-list" id="voice-list"></div>
+    <p class="pay-note">🎤 Tu navegador pedirá permiso para usar el micrófono. Las grabaciones se guardan en tu dispositivo; usa <b>Exportar</b> para llevarlas al sitio publicado.</p>
+    <div class="code-actions">
+      <button class="mini-btn solid" id="voice-close">Listo</button>
     </div>
   </div>
 </div>
@@ -1245,6 +1317,8 @@ function applySession(){
   const chip=document.getElementById("session-chip");
   const admin=document.getElementById("tab-admin");
   movePlayer(!state.session);
+  const bv=document.getElementById("btn-voice");
+  if(bv)bv.style.display=(state.session&&state.session.role==="owner")?"":"none";
   if(!state.session){gate.classList.add("on");return}
   gate.classList.remove("on");
   if(esOwner()){
@@ -1364,7 +1438,7 @@ let wstep=0,draft=null,faqFilter="";
 function resetWizard(){
   wstep=0;faqFilter="";
   draft={tipo:"giro",empresa:"",industria:null,web:"",tel:"",horario:"",desc:"",objetivo:[],tono:"amigable",
-    nombreBot:"",avatar:"🤖",bienvenida:"",faqs:[],servicios:[],leadFields:["nombre","email","telefono"],
+    nombreBot:"",avatar:"🤖",bienvenida:"",faqs:[],servicios:[],docs:[],leadFields:["nombre","email","telefono"],
     canales:["web","whatsapp"],color:"#6B7FE3"};
   document.getElementById("build-screen").style.display="none";
   document.getElementById("wiz-root").style.display="";
@@ -1443,8 +1517,10 @@ function stepConocimiento(){
   <div class="kb-tools">
     <span class="kb-count">🗄️ ${draft.faqs.length} pares</span>
     <input class="kb-search" id="kb-search" placeholder="Buscar en el conocimiento…" value="${esc(faqFilter)}">
-    <button type="button" class="mini-btn solid" id="bulk-open">🗄️ Importar en volumen</button>
+    <button type="button" class="mini-btn solid" id="docs-open">📎 Subir archivos de mi empresa</button>
+    <button type="button" class="mini-btn" id="bulk-open">🗄️ Pegar en volumen</button>
   </div>
+  ${draft.docs&&draft.docs.length?`<div class="chips" style="margin-bottom:12px">${draft.docs.map(d=>`<span class="doc-chip">${DOC_ICON[docExt(d)]||"📄"} ${esc(d)}</span>`).join("")}</div>`:""}
   <div class="faq-list" id="faq-list">${draft.faqs.map((f,i)=>{
     const hide=fl&&!(f.q.toLowerCase().includes(fl)||f.a.toLowerCase().includes(fl));
     return `<div class="faq-item ${hide?"hide":""}"><div class="qa">
@@ -1553,6 +1629,7 @@ function bindStep(){
       el.classList.toggle("hide",!!fl&&!(f.q.toLowerCase().includes(fl)||f.a.toLowerCase().includes(fl)));
     });
   });
+  card.querySelector("#docs-open")?.addEventListener("click",()=>{collect();openDocs(null)});
   card.querySelector("#bulk-open")?.addEventListener("click",()=>{
     collect();document.getElementById("bulk-ta").value="";
     document.getElementById("bulk-overlay").classList.add("on");
@@ -1675,13 +1752,14 @@ function renderBots(){
         <div><h3>${esc(b.nombreBot)} · ${esc(b.empresa)}</h3><small>${i?i.em+" "+i.n:""}</small></div>
       </div>
       <div style="display:flex;gap:8px"><span class="pill live">Activo</span><span class="pill tipo">${b.tipo==="area"?"🏛️ Área interna":"🏪 Clientes"}</span></div>
-      <div class="bc-meta"><span>💬 <b>${tot}</b> convers.</span><span>📥 <b>${nl}</b> registros</span><span>🗄️ <b>${b.faqs.length}</b> pares</span><span>⭐ <b>${b.metrics.csat}</b></span></div>
+      <div class="bc-meta"><span>💬 <b>${tot}</b> convers.</span><span>📥 <b>${nl}</b> registros</span><span>🗄️ <b>${b.faqs.length}</b> pares</span>${b.docs&&b.docs.length?`<span>📎 <b>${b.docs.length}</b> arch.</span>`:""}<span>⭐ <b>${b.metrics.csat}</b></span></div>
       <div class="bc-ch">${b.canales.map(c=>`<span class="tagc">${CANALES.find(x=>x[0]===c)?.[1]||c}</span>`).join("")}</div>
       <div class="bc-actions">
         <button class="mini-btn solid" data-chat="${b.id}">💬 Probar bot</button>
         <button class="mini-btn" data-dashbot="${b.id}">📊 Dashboard</button>
         <button class="mini-btn" data-embed="${b.id}">📎 Instalar</button>
         <button class="mini-btn" data-export="${b.id}">⬇ Exportar</button>
+        <button class="mini-btn" data-train="${b.id}" style="grid-column:1/-1">📎 Entrenar con archivos</button>
         <button class="mini-btn danger" data-delbot="${b.id}" style="grid-column:1/-1">🗑 Eliminar bot</button>
       </div>
     </div>`;
@@ -1690,6 +1768,7 @@ function renderBots(){
   g.querySelectorAll("[data-dashbot]").forEach(b=>b.addEventListener("click",()=>{dashBot=b.dataset.dashbot;go("dash")}));
   g.querySelectorAll("[data-embed]").forEach(b=>b.addEventListener("click",()=>openEmbed(b.dataset.embed)));
   g.querySelectorAll("[data-export]").forEach(b=>b.addEventListener("click",()=>exportBot(b.dataset.export)));
+  g.querySelectorAll("[data-train]").forEach(b=>b.addEventListener("click",()=>openDocs(b.dataset.train)));
   g.querySelectorAll("[data-delbot]").forEach(b=>b.addEventListener("click",()=>{
     const bot=state.bots.find(x=>x.id===b.dataset.delbot);if(!bot)return;
     askConfirm("Eliminar bot","Se eliminará "+bot.nombreBot+" · "+bot.empresa+" junto con todos sus registros capturados. Esta acción no se puede deshacer.",()=>{
@@ -2303,6 +2382,305 @@ startNet(document.getElementById("gate"));
 
 
 
+/* ════════ Lectura de archivos → conocimiento ════════ */
+const DOC_ICON={pdf:"📕",docx:"📘",xlsx:"📗",pptx:"📙",html:"🌐",htm:"🌐",txt:"📄",csv:"📊",json:"🗂️",md:"📝"};
+function docExt(n){const m=String(n).toLowerCase().match(/\.([a-z0-9]+)$/);return m?m[1]:""}
+function fmtSize(b){return b<1024?b+" B":b<1048576?(b/1024).toFixed(0)+" KB":(b/1048576).toFixed(1)+" MB"}
+
+async function inflateRaw(u8,fmt){
+  const ds=new DecompressionStream(fmt||"deflate-raw");
+  const st=new Blob([u8]).stream().pipeThrough(ds);
+  return new Uint8Array(await new Response(st).arrayBuffer());
+}
+/* lector de ZIP (docx, xlsx, pptx son archivos ZIP) */
+async function unzip(buf){
+  const dv=new DataView(buf),out={};
+  let eocd=-1;
+  for(let i=buf.byteLength-22;i>=0&&i>buf.byteLength-22-65557;i--){
+    if(dv.getUint32(i,true)===0x06054b50){eocd=i;break}
+  }
+  if(eocd<0)throw new Error("No parece un archivo válido");
+  const count=dv.getUint16(eocd+10,true);
+  let off=dv.getUint32(eocd+16,true);
+  const dec=new TextDecoder();
+  for(let n=0;n<count&&off+46<=buf.byteLength;n++){
+    if(dv.getUint32(off,true)!==0x02014b50)break;
+    const method=dv.getUint16(off+10,true);
+    const csize=dv.getUint32(off+20,true);
+    const nameLen=dv.getUint16(off+28,true);
+    const extraLen=dv.getUint16(off+30,true);
+    const cmtLen=dv.getUint16(off+32,true);
+    const lho=dv.getUint32(off+42,true);
+    const name=dec.decode(new Uint8Array(buf,off+46,nameLen));
+    const lnameLen=dv.getUint16(lho+26,true),lextraLen=dv.getUint16(lho+28,true);
+    const start=lho+30+lnameLen+lextraLen;
+    if(start+csize<=buf.byteLength)out[name]={method,data:new Uint8Array(buf,start,csize)};
+    off+=46+nameLen+extraLen+cmtLen;
+  }
+  return out;
+}
+async function zipText(files,name){
+  const f=files[name];if(!f)return "";
+  const raw=f.method===0?f.data:await inflateRaw(f.data);
+  return new TextDecoder().decode(raw);
+}
+function xmlText(xml,tag){
+  const re=new RegExp("<"+tag+"[^>]*>([\\s\\S]*?)</"+tag+">","g");
+  const out=[];let m;
+  while((m=re.exec(xml)))out.push(m[1].replace(/<[^>]+>/g,""));
+  return out;
+}
+function unent(s){
+  return String(s).replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"')
+    .replace(/&apos;/g,"'").replace(/&#(\d+);/g,(_,d)=>String.fromCharCode(+d)).replace(/&amp;/g,"&");
+}
+
+async function readDocx(buf){
+  const files=await unzip(buf);
+  const xml=await zipText(files,"word/document.xml");
+  const paras=xml.split(/<\/w:p>/).map(p=>{
+    const t=xmlText(p,"w:t").join("");
+    return unent(t).trim();
+  }).filter(Boolean);
+  return paras.join("\n");
+}
+async function readPptx(buf){
+  const files=await unzip(buf);
+  const names=Object.keys(files).filter(n=>/^ppt\/slides\/slide\d+\.xml$/.test(n))
+    .sort((a,b)=>(+a.match(/\d+/)[0])-(+b.match(/\d+/)[0]));
+  const out=[];
+  for(const n of names){
+    const xml=await zipText(files,n);
+    const t=xmlText(xml,"a:t").map(unent).map(s=>s.trim()).filter(Boolean);
+    if(t.length)out.push(t.join("\n"));
+  }
+  return out.join("\n");
+}
+async function readXlsx(buf){
+  const files=await unzip(buf);
+  const ssXml=await zipText(files,"xl/sharedStrings.xml");
+  const shared=ssXml?ssXml.split(/<si[ >]/).slice(1).map(si=>unent(xmlText(si,"t").join(""))):[];
+  const sheets=Object.keys(files).filter(n=>/^xl\/worksheets\/sheet\d+\.xml$/.test(n)).sort();
+  const rows=[];
+  for(const sn of sheets){
+    const xml=await zipText(files,sn);
+    const rowRe=/<row[^>]*>([\s\S]*?)<\/row>/g;let rm;
+    while((rm=rowRe.exec(xml))){
+      const cells=[];const cRe=/<c([^>]*)>([\s\S]*?)<\/c>|<c([^>]*)\/>/g;let cm;
+      while((cm=cRe.exec(rm[1]))){
+        const attrs=cm[1]||cm[3]||"",inner=cm[2]||"";
+        const type=(attrs.match(/t="([^"]+)"/)||[])[1];
+        let v="";
+        if(type==="s"){const i=+(xmlText(inner,"v")[0]||-1);v=shared[i]||""}
+        else if(type==="inlineStr")v=unent(xmlText(inner,"t").join(""));
+        else v=unent(xmlText(inner,"v")[0]||"");
+        cells.push(String(v).trim());
+      }
+      if(cells.some(Boolean))rows.push(cells);
+    }
+  }
+  return {rows};
+}
+async function readPdf(buf){
+  const bytes=new Uint8Array(buf);
+  const lat=new TextDecoder("latin1").decode(bytes);
+  const chunks=[];
+  const re=/stream\r?\n?/g;let m;
+  while((m=re.exec(lat))){
+    const start=m.index+m[0].length;
+    const end=lat.indexOf("endstream",start);
+    if(end<0)continue;
+    let data=bytes.subarray(start,end);
+    let e0=data.length;
+    while(e0>0&&(data[e0-1]===0x0a||data[e0-1]===0x0d||data[e0-1]===0x20))e0--;
+    const trimmed=data.subarray(0,e0);
+    const dec=new TextDecoder("latin1");
+    let txt="";
+    const zlib=trimmed[0]===0x78;
+    const tries=zlib?[["deflate",trimmed],["deflate-raw",trimmed.subarray(2)],["deflate",data]]
+                    :[["deflate-raw",trimmed],["deflate",trimmed]];
+    for(const [fmt,d] of tries){
+      try{txt=dec.decode(await inflateRaw(d,fmt));if(txt)break}catch(e){}
+    }
+    if(!txt&&!zlib)txt=dec.decode(trimmed);
+    if(!txt)continue;
+    if(/(Tj|TJ)/.test(txt))chunks.push(txt);
+    re.lastIndex=end;
+  }
+  const out=[];
+  const unesc=s=>s.replace(/\\([nrtbf()\\])/g,(_,c)=>({n:"\n",r:"\n",t:" ",b:"",f:"",'(':"(",')':")","\\":"\\"}[c]||c))
+                  .replace(/\\([0-7]{1,3})/g,(_,o)=>String.fromCharCode(parseInt(o,8)));
+  for(const c of chunks){
+    let line="";
+    const tok=/\((?:\\.|[^\\()])*\)|\bTJ\b|\bTj\b|\bTD\b|\bTd\b|T\*|\bET\b|\bBT\b/g;let t;
+    while((t=tok.exec(c))){
+      const s=t[0];
+      if(s[0]==="("){line+=unesc(s.slice(1,-1))}
+      else if(s==="TD"||s==="Td"||s==="T*"||s==="ET"||s==="BT"){if(line.trim()){out.push(line.trim());line=""}}
+    }
+    if(line.trim())out.push(line.trim());
+  }
+  return out.join("\n");
+}
+async function readTextFile(file){
+  return await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result));r.onerror=rej;r.readAsText(file)});
+}
+async function readBuf(file){
+  return await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsArrayBuffer(file)});
+}
+
+/* texto → pares de conocimiento */
+function textToPairs(text,src){
+  const lines=String(text).replace(/\r/g,"").split("\n").map(s=>s.replace(/\s+/g," ").trim()).filter(Boolean);
+  const isQ=l=>/[?？]\s*$/.test(l)&&l.length<170;
+  const pairs=[];
+  for(let i=0;i<lines.length;i++){
+    if(!isQ(lines[i]))continue;
+    const ans=[];
+    for(let j=i+1;j<lines.length&&ans.join(" ").length<600;j++){
+      if(isQ(lines[j]))break;
+      ans.push(lines[j]);
+    }
+    if(ans.length){pairs.push({q:lines[i],a:ans.join(" ").slice(0,800),src});i+=ans.length}
+  }
+  if(pairs.length>=2)return pairs;
+  const chunks=[];let cur="";
+  for(const l of lines){
+    if((cur+" "+l).length>430){if(cur)chunks.push(cur);cur=l}
+    else cur=cur?cur+" "+l:l;
+  }
+  if(cur)chunks.push(cur);
+  return chunks.slice(0,250).map(c=>{
+    const dot=c.search(/[.!?]\s/);
+    let head=dot>15?c.slice(0,dot+1):c.slice(0,95);
+    if(head.length>110)head=head.slice(0,110)+"…";
+    return {q:head.trim(),a:c,src};
+  });
+}
+function rowsToPairs(rows,src){
+  if(!rows.length)return [];
+  const head=rows[0].map(h=>h.toLowerCase());
+  const qi=head.findIndex(h=>/pregunta|question|consulta|tema/.test(h));
+  const ai=head.findIndex(h=>/respuesta|answer|contenido|detalle|descripcion|descripción/.test(h));
+  const body=(qi>=0||ai>=0)?rows.slice(1):rows;
+  const useQ=qi>=0?qi:0,useA=ai>=0?ai:1;
+  if(rows[0].length>=2){
+    return body.filter(r=>r[useQ]&&r[useA]).slice(0,400).map(r=>({q:String(r[useQ]).slice(0,170),a:String(r[useA]).slice(0,800),src}));
+  }
+  return textToPairs(rows.map(r=>r.join(" · ")).join("\n"),src);
+}
+
+async function extractPairs(file){
+  const ext=docExt(file.name),src=file.name;
+  if(["txt","md","csv","json"].includes(ext)){
+    const t=await readTextFile(file);
+    if(ext==="csv"){
+      const rows=t.split(/\r?\n/).filter(Boolean).map(l=>l.split(/[,;\t]/).map(c=>c.replace(/^"|"$/g,"").trim()));
+      return rowsToPairs(rows,src);
+    }
+    if(ext==="json"){
+      try{
+        const j=JSON.parse(t);
+        if(Array.isArray(j)){
+          const p=j.map(x=>Array.isArray(x)?{q:String(x[0]||""),a:String(x[1]||""),src}
+            :{q:String(x.q||x.pregunta||x.question||""),a:String(x.a||x.respuesta||x.answer||""),src}).filter(f=>f.q&&f.a);
+          if(p.length)return p;
+        }
+      }catch(e){}
+      return textToPairs(t,src);
+    }
+    return textToPairs(t,src);
+  }
+  if(["html","htm"].includes(ext)){
+    const t=await readTextFile(file);
+    const doc=new DOMParser().parseFromString(t,"text/html");
+    doc.querySelectorAll("script,style,noscript,nav,footer,svg").forEach(e=>e.remove());
+    const blocks=[];
+    (doc.body?doc.body:doc).querySelectorAll("h1,h2,h3,h4,h5,h6,p,li,td,th,dt,dd,blockquote,figcaption,summary").forEach(el=>{
+      const s=(el.textContent||"").replace(/\s+/g," ").trim();
+      if(s)blocks.push(s);
+    });
+    const body=blocks.length?blocks.join("\n"):((doc.body?doc.body.textContent:"")||"").replace(/\s+/g," ").trim();
+    return textToPairs(body,src);
+  }
+  const buf=await readBuf(file);
+  if(ext==="docx")return textToPairs(await readDocx(buf),src);
+  if(ext==="pptx")return textToPairs(await readPptx(buf),src);
+  if(ext==="xlsx"){const {rows}=await readXlsx(buf);return rowsToPairs(rows,src)}
+  if(ext==="pdf"){
+    const t=await readPdf(buf);
+    if(!t.trim())throw new Error("PDF sin texto legible (¿es un escaneo?)");
+    return textToPairs(t,src);
+  }
+  throw new Error("Formato no soportado");
+}
+
+/* ── UI del cargador ── */
+let docsTarget=null,docsPairs=[],docsFiles=[];
+function openDocs(botId){
+  docsTarget=botId||null;docsPairs=[];docsFiles=[];
+  document.getElementById("docs-list").innerHTML="";
+  document.getElementById("docs-note").style.display="none";
+  document.getElementById("docs-input").value="";
+  document.getElementById("docs-overlay").classList.add("on");
+}
+function renderDocsList(){
+  document.getElementById("docs-list").innerHTML=docsFiles.map(f=>`
+    <div class="file-row">
+      <span class="fi">${DOC_ICON[docExt(f.name)]||"📄"}</span>
+      <span class="fn">${esc(f.name)}</span>
+      <span class="fs">${fmtSize(f.size)}</span>
+      <span class="fb ${f.state}">${f.state==="work"?"Leyendo…":f.state==="ok"?("✓ "+f.n+" fragmentos"):("⚠ "+esc(f.err||"error"))}</span>
+    </div>`).join("");
+  const total=docsPairs.length;
+  const note=document.getElementById("docs-note");
+  if(docsFiles.length){
+    note.style.display="";
+    note.innerHTML=total
+      ?`🧠 <b>${total} fragmentos de conocimiento</b> listos para agregar. Podrás editarlos o borrarlos después en la base de conocimiento.`
+      :"No pudimos extraer texto de estos archivos. Si es un PDF escaneado (imagen), conviértelo a texto primero.";
+  }
+}
+async function handleDocFiles(list){
+  for(const file of Array.from(list)){
+    const entry={name:file.name,size:file.size,state:"work",n:0};
+    docsFiles.push(entry);renderDocsList();
+    try{
+      const pairs=(await extractPairs(file)).filter(p=>p.q&&p.a);
+      if(!pairs.length)throw new Error("sin texto legible");
+      docsPairs.push(...pairs);entry.state="ok";entry.n=pairs.length;
+    }catch(e){entry.state="err";entry.err=(e&&e.message)||"no se pudo leer"}
+    renderDocsList();
+  }
+}
+
+
+/* eventos del cargador de archivos */
+(function(){
+  const drop=document.getElementById("docs-drop"),input=document.getElementById("docs-input");
+  drop.addEventListener("click",()=>input.click());
+  drop.addEventListener("dragover",e=>{e.preventDefault();drop.classList.add("over")});
+  drop.addEventListener("dragleave",()=>drop.classList.remove("over"));
+  drop.addEventListener("drop",e=>{e.preventDefault();drop.classList.remove("over");if(e.dataTransfer.files.length)handleDocFiles(e.dataTransfer.files)});
+  input.addEventListener("change",e=>{if(e.target.files.length)handleDocFiles(e.target.files);e.target.value=""});
+  document.getElementById("docs-close").addEventListener("click",()=>document.getElementById("docs-overlay").classList.remove("on"));
+  document.getElementById("docs-add").addEventListener("click",()=>{
+    if(!docsPairs.length){toast("Aún no hay fragmentos que agregar");return}
+    const names=docsFiles.filter(f=>f.state==="ok").map(f=>f.name);
+    if(docsTarget){
+      const b=state.bots.find(x=>x.id===docsTarget);
+      if(b){b.faqs.push(...docsPairs);b.docs=(b.docs||[]).concat(names);save();renderBots()}
+    }else{
+      draft.faqs.push(...docsPairs);
+      draft.docs=(draft.docs||[]).concat(names);
+      faqFilter="";renderWizard();
+    }
+    const n=docsPairs.length;
+    document.getElementById("docs-overlay").classList.remove("on");
+    toast("🧠 "+n+" fragmentos agregados desde "+names.length+" archivo(s)");
+  });
+})();
+
 /* ════════ Reproductor del video demo ════════ */
 const PL_DUR=72;
 const PL_CH=[
@@ -2355,8 +2733,10 @@ function plCounts(){
   });
 }
 let plSound=true;
-function plSpeak(txt){
-  if(!plSound||!("speechSynthesis" in window))return;
+function plSpeak(txt,idx){
+  if(!plSound)return;
+  if(typeof voicePlay==="function"&&idx!=null&&voicePlay(idx))return;
+  if(!("speechSynthesis" in window))return;
   try{
     speechSynthesis.cancel();
     const u=new SpeechSynthesisUtterance(txt);
@@ -2375,7 +2755,7 @@ function plCaption(force){
   const el=document.getElementById("pl-caption-txt");
   const txt=lang==="en"?cap.en:cap.es;
   if(el.textContent!==txt)el.textContent=txt;
-  if(PL.playing&&(idx!==PL.capIdx||force)){PL.capIdx=idx;plSpeak(txt)}
+  if(PL.playing&&(idx!==PL.capIdx||force)){PL.capIdx=idx;plSpeak(txt,idx)}
   else if(idx!==PL.capIdx)PL.capIdx=idx;
 }
 function plRender(){
@@ -2405,6 +2785,7 @@ function plPause(){
   PL.playing=false;
   document.getElementById("pl-play").textContent="▶";
   if("speechSynthesis" in window)try{speechSynthesis.cancel()}catch(e){}
+  if(typeof voiceStop==="function")voiceStop();
 }
 function plSeek(t){
   PL.t=Math.max(0,Math.min(PL_DUR,t));PL.ended=false;
@@ -2426,10 +2807,13 @@ function plInit(){
     plSeek((e.clientX-r.left)/r.width*PL_DUR);
   });
   document.getElementById("pl-play").addEventListener("click",()=>PL.playing?plPause():plPlay());
+  document.getElementById("btn-voice").addEventListener("click",()=>{
+    plPause();renderVoice();document.getElementById("voice-overlay").classList.add("on");
+  });
   document.getElementById("pl-sound").addEventListener("click",()=>{
     plSound=!plSound;
     document.getElementById("pl-sound").textContent=plSound?"🔊":"🔇";
-    if(!plSound&&"speechSynthesis" in window)try{speechSynthesis.cancel()}catch(e){}
+    if(!plSound){if("speechSynthesis" in window)try{speechSynthesis.cancel()}catch(e){}if(typeof voiceStop==="function")voiceStop()}
     else if(plSound&&PL.playing)plCaption(true);
   });
   document.getElementById("pl-bigplay").addEventListener("click",plPlay);
@@ -2443,6 +2827,104 @@ function plChapLabels(){
   document.querySelectorAll(".pl-chap").forEach((b,i)=>{b.textContent=lang==="en"?PL_CH[i].en:PL_CH[i].es});
 }
 function plRefresh(){plChapLabels();plCaption()}
+
+/* ════════ Narración con tu propia voz ════════ */
+const VOICE_KEY="lumibots_voice";
+let VOICE={};            /* {"es-0": "data:audio/webm;base64,..." } */
+let voiceRec=null,voiceRecIdx=-1,voiceAudio=null;
+try{VOICE=JSON.parse(localStorage.getItem(VOICE_KEY)||"{}")}catch(e){VOICE={}}
+if(typeof LUMI_VOICE!=="undefined"&&LUMI_VOICE&&Object.keys(VOICE).length===0)VOICE=LUMI_VOICE;
+function voiceKeyOf(i){return lang+"-"+i}
+function voiceSave(){
+  try{localStorage.setItem(VOICE_KEY,JSON.stringify(VOICE))}
+  catch(e){toast("⚠ No hay espacio para más grabaciones — exporta y borra algunas")}
+}
+function voiceHas(i){return !!VOICE[voiceKeyOf(i)]}
+function voicePlay(i){
+  const d=VOICE[voiceKeyOf(i)];if(!d)return false;
+  try{
+    if(voiceAudio){voiceAudio.pause();voiceAudio=null}
+    voiceAudio=new Audio(d);voiceAudio.play().catch(()=>{});
+    return true;
+  }catch(e){return false}
+}
+function voiceStop(){if(voiceAudio){try{voiceAudio.pause()}catch(e){}voiceAudio=null}}
+
+function renderVoice(){
+  const list=document.getElementById("voice-list");
+  list.innerHTML=PL_CAP.map((c,i)=>{
+    const txt=lang==="en"?c.en:c.es;
+    const done=voiceHas(i),rec=voiceRecIdx===i;
+    return `<div class="rec-row ${rec?"rec":done?"done":""}">
+      <span class="rec-num">${done?"✓":i+1}</span>
+      <span class="rec-txt">${esc(txt)}</span>
+      <span class="rec-acts">
+        <button class="rec-btn ${rec?"on":""}" data-rec="${i}" title="${rec?"Detener":"Grabar"}">${rec?"⏹":"🎙️"}</button>
+        <button class="rec-btn" data-play="${i}" title="Escuchar" ${done?"":"disabled style=opacity:.35"}>▶</button>
+        <button class="rec-btn" data-del="${i}" title="Borrar" ${done?"":"disabled style=opacity:.35"}>✕</button>
+      </span>
+    </div>`;
+  }).join("");
+  const n=PL_CAP.filter((_,i)=>voiceHas(i)).length;
+  document.getElementById("voice-count").textContent=lang==="en"
+    ?(n+" of "+PL_CAP.length+" recorded"):(n+" de "+PL_CAP.length+" grabadas");
+  list.querySelectorAll("[data-rec]").forEach(b=>b.addEventListener("click",()=>voiceToggle(+b.dataset.rec)));
+  list.querySelectorAll("[data-play]").forEach(b=>b.addEventListener("click",()=>voicePlay(+b.dataset.play)));
+  list.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>{
+    delete VOICE[voiceKeyOf(+b.dataset.del)];voiceSave();renderVoice();
+  }));
+}
+async function voiceToggle(i){
+  if(voiceRecIdx===i){voiceStopRec();return}
+  if(voiceRecIdx>=0)voiceStopRec();
+  if(!navigator.mediaDevices||!window.MediaRecorder){toast("Tu navegador no permite grabar audio");return}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const mr=new MediaRecorder(stream);
+    const parts=[];
+    mr.ondataavailable=e=>{if(e.data.size)parts.push(e.data)};
+    mr.onstop=()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      const blob=new Blob(parts,{type:mr.mimeType||"audio/webm"});
+      const fr=new FileReader();
+      fr.onload=()=>{VOICE[voiceKeyOf(i)]=String(fr.result);voiceSave();voiceRecIdx=-1;renderVoice();toast("🎙️ Frase "+(i+1)+" grabada")};
+      fr.readAsDataURL(blob);
+    };
+    voiceRec=mr;voiceRecIdx=i;mr.start();renderVoice();
+  }catch(e){toast("No se pudo usar el micrófono — revisa los permisos del navegador")}
+}
+function voiceStopRec(){
+  if(voiceRec&&voiceRec.state!=="inactive")try{voiceRec.stop()}catch(e){}
+  voiceRec=null;
+}
+document.getElementById("voice-close").addEventListener("click",()=>{
+  voiceStopRec();document.getElementById("voice-overlay").classList.remove("on");
+});
+document.getElementById("voice-export").addEventListener("click",()=>{
+  if(!Object.keys(VOICE).length){toast("Aún no hay grabaciones que exportar");return}
+  const blob=new Blob([JSON.stringify(VOICE)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="lumibots-narracion.json";a.click();URL.revokeObjectURL(a.href);
+  toast("⬇ Narración exportada — compártela para publicarla en el sitio");
+});
+document.getElementById("voice-import").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const j=JSON.parse(String(r.result));
+      if(typeof j!=="object")throw new Error();
+      VOICE=Object.assign(VOICE,j);voiceSave();renderVoice();
+      toast("⬆ Narración importada");
+    }catch(err){toast("⚠ Ese archivo no es una narración válida")}
+  };
+  r.readAsText(f);e.target.value="";
+});
+document.getElementById("voice-clear").addEventListener("click",()=>{
+  askConfirm("Borrar narración","Se eliminarán todas las grabaciones de tu voz guardadas en este dispositivo.",()=>{
+    VOICE={};voiceSave();renderVoice();toast("Grabaciones borradas");
+  });
+});
 
 /* ════════ Idioma ES/EN ════════ */
 let lang=localStorage.getItem("lumibots_lang")||"es";
@@ -2599,7 +3081,15 @@ const I18N_TEXT={
 "🧠 Revisa lo que tu bot sabrá":"🧠 Review what your bot will know",
 "Servicios o productos que ofrece":"Services or products offered","Funciones que cubre":"Functions covered","＋ Agregar":"＋ Add",
 "Base de conocimiento (preguntas y respuestas)":"Knowledge base (questions & answers)",
-"🗄️ Importar en volumen":"🗄️ Bulk import","＋ Agregar otra pregunta":"＋ Add another question",
+"📎 Subir archivos de mi empresa":"📎 Upload my company files","🗄️ Pegar en volumen":"🗄️ Bulk paste",
+"📎 Entrenar con archivos":"📎 Train with files","📎 Entrena tu bot con archivos de tu empresa":"📎 Train your bot with your company files",
+"Arrastra tus archivos aquí o haz clic para elegirlos":"Drag your files here or click to choose them",
+"Puedes subir varios a la vez":"You can upload several at once",
+"Agregar al conocimiento":"Add to knowledge",
+"🎙️ Narra el video con tu voz":"🎙️ Narrate the video in your voice",
+"Graba cada frase con tu propia voz. El video la reproducirá en lugar de la voz automática. Puedes regrabar las veces que quieras.":"Record each line in your own voice. The video will play it instead of the automatic voice. Re-record as many times as you like.",
+"⬇ Exportar narración":"⬇ Export narration","⬆ Importar":"⬆ Import","🗑 Borrar todo":"🗑 Delete all","Listo":"Done",
+"🎙️ Grabar mi voz":"🎙️ Record my voice","＋ Agregar otra pregunta":"＋ Add another question",
 "📥 ¿Qué información capturará y almacenará?":"📥 What information will it capture and store?",
 "💡 Consejo: de 3 a 5 datos es el punto dulce — suficientes para dar seguimiento sin cansar a quien escribe. Todos los registros se pueden exportar a CSV.":"💡 Tip: 3 to 5 fields is the sweet spot — enough to follow up without tiring the person. All records can be exported to CSV.",
 "🎨 Canales, estilo y ¡despegue!":"🎨 Channels, style and liftoff!",

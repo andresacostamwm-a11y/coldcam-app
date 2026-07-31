@@ -41,6 +41,13 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   nombre, avatar, color del widget y mensaje de bienvenida.
 
 ### Información en volumen
+- **Entrenamiento con archivos de la empresa**: sube PDF, Word (.docx),
+  Excel (.xlsx), PowerPoint (.pptx), HTML, TXT, CSV o JSON y la app extrae su
+  texto para convertirlo en conocimiento del bot. Todo se procesa en el
+  navegador (los archivos nunca salen del dispositivo) usando los
+  descompresores nativos del navegador; un Excel con columnas
+  Pregunta/Respuesta se importa como pares directos. Los PDF escaneados
+  (imágenes sin texto) no se pueden leer.
 - **Carga masiva de conocimiento**: pega cientos de pares `Pregunta | Respuesta`
   o carga un CSV/JSON de golpe; buscador dentro de la base de conocimiento.
 - **15 tipos de dato capturables**: nombre, correo, teléfono, empresa, interés,
@@ -57,6 +64,10 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   de registros con exportación a CSV.
 - **Multicanal**: Web, WhatsApp, Instagram, Messenger y Telegram; código de
   instalación para sitios web y exportación del bot en JSON.
+- **Video explicativo narrado** en la pantalla de entrada (visible sin
+  contraseña), con capítulos, subtítulos bilingües y narración por voz. El
+  propietario puede grabar la narración con su propia voz desde la app y
+  exportarla para publicarla en el sitio.
 
 ### Licencias (modo negocio)
 - **Puerta de acceso privada**: propietario con usuario y contraseña;
