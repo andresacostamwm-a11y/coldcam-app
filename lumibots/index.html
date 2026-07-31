@@ -406,6 +406,20 @@ footer b{color:var(--ink-2)}
   .funnel-row{grid-template-columns:106px 1fr 46px}
 }
 
+/* ── Checkout y facturación ── */
+.bill-toggle{display:flex;justify-content:center;gap:10px;margin:-8px 0 30px;align-items:center;flex-wrap:wrap}
+.bill-btn{padding:10px 22px;border-radius:99px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:14px;color:var(--ink-2)}
+.bill-btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.bill-save{font-size:12px;font-weight:800;background:var(--mint-soft);color:#1d6b48;border-radius:99px;padding:5px 12px}
+.price-eq{font-size:12.5px;color:var(--good);font-weight:700;margin-top:2px}
+.pay-h{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:800;margin:18px 0 10px}
+.pay-resumen{background:var(--accent-soft);border-radius:14px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;flex-wrap:wrap}
+.pay-resumen b.amt{font-size:20px;letter-spacing:-.4px;font-variant-numeric:tabular-nums}
+.pay-note{font-size:12.5px;color:var(--ink-2);background:var(--paper);border-radius:10px;padding:10px 13px;margin-top:14px}
+.card-row{position:relative}
+.card-row input{width:100%;padding-right:110px}
+.card-brand{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11.5px;font-weight:800;color:var(--accent-deep);letter-spacing:.04em}
+
 /* ── Tema azul futurista (hero, gate, cta) ── */
 .net-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .gate .net-canvas{position:fixed}
@@ -588,10 +602,11 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
 <main id="view-planes" class="view">
   <div class="wrap">
     <div class="sec-head" style="padding-top:46px">
-      <span class="kicker">Planes y licencias</span>
-      <h2>Elige tu plan — el propietario autoriza tu acceso</h2>
-      <p>Al comprar, tu solicitud llega al propietario de la plataforma. En cuanto la autorice recibirás tu clave de licencia para entrar.</p>
+      <span class="kicker">Planes y membresías</span>
+      <h2>Elige tu plan y paga con tarjeta</h2>
+      <p>Tu licencia se activa al instante al completar el pago. El propietario de la plataforma conserva el control para pausar o revocar accesos.</p>
     </div>
+    <div class="bill-toggle" id="bill-toggle"></div>
     <div class="plans-grid" id="plans-grid"></div>
   </div>
 </main>
@@ -716,20 +731,44 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
   </div>
 </div>
 
-<!-- compra modal -->
-<div class="overlay" id="buy-overlay" role="dialog" aria-modal="true" aria-label="Comprar plan">
+<!-- checkout con tarjeta -->
+<div class="overlay" id="buy-overlay" role="dialog" aria-modal="true" aria-label="Pagar membresía">
   <div class="code-modal">
-    <h3 id="buy-title">💳 Comprar plan</h3>
-    <p>Déjanos tus datos. El propietario de la plataforma autorizará tu licencia y te compartirá tu clave de acceso.</p>
-    <div class="f-grid">
-      <div class="f-field"><label>Tu nombre *</label><input id="buy-nombre" placeholder="Nombre y apellido"></div>
-      <div class="f-field"><label>Empresa *</label><input id="buy-empresa" placeholder="Nombre de tu empresa"></div>
-      <div class="f-field full"><label>Correo electrónico *</label><input id="buy-email" type="email" placeholder="tu@empresa.com"></div>
+    <div id="buy-form">
+      <h3 id="buy-title">💳 Finalizar compra</h3>
+      <div class="pay-resumen" id="buy-resumen" style="margin-top:12px"></div>
+      <h4 class="pay-h">Tus datos</h4>
+      <div class="f-grid">
+        <div class="f-field"><label>Tu nombre *</label><input id="buy-nombre" placeholder="Nombre y apellido"></div>
+        <div class="f-field"><label>Empresa *</label><input id="buy-empresa" placeholder="Nombre de tu empresa"></div>
+        <div class="f-field full"><label>Correo electrónico *</label><input id="buy-email" type="email" placeholder="tu@empresa.com"></div>
+      </div>
+      <h4 class="pay-h">Pago con tarjeta</h4>
+      <div class="f-grid">
+        <div class="f-field full"><label>Número de tarjeta *</label>
+          <div class="card-row"><input id="buy-card" inputmode="numeric" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number"><span class="card-brand" id="buy-brand"></span></div>
+        </div>
+        <div class="f-field full"><label>Titular de la tarjeta *</label><input id="buy-titular" placeholder="Como aparece en la tarjeta" autocomplete="cc-name"></div>
+        <div class="f-field"><label>Vencimiento (MM/AA) *</label><input id="buy-exp" placeholder="MM/AA" maxlength="5" inputmode="numeric" autocomplete="cc-exp"></div>
+        <div class="f-field"><label>CVV *</label><input id="buy-cvv" type="password" placeholder="•••" maxlength="4" inputmode="numeric" autocomplete="cc-csc"></div>
+      </div>
+      <p class="pay-note">🔒 Modo demostración: no se realiza ningún cargo real y el número de tarjeta <b>no se guarda</b> (solo los últimos 4 dígitos, para el comprobante). Al conectar Stripe o Mercado Pago, este mismo formulario procesará cobros reales.</p>
+      <p class="f-err" id="buy-err">⚠ Revisa los campos marcados.</p>
+      <div class="code-actions">
+        <button class="mini-btn" id="buy-close">Cancelar</button>
+        <button class="mini-btn solid" id="buy-send">Pagar</button>
+      </div>
     </div>
-    <p class="f-err" id="buy-err">⚠ Completa los tres campos.</p>
-    <div class="code-actions">
-      <button class="mini-btn" id="buy-close">Cancelar</button>
-      <button class="mini-btn solid" id="buy-send">Enviar solicitud de compra</button>
+    <div id="buy-ok" style="display:none;text-align:center;padding:10px 0">
+      <div style="font-size:46px;margin-bottom:8px">🎉</div>
+      <h3>¡Pago exitoso — tu licencia está activa!</h3>
+      <p id="buy-ok-msg" style="color:var(--ink-2);font-size:14px;margin:10px 0 16px"></p>
+      <div class="lic-key" id="buy-ok-key" style="font-size:17px;padding:11px 18px;display:inline-block"></div>
+      <p style="color:var(--ink-2);font-size:13px;margin:16px 0 18px">Guarda esta clave: con ella y tu nombre o correo entras a la plataforma. El comprobante quedó registrado con el propietario.</p>
+      <div class="code-actions" style="justify-content:center">
+        <button class="mini-btn" id="buy-ok-copy">📋 Copiar clave</button>
+        <button class="mini-btn solid" id="buy-ok-close">Ir a iniciar sesión</button>
+      </div>
     </div>
   </div>
 </div>
@@ -756,7 +795,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <div class="f-field"><label>Nombre del cliente *</label><input id="lic-nombre" placeholder="Nombre y apellido"></div>
       <div class="f-field"><label>Empresa</label><input id="lic-empresa" placeholder="Empresa del cliente"></div>
       <div class="f-field"><label>Correo</label><input id="lic-email" type="email" placeholder="cliente@empresa.com"></div>
-      <div class="f-field"><label>Plan</label><select id="lic-plan"><option value="starter">Starter · $490/mes</option><option value="pro" selected>Pro · $990/mes</option><option value="empresa">Empresa · $2,490/mes</option></select></div>
+      <div class="f-field"><label>Plan</label><select id="lic-plan"><option value="starter">Starter · $499/mes</option><option value="pro" selected>Pro · $1,299/mes</option><option value="empresa">Empresa · $2,999/mes</option></select></div>
     </div>
     <p class="f-err" id="lic-err">⚠ Escribe al menos el nombre del cliente.</p>
     <div class="code-actions">
@@ -963,11 +1002,11 @@ const WIDGET_COLORS=["#6B7FE3","#7ED9B4","#F6C79A","#A9D3F2","#CDC2F0","#F2B8C6"
 const AVATARES=["🤖","✨","🦷","🍽️","💈","🏠","🛍️","🎓","⚖️","💪","🏝️","🚗","💻","🧰","💰","🛒","🎧","🔧","📣","👥","📈","🚚","🖥️","🗂️"];
 
 const PLANES=[
- {id:"starter",n:"Starter",precio:490,pd:"Para un negocio que empieza con su primer asistente.",
+ {id:"starter",n:"Starter",precio:499,anual:4990,pd:"Para un negocio que empieza con su primer asistente.",
   feats:["1 bot activo","Giros de negocio y 3 áreas internas","Hasta 200 pares de conocimiento","Dashboard con métricas esenciales","Exportación de registros en CSV","Canal web + WhatsApp"]},
- {id:"pro",n:"Pro",precio:990,destacado:true,pd:"Para empresas que quieren bots en varias áreas.",
+ {id:"pro",n:"Pro",precio:1299,anual:12990,destacado:true,pd:"Para empresas que quieren bots en varias áreas.",
   feats:["5 bots activos","Los 12 giros y las 10 áreas especialistas","Conocimiento ilimitado con carga masiva","Dashboard completo con embudo y rangos","Los 5 canales conectados","Soporte prioritario del propietario"]},
- {id:"empresa",n:"Empresa",precio:2490,pd:"Para operaciones grandes y agencias.",
+ {id:"empresa",n:"Empresa",precio:2999,anual:29990,pd:"Para operaciones grandes y agencias.",
   feats:["Bots ilimitados","Todo lo del plan Pro","Volúmenes altos de captura y almacenamiento","Respaldo completo de datos (JSON)","Marca blanca del widget","Acompañamiento de implementación"]}
 ];
 
@@ -1010,7 +1049,7 @@ function makeMetrics(id){
 
 function seedLicenses(){
   state.licenses=[
-   {id:"lic-demo",key:"LUMI-2026-DEMO",cliente:"Laura Méndez",empresa:"Constructora Delta",email:"laura@constructoradelta.mx",plan:"pro",estado:"Activa",creado:"2026-07-15"},
+   {id:"lic-demo",key:"LUMI-2026-DEMO",cliente:"Laura Méndez",empresa:"Constructora Delta",email:"laura@constructoradelta.mx",plan:"pro",estado:"Activa",creado:"2026-07-15",fact:{periodo:"anual",monto:12990,last4:"4242",marca:"VISA",fecha:"2026-07-15"}},
    {id:"lic-p1",key:null,cliente:"Roberto Sandoval",empresa:"Farmacias Vida",email:"roberto@farmaciasvida.mx",plan:"starter",estado:"Pendiente",creado:"2026-07-29"}
   ];
 }
@@ -1654,36 +1693,98 @@ function startLead(){
 }
 
 /* ════════ Planes y compra ════════ */
-let buyPlan=null;
+let buyPlan=null,billPeriod="anual",lastKey="";
+function planPrecio(p){return billPeriod==="anual"?p.anual:p.precio}
 function renderPlanes(){
+  document.getElementById("bill-toggle").innerHTML=`
+    <button class="bill-btn ${billPeriod==="mensual"?"on":""}" data-bill="mensual">Mensual</button>
+    <button class="bill-btn ${billPeriod==="anual"?"on":""}" data-bill="anual">Anual</button>
+    <span class="bill-save">🎁 Anual = 2 meses gratis</span>`;
+  document.querySelectorAll("[data-bill]").forEach(b=>b.addEventListener("click",()=>{billPeriod=b.dataset.bill;renderPlanes()}));
   document.getElementById("plans-grid").innerHTML=PLANES.map(p=>`
     <div class="plan ${p.destacado?"destacado":""}">
       ${p.destacado?'<span class="flag">Más elegido</span>':""}
       <h3>${p.n}</h3><p class="pd">${p.pd}</p>
-      <div class="price">$${p.precio.toLocaleString("es-MX")}<small> MXN/mes</small></div>
+      <div class="price">$${planPrecio(p).toLocaleString("es-MX")}<small> MXN/${billPeriod==="anual"?"año":"mes"}</small></div>
+      ${billPeriod==="anual"?`<div class="price-eq">equivale a $${Math.round(p.anual/12).toLocaleString("es-MX")}/mes · ahorras $${(p.precio*12-p.anual).toLocaleString("es-MX")}</div>`:""}
       <ul>${p.feats.map(f=>`<li>${f}</li>`).join("")}</ul>
-      <button class="btn ${p.destacado?"btn-primary":"btn-ghost"}" data-buy="${p.id}">💳 Comprar ${p.n}</button>
+      <button class="btn ${p.destacado?"btn-primary":"btn-ghost"}" data-buy="${p.id}">💳 Contratar ${p.n}</button>
     </div>`).join("");
   document.querySelectorAll("[data-buy]").forEach(b=>b.addEventListener("click",()=>{
     buyPlan=b.dataset.buy;
-    document.getElementById("buy-title").textContent="💳 Comprar plan "+(PLANES.find(p=>p.id===buyPlan)?.n||"");
-    ["buy-nombre","buy-empresa","buy-email"].forEach(id=>document.getElementById(id).value="");
+    const p=PLANES.find(x=>x.id===buyPlan);
+    document.getElementById("buy-title").textContent="💳 Contratar plan "+p.n;
+    document.getElementById("buy-resumen").innerHTML=
+      `<span>Plan <b>${p.n}</b> · facturación ${billPeriod}${billPeriod==="anual"?" (2 meses gratis)":""}</span><b class="amt">$${planPrecio(p).toLocaleString("es-MX")} MXN</b>`;
+    ["buy-nombre","buy-empresa","buy-email","buy-card","buy-titular","buy-exp","buy-cvv"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("buy-brand").textContent="";
     document.getElementById("buy-err").classList.remove("show");
+    document.getElementById("buy-form").style.display="";
+    document.getElementById("buy-ok").style.display="none";
+    const btn=document.getElementById("buy-send");
+    btn.disabled=false;btn.textContent="Pagar $"+planPrecio(p).toLocaleString("es-MX")+" MXN";
     document.getElementById("buy-overlay").classList.add("on");
   }));
 }
+/* validación de tarjeta (algoritmo de Luhn) — el número nunca se persiste */
+function luhn(s){let sum=0,alt=false;for(let i=s.length-1;i>=0;i--){let d=+s[i];if(alt){d*=2;if(d>9)d-=9}sum+=d;alt=!alt}return sum%10===0}
+function brandOf(n){if(/^4/.test(n))return"VISA";if(/^(5[1-5]|2[2-7])/.test(n))return"MASTERCARD";if(/^3[47]/.test(n))return"AMEX";return n?"·":""}
+document.getElementById("buy-card").addEventListener("input",e=>{
+  const v=e.target.value.replace(/\D/g,"").slice(0,16);
+  e.target.value=v.replace(/(.{4})/g,"$1 ").trim();
+  document.getElementById("buy-brand").textContent=brandOf(v);
+});
+document.getElementById("buy-exp").addEventListener("input",e=>{
+  const v=e.target.value.replace(/\D/g,"").slice(0,4);
+  e.target.value=v.length>2?v.slice(0,2)+"/"+v.slice(2):v;
+});
+document.getElementById("buy-cvv").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"").slice(0,4)});
 document.getElementById("buy-close").addEventListener("click",()=>document.getElementById("buy-overlay").classList.remove("on"));
 document.getElementById("buy-send").addEventListener("click",()=>{
+  const err=document.getElementById("buy-err");
+  const bad=msg=>{err.textContent="⚠ "+msg;err.classList.add("show")};
   const n=document.getElementById("buy-nombre").value.trim(),
         e=document.getElementById("buy-empresa").value.trim(),
-        m=document.getElementById("buy-email").value.trim();
-  if(!n||!e||!m||!m.includes("@")){document.getElementById("buy-err").classList.add("show");return}
-  state.licenses.unshift({id:"lic"+Math.random().toString(36).slice(2,8),key:null,cliente:n,empresa:e,email:m,plan:buyPlan,estado:"Pendiente",creado:hoy()});
-  save();
+        m=document.getElementById("buy-email").value.trim(),
+        card=document.getElementById("buy-card").value.replace(/\s/g,""),
+        tit=document.getElementById("buy-titular").value.trim(),
+        exp=document.getElementById("buy-exp").value.trim(),
+        cvv=document.getElementById("buy-cvv").value.trim();
+  if(!n||!e)return bad("Escribe tu nombre y tu empresa.");
+  if(!m||!m.includes("@"))return bad("Escribe un correo válido.");
+  if(card.length<15||!luhn(card))return bad("El número de tarjeta no es válido.");
+  if(!tit)return bad("Escribe el nombre del titular de la tarjeta.");
+  const em=exp.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+  if(!em)return bad("El vencimiento debe tener formato MM/AA.");
+  const now=new Date(),yy=2000+ +em[2],mm=+em[1];
+  if(yy<now.getFullYear()||(yy===now.getFullYear()&&mm<now.getMonth()+1))return bad("La tarjeta está vencida.");
+  if(cvv.length<3)return bad("El CVV debe tener 3 o 4 dígitos.");
+  err.classList.remove("show");
+  const p=PLANES.find(x=>x.id===buyPlan);
+  const btn=document.getElementById("buy-send");
+  btn.disabled=true;btn.textContent="Procesando pago…";
+  setTimeout(()=>{
+    const l={id:"lic"+Math.random().toString(36).slice(2,8),key:makeKey(),cliente:n,empresa:e,email:m,
+      plan:buyPlan,estado:"Activa",creado:hoy(),
+      fact:{periodo:billPeriod,monto:planPrecio(p),last4:card.slice(-4),marca:brandOf(card),fecha:hoy()}};
+    state.licenses.unshift(l);save();lastKey=l.key;
+    document.getElementById("buy-form").style.display="none";
+    document.getElementById("buy-ok").style.display="";
+    document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · $"+planPrecio(p).toLocaleString("es-MX")+" MXN · tarjeta •••• "+card.slice(-4);
+    document.getElementById("buy-ok-key").textContent=l.key;
+    if(esOwner())renderAdmin();
+  },1700);
+});
+document.getElementById("buy-ok-copy").addEventListener("click",()=>{
+  navigator.clipboard?.writeText(lastKey).then(()=>toast("📋 Clave copiada")).catch(()=>toast("Copia la clave manualmente"));
+});
+document.getElementById("buy-ok-close").addEventListener("click",()=>{
   document.getElementById("buy-overlay").classList.remove("on");
-  toast("📨 Solicitud enviada — el propietario autorizará tu licencia y te compartirá tu clave");
-  if(guestPlanes&&!state.session){setTimeout(()=>{guestPlanes=false;applySession()},1200)}
-  if(esOwner())renderAdmin();
+  if(!state.session){
+    guestPlanes=false;applySession();
+    const l=state.licenses.find(x=>x.key===lastKey);
+    if(l){document.getElementById("gate-cli-id").value=l.email;document.getElementById("gate-key").value=l.key}
+  }
 });
 
 /* ════════ Dashboard ════════ */
@@ -1892,11 +1993,13 @@ function renderAdmin(){
   const act=state.licenses.filter(l=>l.estado==="Activa"),
         pen=state.licenses.filter(l=>l.estado==="Pendiente"),
         sus=state.licenses.filter(l=>l.estado==="Suspendida");
-  const mrr=act.reduce((a,l)=>a+(PLANES.find(p=>p.id===l.plan)?.precio||0),0);
+  const mrr=act.reduce((a,l)=>{const p=PLANES.find(x=>x.id===l.plan);if(!p)return a;
+    return a+(l.fact&&l.fact.periodo==="anual"?Math.round(p.anual/12):p.precio)},0);
+  const cobrado=state.licenses.reduce((a,l)=>a+(l.fact?l.fact.monto:0),0);
   document.getElementById("admin-tiles").innerHTML=`
     <div class="tile"><span class="tl">🔑 Licencias activas</span><div class="tv">${act.length}</div><span class="td nt">${sus.length} suspendidas</span></div>
     <div class="tile"><span class="tl">📨 Solicitudes de compra</span><div class="tv">${pen.length}</div><span class="td ${pen.length?"up":"nt"}">${pen.length?"esperan tu autorización":"todo al día"}</span></div>
-    <div class="tile"><span class="tl">💵 Ingreso mensual</span><div class="tv">$${mrr.toLocaleString("es-MX")}</div><span class="td nt">MXN por licencias activas</span></div>
+    <div class="tile"><span class="tl">💵 Ingreso mensual</span><div class="tv">$${mrr.toLocaleString("es-MX")}</div><span class="td nt">MXN equiv./mes · $${cobrado.toLocaleString("es-MX")} cobrados</span></div>
     <div class="tile"><span class="tl">🤖 Bots en la plataforma</span><div class="tv">${state.bots.length}</div><span class="td nt">${state.leads.length} registros capturados</span></div>`;
   const rows=state.licenses.map(l=>{
     const plan=PLANES.find(p=>p.id===l.plan);
@@ -1906,7 +2009,7 @@ function renderAdmin(){
     else acts=`<button class="lic-btn ok" data-lact="${l.id}">▶ Reactivar</button><button class="lic-btn bad" data-ldel="${l.id}">✕ Revocar</button>`;
     return `<tr>
       <td><b>${esc(l.cliente)}</b><br><span style="font-size:12.5px;color:var(--ink-2)">${esc(l.empresa)} · ${esc(l.email)}</span></td>
-      <td>${plan?plan.n:l.plan}<br><span style="font-size:12px;color:var(--ink-2)">$${(plan?plan.precio:0).toLocaleString("es-MX")}/mes</span></td>
+      <td>${plan?plan.n:l.plan}<br><span style="font-size:12px;color:var(--ink-2)">${l.fact?((l.fact.periodo==="anual"?"Anual · $":"Mensual · $")+l.fact.monto.toLocaleString("es-MX")+(l.fact.last4?" · •••• "+l.fact.last4:"")):"$"+(plan?plan.precio:0).toLocaleString("es-MX")+"/mes"}</span></td>
       <td>${l.key?`<span class="lic-key">${l.key}</span>`:`<span style="color:var(--ink-3);font-size:12.5px">— se genera al autorizar</span>`}</td>
       <td style="white-space:nowrap;font-variant-numeric:tabular-nums">${l.creado}</td>
       <td><span class="st-pill st-${l.estado.toLowerCase()}">${l.estado}</span></td>
