@@ -420,6 +420,72 @@ footer b{color:var(--ink-2)}
 .card-row input{width:100%;padding-right:110px}
 .card-brand{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11.5px;font-weight:800;color:var(--accent-deep);letter-spacing:.04em}
 
+/* ── Video demo interactivo ── */
+.player{max-width:880px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.pl-screen{position:relative;aspect-ratio:16/9;background:linear-gradient(125deg,#0A1E4E 0%,#12377F 48%,#1E63C8 100%);overflow:hidden;color:#fff}
+.scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:opacity .5s ease;padding:24px}
+.scene.on{opacity:1;pointer-events:auto}
+.sc-logo{width:84px;height:84px;border-radius:26px;background:linear-gradient(135deg,var(--lilac),var(--sky),var(--mint));display:grid;place-items:center;font-size:40px;box-shadow:0 16px 40px rgba(3,12,35,.5);animation:orbFloat 2.4s ease-in-out infinite}
+.scene h3{font-size:clamp(20px,3.4vw,32px);letter-spacing:-.8px;text-align:center;text-shadow:0 2px 20px rgba(3,12,35,.5)}
+.scene>p{color:rgba(220,234,255,.9);font-size:clamp(13px,1.8vw,17px);text-align:center;max-width:52ch}
+.mock{background:#fff;border-radius:16px;box-shadow:0 22px 55px rgba(3,12,35,.5);color:var(--ink);padding:18px 20px;width:min(400px,88%);text-align:left}
+.mk-title{font-weight:800;font-size:14px;margin-bottom:10px}
+.mk-prog{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:12px}
+.mk-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--mint));border-radius:99px}
+.scene.on .mk-prog i{animation:mkFill 9s .5s linear forwards}
+@keyframes mkFill{to{width:100%}}
+.mk-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.mk-chip{border:1.5px solid var(--line);border-radius:99px;padding:6px 12px;font-size:12.5px;font-weight:700;color:var(--ink-2);opacity:0}
+.scene.on .mk-chip{animation:mkIn .4s both}
+.scene.on .mk-chip.c1{animation-delay:.6s}
+.scene.on .mk-chip.c2{animation-delay:1.1s}
+.scene.on .mk-chip.c3{animation-delay:1.6s}
+.scene.on .mk-chip.c1{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep)}
+.mk-field{border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--ink);margin-bottom:8px;opacity:0}
+.scene.on .mk-field.f1{animation:mkIn .45s 2.4s both}
+.scene.on .mk-field.f2{animation:mkIn .45s 3.4s both}
+.mk-btn{background:var(--accent);color:#fff;border-radius:11px;padding:10px;text-align:center;font-weight:800;font-size:13.5px;opacity:0}
+.scene.on .mk-btn{animation:mkIn .5s 4.6s both,mkPulse 1.6s 5.4s ease-in-out 2}
+@keyframes mkIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes mkPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+.mk-chat{display:flex;flex-direction:column;gap:8px}
+.mk-msg{max-width:85%;padding:8px 12px;border-radius:13px;font-size:12.5px;line-height:1.4;opacity:0}
+.mk-msg.b{background:var(--accent-soft);border-bottom-left-radius:4px;align-self:flex-start}
+.mk-msg.u{background:var(--mint-soft);border-bottom-right-radius:4px;align-self:flex-end}
+.scene.on .mk-msg.m1{animation:mkIn .4s .5s both}
+.scene.on .mk-msg.m2{animation:mkIn .4s 2.6s both}
+.scene.on .mk-msg.m3{animation:mkIn .4s 4.7s both}
+.scene.on .mk-msg.m4{animation:mkIn .4s 6.8s both}
+.scene.on .mk-msg.m5{animation:mkIn .4s 8.9s both}
+.mk-badge{align-self:center;font-size:11px;font-weight:800;background:var(--mint-soft);color:#1d6b48;border-radius:99px;padding:5px 12px;opacity:0}
+.scene.on .mk-badge{animation:mkIn .5s 10.8s both,mkPulse 1.4s 11.5s ease-in-out 2}
+.mk-tiles{display:flex;gap:10px;margin-bottom:12px}
+.mk-tile{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:10px;text-align:center}
+.mk-tile b{display:block;font-size:19px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.mk-tile span{font-size:10.5px;color:var(--ink-2);font-weight:700}
+.mk-bars{display:flex;align-items:flex-end;gap:10px;height:74px;padding:0 6px}
+.mk-bar{flex:1;background:#2a78d6;border-radius:5px 5px 0 0;height:0}
+.scene.on .mk-bar{transition:height 1s ease}
+.mk-key{font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:800;background:#fff;color:var(--accent-deep);border-radius:11px;padding:10px 18px;box-shadow:0 14px 36px rgba(3,12,35,.45);opacity:0;letter-spacing:.04em}
+.scene.on .mk-key{animation:mkIn .5s 2.2s both}
+.mk-ok{font-size:12.5px;font-weight:800;background:var(--mint-soft);color:#1d6b48;border-radius:99px;padding:6px 14px;opacity:0}
+.scene.on .mk-ok{animation:mkIn .5s 3.4s both}
+.pl-caption{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;pointer-events:none;padding:0 20px}
+.pl-caption span{background:rgba(6,16,42,.78);backdrop-filter:blur(6px);color:#fff;font-size:clamp(12px,1.7vw,15px);font-weight:600;padding:8px 16px;border-radius:11px;max-width:64ch;text-align:center;line-height:1.4}
+.pl-bigplay{position:absolute;inset:0;margin:auto;width:86px;height:86px;border-radius:50%;background:rgba(255,255,255,.95);color:var(--accent-deep);font-size:32px;display:grid;place-items:center;box-shadow:0 18px 50px rgba(3,12,35,.55);transition:transform .15s;z-index:5}
+.pl-bigplay:hover{transform:scale(1.08)}
+.pl-bigplay.hide{display:none}
+.pl-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line)}
+.pl-btn{width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;font-size:15px;flex:none}
+.pl-track{flex:1;height:20px;display:flex;align-items:center;cursor:pointer;position:relative}
+.pl-track::before{content:"";position:absolute;left:0;right:0;height:6px;border-radius:99px;background:var(--line)}
+.pl-fill{position:absolute;left:0;height:6px;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--mint));width:0%;pointer-events:none}
+.pl-mark{position:absolute;width:3px;height:10px;border-radius:2px;background:var(--ink-3);opacity:.55;pointer-events:none}
+.pl-time{font-size:12.5px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums;flex:none}
+.pl-chaps{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:0 16px 16px}
+.pl-chap{border:1.5px solid var(--line);border-radius:99px;padding:6px 13px;font-size:12.5px;font-weight:700;color:var(--ink-2);background:#FDFCFA}
+.pl-chap.on{background:var(--accent);border-color:var(--accent);color:#fff}
+
 /* ── Tema azul futurista (hero, gate, cta) ── */
 .net-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .gate .net-canvas{position:fixed}
@@ -519,6 +585,74 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         </div>
         <div class="dc-body" id="hero-demo-body"></div>
       </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="video-sec">
+    <div class="sec-head">
+      <span class="kicker">Video demo</span>
+      <h2>Mira cómo funciona en 1 minuto</h2>
+      <p>Un recorrido guiado e interactivo: reproduce, pausa, adelanta o salta directo al capítulo que te interese.</p>
+    </div>
+    <div class="player">
+      <div class="pl-screen" id="pl-screen">
+        <div class="scene on" id="sc-0">
+          <div class="sc-logo">✦</div>
+          <h3>LumiBots Studio Premium</h3>
+          <p>Chatbots que atienden, venden y organizan tu empresa — 24/7</p>
+        </div>
+        <div class="scene" id="sc-1">
+          <div class="mock">
+            <div class="mk-title">🪄 Asistente de creación guiada</div>
+            <div class="mk-prog"><i></i></div>
+            <div class="mk-row"><span class="mk-chip c1">🍽️ Restaurante</span><span class="mk-chip c2">💰 Finanzas</span><span class="mk-chip c3">🔧 Mantenimiento</span></div>
+            <div class="mk-field f1">🏢 Clínica Dental Sonría</div>
+            <div class="mk-field f2">🕐 Lun a Sáb 9:00–19:00</div>
+            <div class="mk-btn">🚀 Crear mi chatbot</div>
+          </div>
+        </div>
+        <div class="scene" id="sc-2">
+          <div class="mock mk-chat">
+            <div class="mk-title">💬 Luna · en vivo</div>
+            <div class="mk-msg b m1">¡Hola! 🦷 ¿Te ayudo a agendar una cita?</div>
+            <div class="mk-msg u m2">Sí, ¿cuánto cuesta la limpieza?</div>
+            <div class="mk-msg b m3">$650 con revisión incluida ✨ ¿Me das tu nombre y teléfono?</div>
+            <div class="mk-msg u m4">Ana López · 55 1234 5678</div>
+            <div class="mk-msg b m5">¡Listo, Ana! Cita el viernes 10:00 📅</div>
+            <div class="mk-badge">📥 Información capturada y almacenada</div>
+          </div>
+        </div>
+        <div class="scene" id="sc-3">
+          <div class="mock">
+            <div class="mk-title">📊 Dashboard en tiempo real</div>
+            <div class="mk-tiles">
+              <div class="mk-tile"><b data-count="1118">0</b><span>Conversaciones</span></div>
+              <div class="mk-tile"><b data-count="167">0</b><span>Registros</span></div>
+              <div class="mk-tile"><b data-count="15" data-suffix="%">0</b><span>Conversión</span></div>
+            </div>
+            <div class="mk-bars"><i class="mk-bar" data-h="52"></i><i class="mk-bar" data-h="70"></i><i class="mk-bar" data-h="44"></i><i class="mk-bar" data-h="88"></i><i class="mk-bar" data-h="62"></i><i class="mk-bar" data-h="96"></i></div>
+          </div>
+        </div>
+        <div class="scene" id="sc-4">
+          <h3>Véndelo a tus clientes</h3>
+          <p>Compran su plan en línea y su licencia se activa al instante — tú conservas el control total.</p>
+          <div class="mk-key">LUMI-8Q4D-M2XK</div>
+          <div class="mk-ok">✓ Licencia activa · Plan Pro</div>
+        </div>
+        <div class="scene" id="sc-5">
+          <h3>Crea tu primer chatbot hoy</h3>
+          <p>Gratis, sin tarjeta y en unos 5 minutos.</p>
+          <button class="btn btn-primary" data-go="wizard" style="position:relative;z-index:6">✨ Empezar ahora</button>
+        </div>
+        <div class="pl-caption" id="pl-caption"><span id="pl-caption-txt"></span></div>
+        <button class="pl-bigplay" id="pl-bigplay" aria-label="Reproducir video">▶</button>
+      </div>
+      <div class="pl-bar">
+        <button class="pl-btn" id="pl-play" aria-label="Reproducir o pausar">▶</button>
+        <div class="pl-track" id="pl-track"><div class="pl-fill" id="pl-fill"></div></div>
+        <span class="pl-time" id="pl-time">0:00 / 1:12</span>
+      </div>
+      <div class="pl-chaps" id="pl-chaps"></div>
     </div>
   </section>
 
@@ -2148,6 +2282,123 @@ startNet(document.querySelector(".hero"));
 startNet(document.getElementById("gate"));
 
 
+
+/* ════════ Reproductor del video demo ════════ */
+const PL_DUR=72;
+const PL_CH=[
+ {t:0,es:"Qué es",en:"What it is"},
+ {t:8,es:"Crear un bot",en:"Create a bot"},
+ {t:22,es:"Chat y captura",en:"Chat & capture"},
+ {t:38,es:"Dashboard",en:"Dashboard"},
+ {t:52,es:"Vende licencias",en:"Sell licenses"},
+ {t:64,es:"Empieza gratis",en:"Start free"}
+];
+const PL_CAP=[
+ {t:0,es:"Esta es LumiBots Studio: chatbots profesionales para atender clientes y áreas internas, las 24 horas.",en:"This is LumiBots Studio: professional chatbots for customers and internal areas, 24/7."},
+ {t:4,es:"Sin programar nada: todo se configura con un asistente guiado, en tu idioma.",en:"No coding at all: everything is set up with a guided wizard, in your language."},
+ {t:8,es:"Paso 1 — Cuéntale al asistente de tu empresa: giro o área, servicios y horarios.",en:"Step 1 — Tell the wizard about your company: industry or area, services and hours."},
+ {t:15,es:"LumiBots arma el conocimiento especialista por ti, listo para editar.",en:"LumiBots builds the specialist knowledge for you, ready to edit."},
+ {t:22,es:"Tu bot conversa como un humano: responde precios, horarios y dudas al instante.",en:"Your bot chats like a human: it answers prices, hours and questions instantly."},
+ {t:30,es:"Y captura los datos que tú definas — nombre, teléfono, cita — guardándolos al momento.",en:"And it captures the data you define — name, phone, appointment — saving it instantly."},
+ {t:38,es:"El dashboard te muestra todo: conversaciones, embudo de conversión y temas frecuentes.",en:"The dashboard shows you everything: conversations, conversion funnel and top topics."},
+ {t:45,es:"Filtra por 7, 14 o 30 días y exporta tus registros a CSV con un clic.",en:"Filter by 7, 14 or 30 days and export your records to CSV in one click."},
+ {t:52,es:"¿Quieres venderlo? Tus clientes compran su plan y su licencia se activa al instante.",en:"Want to sell it? Your clients buy their plan and their license activates instantly."},
+ {t:58,es:"Cada cliente trabaja en su propio espacio; tú lo controlas todo como propietario.",en:"Each client works in their own workspace; you control everything as the owner."},
+ {t:64,es:"Crea tu primer chatbot hoy — gratis y en unos 5 minutos.",en:"Create your first chatbot today — free and in about 5 minutes."}
+];
+const PL={t:0,playing:false,cur:0,last:0,ended:false};
+function plFmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function plSceneIdx(t){let i=0;for(let k=0;k<PL_CH.length;k++)if(t>=PL_CH[k].t)i=k;return i}
+function plActivate(i,force){
+  if(i===PL.cur&&!force)return;
+  PL.cur=i;
+  document.querySelectorAll(".scene").forEach((s,k)=>{
+    s.classList.remove("on");
+    if(k===i){void s.offsetWidth;s.classList.add("on")}
+  });
+  document.querySelectorAll(".pl-chap").forEach((c,k)=>c.classList.toggle("on",k===i));
+  if(i===3)plCounts();
+}
+function plCounts(){
+  document.querySelectorAll("#sc-3 [data-count]").forEach(el=>{
+    const target=+el.dataset.count,suf=el.dataset.suffix||"";
+    const t0=performance.now();
+    (function step(now){
+      const p=Math.min(1,(now-t0)/1500);
+      el.textContent=Math.round(target*p).toLocaleString("es-MX")+suf;
+      if(p<1)requestAnimationFrame(step);
+    })(t0);
+  });
+  document.querySelectorAll("#sc-3 .mk-bar").forEach((b,k)=>{
+    b.style.height="0";
+    setTimeout(()=>{b.style.height=b.dataset.h+"%"},250+k*160);
+  });
+}
+function plCaption(){
+  let cap=PL_CAP[0];
+  for(const c of PL_CAP)if(PL.t>=c.t)cap=c;
+  const el=document.getElementById("pl-caption-txt");
+  const txt=lang==="en"?cap.en:cap.es;
+  if(el.textContent!==txt)el.textContent=txt;
+}
+function plRender(){
+  document.getElementById("pl-fill").style.width=(PL.t/PL_DUR*100)+"%";
+  document.getElementById("pl-time").textContent=plFmt(PL.t)+" / "+plFmt(PL_DUR);
+  plActivate(plSceneIdx(PL.t));
+  plCaption();
+}
+function plTick(now){
+  if(!PL.playing)return;
+  const dt=(now-PL.last)/1000;PL.last=now;
+  PL.t+=dt;
+  if(PL.t>=PL_DUR){PL.t=PL_DUR;plPause();PL.ended=true;
+    const bp=document.getElementById("pl-bigplay");bp.classList.remove("hide");bp.textContent="↻";}
+  plRender();
+  if(PL.playing)requestAnimationFrame(plTick);
+}
+function plPlay(){
+  if(PL.ended||PL.t>=PL_DUR){PL.t=0;PL.ended=false;plActivate(0,true)}
+  PL.playing=true;PL.last=performance.now();
+  document.getElementById("pl-play").textContent="⏸";
+  document.getElementById("pl-bigplay").classList.add("hide");
+  requestAnimationFrame(plTick);
+}
+function plPause(){
+  PL.playing=false;
+  document.getElementById("pl-play").textContent="▶";
+}
+function plSeek(t){
+  PL.t=Math.max(0,Math.min(PL_DUR,t));PL.ended=false;
+  const bp=document.getElementById("pl-bigplay");
+  if(PL.t<PL_DUR){bp.textContent="▶"}
+  plActivate(plSceneIdx(PL.t),true);
+  plRender();
+  if(!PL.playing)plPlay();
+}
+function plInit(){
+  const chaps=document.getElementById("pl-chaps");
+  chaps.innerHTML=PL_CH.map((c,i)=>`<button class="pl-chap ${i===0?"on":""}" data-chap="${i}"></button>`).join("");
+  plChapLabels();
+  chaps.querySelectorAll("[data-chap]").forEach(b=>b.addEventListener("click",()=>plSeek(PL_CH[+b.dataset.chap].t)));
+  const track=document.getElementById("pl-track");
+  PL_CH.forEach(c=>{if(c.t>0){const m=document.createElement("i");m.className="pl-mark";m.style.left=(c.t/PL_DUR*100)+"%";track.appendChild(m)}});
+  track.addEventListener("click",e=>{
+    const r=track.getBoundingClientRect();
+    plSeek((e.clientX-r.left)/r.width*PL_DUR);
+  });
+  document.getElementById("pl-play").addEventListener("click",()=>PL.playing?plPause():plPlay());
+  document.getElementById("pl-bigplay").addEventListener("click",plPlay);
+  document.getElementById("pl-screen").addEventListener("click",e=>{
+    if(e.target.closest(".pl-bigplay")||e.target.closest("[data-go]"))return;
+    PL.playing?plPause():plPlay();
+  });
+  plCaption();
+}
+function plChapLabels(){
+  document.querySelectorAll(".pl-chap").forEach((b,i)=>{b.textContent=lang==="en"?PL_CH[i].en:PL_CH[i].es});
+}
+function plRefresh(){plChapLabels();plCaption()}
+
 /* ════════ Idioma ES/EN ════════ */
 let lang=localStorage.getItem("lumibots_lang")||"es";
 function L(es,en){return lang==="en"?en:es}
@@ -2182,6 +2433,25 @@ const I18N_TEXT={
 "✨ Crear un chatbot ahora":"✨ Create a chatbot now","▶ Ver demo en vivo":"▶ Watch live demo",
 "giros de negocio":"business industries","áreas internas especialistas":"specialist internal areas","tipos de dato capturables":"capturable data types","conocimiento por volumen":"bulk knowledge",
 "● En línea — responde al instante":"● Online — instant replies",
+/* video demo */
+"Video demo":"Video demo","Mira cómo funciona en 1 minuto":"See how it works in 1 minute",
+"Un recorrido guiado e interactivo: reproduce, pausa, adelanta o salta directo al capítulo que te interese.":"A guided, interactive tour: play, pause, scrub or jump straight to the chapter you care about.",
+"Chatbots que atienden, venden y organizan tu empresa — 24/7":"Chatbots that serve, sell and organize your company — 24/7",
+"🪄 Asistente de creación guiada":"🪄 Guided creation wizard",
+"💬 Luna · en vivo":"💬 Luna · live",
+"¡Hola! 🦷 ¿Te ayudo a agendar una cita?":"Hi! 🦷 Can I help you book an appointment?",
+"Sí, ¿cuánto cuesta la limpieza?":"Yes, how much is a cleaning?",
+"$650 con revisión incluida ✨ ¿Me das tu nombre y teléfono?":"$650 with a check-up included ✨ Your name and phone?",
+"¡Listo, Ana! Cita el viernes 10:00 📅":"Done, Ana! Friday 10:00 📅",
+"📥 Información capturada y almacenada":"📥 Information captured and stored",
+"📊 Dashboard en tiempo real":"📊 Real-time dashboard",
+"Conversaciones":"Conversations","Registros":"Records","Conversión":"Conversion",
+"Véndelo a tus clientes":"Sell it to your clients",
+"Compran su plan en línea y su licencia se activa al instante — tú conservas el control total.":"They buy their plan online and their license activates instantly — you keep full control.",
+"✓ Licencia activa · Plan Pro":"✓ Active license · Pro plan",
+"Crea tu primer chatbot hoy":"Create your first chatbot today",
+"Gratis, sin tarjeta y en unos 5 minutos.":"Free, no card, in about 5 minutes.",
+"🏢 Clínica Dental Sonría":"🏢 Sunrise Dental Clinic","🕐 Lun a Sáb 9:00–19:00":"🕐 Mon–Sat 9:00–19:00",
 /* áreas */
 "Especialistas por área":"Specialists by area","Un bot experto para cada departamento":"An expert bot for every department",
 "No solo atiende clientes: LumiBots crea asistentes internos con conocimiento especialista de cada área de tu organización.":"Not just customer service: LumiBots builds internal assistants with specialist knowledge for every area of your organization.",
@@ -2432,6 +2702,7 @@ function setLang(l){
   const b=document.getElementById("btn-lang");if(b)b.textContent=label;
   const g=document.getElementById("gate-lang");if(g)g.textContent=label;
   translateTree(document.body);
+  if(typeof plRefresh==="function")plRefresh();
   const dv=document.getElementById("view-dash");
   if(dv&&dv.classList.contains("on"))renderDash();
 }
@@ -2442,6 +2713,7 @@ document.getElementById("gate-lang").addEventListener("click",()=>setLang(lang==
 load();
 applySession();
 playHeroDemo();
+plInit();
 setLang(lang);
 </script>
 </body>
