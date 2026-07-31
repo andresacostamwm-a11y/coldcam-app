@@ -597,6 +597,12 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
 .gate-card{color:var(--ink)}
 .gate-buy{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.24);color:rgba(228,238,255,.92);backdrop-filter:blur(8px);box-shadow:0 14px 40px rgba(4,16,45,.35)}
 .cta-band{background:linear-gradient(125deg,#0A1E4E 0%,#12377F 48%,#1E63C8 100%);border:1px solid rgba(255,255,255,.14);color:#fff;box-shadow:0 20px 50px rgba(10,30,78,.35)}
+/* selector de voz de la narración */
+.pl-voz{border:1.5px solid var(--line);background:#fff;color:var(--ink-2);border-radius:99px;
+  padding:6px 10px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;
+  max-width:150px;flex:none}
+.pl-voz:focus{outline:2px solid var(--accent);outline-offset:1px}
+@media (max-width:560px){.pl-voz{max-width:104px;font-size:11px;padding:5px 7px}}
 /* ── planes visibles en la puerta ── */
 .gate-jump{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
 .gate-jump .btn-ghost{background:rgba(255,255,255,.92);color:#12377F;border-color:transparent}
@@ -824,6 +830,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <div class="pl-bar">
         <button class="pl-btn" id="pl-play" aria-label="Reproducir o pausar">▶</button>
         <button class="pl-btn" id="pl-sound" aria-label="Activar o silenciar narración" title="Narración por voz" style="background:#fff;color:var(--accent-deep);border:1.5px solid var(--line)">🔊</button>
+        <select class="pl-voz" id="pl-voz" aria-label="Elegir la voz de la narración" title="Voz de la narración"></select>
         <div class="pl-track" id="pl-track"><div class="pl-fill" id="pl-fill"></div></div>
         <span class="pl-time" id="pl-time">0:00 / 1:12</span>
       </div>
@@ -3042,6 +3049,44 @@ let plSound=true;
 /* con la narración del navegador la duración real de cada frase la decide el sintetizador,
    así que la línea de tiempo la manda la voz: la diapositiva cambia cuando la frase termina */
 function ttsSync(){return plSound&&voiceMode!=="off"&&!narrOn()&&("speechSynthesis" in window)}
+/* ── elección de la voz del navegador ──
+   por omisión busca una voz MASCULINA en el idioma activo; el visitante puede cambiarla */
+const VOZ_H=["jorge","diego","juan","carlos","enrique","pablo","raul","raúl","alvaro","álvaro","miguel",
+  "alonso","gonzalo","javier","dario","darío","andres","andrés","male","hombre","masculin",
+  "daniel","george","ryan","arthur","oliver","james","brian","guy","tom","alex"];
+const VOZ_M=["monica","mónica","paulina","marisol","angelica","angélica","elvira","helena","dalia","laura",
+  "lucia","lucía","sabina","esperanza","isabela","camila","ximena","carmen","maria","maría","rosa",
+  "catalina","luciana","penelope","penélope","female","mujer","femenin",
+  "karen","serena","kate","emma","amelie","zira","hazel","susan","libby","sonia","aria","jenny","fiona","moira","tessa"];
+let ttsVoiceURI=localStorage.getItem("lumibots_ttsvoice")||"";
+function ttsVoices(){
+  if(!("speechSynthesis" in window))return[];
+  const vs=speechSynthesis.getVoices()||[];
+  const pref=lang==="en"?["en-gb","en-us","en"]:["es-es","es-mx","es-419","es-us","es"];
+  const out=[];
+  pref.forEach(p=>vs.forEach(v=>{
+    const lg=(v.lang||"").replace("_","-").toLowerCase();
+    if(out.indexOf(v)<0&&lg.startsWith(p))out.push(v);
+  }));
+  return out;
+}
+function esVozH(v){const n=(v.name||"").toLowerCase();return VOZ_H.some(x=>n.includes(x))}
+function esVozM(v){const n=(v.name||"").toLowerCase();return VOZ_M.some(x=>n.includes(x))}
+function ttsPick(){
+  const vs=ttsVoices();if(!vs.length)return null;
+  if(ttsVoiceURI){const v=vs.find(x=>x.voiceURI===ttsVoiceURI);if(v)return v}
+  return vs.find(esVozH)||vs.find(v=>!esVozM(v))||vs[0];
+}
+function ttsFill(){
+  const s=document.getElementById("pl-voz");if(!s)return;
+  const vs=ttsVoices(),cur=ttsPick();
+  if(vs.length<2||voiceMode!=="auto"){s.style.display="none";return}
+  s.style.display="";
+  s.innerHTML=vs.map(v=>{
+    const et=esVozH(v)?"♂ ":esVozM(v)?"♀ ":"";
+    return `<option value="${esc(v.voiceURI)}"${cur&&v.voiceURI===cur.voiceURI?" selected":""}>${esc(et+(v.name||"").replace(/^(Microsoft|Google)\s+/,""))}</option>`;
+  }).join("");
+}
 function plSpeak(txt,idx){
   if(!plSound||voiceMode==="off")return;
   if(typeof voicePlay==="function"&&idx!=null&&voicePlay(idx))return;
@@ -3050,10 +3095,8 @@ function plSpeak(txt,idx){
     speechSynthesis.cancel();
     const u=new SpeechSynthesisUtterance(txt);
     u.lang=lang==="en"?"en-GB":"es-ES";
-    const vs=speechSynthesis.getVoices();
-    const pref=lang==="en"?["en-GB","en-US","en"]:["es-ES","es-419","es-MX","es-US","es"];
-    for(const p of pref){const v=vs.find(x=>x.lang.replace("_","-").startsWith(p));if(v){u.voice=v;break}}
-    u.rate=0.97;u.pitch=0.96;/* ritmo narrativo, tono grave */
+    const v=ttsPick();if(v){u.voice=v;u.lang=v.lang}
+    u.rate=0.97;u.pitch=v&&esVozM(v)?0.96:0.9;/* ritmo narrativo, tono grave */
     PL.spk=idx;PL.speaking=true;PL.spkT0=performance.now();
     u.onend=u.onerror=()=>{
       if(PL.spk!==idx)return;      /* llegó tarde: ya hay otra frase sonando */
@@ -3166,7 +3209,17 @@ function plInit(){
     if(e.target.closest(".pl-bigplay")||e.target.closest("[data-go]"))return;
     PL.playing?plPause():plPlay();
   });
-  plCaption();plSoundLabel();plRender();
+  const sv=document.getElementById("pl-voz");
+  if(sv)sv.addEventListener("change",()=>{
+    ttsVoiceURI=sv.value;localStorage.setItem("lumibots_ttsvoice",ttsVoiceURI);
+    const v=ttsPick();
+    if("speechSynthesis" in window)try{speechSynthesis.cancel()}catch(e){}
+    PL.speaking=false;PL.capIdx=-1;      /* vuelve a decir la frase con la voz nueva */
+    if(PL.playing)plCaption(true);
+    toast("🗣 "+L("Narración con la voz ","Narration switched to ")+(v?v.name:"—"));
+  });
+  if("speechSynthesis" in window)speechSynthesis.onvoiceschanged=()=>ttsFill();
+  plCaption();plSoundLabel();plRender();ttsFill();
   addEventListener("resize",()=>plRender());
 }
 function plSoundLabel(){
@@ -3176,6 +3229,7 @@ function plSoundLabel(){
   b.title=voiceMode==="mine"?L("Narración con tu voz grabada","Narrated with your recorded voice")
     :voiceMode==="auto"?L("Narración automática del navegador","Automatic browser narration")
     :L("Sin narración","No narration");
+  if(typeof ttsFill==="function")ttsFill();
 }
 function plChapLabels(){
   document.querySelectorAll(".pl-chap").forEach((b,i)=>{b.textContent=lang==="en"?PL_CH[i].en:PL_CH[i].es});

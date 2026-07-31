@@ -92,6 +92,11 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   reconstruye con las duraciones reales de cada clip.
   Dos modos de narración:
   1. 🔊 Narración automática del navegador (`es-ES` / `en-GB`, ritmo narrativo).
+     Elige por sí sola una **voz masculina** entre las instaladas en el
+     dispositivo —y evita las femeninas cuando no encuentra ninguna marcada
+     como masculina—; el reproductor incluye un **selector de voz** (♂/♀) para
+     cambiarla a mano, y la elección se recuerda. La voz disponible depende del
+     sistema operativo del visitante, no de la app.
   2. 🎙️ **Narración propia** — grabando las frases con el micrófono desde el
      teleprompter integrado o **importando audios de un locutor profesional**
      (por ejemplo la voz Gabriel Blanco de ElevenLabs,
