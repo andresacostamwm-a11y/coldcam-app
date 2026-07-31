@@ -65,9 +65,16 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
 - **Multicanal**: Web, WhatsApp, Instagram, Messenger y Telegram; código de
   instalación para sitios web y exportación del bot en JSON.
 - **Video explicativo narrado** en la pantalla de entrada (visible sin
-  contraseña), con capítulos, subtítulos bilingües y narración por voz. El
-  propietario puede grabar la narración con su propia voz desde la app y
-  exportarla para publicarla en el sitio.
+  contraseña), con capítulos, subtítulos bilingües y tres modos de narración
+  que se alternan con el botón del reproductor:
+  1. 🎙️ **Voz real del propietario** — pista `voz-narracion-andres.webm`
+     (grabación original en `voz-original-andres.m4a`, masterizada con
+     filtro paso alto, EQ de presencia, compresión y normalización a −16 LUFS).
+     Con esta pista la línea de tiempo del video se ajusta automáticamente a
+     su duración y las animaciones escalan con la variable CSS `--vs`.
+  2. 🔊 Narración automática del navegador, sincronizada con los subtítulos.
+  3. 🔇 Sin narración.
+  El propietario también puede grabar frase por frase desde la app.
 
 ### Licencias (modo negocio)
 - **Puerta de acceso privada**: propietario con usuario y contraseña;
