@@ -85,6 +85,10 @@ a{color:var(--accent-deep);text-decoration:none}
 .gate-card h3{font-size:18px;margin-bottom:4px}
 .gate-card>p{font-size:13.5px;color:var(--ink-2);margin-bottom:16px}
 .gate-row{display:flex;gap:10px}
+.gate-form{display:flex;flex-direction:column;gap:10px}
+.gate-form input{border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;background:#FDFCFA;font-size:15px}
+.gate-form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.gate-form .btn{justify-content:center}
 .gate-row input{flex:1;border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;background:#FDFCFA;font-size:15px;letter-spacing:.05em}
 .gate-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
 .gate-hint{margin-top:12px;font-size:12.5px;color:var(--ink-3);background:var(--paper);border-radius:10px;padding:9px 13px}
@@ -436,22 +440,24 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <div class="gate-card">
         <h3>👑 Soy el propietario</h3>
         <p>Acceso total: todos los bots, el dashboard global y el panel de licencias de clientes.</p>
-        <div class="gate-row">
-          <input id="gate-pin" type="password" inputmode="numeric" placeholder="PIN de propietario" maxlength="8" aria-label="PIN de propietario">
-          <button class="btn btn-primary" id="gate-owner-btn">Entrar</button>
+        <div class="gate-form">
+          <input id="gate-user" placeholder="Usuario" autocomplete="username" aria-label="Usuario del propietario">
+          <input id="gate-pass" type="password" placeholder="Contraseña" autocomplete="current-password" aria-label="Contraseña del propietario">
+          <button class="btn btn-primary" id="gate-owner-btn">Entrar como propietario</button>
         </div>
-        <p class="gate-err" id="gate-pin-err">⚠ PIN incorrecto. Inténtalo de nuevo.</p>
-        <div class="gate-hint">🔐 PIN inicial: <code>2026</code> — cámbialo en el panel Admin en cuanto entres.</div>
+        <p class="gate-err" id="gate-pin-err">⚠ Usuario o contraseña incorrectos.</p>
+        <div class="gate-hint">🔐 Puedes cambiar tu usuario y contraseña en el panel Admin.</div>
       </div>
       <div class="gate-card">
         <h3>🔑 Tengo una licencia</h3>
-        <p>Ingresa la clave que te compartió el propietario al autorizar tu compra.</p>
-        <div class="gate-row">
-          <input id="gate-key" placeholder="LUMI-XXXX-XXXX" maxlength="18" aria-label="Clave de licencia" style="text-transform:uppercase">
-          <button class="btn btn-primary" id="gate-key-btn">Entrar</button>
+        <p>Escribe tu nombre o tu correo y la clave que el propietario te compartió al autorizar tu compra.</p>
+        <div class="gate-form">
+          <input id="gate-cli-id" placeholder="Tu nombre o correo" autocomplete="username" aria-label="Nombre o correo del cliente">
+          <input id="gate-key" placeholder="Clave · LUMI-XXXX-XXXX" maxlength="18" aria-label="Clave de licencia" style="text-transform:uppercase" autocomplete="off">
+          <button class="btn btn-primary" id="gate-key-btn">Entrar con mi licencia</button>
         </div>
-        <p class="gate-err" id="gate-key-err">⚠ Clave no válida o licencia inactiva.</p>
-        <div class="gate-hint">🧪 Licencia de demostración: <code>LUMI-2026-DEMO</code></div>
+        <p class="gate-err" id="gate-key-err">⚠ Datos no válidos o licencia inactiva.</p>
+        <div class="gate-hint">🧪 Demo: <code>Laura Méndez</code> + clave <code>LUMI-2026-DEMO</code></div>
       </div>
     </div>
     <div class="gate-buy">
@@ -649,10 +655,11 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       </div>
       <div class="panel">
         <h3>🔐 Seguridad del propietario</h3>
-        <p class="ps">Cambia el PIN con el que entras a la plataforma.</p>
+        <p class="ps">Cambia el usuario y la contraseña con los que entras a la plataforma.</p>
         <div class="admin-cfg">
-          <div class="f-field"><label>Nuevo PIN <em>(4 a 8 dígitos)</em></label><input id="cfg-pin" type="password" inputmode="numeric" maxlength="8" placeholder="••••"></div>
-          <button class="mini-btn solid" id="btn-save-pin" style="height:46px">Guardar PIN</button>
+          <div class="f-field"><label>Usuario</label><input id="cfg-user" placeholder="Tu usuario"></div>
+          <div class="f-field"><label>Nueva contraseña <em>(mín. 6 caracteres)</em></label><input id="cfg-pass" type="password" placeholder="••••••••"></div>
+          <button class="mini-btn solid" id="btn-save-cred" style="height:46px">Guardar</button>
         </div>
       </div>
     </div>
@@ -930,7 +937,8 @@ const PLANES=[
 
 /* ════════ Estado y persistencia ════════ */
 const LS_KEY="lumibots_v2";
-let state={bots:[],leads:[],licenses:[],config:{pin:"2026"},session:null};
+const DEFAULT_CRED={usuario:"Andrés Acosta",pass:"Airbus380@"};
+let state={bots:[],leads:[],licenses:[],config:{...DEFAULT_CRED},session:null};
 function save(){
   try{localStorage.setItem(LS_KEY,JSON.stringify(state))}
   catch(e){toast("⚠ Espacio local lleno — descarga un respaldo desde Admin y limpia datos")}
@@ -938,7 +946,7 @@ function save(){
 function load(){
   try{
     const raw=localStorage.getItem(LS_KEY);
-    if(raw){state=JSON.parse(raw);state.config=state.config||{pin:"2026"};state.licenses=state.licenses||[];return}
+    if(raw){state=JSON.parse(raw);state.config=Object.assign({...DEFAULT_CRED},state.config||{});state.licenses=state.licenses||[];return}
     const v1=localStorage.getItem("lumibots_v1");
     if(v1){
       const old=JSON.parse(v1);
@@ -1030,19 +1038,26 @@ function login(role,licId){
   toast(role==="owner"?"👑 Bienvenido, propietario":"🔑 Bienvenido — licencia activa");
 }
 document.getElementById("gate-owner-btn").addEventListener("click",()=>{
-  const pin=document.getElementById("gate-pin").value.trim();
-  if(pin===state.config.pin){document.getElementById("gate-pin-err").classList.remove("show");login("owner")}
-  else document.getElementById("gate-pin-err").classList.add("show");
+  const u=document.getElementById("gate-user").value.trim();
+  const p=document.getElementById("gate-pass").value;
+  const err=document.getElementById("gate-pin-err");
+  if(norm(u)===norm(state.config.usuario)&&p===state.config.pass){err.classList.remove("show");login("owner")}
+  else err.classList.add("show");
 });
-document.getElementById("gate-pin").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("gate-owner-btn").click()});
+["gate-user","gate-pass"].forEach(id=>document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("gate-owner-btn").click()}));
 document.getElementById("gate-key-btn").addEventListener("click",()=>{
+  const ident=norm(document.getElementById("gate-cli-id").value.trim());
   const key=document.getElementById("gate-key").value.trim().toUpperCase();
   const l=state.licenses.find(x=>x.key===key);
   const err=document.getElementById("gate-key-err");
-  if(l&&l.estado==="Activa"){err.classList.remove("show");login("cliente",l.id)}
-  else{err.textContent=l&&l.estado==="Suspendida"?"⚠ Tu licencia está suspendida. Contacta al propietario.":l&&l.estado==="Pendiente"?"⚠ Tu compra aún no ha sido autorizada por el propietario.":"⚠ Clave no válida o licencia inactiva.";err.classList.add("show")}
+  if(!ident){err.textContent="⚠ Escribe tu nombre o tu correo.";err.classList.add("show");return}
+  if(l&&l.estado==="Activa"){
+    const match=ident===norm(l.cliente)||ident===norm(l.email)||ident===norm(l.empresa);
+    if(!match){err.textContent="⚠ El nombre o correo no coincide con esta licencia.";err.classList.add("show");return}
+    err.classList.remove("show");login("cliente",l.id);
+  }else{err.textContent=l&&l.estado==="Suspendida"?"⚠ Tu licencia está suspendida. Contacta al propietario.":l&&l.estado==="Pendiente"?"⚠ Tu compra aún no ha sido autorizada por el propietario.":"⚠ Clave no válida o licencia inactiva.";err.classList.add("show")}
 });
-document.getElementById("gate-key").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("gate-key-btn").click()});
+["gate-cli-id","gate-key"].forEach(id=>document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("gate-key-btn").click()}));
 document.getElementById("gate-buy-btn").addEventListener("click",()=>{
   document.getElementById("gate").classList.remove("on");
   guestPlanes=true;go("planes");
@@ -1842,6 +1857,7 @@ function renderAdmin(){
     if(!confirm("¿Revocar la licencia de "+l.cliente+" ("+l.empresa+")? Perderá el acceso."))return;
     state.licenses=state.licenses.filter(x=>x.id!==l.id);save();renderAdmin();toast("Licencia eliminada");
   }));
+  const cu=document.getElementById("cfg-user");if(cu&&!cu.value)cu.value=state.config.usuario||"";
   const bytes=new Blob([JSON.stringify(state)]).size;
   const cap=5*1024*1024;
   const kb=sum=>sum<1024*1024?(sum/1024).toFixed(1)+" KB":(sum/1024/1024).toFixed(2)+" MB";
@@ -1860,11 +1876,14 @@ document.getElementById("btn-new-lic").addEventListener("click",()=>{
   navigator.clipboard?.writeText(l.key).catch(()=>{});
   toast("🔑 Licencia creada — clave "+l.key+" lista para compartir");
 });
-document.getElementById("btn-save-pin").addEventListener("click",()=>{
-  const p=document.getElementById("cfg-pin").value.trim();
-  if(!/^\d{4,8}$/.test(p)){toast("El PIN debe tener de 4 a 8 dígitos");return}
-  state.config.pin=p;save();document.getElementById("cfg-pin").value="";
-  toast("🔐 PIN actualizado — úsalo en tu próximo acceso");
+document.getElementById("btn-save-cred").addEventListener("click",()=>{
+  const u=document.getElementById("cfg-user").value.trim();
+  const p=document.getElementById("cfg-pass").value;
+  if(u)state.config.usuario=u;
+  if(p){if(p.length<6){toast("La contraseña debe tener al menos 6 caracteres");return}state.config.pass=p}
+  if(!u&&!p){toast("Escribe un usuario nuevo, una contraseña nueva, o ambos");return}
+  save();document.getElementById("cfg-pass").value="";
+  toast("🔐 Credenciales actualizadas — úsalas en tu próximo acceso");
 });
 document.getElementById("btn-backup").addEventListener("click",()=>{
   const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});

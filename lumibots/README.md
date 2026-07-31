@@ -15,10 +15,13 @@ Abre `index.html` en cualquier navegador moderno. No necesita servidor ni
 dependencias: todo vive en un solo archivo y los datos se guardan en el
 `localStorage` del navegador.
 
-**Accesos de demostración:**
+**Accesos:**
 
-- 👑 Propietario: PIN `2026` (cámbialo en el panel Admin)
-- 🔑 Cliente: licencia `LUMI-2026-DEMO`
+- 👑 Propietario: usuario y contraseña propios (configurables en el panel
+  Admin, donde también se cambian).
+- 🔑 Cliente: su nombre o correo + la clave de licencia que el propietario
+  autorizó (demo: `Laura Méndez` + `LUMI-2026-DEMO`). La identidad debe
+  coincidir con la registrada en la licencia.
 
 ## Qué incluye
 
@@ -53,14 +56,14 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   instalación para sitios web y exportación del bot en JSON.
 
 ### Licencias (modo negocio)
-- **Puerta de acceso privada**: propietario con PIN; clientes con clave de
-  licencia.
+- **Puerta de acceso privada**: propietario con usuario y contraseña;
+  clientes con su nombre o correo más su clave de licencia.
 - **Página de planes** (Starter/Pro/Empresa): el cliente compra, la solicitud
   llega al propietario, este la **autoriza** y se genera la clave
   `LUMI-XXXX-XXXX` para compartir.
 - **Panel del propietario**: licencias activas/pendientes/suspendidas, ingreso
-  mensual, suspender/reactivar/revocar accesos, licencias manuales y cambio de
-  PIN.
+  mensual, suspender/reactivar/revocar accesos, licencias manuales y cambio
+  de usuario/contraseña del propietario.
 - **Espacios separados**: cada cliente ve solo sus bots y sus registros; el
   propietario lo ve todo.
 
