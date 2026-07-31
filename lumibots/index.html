@@ -614,6 +614,14 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
 .gate-card{color:var(--ink)}
 .gate-buy{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.24);color:rgba(228,238,255,.92);backdrop-filter:blur(8px);box-shadow:0 14px 40px rgba(4,16,45,.35)}
 .cta-band{background:linear-gradient(125deg,#0A1E4E 0%,#12377F 48%,#1E63C8 100%);border:1px solid rgba(255,255,255,.14);color:#fff;box-shadow:0 20px 50px rgba(10,30,78,.35)}
+.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:12px}
+.pm{border:1.5px solid var(--line);background:#FDFCFA;border-radius:13px;padding:11px 12px;cursor:pointer;
+  text-align:left;font-family:inherit;transition:all .12s;display:flex;flex-direction:column;gap:3px}
+.pm b{font-size:13.5px;color:var(--ink);display:block}
+.pm span{font-size:11.5px;color:var(--ink-3);line-height:1.35}
+.pm.sel{border-color:var(--accent);background:var(--accent-soft)}
+.pm:hover{border-color:var(--accent)}
+@media (max-width:560px){.pay-methods{grid-template-columns:1fr}}
 .stripe-box{display:flex;gap:12px;align-items:flex-start;background:var(--mint-soft);
   border:1.5px solid var(--mint);border-radius:14px;padding:13px 15px;margin-bottom:4px}
 .stripe-ico{font-size:22px;line-height:1.2}
@@ -1053,6 +1061,26 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
           <span class="hint" id="stripe-estado" style="align-self:center"></span>
         </div>
       </div>
+
+      <!-- cobro con PayPal -->
+      <div class="admin-card" style="margin-top:18px">
+        <h3>🅿️ Cobro con PayPal</h3>
+        <p class="hint">Con tu correo de PayPal basta: la app arma el cobro con el importe y el periodo de cada plan. Si prefieres usar un botón o un enlace creado por ti en PayPal, pégalo abajo y tendrá prioridad. Necesitas una cuenta <b>PayPal Business</b> para cobrar suscripciones.</p>
+        <div class="f-grid">
+          <div class="f-field"><label>Tu correo de PayPal</label><input id="pp-email" type="email" placeholder="tucorreo@ejemplo.com"></div>
+          <div class="f-field"><label>Enlace propio de PayPal <em>(opcional)</em></label><input id="pp-link" placeholder="https://www.paypal.com/… o paypal.me/…"></div>
+          <div class="f-field full"><label>Tipo de cobro</label>
+            <div class="chips">
+              <button type="button" class="chip" id="pp-rec">🔁 Suscripción automática</button>
+              <button type="button" class="chip" id="pp-uni">1️⃣ Pago único cada periodo</button>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <button class="mini-btn solid" id="btn-save-pp">Guardar PayPal</button>
+          <span class="hint" id="pp-estado" style="align-self:center"></span>
+        </div>
+      </div>
     </div>
   </div>
 </main>
@@ -1116,15 +1144,14 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <div class="f-field full"><label>Correo electrónico *</label><input id="buy-email" type="email" placeholder="tu@empresa.com"></div>
       </div>
       <div id="pay-sec">
-      <h4 class="pay-h">Pago seguro</h4>
+      <h4 class="pay-h">¿Cómo quieres pagar?</h4>
+      <div class="pay-methods" id="pay-methods"></div>
       <div class="stripe-box" id="stripe-box">
         <span class="stripe-ico">🔒</span>
-        <div>
-          <b>Pagas en la pasarela segura de Stripe</b>
-          <p>Al pulsar el botón te llevamos a la pantalla de pago de Stripe, donde introduces tu tarjeta. <b>Tus datos de tarjeta nunca pasan por esta página.</b> Cuando el pago se confirme recibirás tu clave de acceso en el correo que escribiste.</p>
-        </div>
+        <div><b id="pay-box-t">Pagas en una pasarela segura</b>
+        <p id="pay-box-p">Te llevamos a la pantalla de pago; tus datos bancarios nunca pasan por esta página. Al confirmarse el pago recibirás tu clave de acceso en el correo que escribiste.</p></div>
       </div>
-      <p class="pay-note" id="stripe-falta" style="display:none">⚠ El cobro con tarjeta todavía no está disponible. Deja tus datos y el propietario se pondrá en contacto contigo para completar la compra.</p>
+      <p class="pay-note" id="stripe-falta" style="display:none">⚠ Este método aún no está disponible. Deja tus datos y el propietario te escribirá para completar la compra.</p>
       </div>
       <p class="f-err" id="buy-err">⚠ Revisa los campos marcados.</p>
       <div class="code-actions">
@@ -1673,7 +1700,7 @@ function go(v){
   if(v==="bots")renderBots();
   if(v==="dash")renderDash();
   if(v==="planes")renderPlanes();
-  if(v==="admin"){renderAdmin();if(typeof renderStripe==="function")renderStripe()}
+  if(v==="admin"){renderAdmin();if(typeof renderStripe==="function"){renderStripe();renderPaypal()}}
 }
 document.addEventListener("click",e=>{
   const g=e.target.closest("[data-go]");
@@ -2315,11 +2342,12 @@ function renderPlanes(){
     document.getElementById("buy-ok").style.display="none";
     const btn=document.getElementById("buy-send");
     btn.disabled=false;
-    const hayLink=!!stripeLink(buyPlan,billPeriod,currency);
-    btn.textContent=gratis?"Crear mi cuenta gratis":(hayLink?"🔒 Pagar "+money(planPrecio(p))+" "+currency+" en Stripe":"Solicitar este plan");
-    document.getElementById("stripe-box").style.display=(gratis||!hayLink)?"none":"";
-    document.getElementById("stripe-falta").style.display=(!gratis&&!hayLink)?"":"none";
+    document.getElementById("pay-sec").style.display=gratis?"none":"";
     document.getElementById("buy-ok-key").style.display="";
+    if(!gratis){ if(!metodoDisponible(payMethod,buyPlan,billPeriod,currency)){
+        payMethod=["tarjeta","paypal","transfer"].find(m=>metodoDisponible(m,buyPlan,billPeriod,currency))||"transfer"; }
+      renderMetodos(); }
+    else btn.textContent="Crear mi cuenta gratis";
     document.getElementById("buy-overlay").classList.add("on");
   }));
 }
@@ -2332,7 +2360,60 @@ function stripeLink(plan,periodo,moneda){
   const e=L[k]||{};
   return (moneda==="EUR"?(e.eur||e.mxn):(e.mxn||e.eur))||"";
 }
+function paypalCfg(){return (state.config&&state.config.paypal)||{}}
+function paypalLink(plan,periodo,moneda,ref){
+  const c=paypalCfg(); if(!c.email&&!c.link) return "";
+  const p=PLANES.find(x=>x.id===plan); if(!p) return "";
+  const monto=(moneda==="EUR"?p.eur:p)[periodo==="anual"?"anual":"precio"];
+  if(c.link){ /* si pegó un enlace propio de PayPal, mandamos ahí */
+    const sep=c.link.includes("?")?"&":"?";
+    return c.link+sep+"custom="+encodeURIComponent(ref||"");
+  }
+  const base="https://www.paypal.com/cgi-bin/webscr?";
+  const q={business:c.email,currency_code:moneda,item_name:"LumiBots · plan "+p.n+" ("+periodo+")",
+           custom:ref||"",no_shipping:"1",no_note:"1"};
+  if(c.recurrente===false){Object.assign(q,{cmd:"_xclick",amount:String(monto)});}
+  else{Object.assign(q,{cmd:"_xclick-subscriptions",a3:String(monto),p3:"1",
+        t3:(periodo==="anual"?"Y":"M"),src:"1"});}
+  return base+Object.keys(q).map(k=>k+"="+encodeURIComponent(q[k])).join("&");
+}
+function metodoDisponible(m,plan,periodo,moneda){
+  if(m==="tarjeta")return !!stripeLink(plan,periodo,moneda);
+  if(m==="paypal")return !!paypalLink(plan,periodo,moneda,"x");
+  return true; /* transferencia siempre disponible: genera solicitud */
+}
 function stripeListo(){return Object.keys(stripeLinks()).some(k=>{const e=stripeLinks()[k];return e&&(e.mxn||e.eur)})}
+let payMethod="tarjeta";
+const METODOS=[
+ {id:"tarjeta",t:"💳 Tarjeta",d:"Crédito o débito · pasarela segura de Stripe"},
+ {id:"paypal", t:"🅿️ PayPal", d:"Con tu saldo de PayPal o tu tarjeta"},
+ {id:"transfer",t:"🏦 Transferencia",d:"El propietario te envía los datos y te activa"}
+];
+function renderMetodos(){
+  const g=document.getElementById("pay-methods");if(!g)return;
+  g.innerHTML=METODOS.map(m=>{
+    const ok=metodoDisponible(m.id,buyPlan,billPeriod,currency);
+    return '<button type="button" class="pm '+(payMethod===m.id?"sel":"")+'" data-pm="'+m.id+'"'+(ok?"":' style="opacity:.45"')+'>'
+      +'<b>'+m.t+'</b><span>'+(ok?m.d:"No disponible ahora mismo")+'</span></button>';
+  }).join("");
+  g.querySelectorAll("[data-pm]").forEach(b=>b.addEventListener("click",()=>{
+    if(!metodoDisponible(b.dataset.pm,buyPlan,billPeriod,currency)){toast("Ese método aún no está activo");return}
+    payMethod=b.dataset.pm;renderMetodos();
+  }));
+  const p=PLANES.find(x=>x.id===buyPlan)||{n:""};
+  const btn=document.getElementById("buy-send");
+  const box=document.getElementById("stripe-box"),falta=document.getElementById("stripe-falta");
+  if(payMethod==="transfer"){
+    btn.textContent="Solicitar el plan "+p.n;
+    box.style.display="none";falta.style.display="none";
+  }else{
+    const nom=payMethod==="paypal"?"PayPal":"Stripe";
+    btn.textContent="🔒 Pagar "+money(planPrecio(p))+" "+currency+" con "+nom;
+    box.style.display="";falta.style.display="none";
+    document.getElementById("pay-box-t").textContent="Pagas en la pasarela segura de "+nom;
+    document.getElementById("pay-box-p").textContent="Al pulsar el botón te llevamos a "+nom+", donde completas el pago. Tus datos bancarios nunca pasan por esta página. Cuando el pago se confirme recibirás tu clave de acceso en el correo que escribiste.";
+  }
+}
 document.getElementById("buy-close").addEventListener("click",()=>document.getElementById("buy-overlay").classList.remove("on"));
 document.getElementById("buy-send").addEventListener("click",()=>{
   const err=document.getElementById("buy-err");
@@ -2374,19 +2455,24 @@ document.getElementById("buy-send").addEventListener("click",()=>{
   state.licenses.unshift(l);save();lastKey=l.key;
   if(esOwner())renderAdmin();
 
-  const url=stripeLink(buyPlan,billPeriod,currency);
+  const url=payMethod==="transfer"?"":(payMethod==="paypal"?paypalLink(buyPlan,billPeriod,currency,ref):stripeLink(buyPlan,billPeriod,currency));
+  l.fact.marca=payMethod==="paypal"?"PayPal":(payMethod==="transfer"?"Transferencia":"Stripe");
+  l.metodo=payMethod;save();
   document.getElementById("buy-form").style.display="none";
   document.getElementById("buy-ok").style.display="";
   const key=document.getElementById("buy-ok-key");
   if(url){
-    const sep=url.includes("?")?"&":"?";
-    const dest=url+sep+"prefilled_email="+encodeURIComponent(m)+"&client_reference_id="+encodeURIComponent(ref);
+    let dest=url;
+    if(payMethod==="tarjeta"){ /* parámetros propios de Stripe */
+      const sep=url.includes("?")?"&":"?";
+      dest=url+sep+"prefilled_email="+encodeURIComponent(m)+"&client_reference_id="+encodeURIComponent(ref);
+    }
     document.getElementById("buy-ok-title").textContent="Te llevamos al pago seguro";
-    document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+". Completa el pago en Stripe; en cuanto se confirme recibirás tu clave de acceso en "+m+".";
+    document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+". Completa el pago en "+(payMethod==="paypal"?"PayPal":"Stripe")+"; en cuanto se confirme recibirás tu clave de acceso en "+m+".";
     key.textContent="Referencia "+ref;key.style.display="";
     window.open(dest,"_blank","noopener");
   }else{
-    document.getElementById("buy-ok-title").textContent="Solicitud recibida";
+    document.getElementById("buy-ok-title").textContent=payMethod==="transfer"?"Solicitud enviada":"Solicitud recibida";
     document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+". El propietario se pondrá en contacto contigo en "+m+" para completar el pago y activarte la licencia.";
     key.style.display="none";
   }
@@ -2703,6 +2789,25 @@ function renderStripe(){
   const n=Object.keys(L).filter(k=>L[k]&&(L[k].mxn||L[k].eur)).length;
   document.getElementById("stripe-estado").textContent=n?("✓ "+n+" de 6 planes con cobro activo"):"Sin enlaces: los clientes quedan como solicitud pendiente";
 }
+function renderPaypal(){
+  const c=paypalCfg();
+  const e=document.getElementById("pp-email");if(!e)return;
+  e.value=c.email||"";document.getElementById("pp-link").value=c.link||"";
+  const rec=c.recurrente!==false;
+  document.getElementById("pp-rec").classList.toggle("sel",rec);
+  document.getElementById("pp-uni").classList.toggle("sel",!rec);
+  document.getElementById("pp-estado").textContent=(c.email||c.link)?"✓ PayPal activo":"Sin configurar: los clientes no verán esta opción";
+}
+document.getElementById("pp-rec").addEventListener("click",()=>{state.config.paypal=Object.assign({},paypalCfg(),{recurrente:true});renderPaypal()});
+document.getElementById("pp-uni").addEventListener("click",()=>{state.config.paypal=Object.assign({},paypalCfg(),{recurrente:false});renderPaypal()});
+document.getElementById("btn-save-pp").addEventListener("click",()=>{
+  const em=document.getElementById("pp-email").value.trim();
+  const lk=document.getElementById("pp-link").value.trim();
+  if(em&&!em.includes("@")){toast("⚠ El correo de PayPal no es válido");return}
+  if(lk&&!/^https:\/\//i.test(lk)){toast("⚠ El enlace debe empezar por https://");return}
+  state.config.paypal=Object.assign({},paypalCfg(),{email:em,link:lk});
+  save();renderPaypal();toast("🅿️ PayPal guardado");
+});
 document.getElementById("btn-save-stripe").addEventListener("click",()=>{
   const out={};let malos=0;
   document.querySelectorAll("[data-sl]").forEach(i=>{

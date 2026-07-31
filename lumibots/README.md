@@ -142,12 +142,22 @@ sesión anterior.
 ### Licencias (modo negocio)
 - **Puerta de acceso privada**: propietario con usuario y contraseña;
   clientes con su nombre o correo más su clave de licencia.
-- **Página de planes** (Gratis/Starter/Pro/Empresa) con **cobro real por
-  Stripe**. La app **no pide ni guarda datos de tarjeta**: el cliente deja
-  nombre, empresa y correo, y se le envía a la pasarela de Stripe, donde paga.
-  El dinero entra en la cuenta de Stripe del propietario y de ahí se deposita
-  en su banco.
-  - Los enlaces de pago se configuran en **Admin → Cobro con Stripe**: uno por
+- **Página de planes** (Gratis/Starter/Pro/Empresa) con **tres formas de
+  pago** que elige el cliente. La app **no pide ni guarda datos bancarios**:
+  recoge nombre, empresa y correo y envía al cliente a la pasarela elegida.
+  1. 💳 **Tarjeta de crédito o débito** — pasarela de Stripe. (Stripe *es* el
+     procesador de tarjeta: no son dos métodos distintos.)
+  2. 🅿️ **PayPal** — con saldo de PayPal o con tarjeta desde PayPal. Basta el
+     correo de PayPal del propietario: la app arma el cobro con el importe y el
+     periodo del plan (suscripción recurrente o pago único, configurable). Si
+     prefiere usar un enlace o botón creado por él en PayPal, tiene prioridad.
+  3. 🏦 **Transferencia** — no cobra en línea: registra la solicitud para que
+     el propietario le pase los datos bancarios y le active la licencia.
+  Si un método no está configurado aparece atenuado y la app selecciona sola
+  otro disponible. El dinero entra en la cuenta de Stripe o de PayPal del
+  propietario y de ahí se deposita en su banco.
+  - Los cobros se configuran en **Admin → Cobro con Stripe** y
+    **Admin → Cobro con PayPal**. En Stripe, un enlace por
     plan y periodo (Starter/Pro/Empresa × mensual/anual), con enlace opcional
     aparte en euros; si falta el de euros se usa el de pesos.
   - Cada compra crea una licencia **Pendiente** con una referencia `LB…` que
