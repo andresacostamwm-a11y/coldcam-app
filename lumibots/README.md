@@ -64,17 +64,22 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   de registros con exportación a CSV.
 - **Multicanal**: Web, WhatsApp, Instagram, Messenger y Telegram; código de
   instalación para sitios web y exportación del bot en JSON.
-- **Video explicativo narrado** en la pantalla de entrada (visible sin
-  contraseña), con capítulos, subtítulos bilingües y tres modos de narración
-  que se alternan con el botón del reproductor:
-  1. 🎙️ **Voz real del propietario** — pista `voz-narracion-andres.webm`
-     (grabación original en `voz-original-andres.m4a`, masterizada con
-     filtro paso alto, EQ de presencia, compresión y normalización a −16 LUFS).
-     Con esta pista la línea de tiempo del video se ajusta automáticamente a
-     su duración y las animaciones escalan con la variable CSS `--vs`.
-  2. 🔊 Narración automática del navegador, sincronizada con los subtítulos.
+- **Video tutorial narrado** en la pantalla de entrada (visible sin
+  contraseña): 7 capítulos y 13 frases que enseñan paso a paso a entrar, crear
+  un bot, entrenarlo con archivos, probarlo, leer el dashboard y vender
+  licencias. Subtítulos bilingües y dos modos de narración:
+  1. 🔊 Narración automática del navegador, sincronizada con cada paso
+     (preferencia de voz `es-ES` / `en-GB`, ritmo narrativo).
+  2. 🎙️ **Voz del propietario** — se activa cuando ha grabado las 13 frases
+     desde el grabador integrado (teleprompter con el guion). Las grabaciones
+     se reproducen a través de una cadena de masterización de locución en
+     tiempo real: paso alto 85 Hz, corte de medios bajos, presencia en 3.4 kHz,
+     de-esser, aire, compresión 3.2:1 y nivelado automático.
   3. 🔇 Sin narración.
-  El propietario también puede grabar frase por frase desde la app.
+  La grabación de referencia del propietario (`voz-original-andres.m4a` y su
+  versión masterizada `voz-narracion-andres.webm`) se conserva en el
+  repositorio y puede escucharse desde el panel Admin; no narra el tutorial
+  porque su contenido no corresponde a los pasos.
 
 ### Licencias (modo negocio)
 - **Puerta de acceso privada**: propietario con usuario y contraseña;
