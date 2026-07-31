@@ -79,16 +79,16 @@ Fuentes: documentación oficial de Anthropic (verificado 30-jul-2026).
 ## Domingo 2 agosto — Skills de Claude para principiantes
 
 Slides s01→s10:
-1. 68f2ed15-8444-42cc-8e2f-403e9bc60061
-2. f7797a8c-2ffb-47f9-9bf7-679739ff2335
-3. e7912520-cce8-4360-842d-ad73beae2e81
-4. 14655193-cd76-47b5-b259-41db301717a7
-5. 3eb94f8f-37a2-4c61-ab79-145a27b5a4dd
-6. 9ce97611-8bb0-47e7-ba9b-51e1f3a20578
-7. 1889bb41-272c-43c3-a08c-e1b0e4e9a568
-8. fae30831-7684-42a3-8a60-ebfbb31776bd
-9. 45dac2f5-d3dd-45ca-8be3-3319b79e8236
-10. 5c6fba00-0e62-4e3c-b87c-90a79e01631f
+1. 33fae440-37c9-47d1-81a9-980632986c1e
+2. 3f680687-b213-4673-8d57-c798f96bd896
+3. 63c066cc-2753-47c9-ba52-31d2421f06ad
+4. 04604406-88d4-4d1b-b465-c23b47a850c4
+5. 33e688f0-2503-493c-a18e-5247bd63f90e
+6. eab63b82-e2a0-43f4-b836-246bf90cabff
+7. d67e71ce-31bc-436f-acee-2e1204d77dd0
+8. 1b07b3ea-94a8-4204-a4ff-7acd583fe7da
+9. 58e8e004-d4d1-4360-8c8b-49824d4584f9
+10. 4bcb6517-217b-4552-bf7f-2e70c0b2a778
 
 **Caption:**
 ¿Repites las mismas instrucciones a la IA una y otra vez? Las skills son la solución 🧩
@@ -110,16 +110,16 @@ Fuentes: documentación oficial de Anthropic (verificado 30-jul-2026).
 ## Lunes 3 agosto — GPT-5.6: Sol, Terra y Luna explicados fácil
 
 Slides s01→s10:
-1. 7b41fa8d-1258-4647-bef4-27016f16a750
-2. ca8a44d9-aaaf-492d-b815-95f7056e0658
-3. b49af3df-09c2-4804-b7a8-1bdc0079a496
-4. 96352173-1476-4a6d-aca9-64fd28320900
-5. 49af1af5-d43c-4a5d-b7f1-de8b6cd1acaf
-6. 79fb102e-01b8-431d-bab8-3423ee96861b
-7. 425cfdad-022e-4809-9fc4-557d3918cb38
-8. d5e454bd-62ef-4233-9d1e-2ae6fbafbd78
-9. b66abcdc-950b-43ac-b284-4e441af73ef4
-10. 0303de89-8421-412e-be09-e360ee59caa0
+1. 85506374-3172-4dfe-b2e3-e2233818d934
+2. a719a0b9-25db-481f-997b-da77c4025615
+3. 4ab54906-f9ca-4bfa-ab7c-aad08a18583f
+4. ac4ac093-eb7a-4d06-a294-f5ef4d19647e
+5. 7b5919c6-0c00-43b5-ba41-9906c2efa694
+6. 253d72ef-4fa5-447e-9d22-ff47f9ce55c1
+7. 0c48e664-e7fe-403c-95fa-2c2550f4afa0
+8. 53bd9486-0fd3-48e0-abb1-def580108ba9
+9. 7f56e56d-4ce0-41b9-a753-4e6f5a13aec1
+10. 4b4584e5-eec1-4b23-9354-b9bbd63142cc
 
 **Caption:**
 GPT-5.6 llegó con 3 versiones: Sol ☀️, Terra 🌍 y Luna 🌙. ¿Cuál te conviene? Te lo explico fácil.
@@ -142,16 +142,16 @@ Fuentes: anuncio y documentación oficial de OpenAI (verificado 30-jul-2026).
 ## Martes 4 agosto — Claude Code vs Codex: ¿cuál elegir?
 
 Slides s01→s10:
-1. 5a42eabb-8365-4a08-8c55-aad96373df8f
-2. 5c6c80af-160a-44b3-8c63-520c86f9c60c
-3. a36cfec2-375e-4566-aa2e-37473938c839
-4. f6dea7d8-c0d6-4f66-9d38-652dff5a9316
-5. 9fca7158-ec06-48db-91e7-21fe3eb92e3d
-6. 9b023279-bb98-4ab7-ac94-1975d678b403
-7. 6120990e-5c8e-45e0-ba4f-bf7b2352dd35
-8. 89b0c0e3-4d4b-40bc-8caa-5b22ed8a2eb2
-9. 962bf985-ff58-45a2-b0bf-315e1173f5b0
-10. 7a4e9135-1e93-4777-be8a-0b624ac1da12
+1. 71ab6f6a-9426-411d-a960-64af19c23d31
+2. 4ffc7750-6cb7-480b-9e90-d5938c6911e0
+3. e08e4d5c-eed8-401f-b08d-eae7149d0efb
+4. 4e9760f5-baa0-486f-a850-204852bb042c
+5. 54841a58-70e1-4bb5-97d1-fed8f8720103
+6. a4c75432-9acb-49fd-9cf4-5031e1b903f8
+7. 4320bb85-6579-4f56-ba0c-131208c0c4af
+8. ead51796-caa0-41d8-b62d-c38c0611b130
+9. bf29c872-8a78-4a57-9a7a-ac367e94ad9b
+10. a2877f1b-e4e3-411d-9ce0-d994b5fa4dc8
 
 **Caption:**
 Claude Code vs Codex: la comparación honesta que necesitabas, sin fanatismos ⚔️

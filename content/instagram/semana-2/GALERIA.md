@@ -94,126 +94,126 @@ Abre esta página en el navegador y desplázate para verlas todas.
 
 ### Slide 1/10
 
-![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/68f2ed15-8444-42cc-8e2f-403e9bc60061.png)
+![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/33fae440-37c9-47d1-81a9-980632986c1e.png)
 
 ### Slide 2/10
 
-![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/f7797a8c-2ffb-47f9-9bf7-679739ff2335.png)
+![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/3f680687-b213-4673-8d57-c798f96bd896.png)
 
 ### Slide 3/10
 
-![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/e7912520-cce8-4360-842d-ad73beae2e81.png)
+![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/63c066cc-2753-47c9-ba52-31d2421f06ad.png)
 
 ### Slide 4/10
 
-![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/14655193-cd76-47b5-b259-41db301717a7.png)
+![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/04604406-88d4-4d1b-b465-c23b47a850c4.png)
 
 ### Slide 5/10
 
-![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/3eb94f8f-37a2-4c61-ab79-145a27b5a4dd.png)
+![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/33e688f0-2503-493c-a18e-5247bd63f90e.png)
 
 ### Slide 6/10
 
-![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/9ce97611-8bb0-47e7-ba9b-51e1f3a20578.png)
+![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/eab63b82-e2a0-43f4-b836-246bf90cabff.png)
 
 ### Slide 7/10
 
-![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/1889bb41-272c-43c3-a08c-e1b0e4e9a568.png)
+![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/d67e71ce-31bc-436f-acee-2e1204d77dd0.png)
 
 ### Slide 8/10
 
-![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/fae30831-7684-42a3-8a60-ebfbb31776bd.png)
+![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/1b07b3ea-94a8-4204-a4ff-7acd583fe7da.png)
 
 ### Slide 9/10
 
-![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/45dac2f5-d3dd-45ca-8be3-3319b79e8236.png)
+![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/58e8e004-d4d1-4360-8c8b-49824d4584f9.png)
 
 ### Slide 10/10
 
-![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/5c6fba00-0e62-4e3c-b87c-90a79e01631f.png)
+![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/4bcb6517-217b-4552-bf7f-2e70c0b2a778.png)
 
 
 ## Lunes 3 agosto — GPT-5.6: Sol, Terra y Luna explicados fácil
 
 ### Slide 1/10
 
-![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/7b41fa8d-1258-4647-bef4-27016f16a750.png)
+![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/85506374-3172-4dfe-b2e3-e2233818d934.png)
 
 ### Slide 2/10
 
-![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/ca8a44d9-aaaf-492d-b815-95f7056e0658.png)
+![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/a719a0b9-25db-481f-997b-da77c4025615.png)
 
 ### Slide 3/10
 
-![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/b49af3df-09c2-4804-b7a8-1bdc0079a496.png)
+![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/4ab54906-f9ca-4bfa-ab7c-aad08a18583f.png)
 
 ### Slide 4/10
 
-![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/96352173-1476-4a6d-aca9-64fd28320900.png)
+![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/ac4ac093-eb7a-4d06-a294-f5ef4d19647e.png)
 
 ### Slide 5/10
 
-![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/49af1af5-d43c-4a5d-b7f1-de8b6cd1acaf.png)
+![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/7b5919c6-0c00-43b5-ba41-9906c2efa694.png)
 
 ### Slide 6/10
 
-![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/79fb102e-01b8-431d-bab8-3423ee96861b.png)
+![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/253d72ef-4fa5-447e-9d22-ff47f9ce55c1.png)
 
 ### Slide 7/10
 
-![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/425cfdad-022e-4809-9fc4-557d3918cb38.png)
+![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/0c48e664-e7fe-403c-95fa-2c2550f4afa0.png)
 
 ### Slide 8/10
 
-![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/d5e454bd-62ef-4233-9d1e-2ae6fbafbd78.png)
+![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/53bd9486-0fd3-48e0-abb1-def580108ba9.png)
 
 ### Slide 9/10
 
-![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/b66abcdc-950b-43ac-b284-4e441af73ef4.png)
+![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/7f56e56d-4ce0-41b9-a753-4e6f5a13aec1.png)
 
 ### Slide 10/10
 
-![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/0303de89-8421-412e-be09-e360ee59caa0.png)
+![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/4b4584e5-eec1-4b23-9354-b9bbd63142cc.png)
 
 
 ## Martes 4 agosto — Claude Code vs Codex: ¿cuál elegir?
 
 ### Slide 1/10
 
-![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/5a42eabb-8365-4a08-8c55-aad96373df8f.png)
+![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/71ab6f6a-9426-411d-a960-64af19c23d31.png)
 
 ### Slide 2/10
 
-![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/5c6c80af-160a-44b3-8c63-520c86f9c60c.png)
+![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/4ffc7750-6cb7-480b-9e90-d5938c6911e0.png)
 
 ### Slide 3/10
 
-![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/a36cfec2-375e-4566-aa2e-37473938c839.png)
+![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/e08e4d5c-eed8-401f-b08d-eae7149d0efb.png)
 
 ### Slide 4/10
 
-![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/f6dea7d8-c0d6-4f66-9d38-652dff5a9316.png)
+![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/4e9760f5-baa0-486f-a850-204852bb042c.png)
 
 ### Slide 5/10
 
-![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/9fca7158-ec06-48db-91e7-21fe3eb92e3d.png)
+![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/54841a58-70e1-4bb5-97d1-fed8f8720103.png)
 
 ### Slide 6/10
 
-![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/9b023279-bb98-4ab7-ac94-1975d678b403.png)
+![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/a4c75432-9acb-49fd-9cf4-5031e1b903f8.png)
 
 ### Slide 7/10
 
-![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/6120990e-5c8e-45e0-ba4f-bf7b2352dd35.png)
+![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/4320bb85-6579-4f56-ba0c-131208c0c4af.png)
 
 ### Slide 8/10
 
-![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/89b0c0e3-4d4b-40bc-8caa-5b22ed8a2eb2.png)
+![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/ead51796-caa0-41d8-b62d-c38c0611b130.png)
 
 ### Slide 9/10
 
-![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/962bf985-ff58-45a2-b0bf-315e1173f5b0.png)
+![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/bf29c872-8a78-4a57-9a7a-ac367e94ad9b.png)
 
 ### Slide 10/10
 
-![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/7a4e9135-1e93-4777-be8a-0b624ac1da12.png)
+![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/a2877f1b-e4e3-411d-9ce0-d994b5fa4dc8.png)
