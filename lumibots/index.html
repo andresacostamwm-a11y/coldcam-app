@@ -597,6 +597,21 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
 .gate-card{color:var(--ink)}
 .gate-buy{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.24);color:rgba(228,238,255,.92);backdrop-filter:blur(8px);box-shadow:0 14px 40px rgba(4,16,45,.35)}
 .cta-band{background:linear-gradient(125deg,#0A1E4E 0%,#12377F 48%,#1E63C8 100%);border:1px solid rgba(255,255,255,.14);color:#fff;box-shadow:0 20px 50px rgba(10,30,78,.35)}
+/* generador de narración con ElevenLabs */
+.xi-box{border:1.5px solid var(--accent);background:var(--accent-soft);border-radius:16px;padding:14px 16px;margin-bottom:16px}
+.xi-box h4{font-size:15px;letter-spacing:-.2px;margin-bottom:5px;color:var(--accent-deep)}
+.xi-box p{font-size:13px;color:var(--ink-2);line-height:1.5;margin-bottom:10px}
+.xi-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:8px;margin-bottom:10px}
+.xi-grid input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;
+  font-family:inherit;font-size:13px;background:#fff;color:var(--ink)}
+.xi-grid input:focus{outline:none;border-color:var(--accent)}
+.xi-acts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.xi-state{font-size:12.5px;font-weight:700;color:var(--ink-2)}
+.xi-state.err{color:#B3261E}
+.xi-state.ok{color:#0d6b46}
+.xi-note{font-size:12px;color:var(--ink-3);margin:9px 0 0}
+.xi-note code{background:#fff;border-radius:6px;padding:1px 5px;font-size:11.5px}
+@media (max-width:560px){.xi-grid{grid-template-columns:1fr}}
 /* selector de voz de la narración */
 .pl-voz{border:1.5px solid var(--line);background:#fff;color:var(--ink-2);border-radius:99px;
   padding:6px 10px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;
@@ -1153,6 +1168,22 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
     <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:14px">
     <b>A) Con locutor profesional:</b> pulsa <b>📋 Copiar el guion</b>, genera la narración en ElevenLabs y pulsa <b>🎧 Importar audios</b>. Puedes importar <b>un solo archivo</b> con las <b id="voice-total">13</b> frases seguidas (lo dividimos solos por las pausas) o <b>un audio por frase</b> numerado 01, 02, 03…<br>
     <b>B) Con tu propia voz:</b> graba cada frase aquí con el micrófono. En ambos casos aplicamos masterización de locución (ecualización, compresión y nivelado).</p>
+
+    <!-- generación directa con ElevenLabs desde el navegador del propietario -->
+    <div class="xi-box">
+      <h4>⚡ Generar la narración con ElevenLabs</h4>
+      <p>Pega tu clave y la app genera aquí mismo las <b id="xi-total">13</b> frases con la voz elegida, las importa y sincroniza el video. <b>La clave se queda solo en este navegador</b> — no viaja al sitio publicado ni queda en el código.</p>
+      <div class="xi-grid">
+        <input id="xi-key" type="password" placeholder="Clave API de ElevenLabs (sk_…)" autocomplete="off" spellcheck="false">
+        <input id="xi-voice" placeholder="ID de la voz" value="RwzBDEn5f6FIgpAjH9YN" spellcheck="false">
+      </div>
+      <div class="xi-acts">
+        <button class="mini-btn solid" id="xi-run">🎙️ Generar las 13 frases</button>
+        <button class="mini-btn" id="xi-test">🔎 Probar la clave</button>
+        <span class="xi-state" id="xi-state"></span>
+      </div>
+      <p class="xi-note">Voz sugerida: <b>Gabriel Blanco</b> · <code>RwzBDEn5f6FIgpAjH9YN</code>. Consume créditos de tu cuenta de ElevenLabs (unos 1.400 caracteres por idioma).</p>
+    </div>
     <div class="rec-bar">
       <span id="voice-count">0 de 0 grabadas</span>
       <span style="flex:1"></span>
@@ -3412,6 +3443,8 @@ function renderVoice(){
   document.getElementById("voice-total").textContent=PL_CAP.length;
   document.getElementById("voice-count").textContent=lang==="en"
     ?(n+" of "+PL_CAP.length+" recorded"):(n+" de "+PL_CAP.length+" grabadas");
+  const xt=document.getElementById("xi-total");if(xt)xt.textContent=PL_CAP.length;
+  if(typeof xiLoadKey==="function"&&!document.getElementById("xi-key").value)xiLoadKey();
   list.querySelectorAll("[data-rec]").forEach(b=>b.addEventListener("click",()=>voiceToggle(+b.dataset.rec)));
   list.querySelectorAll("[data-play]").forEach(b=>b.addEventListener("click",()=>voicePlay(+b.dataset.play)));
   list.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>{
@@ -3449,6 +3482,80 @@ document.getElementById("voice-script").addEventListener("click",()=>{
     .then(()=>toast("📋 Guion copiado — genera cada frase en ElevenLabs y vuelve a importar los audios"))
     .catch(()=>toast("Copia el guion manualmente desde la lista"));
 });
+/* ── Generación directa con ElevenLabs desde el navegador del propietario ──
+   La petición sale del dispositivo de quien usa la app, nunca de un servidor nuestro,
+   y la clave se guarda solo en este navegador. */
+const XI_URL="https://api.elevenlabs.io/v1/";
+function xiKey(){return (document.getElementById("xi-key").value||"").trim()}
+function xiVoice(){return (document.getElementById("xi-voice").value||"").trim()||"RwzBDEn5f6FIgpAjH9YN"}
+function xiState(msg,cls){
+  const s=document.getElementById("xi-state");if(!s)return;
+  s.textContent=msg||"";s.className="xi-state"+(cls?" "+cls:"");
+}
+function xiSaveKey(){try{localStorage.setItem("lumibots_xi",xiKey());localStorage.setItem("lumibots_xi_v",xiVoice())}catch(e){}}
+function xiLoadKey(){
+  const k=document.getElementById("xi-key"),v=document.getElementById("xi-voice");
+  if(k)k.value=localStorage.getItem("lumibots_xi")||"";
+  if(v)v.value=localStorage.getItem("lumibots_xi_v")||"RwzBDEn5f6FIgpAjH9YN";
+}
+function xiError(e,r){
+  if(r&&r.status===401)return L("La clave no es válida o caducó.","The key is invalid or expired.");
+  if(r&&r.status===402)return L("Tu cuenta de ElevenLabs no tiene créditos suficientes.","Your ElevenLabs account is out of credits.");
+  if(r&&r.status===404)return L("Ese ID de voz no existe en tu cuenta.","That voice ID does not exist in your account.");
+  if(r&&r.status===429)return L("Demasiadas peticiones seguidas: espera un momento.","Too many requests: wait a moment.");
+  if(r)return L("ElevenLabs respondió con el error ","ElevenLabs returned error ")+r.status;
+  return L("No se pudo conectar con ElevenLabs (revisa tu conexión o usa la importación manual).",
+           "Could not reach ElevenLabs (check your connection or use manual import).");
+}
+document.getElementById("xi-test").addEventListener("click",async()=>{
+  if(!xiKey())return xiState(L("Escribe tu clave primero.","Enter your key first."),"err");
+  xiState(L("Comprobando…","Checking…"));
+  try{
+    const r=await fetch(XI_URL+"voices/"+encodeURIComponent(xiVoice()),{headers:{"xi-api-key":xiKey()}});
+    if(!r.ok)return xiState("⚠ "+xiError(null,r),"err");
+    const j=await r.json();
+    xiSaveKey();
+    xiState("✓ "+L("Clave correcta · voz: ","Key OK · voice: ")+(j.name||xiVoice()),"ok");
+  }catch(e){xiState("⚠ "+xiError(e),"err")}
+});
+document.getElementById("xi-run").addEventListener("click",async()=>{
+  if(!xiKey())return xiState(L("Escribe tu clave primero.","Enter your key first."),"err");
+  const btn=document.getElementById("xi-run");
+  btn.disabled=true;xiSaveKey();
+  const total=PL_CAP.length;
+  try{
+    for(let i=0;i<total;i++){
+      xiState(L("Generando frase ","Generating line ")+(i+1)+" / "+total+"…");
+      const texto=lang==="en"?PL_CAP[i].en:PL_CAP[i].es;
+      const r=await fetch(XI_URL+"text-to-speech/"+encodeURIComponent(xiVoice()),{
+        method:"POST",
+        headers:{"xi-api-key":xiKey(),"Content-Type":"application/json","Accept":"audio/mpeg"},
+        body:JSON.stringify({text:texto,model_id:"eleven_multilingual_v2",
+          voice_settings:{stability:0.45,similarity_boost:0.8,style:0.15,use_speaker_boost:true}})
+      });
+      if(!r.ok){xiState("⚠ "+xiError(null,r),"err");btn.disabled=false;return}
+      const blob=await r.blob();
+      const dataUrl=await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(String(fr.result));fr.onerror=rej;fr.readAsDataURL(blob)});
+      VOICE[lang+"-"+i]=dataUrl;
+      delete vCache[lang+"-"+i];delete VOICE_D[lang+"-"+i];
+      voiceSave();
+      await measureVoice(i);
+      renderVoice();
+    }
+    /* una narración generada sustituye a cualquier archivo único importado antes */
+    if(typeof VOICE_FULL!=="undefined"&&VOICE_FULL){
+      VOICE_FULL="";VOICE_SEG=[];
+      localStorage.removeItem("lumibots_voice_full");localStorage.removeItem("lumibots_voice_seg");
+    }
+    voiceMode="mine";localStorage.setItem("lumibots_voicemode","mine");
+    plSoundLabel();plRender();
+    xiState("✓ "+L("Listo: las "+total+" frases están generadas y el video ya va sincronizado.",
+                   "Done: all "+total+" lines generated and the video is in sync."),"ok");
+    toast("🎙️ "+L("Narración de ElevenLabs lista","ElevenLabs narration ready"));
+  }catch(e){xiState("⚠ "+xiError(e),"err")}
+  btn.disabled=false;
+});
+
 /* descargar el guion listo para pegarlo en ElevenLabs (voz Gabriel Blanco) */
 document.getElementById("voice-script-dl").addEventListener("click",()=>{
   const head="LumiBots Studio — guion de narración ("+(lang==="en"?"inglés":"español")+")\n"+

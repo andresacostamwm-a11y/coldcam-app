@@ -100,7 +100,14 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   2. 🎙️ **Narración propia** — grabando las frases con el micrófono desde el
      teleprompter integrado o **importando audios de un locutor profesional**
      (por ejemplo la voz Gabriel Blanco de ElevenLabs,
-     `RwzBDEn5f6FIgpAjH9YN`): desde el panel de voz, **⬇ Guion .txt** descarga
+     `RwzBDEn5f6FIgpAjH9YN`). Tres caminos, todos en el panel de voz (solo
+     propietario):
+     **⚡ Generación directa**: se pega la clave API de ElevenLabs y la app
+     genera las 13 frases, las importa y sincroniza el video sin salir de la
+     pantalla. La petición sale **del navegador de quien usa la app**, y la
+     clave se guarda únicamente en ese navegador (`localStorage`): no está en
+     el código, no viaja al sitio publicado y no se sube al repositorio.
+     **⬇ Guion .txt** descarga
      las 13 frases con el identificador de esa voz y las instrucciones, y
      **🎧 Importar audios** acepta 13 archivos numerados **o un único archivo
      con toda la narración**, que se divide automáticamente detectando las
