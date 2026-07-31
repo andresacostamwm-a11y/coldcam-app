@@ -604,7 +604,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
     <div class="sec-head" style="padding-top:46px">
       <span class="kicker">Planes y membresías</span>
       <h2>Elige tu plan y paga con tarjeta</h2>
-      <p>Tu licencia se activa al instante al completar el pago. El propietario de la plataforma conserva el control para pausar o revocar accesos.</p>
+      <p>Precios en pesos mexicanos (MXN) o euros (EUR) — tú eliges. Tu licencia se activa al instante al completar el pago, y el propietario conserva el control para pausar o revocar accesos.</p>
     </div>
     <div class="bill-toggle" id="bill-toggle"></div>
     <div class="plans-grid" id="plans-grid"></div>
@@ -1002,11 +1002,11 @@ const WIDGET_COLORS=["#6B7FE3","#7ED9B4","#F6C79A","#A9D3F2","#CDC2F0","#F2B8C6"
 const AVATARES=["🤖","✨","🦷","🍽️","💈","🏠","🛍️","🎓","⚖️","💪","🏝️","🚗","💻","🧰","💰","🛒","🎧","🔧","📣","👥","📈","🚚","🖥️","🗂️"];
 
 const PLANES=[
- {id:"starter",n:"Starter",precio:499,anual:4990,pd:"Para un negocio que empieza con su primer asistente.",
+ {id:"starter",n:"Starter",precio:499,anual:4990,eur:{precio:25,anual:249},pd:"Para un negocio que empieza con su primer asistente.",
   feats:["1 bot activo","Giros de negocio y 3 áreas internas","Hasta 200 pares de conocimiento","Dashboard con métricas esenciales","Exportación de registros en CSV","Canal web + WhatsApp"]},
- {id:"pro",n:"Pro",precio:1299,anual:12990,destacado:true,pd:"Para empresas que quieren bots en varias áreas.",
+ {id:"pro",n:"Pro",precio:1299,anual:12990,eur:{precio:65,anual:649},destacado:true,pd:"Para empresas que quieren bots en varias áreas.",
   feats:["5 bots activos","Los 12 giros y las 10 áreas especialistas","Conocimiento ilimitado con carga masiva","Dashboard completo con embudo y rangos","Los 5 canales conectados","Soporte prioritario del propietario"]},
- {id:"empresa",n:"Empresa",precio:2999,anual:29990,pd:"Para operaciones grandes y agencias.",
+ {id:"empresa",n:"Empresa",precio:2999,anual:29990,eur:{precio:149,anual:1490},pd:"Para operaciones grandes y agencias.",
   feats:["Bots ilimitados","Todo lo del plan Pro","Volúmenes altos de captura y almacenamiento","Respaldo completo de datos (JSON)","Marca blanca del widget","Acompañamiento de implementación"]}
 ];
 
@@ -1049,7 +1049,7 @@ function makeMetrics(id){
 
 function seedLicenses(){
   state.licenses=[
-   {id:"lic-demo",key:"LUMI-2026-DEMO",cliente:"Laura Méndez",empresa:"Constructora Delta",email:"laura@constructoradelta.mx",plan:"pro",estado:"Activa",creado:"2026-07-15",fact:{periodo:"anual",monto:12990,last4:"4242",marca:"VISA",fecha:"2026-07-15"}},
+   {id:"lic-demo",key:"LUMI-2026-DEMO",cliente:"Laura Méndez",empresa:"Constructora Delta",email:"laura@constructoradelta.mx",plan:"pro",estado:"Activa",creado:"2026-07-15",fact:{periodo:"anual",monto:12990,moneda:"MXN",last4:"4242",marca:"VISA",fecha:"2026-07-15"}},
    {id:"lic-p1",key:null,cliente:"Roberto Sandoval",empresa:"Farmacias Vida",email:"roberto@farmaciasvida.mx",plan:"starter",estado:"Pendiente",creado:"2026-07-29"}
   ];
 }
@@ -1693,20 +1693,28 @@ function startLead(){
 }
 
 /* ════════ Planes y compra ════════ */
-let buyPlan=null,billPeriod="anual",lastKey="";
-function planPrecio(p){return billPeriod==="anual"?p.anual:p.precio}
+let buyPlan=null,billPeriod="anual",currency="MXN",lastKey="";
+const EUR_MXN=21; /* tipo de cambio de referencia para consolidar ingresos */
+function curOf(p){return currency==="EUR"?p.eur:p}
+function planPrecio(p){const c=curOf(p);return billPeriod==="anual"?c.anual:c.precio}
+function money(v,cur){return (cur||currency)==="EUR"?"€"+v.toLocaleString("es-ES"):"$"+v.toLocaleString("es-MX")}
 function renderPlanes(){
   document.getElementById("bill-toggle").innerHTML=`
     <button class="bill-btn ${billPeriod==="mensual"?"on":""}" data-bill="mensual">Mensual</button>
     <button class="bill-btn ${billPeriod==="anual"?"on":""}" data-bill="anual">Anual</button>
-    <span class="bill-save">🎁 Anual = 2 meses gratis</span>`;
+    <span class="bill-save">🎁 Anual = 2 meses gratis</span>
+    <span style="width:14px"></span>
+    <button class="bill-btn ${currency==="MXN"?"on":""}" data-cur="MXN">$ MXN</button>
+    <button class="bill-btn ${currency==="EUR"?"on":""}" data-cur="EUR">€ EUR</button>`;
   document.querySelectorAll("[data-bill]").forEach(b=>b.addEventListener("click",()=>{billPeriod=b.dataset.bill;renderPlanes()}));
+  document.querySelectorAll("[data-cur]").forEach(b=>b.addEventListener("click",()=>{currency=b.dataset.cur;renderPlanes()}));
   document.getElementById("plans-grid").innerHTML=PLANES.map(p=>`
     <div class="plan ${p.destacado?"destacado":""}">
       ${p.destacado?'<span class="flag">Más elegido</span>':""}
       <h3>${p.n}</h3><p class="pd">${p.pd}</p>
-      <div class="price">$${planPrecio(p).toLocaleString("es-MX")}<small> MXN/${billPeriod==="anual"?"año":"mes"}</small></div>
-      ${billPeriod==="anual"?`<div class="price-eq">equivale a $${Math.round(p.anual/12).toLocaleString("es-MX")}/mes · ahorras $${(p.precio*12-p.anual).toLocaleString("es-MX")}</div>`:""}
+      <div class="price">${money(planPrecio(p))}<small> ${currency}/${billPeriod==="anual"?"año":"mes"}</small></div>
+      ${billPeriod==="anual"?`<div class="price-eq">equivale a ${money(Math.round(curOf(p).anual/12))}/mes · ahorras ${money(curOf(p).precio*12-curOf(p).anual)}</div>`:""}
+      <div class="price-eq" style="color:var(--ink-3)">≈ ${currency==="MXN"?money(billPeriod==="anual"?p.eur.anual:p.eur.precio,"EUR")+" EUR":money(billPeriod==="anual"?p.anual:p.precio,"MXN")+" MXN"}/${billPeriod==="anual"?"año":"mes"}</div>
       <ul>${p.feats.map(f=>`<li>${f}</li>`).join("")}</ul>
       <button class="btn ${p.destacado?"btn-primary":"btn-ghost"}" data-buy="${p.id}">💳 Contratar ${p.n}</button>
     </div>`).join("");
@@ -1715,14 +1723,14 @@ function renderPlanes(){
     const p=PLANES.find(x=>x.id===buyPlan);
     document.getElementById("buy-title").textContent="💳 Contratar plan "+p.n;
     document.getElementById("buy-resumen").innerHTML=
-      `<span>Plan <b>${p.n}</b> · facturación ${billPeriod}${billPeriod==="anual"?" (2 meses gratis)":""}</span><b class="amt">$${planPrecio(p).toLocaleString("es-MX")} MXN</b>`;
+      `<span>Plan <b>${p.n}</b> · facturación ${billPeriod}${billPeriod==="anual"?" (2 meses gratis)":""}</span><b class="amt">${money(planPrecio(p))} ${currency}</b>`;
     ["buy-nombre","buy-empresa","buy-email","buy-card","buy-titular","buy-exp","buy-cvv"].forEach(id=>document.getElementById(id).value="");
     document.getElementById("buy-brand").textContent="";
     document.getElementById("buy-err").classList.remove("show");
     document.getElementById("buy-form").style.display="";
     document.getElementById("buy-ok").style.display="none";
     const btn=document.getElementById("buy-send");
-    btn.disabled=false;btn.textContent="Pagar $"+planPrecio(p).toLocaleString("es-MX")+" MXN";
+    btn.disabled=false;btn.textContent="Pagar "+money(planPrecio(p))+" "+currency;
     document.getElementById("buy-overlay").classList.add("on");
   }));
 }
@@ -1766,11 +1774,11 @@ document.getElementById("buy-send").addEventListener("click",()=>{
   setTimeout(()=>{
     const l={id:"lic"+Math.random().toString(36).slice(2,8),key:makeKey(),cliente:n,empresa:e,email:m,
       plan:buyPlan,estado:"Activa",creado:hoy(),
-      fact:{periodo:billPeriod,monto:planPrecio(p),last4:card.slice(-4),marca:brandOf(card),fecha:hoy()}};
+      fact:{periodo:billPeriod,monto:planPrecio(p),moneda:currency,last4:card.slice(-4),marca:brandOf(card),fecha:hoy()}};
     state.licenses.unshift(l);save();lastKey=l.key;
     document.getElementById("buy-form").style.display="none";
     document.getElementById("buy-ok").style.display="";
-    document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · $"+planPrecio(p).toLocaleString("es-MX")+" MXN · tarjeta •••• "+card.slice(-4);
+    document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+" · tarjeta •••• "+card.slice(-4);
     document.getElementById("buy-ok-key").textContent=l.key;
     if(esOwner())renderAdmin();
   },1700);
@@ -1994,8 +2002,10 @@ function renderAdmin(){
         pen=state.licenses.filter(l=>l.estado==="Pendiente"),
         sus=state.licenses.filter(l=>l.estado==="Suspendida");
   const mrr=act.reduce((a,l)=>{const p=PLANES.find(x=>x.id===l.plan);if(!p)return a;
-    return a+(l.fact&&l.fact.periodo==="anual"?Math.round(p.anual/12):p.precio)},0);
-  const cobrado=state.licenses.reduce((a,l)=>a+(l.fact?l.fact.monto:0),0);
+    const eur=l.fact&&l.fact.moneda==="EUR";
+    const base=l.fact&&l.fact.periodo==="anual"?(eur?p.eur.anual/12:p.anual/12):(eur?p.eur.precio:p.precio);
+    return a+Math.round(eur?base*EUR_MXN:base)},0);
+  const cobrado=state.licenses.reduce((a,l)=>a+(l.fact?Math.round(l.fact.moneda==="EUR"?l.fact.monto*EUR_MXN:l.fact.monto):0),0);
   document.getElementById("admin-tiles").innerHTML=`
     <div class="tile"><span class="tl">🔑 Licencias activas</span><div class="tv">${act.length}</div><span class="td nt">${sus.length} suspendidas</span></div>
     <div class="tile"><span class="tl">📨 Solicitudes de compra</span><div class="tv">${pen.length}</div><span class="td ${pen.length?"up":"nt"}">${pen.length?"esperan tu autorización":"todo al día"}</span></div>
@@ -2009,7 +2019,7 @@ function renderAdmin(){
     else acts=`<button class="lic-btn ok" data-lact="${l.id}">▶ Reactivar</button><button class="lic-btn bad" data-ldel="${l.id}">✕ Revocar</button>`;
     return `<tr>
       <td><b>${esc(l.cliente)}</b><br><span style="font-size:12.5px;color:var(--ink-2)">${esc(l.empresa)} · ${esc(l.email)}</span></td>
-      <td>${plan?plan.n:l.plan}<br><span style="font-size:12px;color:var(--ink-2)">${l.fact?((l.fact.periodo==="anual"?"Anual · $":"Mensual · $")+l.fact.monto.toLocaleString("es-MX")+(l.fact.last4?" · •••• "+l.fact.last4:"")):"$"+(plan?plan.precio:0).toLocaleString("es-MX")+"/mes"}</span></td>
+      <td>${plan?plan.n:l.plan}<br><span style="font-size:12px;color:var(--ink-2)">${l.fact?((l.fact.periodo==="anual"?"Anual · ":"Mensual · ")+money(l.fact.monto,l.fact.moneda||"MXN")+" "+(l.fact.moneda||"MXN")+(l.fact.last4?" · •••• "+l.fact.last4:"")):"$"+(plan?plan.precio:0).toLocaleString("es-MX")+"/mes"}</span></td>
       <td>${l.key?`<span class="lic-key">${l.key}</span>`:`<span style="color:var(--ink-3);font-size:12.5px">— se genera al autorizar</span>`}</td>
       <td style="white-space:nowrap;font-variant-numeric:tabular-nums">${l.creado}</td>
       <td><span class="st-pill st-${l.estado.toLowerCase()}">${l.estado}</span></td>

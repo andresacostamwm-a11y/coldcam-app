@@ -43,11 +43,16 @@ el trabajo de implementación.
 Con margen frente a las plataformas gringas (convertidas a MXN) y un descuento
 claro frente al servicio hecho a mano mexicano:
 
-| Plan | Mensual | Anual (2 meses gratis) | Ancla competitiva |
-|---|---|---|---|
-| **Starter** | **$499 MXN** (~$29 USD) | **$4,990 MXN** | = Tidio de entrada; mitad de un ManyChat completo |
-| **Pro** ⭐ | **$1,299 MXN** (~$76 USD) | **$12,990 MXN** | = Chatfuel; 1/3 del servicio mexicano hecho a mano |
-| **Empresa** | **$2,999 MXN** (~$175 USD) | **$29,990 MXN** | 33% más barato que Kosmo/Aurora, con bots ilimitados |
+| Plan | Mensual MXN | Anual MXN | Mensual EUR | Anual EUR | Ancla competitiva |
+|---|---|---|---|---|---|
+| **Starter** | **$499** | **$4,990** | **€25** | **€249** | = Tidio de entrada; mitad de un ManyChat completo |
+| **Pro** ⭐ | **$1,299** | **$12,990** | **€65** | **€649** | = Chatfuel; 1/3 del servicio mexicano hecho a mano |
+| **Empresa** | **$2,999** | **$29,990** | **€149** | **€1,490** | 33% más barato que Kosmo/Aurora, con bots ilimitados |
+
+*Anual = 10 meses (2 gratis). Los precios en EUR son precios de lista propios
+(no conversión al día): psicológicamente limpios para clientes europeos y con
+margen ante variaciones cambiarias. Referencia de consolidación contable usada
+en la app: 1 EUR ≈ 21 MXN — ajústala en la constante `EUR_MXN` cuando cambie.*
 
 ### Reglas de la recomendación
 
