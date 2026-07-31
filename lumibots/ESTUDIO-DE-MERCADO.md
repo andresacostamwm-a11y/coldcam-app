@@ -45,12 +45,14 @@ claro frente al servicio hecho a mano mexicano:
 
 | Plan | Mensual MXN | Anual MXN | Mensual EUR | Anual EUR | Ancla competitiva |
 |---|---|---|---|---|---|
-| **Gratis** | **$0** | — | **€0** | — | puerta de entrada: prueba sin tarjeta, convierte a Starter/Pro |
+| **Gratis** | **$0** | — | **€0** | — | puerta de entrada sin tarjeta: deja explorar la plataforma pero **no crea bots**, así que empuja a Starter/Pro |
 | **Starter** | **$399** | **$3,990** | **€19** | **€190** | debajo de Tidio de entrada; compra sin pensarlo |
 | **Pro** ⭐ | **$999** | **$9,990** | **€49** | **€490** | debajo de Chatfuel; 1/4 del servicio mexicano hecho a mano |
 | **Empresa** | **$2,499** | **$24,990** | **€119** | **€1,190** | ~40% más barato que Kosmo/Aurora, con bots ilimitados |
 
-*Modelo freemium: el plan Gratis alimenta el embudo; el precio agresivo de
+*Modelo freemium con muro de pago: el plan Gratis alimenta el embudo —el
+visitante ve la plataforma y la demostración guiada— pero **crear un bot real
+exige un plan de pago**, que es donde se convierte. El precio agresivo de
 Starter y Pro acelera el volumen. Cuando el 40%+ compre sin negociar, sube
 los precios.*
 

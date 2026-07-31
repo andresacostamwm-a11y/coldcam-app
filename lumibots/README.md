@@ -17,14 +17,13 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
 
 **Accesos (una sola ventana):**
 
-- 👑 Propietario: entra por la misma ventana de licencias con su usuario y su
-  clave secreta de propietario (configurables en el panel Admin; la clave
-  nunca se muestra en pantalla).
-- 🔑 Cliente: su nombre o correo + la clave de su licencia (demo:
-  `Laura Méndez` + `LUMI-2026-DEMO`). La identidad debe coincidir con la
-  registrada en la licencia.
-- 🎁 Plan Gratis: cualquier visitante puede crear una cuenta básica de prueba
-  sin tarjeta desde la página de planes.
+- 👑 Propietario (único usuario con acceso completo y de modificación):
+  `Andrés Acosta` + su clave secreta, en la misma ventana de acceso. La clave
+  se cambia desde el panel Admin y nunca se muestra en pantalla.
+- 🔑 Cliente: su nombre o correo + la clave `LUMI-XXXX-XXXX` que recibe al
+  contratar. La identidad debe coincidir con la registrada en la licencia.
+- 🎁 Plan Gratis: cuenta sin tarjeta para conocer la plataforma. **No crea
+  bots**: para eso hace falta un plan de pago.
 - ▶️ Demostración guiada: sin clave, desde el botón «Probar la demostración
   guiada» de la puerta de acceso. Entra con el nombre **Andrés Acosta** y una
   guía paso a paso lleva al visitante por cada pestaña —crear el bot, entrenarlo,
@@ -35,7 +34,14 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
 
 ## Qué incluye
 
-### Creación de bots
+### Creación de bots (requiere suscripción de pago)
+- **Muro de pago**: crear un bot real exige una licencia de pago activa. El
+  plan Gratis y la demostración guiada no crean nada; la pestaña «Crear bot»
+  redirige a Planes con el motivo. Cada plan tiene su límite —Starter 1 bot,
+  Pro 5, Empresa ilimitados— y al alcanzarlo la app invita a mejorar el plan.
+- **Precios visibles antes de entrar**: la pantalla de acceso muestra los
+  cuatro planes con su precio en MXN o EUR, mensual o anual, y lleva
+  directo a la contratación.
 - **Asistente guiado de 5 pasos** que pide los datos necesarios de la empresa
   y arma el bot automáticamente, con validación en cada paso.
 - **12 giros de negocio**: restaurante, salud, belleza, inmobiliaria, tienda,
@@ -79,12 +85,19 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   pantalla: el visitante elige el idioma y la narración se reproduce en él.
   Cada escena se dibuja en un lienzo fijo de 960×540 que se escala al ancho del
   reproductor, así el contenido siempre se ve completo en cualquier pantalla.
+  **La imagen siempre va con la voz**: la línea de tiempo la manda la
+  narración, no un reloj fijo. Con la voz del navegador cada escena espera a
+  que la frase termine de sonar y avanza en ese instante (con un seguro por si
+  el navegador no avisa); con narración importada la línea de tiempo se
+  reconstruye con las duraciones reales de cada clip.
   Dos modos de narración:
   1. 🔊 Narración automática del navegador (`es-ES` / `en-GB`, ritmo narrativo).
   2. 🎙️ **Narración propia** — grabando las frases con el micrófono desde el
      teleprompter integrado o **importando audios de un locutor profesional**
      (por ejemplo la voz Gabriel Blanco de ElevenLabs,
-     `RwzBDEn5f6FIgpAjH9YN`): acepta 13 archivos numerados **o un único archivo
+     `RwzBDEn5f6FIgpAjH9YN`): desde el panel de voz, **⬇ Guion .txt** descarga
+     las 13 frases con el identificador de esa voz y las instrucciones, y
+     **🎧 Importar audios** acepta 13 archivos numerados **o un único archivo
      con toda la narración**, que se divide automáticamente detectando las
      pausas. La línea de tiempo se reconstruye con las duraciones reales y cada
      clip pasa por una cadena de masterización de locución.

@@ -597,6 +597,30 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
 .gate-card{color:var(--ink)}
 .gate-buy{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.24);color:rgba(228,238,255,.92);backdrop-filter:blur(8px);box-shadow:0 14px 40px rgba(4,16,45,.35)}
 .cta-band{background:linear-gradient(125deg,#0A1E4E 0%,#12377F 48%,#1E63C8 100%);border:1px solid rgba(255,255,255,.14);color:#fff;box-shadow:0 20px 50px rgba(10,30,78,.35)}
+/* ── planes visibles en la puerta ── */
+.gate-jump{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+.gate-jump .btn-ghost{background:rgba(255,255,255,.92);color:#12377F;border-color:transparent}
+.gate-plans-wrap{margin:0 auto 34px;max-width:1020px}
+.gate-h2{color:#fff;font-size:clamp(20px,3vw,28px);letter-spacing:-.6px;text-align:center}
+.gate-h2-sub{color:rgba(224,236,255,.88);font-size:14px;margin:6px 0 16px;text-align:center}
+.gate-cur{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.gate-cur button{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.14);color:#fff;
+  border-radius:99px;padding:7px 15px;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit}
+.gate-cur button.on{background:#fff;color:#12377F;border-color:#fff}
+.gate-plans{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;text-align:left}
+.gp{background:rgba(255,255,255,.96);border-radius:18px;padding:18px 16px;position:relative;
+  display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 26px rgba(4,16,45,.24)}
+.gp.top{outline:3px solid var(--mint);outline-offset:-3px}
+.gp .gp-flag{position:absolute;top:-11px;left:16px;background:var(--mint);color:#0d3d2c;
+  font-size:11px;font-weight:900;padding:3px 10px;border-radius:99px;letter-spacing:.3px}
+.gp h4{font-size:17px;letter-spacing:-.3px;color:var(--ink)}
+.gp .gp-price{font-size:26px;font-weight:900;letter-spacing:-1px;color:var(--ink);line-height:1.1}
+.gp .gp-price small{font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:0}
+.gp .gp-alt{font-size:12px;color:var(--ink-3)}
+.gp .gp-desc{font-size:13px;color:var(--ink-2);line-height:1.45;flex:1}
+.gp .btn{width:100%;justify-content:center;font-size:13.5px;padding:9px 12px}
+@media (max-width:880px){.gate-plans{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.gate-plans{grid-template-columns:1fr}.gate-jump .btn{width:100%}}
 .cta-band h2{color:#fff}
 .cta-band p{color:rgba(224,236,255,.85)}
 .cta-band .btn-primary{background:#fff;color:#12377F;box-shadow:0 10px 26px rgba(4,16,45,.4)}
@@ -619,12 +643,27 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       </span>
     </div>
     <h1>Bienvenido a tu estudio de chatbots</h1>
-    <p class="sub" style="margin-bottom:22px">Chatbots profesionales para todas las áreas de tu empresa. Mira el video, prueba gratis y entra con tu clave.</p>
+    <p class="sub" style="margin-bottom:18px">Chatbots profesionales para todas las áreas de tu empresa. Elige tu plan, paga y crea tu asistente en cinco minutos.</p>
+    <div class="gate-jump">
+      <button class="btn btn-primary" id="gate-buy-top">💳 Ver planes y precios</button>
+      <button class="btn btn-ghost" id="gate-demo-top">▶ Ver la demostración guiada</button>
+    </div>
+
     <div style="margin:6px 0 14px;text-align:center">
       <h2 style="color:#fff;font-size:clamp(20px,3vw,28px);letter-spacing:-.6px">🎬 Cómo tener tu chatbot en 5 minutos</h2>
       <p style="color:rgba(224,236,255,.85);font-size:14px;margin-top:6px">Con narración en tu idioma — cámbiala o siléncialA con el botón del reproductor</p>
     </div>
     <div id="gate-player-slot" style="text-align:left;margin-bottom:34px"></div>
+
+    <!-- precios visibles antes de entrar -->
+    <div class="gate-plans-wrap" id="gate-plans-wrap">
+      <h2 class="gate-h2">💳 Planes y precios</h2>
+      <p class="gate-h2-sub">Para crear tu bot necesitas un plan de pago activo. Contrátalo y recibes tu clave al instante.</p>
+      <div class="gate-cur" id="gate-cur"></div>
+      <div class="gate-plans" id="gate-plans"></div>
+      <button class="btn btn-primary" id="gate-buy-mid" style="margin-top:20px">💳 Ver el detalle de cada plan y contratar</button>
+    </div>
+
     <div style="margin-bottom:14px;text-align:center">
       <h2 style="color:#fff;font-size:clamp(18px,2.4vw,23px);letter-spacing:-.4px">¿Ya tienes acceso?</h2>
     </div>
@@ -638,7 +677,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
           <button class="btn btn-primary" id="gate-key-btn">Entrar</button>
         </div>
         <p class="gate-err" id="gate-key-err">⚠ Datos no válidos o licencia inactiva.</p>
-        <div class="gate-hint">🧪 Demo de cliente: <code>Laura Méndez</code> + clave <code>LUMI-2026-DEMO</code></div>
+        <div class="gate-hint">🔒 Los clientes entran con la clave <code>LUMI-XXXX-XXXX</code> que reciben al contratar su plan.</div>
       </div>
     </div>
     <div class="gate-buy" style="margin-top:24px;background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34)">
@@ -1111,6 +1150,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <span id="voice-count">0 de 0 grabadas</span>
       <span style="flex:1"></span>
       <button class="mini-btn" id="voice-script">📋 Copiar el guion</button>
+      <button class="mini-btn" id="voice-script-dl">⬇ Guion .txt</button>
       <label class="mini-btn solid" style="cursor:pointer">🎧 Importar audios (ElevenLabs)<input type="file" id="voice-audios" accept="audio/*" multiple style="display:none"></label>
       <button class="mini-btn" id="voice-export">⬇ Exportar</button>
       <label class="mini-btn" style="cursor:pointer">⬆ JSON<input type="file" id="voice-import" accept="application/json" style="display:none"></label>
@@ -1335,19 +1375,19 @@ const WIDGET_COLORS=["#6B7FE3","#7ED9B4","#F6C79A","#A9D3F2","#CDC2F0","#F2B8C6"
 const AVATARES=["🤖","✨","🦷","🍽️","💈","🏠","🛍️","🎓","⚖️","💪","🏝️","🚗","💻","🧰","💰","🛒","🎧","🔧","📣","👥","📈","🚚","🖥️","🗂️"];
 
 const PLANES=[
- {id:"gratis",n:"Gratis",precio:0,anual:0,eur:{precio:0,anual:0},pd:"Prueba LumiBots gratis, sin tarjeta.",
-  feats:["1 bot de prueba","Plantillas de giros y áreas incluidas","Hasta 50 pares de conocimiento","Simulador de chat completo","Dashboard esencial","Canal web"]},
- {id:"starter",n:"Starter",precio:399,anual:3990,eur:{precio:19,anual:190},pd:"Para un negocio que empieza con su primer asistente.",
-  feats:["1 bot activo","Giros de negocio y 3 áreas internas","Hasta 200 pares de conocimiento","Dashboard con métricas esenciales","Exportación de registros en CSV","Canal web + WhatsApp"]},
- {id:"pro",n:"Pro",precio:999,anual:9990,eur:{precio:49,anual:490},destacado:true,pd:"Para empresas que quieren bots en varias áreas.",
-  feats:["5 bots activos","Los 12 giros y las 10 áreas especialistas","Conocimiento ilimitado con carga masiva","Dashboard completo con embudo y rangos","Los 5 canales conectados","Soporte prioritario del propietario"]},
- {id:"empresa",n:"Empresa",precio:2499,anual:24990,eur:{precio:119,anual:1190},pd:"Para operaciones grandes y agencias.",
+ {id:"gratis",n:"Gratis",precio:0,anual:0,eur:{precio:0,anual:0},maxBots:0,pd:"Conoce la plataforma por dentro, sin tarjeta.",
+  feats:["Demostración guiada paso a paso","Explora los 12 giros y las 10 áreas","Prueba el simulador de chat","Mira el dashboard con datos de ejemplo","⚠ No incluye crear tu bot: para eso contrata un plan de pago"]},
+ {id:"starter",n:"Starter",precio:399,anual:3990,eur:{precio:19,anual:190},maxBots:1,pd:"Para un negocio que empieza con su primer asistente.",
+  feats:["1 bot real activo","Giros de negocio y 3 áreas internas","Hasta 200 pares de conocimiento","Dashboard con métricas esenciales","Exportación de registros en CSV","Canal web + WhatsApp"]},
+ {id:"pro",n:"Pro",precio:999,anual:9990,eur:{precio:49,anual:490},maxBots:5,destacado:true,pd:"Para empresas que quieren bots en varias áreas.",
+  feats:["5 bots reales activos","Los 12 giros y las 10 áreas especialistas","Conocimiento ilimitado con carga masiva","Dashboard completo con embudo y rangos","Los 5 canales conectados","Soporte prioritario del propietario"]},
+ {id:"empresa",n:"Empresa",precio:2499,anual:24990,eur:{precio:119,anual:1190},maxBots:Infinity,pd:"Para operaciones grandes y agencias.",
   feats:["Bots ilimitados","Todo lo del plan Pro","Volúmenes altos de captura y almacenamiento","Respaldo completo de datos (JSON)","Marca blanca del widget","Acompañamiento de implementación"]}
 ];
 
 /* ════════ Estado y persistencia ════════ */
 const LS_KEY="lumibots_v2";
-const DEFAULT_CRED={usuario:"Andrés Acosta",ownerKey:"222-1765-406"};
+const DEFAULT_CRED={usuario:"Andrés Acosta",ownerKey:"1980",credV:3};
 let state={bots:[],leads:[],licenses:[],config:{...DEFAULT_CRED},session:null};
 function save(){
   if(typeof esDemo==="function"&&esDemo())return; /* la demo no guarda nada */
@@ -1357,7 +1397,13 @@ function save(){
 function load(){
   try{
     const raw=localStorage.getItem(LS_KEY);
-    if(raw){state=JSON.parse(raw);state.config=Object.assign({...DEFAULT_CRED},state.config||{});state.licenses=state.licenses||[];return}
+    if(raw){
+      state=JSON.parse(raw);
+      state.config=Object.assign({...DEFAULT_CRED},state.config||{});
+      /* la clave del propietario cambió: descarta la guardada de versiones anteriores */
+      if(state.config.credV!==DEFAULT_CRED.credV)state.config={...DEFAULT_CRED};
+      state.licenses=state.licenses||[];return;
+    }
     const v1=localStorage.getItem("lumibots_v1");
     if(v1){
       const old=JSON.parse(v1);
@@ -1427,6 +1473,19 @@ function seedDemo(){
 function esOwner(){return state.session&&state.session.role==="owner"}
 function miLic(){return state.session&&state.session.role==="cliente"?state.licenses.find(l=>l.id===state.session.licId):null}
 function visibleBots(){return (esOwner()||esDemo())?state.bots.filter(b=>b.owner==="owner"):state.bots.filter(b=>b.owner===(state.session?state.session.licId:"—"))}
+function planActual(){const l=miLic();return l?PLANES.find(p=>p.id===l.plan)||null:null}
+/* crear un bot real exige una suscripción de pago activa y respeta el límite del plan */
+function permisoCrear(){
+  if(esOwner())return{ok:true};
+  if(esDemo())return{ok:true,demo:true};
+  const l=miLic();
+  if(!l||l.estado!=="Activa")return{ok:false,motivo:L("Necesitas una licencia activa para crear tu bot.","You need an active license to create your bot.")};
+  const p=planActual();
+  const max=p&&p.maxBots!=null?p.maxBots:0;
+  if(!max)return{ok:false,upgrade:true,motivo:L("El plan Gratis no crea bots. Contrata Starter, Pro o Empresa para tener el tuyo.","The Free plan cannot create bots. Get Starter, Pro or Empresa to have yours.")};
+  if(visibleBots().length>=max)return{ok:false,upgrade:true,motivo:L("Tu plan "+p.n+" incluye "+max+" bot"+(max>1?"s":"")+". Mejora tu plan para crear más.","Your "+p.n+" plan includes "+max+" bot"+(max>1?"s":"")+". Upgrade to create more.")};
+  return{ok:true};
+}
 
 function movePlayer(toGate){
   const pl=document.querySelector(".player");
@@ -1487,9 +1546,9 @@ document.getElementById("gate-key-btn").addEventListener("click",()=>{
   }else{err.textContent=l&&l.estado==="Suspendida"?"⚠ Tu licencia está suspendida. Contacta al propietario.":l&&l.estado==="Pendiente"?"⚠ Tu compra aún no ha sido autorizada por el propietario.":"⚠ Clave no válida o licencia inactiva.";err.classList.add("show")}
 });
 ["gate-cli-id","gate-key"].forEach(id=>document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("gate-key-btn").click()}));
-document.getElementById("gate-buy-btn").addEventListener("click",()=>{
-  document.getElementById("gate").classList.remove("on");
-  guestPlanes=true;go("planes");
+["gate-buy-btn","gate-buy-top","gate-buy-mid"].forEach(id=>{
+  const b=document.getElementById(id);
+  if(b)b.addEventListener("click",()=>gateToPlanes());
 });
 document.getElementById("btn-logout").addEventListener("click",()=>{
   state.session=null;guestPlanes=false;save();applySession();
@@ -1502,6 +1561,10 @@ const views=["home","wizard","bots","dash","planes","admin"];
 function go(v){
   if(v==="admin"&&!esOwner()){toast("Solo el propietario puede entrar al panel Admin");return}
   if(!state.session&&v!=="planes"){applySession();return}
+  if(v==="wizard"){
+    const perm=permisoCrear();
+    if(!perm.ok){toast("🔒 "+perm.motivo);go("planes");return}
+  }
   views.forEach(x=>document.getElementById("view-"+x).classList.toggle("on",x===v));
   document.querySelectorAll(".nav-tab").forEach(t=>t.classList.toggle("on",t.dataset.go===v));
   window.scrollTo({top:0,behavior:"smooth"});
@@ -1847,6 +1910,8 @@ function validate(){
 
 const BUILD_STEPS=["Leyendo la información de tu empresa","Cargando plantilla especialista y base de conocimiento","Entrenando respuestas con tu tono de voz","Configurando la captura y almacenamiento de datos","Conectando canales y widget","¡Bot listo y en línea!"];
 function buildBot(){
+  const perm=permisoCrear();
+  if(!perm.ok){toast("🔒 "+perm.motivo);go("planes");return}
   document.getElementById("wiz-root").style.display="none";
   const bs=document.getElementById("build-screen");bs.style.display="";
   const list=document.getElementById("build-list");
@@ -1883,7 +1948,10 @@ function renderBots(){
   const g=document.getElementById("bots-grid");
   const bots=visibleBots();
   if(!bots.length){
-    g.innerHTML=`<div class="empty"><div class="em">🌱</div><h3>Aún no tienes bots</h3><p>Crea tu primer asistente en unos 5 minutos.</p><button class="btn btn-primary" data-go="wizard">✨ Crear mi primer bot</button></div>`;
+    const perm=permisoCrear();
+    g.innerHTML=perm.ok
+      ?`<div class="empty"><div class="em">🌱</div><h3>Aún no tienes bots</h3><p>Crea tu primer asistente en unos 5 minutos.</p><button class="btn btn-primary" data-go="wizard">✨ Crear mi primer bot</button></div>`
+      :`<div class="empty"><div class="em">🔒</div><h3>Contrata tu plan para crear tu bot</h3><p>${esc(perm.motivo)}</p><button class="btn btn-primary" data-go="planes">💳 Ver planes y precios</button></div>`;
     return;
   }
   g.innerHTML=bots.map(b=>{
@@ -2067,6 +2135,38 @@ const EUR_MXN=21; /* tipo de cambio de referencia para consolidar ingresos */
 function curOf(p){return currency==="EUR"?p.eur:p}
 function planPrecio(p){const c=curOf(p);return billPeriod==="anual"?c.anual:c.precio}
 function money(v,cur){return (cur||currency)==="EUR"?"€"+v.toLocaleString("es-ES"):"$"+v.toLocaleString("es-MX")}
+/* precios visibles en la puerta de acceso, antes de entrar */
+function renderGatePlans(){
+  const cur=document.getElementById("gate-cur"),grid=document.getElementById("gate-plans");
+  if(!cur||!grid)return;
+  cur.innerHTML=`
+    <button class="${billPeriod==="mensual"?"on":""}" data-gbill="mensual">${L("Mensual","Monthly")}</button>
+    <button class="${billPeriod==="anual"?"on":""}" data-gbill="anual">${L("Anual · 2 meses gratis","Yearly · 2 months free")}</button>
+    <button class="${currency==="MXN"?"on":""}" data-gcur="MXN">$ MXN</button>
+    <button class="${currency==="EUR"?"on":""}" data-gcur="EUR">€ EUR</button>`;
+  grid.innerHTML=PLANES.map(p=>{
+    const gratis=p.id==="gratis";
+    const precio=gratis
+      ?`<div class="gp-price">${currency==="EUR"?"€0":"$0"}<small> ${L("para siempre","forever")}</small></div>
+        <div class="gp-alt">${L("sin tarjeta","no card")}</div>`
+      :`<div class="gp-price">${money(planPrecio(p))}<small> ${currency}/${billPeriod==="anual"?L("año","yr"):L("mes","mo")}</small></div>
+        <div class="gp-alt">≈ ${currency==="MXN"?money(billPeriod==="anual"?p.eur.anual:p.eur.precio,"EUR")+" EUR":money(billPeriod==="anual"?p.anual:p.precio,"MXN")+" MXN"}</div>`;
+    return `<div class="gp ${p.destacado?"top":""}">
+      ${p.destacado?`<span class="gp-flag">${L("Más elegido","Most chosen")}</span>`:""}
+      <h4>${p.n}</h4>${precio}
+      <p class="gp-desc">${gratis?L("Solo para conocer la plataforma. No crea bots.","Just to explore the platform. No bot creation."):L("Incluye "+(p.maxBots===Infinity?"bots ilimitados":p.maxBots+" bot"+(p.maxBots>1?"s":"")+" real"+(p.maxBots>1?"es":"")),"Includes "+(p.maxBots===Infinity?"unlimited bots":p.maxBots+" real bot"+(p.maxBots>1?"s":"")))}</p>
+      <button class="btn ${p.destacado?"btn-primary":"btn-ghost"}" data-gbuy="${p.id}">${gratis?L("🎁 Entrar gratis","🎁 Start free"):L("💳 Contratar","💳 Get it")}</button>
+    </div>`;
+  }).join("");
+  grid.querySelectorAll("[data-gbuy]").forEach(b=>b.addEventListener("click",()=>gateToPlanes(b.dataset.gbuy)));
+  cur.querySelectorAll("[data-gbill]").forEach(b=>b.addEventListener("click",()=>{billPeriod=b.dataset.gbill;renderGatePlans()}));
+  cur.querySelectorAll("[data-gcur]").forEach(b=>b.addEventListener("click",()=>{currency=b.dataset.gcur;renderGatePlans()}));
+}
+function gateToPlanes(planId){
+  document.getElementById("gate").classList.remove("on");
+  guestPlanes=true;go("planes");
+  if(planId)setTimeout(()=>{const b=document.querySelector('[data-buy="'+planId+'"]');if(b)b.click()},260);
+}
 function renderPlanes(){
   document.getElementById("bill-toggle").innerHTML=`
     <button class="bill-btn ${billPeriod==="mensual"?"on":""}" data-bill="mensual">Mensual</button>
@@ -2465,7 +2565,7 @@ document.getElementById("btn-save-cred").addEventListener("click",()=>{
   const u=document.getElementById("cfg-user").value.trim();
   const p=document.getElementById("cfg-pass").value;
   if(u)state.config.usuario=u;
-  if(p){if(p.length<6){toast("La clave debe tener al menos 6 caracteres");return}state.config.ownerKey=p}
+  if(p){if(p.length<4){toast("La clave debe tener al menos 4 caracteres");return}state.config.ownerKey=p}
   if(!u&&!p){toast("Escribe un usuario nuevo, una clave nueva, o ambos");return}
   save();document.getElementById("cfg-pass").value="";
   toast("🔐 Credenciales actualizadas — úsalas en tu próximo acceso");
@@ -2910,7 +3010,7 @@ const PL_CAP=[
  {t:68,es:"Empieza hoy: elige tu plan y ten a tu asistente atendiendo en cinco minutos.",
     en:"Start today: choose your plan and have your assistant working in five minutes."}
 ];
-const PL={t:0,playing:false,cur:0,last:0,ended:false,capIdx:-1};
+const PL={t:0,playing:false,cur:0,last:0,ended:false,capIdx:-1,spk:-1,speaking:false,spkT0:0};
 function plFmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
 function plSceneIdx(t){const ct=chapTimes();let i=0;for(let k=0;k<ct.length;k++)if(t>=ct[k])i=k;return i}
 function plActivate(i,force){
@@ -2939,6 +3039,9 @@ function plCounts(){
   });
 }
 let plSound=true;
+/* con la narración del navegador la duración real de cada frase la decide el sintetizador,
+   así que la línea de tiempo la manda la voz: la diapositiva cambia cuando la frase termina */
+function ttsSync(){return plSound&&voiceMode!=="off"&&!narrOn()&&("speechSynthesis" in window)}
 function plSpeak(txt,idx){
   if(!plSound||voiceMode==="off")return;
   if(typeof voicePlay==="function"&&idx!=null&&voicePlay(idx))return;
@@ -2951,6 +3054,15 @@ function plSpeak(txt,idx){
     const pref=lang==="en"?["en-GB","en-US","en"]:["es-ES","es-419","es-MX","es-US","es"];
     for(const p of pref){const v=vs.find(x=>x.lang.replace("_","-").startsWith(p));if(v){u.voice=v;break}}
     u.rate=0.97;u.pitch=0.96;/* ritmo narrativo, tono grave */
+    PL.spk=idx;PL.speaking=true;PL.spkT0=performance.now();
+    u.onend=u.onerror=()=>{
+      if(PL.spk!==idx)return;      /* llegó tarde: ya hay otra frase sonando */
+      PL.speaking=false;
+      if(!PL.playing)return;
+      const ct=capTimes(),nx=ct[idx+1];
+      if(nx==null)PL.t=plDur();     /* última frase: cierra el video al terminar de hablar */
+      else if(PL.t<nx)PL.t=nx;      /* adelanta la diapositiva justo al acabar la frase */
+    };
     speechSynthesis.speak(u);
   }catch(e){}
 }
@@ -2980,6 +3092,17 @@ function plTick(now){
   const dt=(now-PL.last)/1000;PL.last=now;
   const tr=(voiceMode==="mine")?trackEl():null;
   if(tr&&!tr.paused)PL.t=tr.currentTime; else PL.t+=dt;
+  if(ttsSync()&&PL.speaking){
+    /* seguro: si el navegador no avisa que terminó (voces no instaladas), sigue sin congelarse */
+    const ct0=capTimes(),hueco=(ct0[PL.spk+1]!=null?ct0[PL.spk+1]-ct0[PL.spk]:5);
+    if(now-PL.spkT0>hueco*1000+6000)PL.speaking=false;
+    else{
+      const nx=capTimes()[PL.spk+1];
+      /* espera a que termine la frase antes de pasar de diapositiva */
+      if(nx!=null&&PL.t>nx-0.08)PL.t=nx-0.08;
+      else if(nx==null&&PL.t>plDur()-0.1)PL.t=plDur()-0.1;
+    }
+  }
   if(PL.t>=plDur()-0.02){PL.t=plDur();plPause();PL.ended=true;
     const bp=document.getElementById("pl-bigplay");bp.classList.remove("hide");bp.textContent="↻";}
   plRender();
@@ -2994,7 +3117,7 @@ function plPlay(){
   requestAnimationFrame(plTick);
 }
 function plPause(){
-  PL.playing=false;
+  PL.playing=false;PL.speaking=false;
   document.getElementById("pl-play").textContent="▶";
   if("speechSynthesis" in window)try{speechSynthesis.cancel()}catch(e){}
   if(typeof voiceStop==="function")voiceStop();
@@ -3002,6 +3125,8 @@ function plPause(){
 }
 function plSeek(t){
   PL.t=Math.max(0,Math.min(plDur(),t));PL.ended=false;
+  PL.speaking=false;PL.spk=-1;PL.capIdx=-1;
+  if("speechSynthesis" in window)try{speechSynthesis.cancel()}catch(e){}
   const bp=document.getElementById("pl-bigplay");
   if(PL.t<plDur()){bp.textContent="▶"}
   plActivate(plSceneIdx(PL.t),true);
@@ -3269,6 +3394,20 @@ document.getElementById("voice-script").addEventListener("click",()=>{
   navigator.clipboard?.writeText(txt)
     .then(()=>toast("📋 Guion copiado — genera cada frase en ElevenLabs y vuelve a importar los audios"))
     .catch(()=>toast("Copia el guion manualmente desde la lista"));
+});
+/* descargar el guion listo para pegarlo en ElevenLabs (voz Gabriel Blanco) */
+document.getElementById("voice-script-dl").addEventListener("click",()=>{
+  const head="LumiBots Studio — guion de narración ("+(lang==="en"?"inglés":"español")+")\n"+
+    "Voz recomendada: ElevenLabs · Gabriel Blanco · RwzBDEn5f6FIgpAjH9YN\n"+
+    "Genera las "+PL_CAP.length+" frases (una por archivo, numerado 01…"+String(PL_CAP.length).padStart(2,"0")+",\n"+
+    "o todas seguidas en un solo archivo dejando ~1 segundo de silencio entre frases).\n"+
+    "Después impórtalas con «🎧 Importar audios» y el video se sincroniza solo.\n\n";
+  const txt=head+PL_CAP.map((c,i)=>String(i+1).padStart(2,"0")+". "+(lang==="en"?c.en:c.es)).join("\n\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([txt],{type:"text/plain;charset=utf-8"}));
+  a.download="guion-narracion-"+lang+".txt";a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  toast("⬇ Guion descargado — genera la voz Gabriel Blanco y vuelve a importarla");
 });
 /* importar los audios generados, en orden */
 document.getElementById("voice-audios").addEventListener("change",async e=>{
@@ -3663,6 +3802,7 @@ function setLang(l){
   const label=l==="es"?"EN":"ES";
   const b=document.getElementById("btn-lang");if(b)b.textContent=label;
   const g=document.getElementById("gate-lang");if(g)g.textContent=label;
+  if(typeof renderGatePlans==="function")renderGatePlans();
   translateTree(document.body);
   if(typeof plRefresh==="function")plRefresh();
   const dv=document.getElementById("view-dash");
@@ -3803,6 +3943,7 @@ function startDemo(){
 document.getElementById("tour-next").addEventListener("click",tourManual);
 document.getElementById("tour-exit").addEventListener("click",()=>{tourStop();toast("Demostración terminada")});
 document.getElementById("gate-demo-btn").addEventListener("click",startDemo);
+document.getElementById("gate-demo-top")?.addEventListener("click",startDemo);
 document.getElementById("home-demo-btn")?.addEventListener("click",startDemo);
 addEventListener("resize",()=>{if(tourI>=0&&TOUR[tourI])tourPlace(tourEl(TOUR[tourI].sel))});
 
@@ -3812,6 +3953,7 @@ applySession();
 playHeroDemo();
 plInit();
 setLang(lang);
+renderGatePlans();
 </script>
 </body>
 </html>
