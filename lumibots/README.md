@@ -90,7 +90,13 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   que la frase termine de sonar y avanza en ese instante (con un seguro por si
   el navegador no avisa); con narración importada la línea de tiempo se
   reconstruye con las duraciones reales de cada clip.
-  Dos modos de narración:
+  Modos de narración:
+  0. 🎧 **Narración incrustada en castellano (por omisión)** — 13 clips con
+     **voz masculina de España**, generados con un sintetizador neuronal y
+     masterizados, que viajan dentro de la propia página (~325 KB). Suenan
+     igual en cualquier teléfono u ordenador porque no dependen de las voces
+     instaladas en el sistema. En inglés todavía no hay clips, así que ahí se
+     usa la narración del navegador.
   1. 🔊 Narración automática del navegador (`es-ES` / `en-GB`, ritmo narrativo).
      Elige por sí sola una **voz masculina** entre las instaladas en el
      dispositivo —y evita las femeninas cuando no encuentra ninguna marcada
