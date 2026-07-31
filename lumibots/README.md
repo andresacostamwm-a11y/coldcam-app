@@ -74,7 +74,10 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
      grabándolas con el micrófono desde el teleprompter integrado o
      **importando audios de un locutor profesional** (por ejemplo la voz
      Gabriel Blanco de ElevenLabs, `RwzBDEn5f6FIgpAjH9YN`) con
-     🎧 Importar audios. El guion completo está en `GUION-NARRACION.md` y se
+     🎧 Importar audios: acepta 13 archivos numerados **o un único archivo con
+     toda la narración**, que se divide automáticamente detectando las pausas
+     (envolvente RMS suavizada y búsqueda del umbral/pausa que produce
+     exactamente 13 bloques). El guion completo está en `GUION-NARRACION.md` y se
      copia al portapapeles con un botón.
      Al importar, la app **mide la duración real de cada clip y reconstruye la
      línea de tiempo del video**: capítulos, subtítulos y animaciones se ajustan

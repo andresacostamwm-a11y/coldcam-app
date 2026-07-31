@@ -2,9 +2,16 @@
 
 Voz recomendada: **Gabriel Blanco** de ElevenLabs · `RwzBDEn5f6FIgpAjH9YN`
 
-Genera **un audio por frase** y nómbralos con número al inicio (`01`, `02`, `03`…) para que la app
-los asigne en orden. Después, en la app: entra como propietario → 🎙️ Grabar mi voz →
-**🎧 Importar audios (ElevenLabs)** y selecciónalos todos.
+Dos formas de importarlo, ambas funcionan igual de bien:
+
+**A) Un solo archivo (lo más rápido).** Pega las 13 frases seguidas en ElevenLabs —
+dejando un salto de línea entre cada una para que haga una pausa natural— genera un
+único audio y descárgalo. En la app: entra como propietario → 🎙️ Grabar mi voz →
+**🎧 Importar audios** y elige ese archivo. La app detecta las pausas, lo divide en las
+13 frases y sincroniza el video solo.
+
+**B) Un audio por frase.** Genera 13 audios y nómbralos con número al inicio
+(`01`, `02`, `03`…). Impórtalos todos de golpe en el mismo botón.
 
 El video se re-sincroniza solo: cada escena dura exactamente lo que dura su frase.
 

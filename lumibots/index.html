@@ -1047,7 +1047,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
     <h3>🎙️ Narra el video con tu voz</h3>
     <p>Dos formas de narrar el video, ambas quedan <b>sincronizadas automáticamente</b>: el video ajusta cada escena a la duración real de cada frase.</p>
     <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:14px">
-    <b>A) Con locutor profesional:</b> pulsa <b>📋 Copiar el guion</b>, genera las <b id="voice-total">13</b> frases en ElevenLabs (una por audio, numeradas 01, 02, 03…), descárgalas y pulsa <b>🎧 Importar audios</b>.<br>
+    <b>A) Con locutor profesional:</b> pulsa <b>📋 Copiar el guion</b>, genera la narración en ElevenLabs y pulsa <b>🎧 Importar audios</b>. Puedes importar <b>un solo archivo</b> con las <b id="voice-total">13</b> frases seguidas (lo dividimos solos por las pausas) o <b>un audio por frase</b> numerado 01, 02, 03…<br>
     <b>B) Con tu propia voz:</b> graba cada frase aquí con el micrófono. En ambos casos aplicamos masterización de locución (ecualización, compresión y nivelado).</p>
     <div class="rec-bar">
       <span id="voice-count">0 de 0 grabadas</span>
@@ -2742,7 +2742,8 @@ const VOICE_REF="data:audio/webm;base64,GkXfo59ChoEBQveBAULygQRC84EIQoKEd2VibUKH
 const VOICE_REF_DUR=34.05;/* grabación de referencia del propietario, no narra el tutorial */
 let voiceMode=localStorage.getItem("lumibots_voicemode")||"auto";
 let trackAudio=null;
-function voiceReady(){ /* "mi voz" solo si el guion está grabado por completo */
+function voiceReady(){ /* narración lista: 13 clips sueltos o un archivo dividido */
+  if(typeof segReady==="function"&&segReady())return true;
   for(let i=0;i<PL_CAP.length;i++)if(!VOICE[lang+"-"+i])return false;
   return true;
 }
@@ -2967,7 +2968,7 @@ function voiceSave(){
   try{localStorage.setItem(VOICE_KEY,JSON.stringify(VOICE))}
   catch(e){toast("⚠ No hay espacio para más grabaciones — exporta y borra algunas")}
 }
-function voiceHas(i){return !!VOICE[voiceKeyOf(i)]}
+function voiceHas(i){return (typeof segReady==="function"&&segReady())||!!VOICE[voiceKeyOf(i)]}
 /* cadena de masterización de locución (la misma del estudio):
    paso alto · EQ de cuerpo y presencia · de-esser · aire · compresión · nivelado */
 let vCtx=null,vNode=null,vCache={};
@@ -2996,6 +2997,7 @@ async function voiceBuffer(i,d){
   vCache[k]={buf,peak};return vCache[k];
 }
 function voicePlay(i){
+  if(segReady())return segPlay(i);
   const d=VOICE[voiceKeyOf(i)];if(!d)return false;
   voiceStop();
   voiceBuffer(i,d).then(({buf,peak})=>{
@@ -3013,6 +3015,105 @@ function voiceStop(){
   if(voiceAudio){try{voiceAudio.pause()}catch(e){}voiceAudio=null}
 }
 
+
+/* ── Narración en un solo archivo: divide por pausas y sincroniza ── */
+let VOICE_FULL=localStorage.getItem("lumibots_voice_full")||"";
+let VOICE_SEG=[];
+try{VOICE_SEG=JSON.parse(localStorage.getItem("lumibots_voice_seg")||"[]")}catch(e){VOICE_SEG=[]}
+let fullBuf=null;
+function segReady(){return VOICE_SEG.length===PL_CAP.length&&!!VOICE_FULL}
+async function fullBuffer(){
+  if(fullBuf)return fullBuf;
+  const r=await fetch(VOICE_FULL);const ab=await r.arrayBuffer();
+  fullBuf=await voiceCtx().decodeAudioData(ab);return fullBuf;
+}
+/* detecta bloques de voz separados por silencio y los ajusta al número de frases */
+function detectSegments(buf,want){
+  const ch=buf.getChannelData(0),sr=buf.sampleRate,win=Math.round(sr*0.02);
+  const raw=[];
+  for(let i=0;i<ch.length;i+=win){
+    let s=0,n=0;
+    for(let j=i;j<Math.min(i+win,ch.length);j++){s+=ch[j]*ch[j];n++}
+    raw.push(Math.sqrt(s/n));
+  }
+  /* suaviza la envolvente para no cortar en los micro-silencios de las sílabas */
+  const env=raw.map((v,i)=>{
+    let s=0,n=0;
+    for(let k=Math.max(0,i-2);k<=Math.min(raw.length-1,i+2);k++){s+=raw[k];n++}
+    return s/n;
+  });
+  const sorted=[...env].sort((a,b)=>a-b);
+  const noise=sorted[Math.floor(sorted.length*0.05)]||0;
+  let peak=0;for(const v of env)if(v>peak)peak=v;
+  if(peak<=noise)return [];
+  const build=(k,gapS)=>{
+    const thr=noise+(peak-noise)*k,qw=Math.max(1,Math.round(gapS/0.02));
+    const segs=[];let start=-1,quiet=0;
+    for(let i=0;i<env.length;i++){
+      if(env[i]>thr){if(start<0)start=i;quiet=0}
+      else if(start>=0){quiet++;if(quiet>=qw){segs.push([start*0.02,(i-quiet+1)*0.02]);start=-1;quiet=0}}
+    }
+    if(start>=0)segs.push([start*0.02,env.length*0.02]);
+    return segs.filter(s=>s[1]-s[0]>0.35);
+  };
+  /* busca la combinación de umbral y pausa que da exactamente `want` frases */
+  let best=null;
+  for(const gap of [0.5,0.45,0.55,0.4,0.6,0.35,0.65,0.3,0.7,0.8,0.9,1.0,0.25]){
+    for(const k of [0.15,0.1,0.2,0.08,0.25,0.06,0.3,0.05]){
+      const s=build(k,gap);
+      if(s.length===want)return s;
+      if(s.length&&(!best||Math.abs(s.length-want)<Math.abs(best.length-want)))best=s;
+    }
+  }
+  let segs=best||[];
+  /* ajusta fusionando los bloques más juntos o partiendo los más largos */
+  while(segs.length>want&&segs.length>1){
+    let mi=0,md=Infinity;
+    for(let i=0;i<segs.length-1;i++){const d=segs[i+1][0]-segs[i][1];if(d<md){md=d;mi=i}}
+    segs=segs.slice(0,mi).concat([[segs[mi][0],segs[mi+1][1]]],segs.slice(mi+2));
+  }
+  while(segs.length&&segs.length<want){
+    let mi=0,mx=0;
+    for(let i=0;i<segs.length;i++){const d=segs[i][1]-segs[i][0];if(d>mx){mx=d;mi=i}}
+    const a=segs[mi],mid=(a[0]+a[1])/2;
+    segs=segs.slice(0,mi).concat([[a[0],mid],[mid,a[1]]],segs.slice(mi+1));
+  }
+  return segs;
+}
+async function importSingleNarration(file){
+  const d=await new Promise(res=>{const r=new FileReader();r.onload=()=>res(String(r.result));r.onerror=()=>res(null);r.readAsDataURL(file)});
+  if(!d)throw new Error("no se pudo leer el archivo");
+  const r=await fetch(d);const ab=await r.arrayBuffer();
+  const buf=await voiceCtx().decodeAudioData(ab.slice(0));
+  const segs=detectSegments(buf,PL_CAP.length);
+  if(segs.length!==PL_CAP.length)throw new Error("detecté "+segs.length+" bloques de voz y el guion tiene "+PL_CAP.length);
+  VOICE_FULL=d;VOICE_SEG=segs;fullBuf=buf;
+  try{
+    localStorage.setItem("lumibots_voice_full",d);
+    localStorage.setItem("lumibots_voice_seg",JSON.stringify(segs));
+  }catch(e){toast("⚠ El audio es muy grande para guardarlo; funciona en esta sesión")}
+  VOICE_D={};
+  segs.forEach((s,i)=>{VOICE_D[lang+"-"+i]=+(s[1]-s[0]).toFixed(2)});
+  localStorage.setItem("lumibots_voice_d",JSON.stringify(VOICE_D));
+  return {dur:+buf.duration.toFixed(2),segs};
+}
+function segPlay(i){
+  const s=VOICE_SEG[i];if(!s)return false;
+  voiceStop();
+  fullBuffer().then(buf=>{
+    const ctx=voiceCtx();
+    if(ctx.state==="suspended")ctx.resume().catch(()=>{});
+    const ch=buf.getChannelData(0),sr=buf.sampleRate;
+    let peak=0;
+    for(let n=Math.floor(s[0]*sr);n<Math.min(ch.length,Math.floor(s[1]*sr));n++){const a=Math.abs(ch[n]);if(a>peak)peak=a}
+    const src=ctx.createBufferSource();src.buffer=buf;
+    const m=masterChain(ctx,peak);
+    src.connect(m.input);m.output.connect(ctx.destination);
+    src.start(0,s[0],Math.max(0.1,s[1]-s[0]));vNode=src;
+  }).catch(()=>{});
+  return true;
+}
+
 function renderVoice(){
   const list=document.getElementById("voice-list");
   list.innerHTML=PL_CAP.map((c,i)=>{
@@ -3028,7 +3129,7 @@ function renderVoice(){
       </span>
     </div>`;
   }).join("");
-  const n=PL_CAP.filter((_,i)=>voiceHas(i)).length;
+  const n=segReady()?PL_CAP.length:PL_CAP.filter((_,i)=>voiceHas(i)).length;
   document.getElementById("voice-total").textContent=PL_CAP.length;
   document.getElementById("voice-count").textContent=lang==="en"
     ?(n+" of "+PL_CAP.length+" recorded"):(n+" de "+PL_CAP.length+" grabadas");
@@ -3074,8 +3175,16 @@ document.getElementById("voice-audios").addEventListener("change",async e=>{
   const files=Array.from(e.target.files).sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:"base"}));
   e.target.value="";
   if(!files.length)return;
-  if(files.length!==PL_CAP.length&&!confirmSkip){
-    toast("⚠ Recibí "+files.length+" audios y el guion tiene "+PL_CAP.length+" frases — se asignarán en orden");
+  if(files.length===1){
+    toast("🎧 Analizando la narración y dividiéndola por frases…");
+    try{
+      const res=await importSingleNarration(files[0]);
+      renderVoice();
+      voiceMode="mine";localStorage.setItem("lumibots_voicemode","mine");
+      plSoundLabel();plRender();
+      toast("✅ Narración de "+res.dur+" s dividida en "+res.segs.length+" frases y sincronizada con el video");
+    }catch(err){toast("⚠ "+((err&&err.message)||"no pude dividir el audio")+" — importa un audio por frase")}
+    return;
   }
   let n=0;
   for(let i=0;i<files.length&&i<PL_CAP.length;i++){
@@ -3088,7 +3197,6 @@ document.getElementById("voice-audios").addEventListener("change",async e=>{
   if(voiceReady()){voiceMode="mine";localStorage.setItem("lumibots_voicemode","mine");plSoundLabel();plRender()}
   toast("🎧 "+n+" audios importados — el video ya está sincronizado con la narración");
 });
-const confirmSkip=true;
 
 document.getElementById("voice-close").addEventListener("click",()=>{
   voiceStopRec();document.getElementById("voice-overlay").classList.remove("on");
@@ -3115,7 +3223,8 @@ document.getElementById("voice-import").addEventListener("change",e=>{
 });
 document.getElementById("voice-clear").addEventListener("click",()=>{
   askConfirm("Borrar narración","Se eliminarán todas las grabaciones de tu voz guardadas en este dispositivo.",()=>{
-    VOICE={};vCache={};VOICE_D={};localStorage.removeItem("lumibots_voice_d");voiceSave();renderVoice();plRender();plSoundLabel();toast("Narración borrada");
+    VOICE={};vCache={};VOICE_D={};VOICE_FULL="";VOICE_SEG=[];fullBuf=null;
+    localStorage.removeItem("lumibots_voice_d");localStorage.removeItem("lumibots_voice_full");localStorage.removeItem("lumibots_voice_seg");voiceSave();renderVoice();plRender();plSoundLabel();toast("Narración borrada");
   });
 });
 
