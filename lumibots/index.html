@@ -157,7 +157,7 @@ h2{font-size:clamp(26px,3.2vw,36px);letter-spacing:-.8px;font-weight:800;margin:
 .cta-band p{color:var(--ink-2);max-width:52ch;margin:0 auto 24px}
 
 /* ── Planes ─────────────────────────────── */
-.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch;padding-bottom:40px}
+.plans-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:stretch;padding-bottom:40px}
 .plan{background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:30px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;position:relative;transition:transform .18s,box-shadow .18s}
 .plan:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
 .plan.destacado{border-color:var(--accent);box-shadow:0 14px 34px rgba(107,127,227,.18)}
@@ -455,28 +455,17 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
     <div><span class="gate-badge">Premium · Acceso con licencia</span></div>
     <h1>Bienvenido a tu estudio de chatbots</h1>
     <p class="sub">Esta plataforma es privada. Entra como propietario para administrar todo, o con la clave de licencia que el propietario te autorizó.</p>
-    <div class="gate-cards">
+    <div class="gate-cards" style="grid-template-columns:1fr;max-width:520px;margin:0 auto;text-align:left">
       <div class="gate-card">
-        <h3>👑 Soy el propietario</h3>
-        <p>Acceso total: todos los bots, el dashboard global y el panel de licencias de clientes.</p>
+        <h3>🔑 Entrar a la plataforma</h3>
+        <p>Escribe tu nombre o tu correo y tu clave de acceso.</p>
         <div class="gate-form">
-          <input id="gate-user" placeholder="Usuario" autocomplete="username" aria-label="Usuario del propietario">
-          <input id="gate-pass" type="password" placeholder="Contraseña" autocomplete="current-password" aria-label="Contraseña del propietario">
-          <button class="btn btn-primary" id="gate-owner-btn">Entrar como propietario</button>
-        </div>
-        <p class="gate-err" id="gate-pin-err">⚠ Usuario o contraseña incorrectos.</p>
-        <div class="gate-hint">🔐 Puedes cambiar tu usuario y contraseña en el panel Admin.</div>
-      </div>
-      <div class="gate-card">
-        <h3>🔑 Tengo una licencia</h3>
-        <p>Escribe tu nombre o tu correo y la clave que el propietario te compartió al autorizar tu compra.</p>
-        <div class="gate-form">
-          <input id="gate-cli-id" placeholder="Tu nombre o correo" autocomplete="username" aria-label="Nombre o correo del cliente">
-          <input id="gate-key" placeholder="Clave · LUMI-XXXX-XXXX" maxlength="18" aria-label="Clave de licencia" style="text-transform:uppercase" autocomplete="off">
-          <button class="btn btn-primary" id="gate-key-btn">Entrar con mi licencia</button>
+          <input id="gate-cli-id" placeholder="Tu nombre o correo" autocomplete="username" aria-label="Nombre o correo">
+          <input id="gate-key" type="password" placeholder="Clave de acceso" maxlength="20" aria-label="Clave de acceso" autocomplete="current-password">
+          <button class="btn btn-primary" id="gate-key-btn">Entrar</button>
         </div>
         <p class="gate-err" id="gate-key-err">⚠ Datos no válidos o licencia inactiva.</p>
-        <div class="gate-hint">🧪 Demo: <code>Laura Méndez</code> + clave <code>LUMI-2026-DEMO</code></div>
+        <div class="gate-hint">🧪 Demo de cliente: <code>Laura Méndez</code> + clave <code>LUMI-2026-DEMO</code></div>
       </div>
     </div>
     <div class="gate-buy">
@@ -676,10 +665,10 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       </div>
       <div class="panel">
         <h3>🔐 Seguridad del propietario</h3>
-        <p class="ps">Cambia el usuario y la contraseña con los que entras a la plataforma.</p>
+        <p class="ps">Cambia el usuario y la clave con los que entras a la plataforma.</p>
         <div class="admin-cfg">
           <div class="f-field"><label>Usuario</label><input id="cfg-user" placeholder="Tu usuario"></div>
-          <div class="f-field"><label>Nueva contraseña <em>(mín. 6 caracteres)</em></label><input id="cfg-pass" type="password" placeholder="••••••••"></div>
+          <div class="f-field"><label>Nueva clave de acceso <em>(mín. 6 caracteres)</em></label><input id="cfg-pass" type="password" placeholder="••••••••"></div>
           <button class="mini-btn solid" id="btn-save-cred" style="height:46px">Guardar</button>
         </div>
       </div>
@@ -745,6 +734,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <div class="f-field"><label>Empresa *</label><input id="buy-empresa" placeholder="Nombre de tu empresa"></div>
         <div class="f-field full"><label>Correo electrónico *</label><input id="buy-email" type="email" placeholder="tu@empresa.com"></div>
       </div>
+      <div id="pay-sec">
       <h4 class="pay-h">Pago con tarjeta</h4>
       <div class="f-grid">
         <div class="f-field full"><label>Número de tarjeta *</label>
@@ -755,6 +745,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <div class="f-field"><label>CVV *</label><input id="buy-cvv" type="password" placeholder="•••" maxlength="4" inputmode="numeric" autocomplete="cc-csc"></div>
       </div>
       <p class="pay-note">🔒 Modo demostración: no se realiza ningún cargo real y el número de tarjeta <b>no se guarda</b> (solo los últimos 4 dígitos, para el comprobante). Al conectar Stripe o Mercado Pago, este mismo formulario procesará cobros reales.</p>
+      </div>
       <p class="f-err" id="buy-err">⚠ Revisa los campos marcados.</p>
       <div class="code-actions">
         <button class="mini-btn" id="buy-close">Cancelar</button>
@@ -763,7 +754,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
     </div>
     <div id="buy-ok" style="display:none;text-align:center;padding:10px 0">
       <div style="font-size:46px;margin-bottom:8px">🎉</div>
-      <h3>¡Pago exitoso — tu licencia está activa!</h3>
+      <h3 id="buy-ok-title">¡Pago exitoso — tu licencia está activa!</h3>
       <p id="buy-ok-msg" style="color:var(--ink-2);font-size:14px;margin:10px 0 16px"></p>
       <div class="lic-key" id="buy-ok-key" style="font-size:17px;padding:11px 18px;display:inline-block"></div>
       <p style="color:var(--ink-2);font-size:13px;margin:16px 0 18px">Guarda esta clave: con ella y tu nombre o correo entras a la plataforma. El comprobante quedó registrado con el propietario.</p>
@@ -797,7 +788,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <div class="f-field"><label>Nombre del cliente *</label><input id="lic-nombre" placeholder="Nombre y apellido"></div>
       <div class="f-field"><label>Empresa</label><input id="lic-empresa" placeholder="Empresa del cliente"></div>
       <div class="f-field"><label>Correo</label><input id="lic-email" type="email" placeholder="cliente@empresa.com"></div>
-      <div class="f-field"><label>Plan</label><select id="lic-plan"><option value="starter">Starter · $499/mes</option><option value="pro" selected>Pro · $1,299/mes</option><option value="empresa">Empresa · $2,999/mes</option></select></div>
+      <div class="f-field"><label>Plan</label><select id="lic-plan"><option value="gratis">Gratis · $0</option><option value="starter">Starter · $399/mes</option><option value="pro" selected>Pro · $999/mes</option><option value="empresa">Empresa · $2,499/mes</option></select></div>
     </div>
     <p class="f-err" id="lic-err">⚠ Escribe al menos el nombre del cliente.</p>
     <div class="code-actions">
@@ -1004,17 +995,19 @@ const WIDGET_COLORS=["#6B7FE3","#7ED9B4","#F6C79A","#A9D3F2","#CDC2F0","#F2B8C6"
 const AVATARES=["🤖","✨","🦷","🍽️","💈","🏠","🛍️","🎓","⚖️","💪","🏝️","🚗","💻","🧰","💰","🛒","🎧","🔧","📣","👥","📈","🚚","🖥️","🗂️"];
 
 const PLANES=[
- {id:"starter",n:"Starter",precio:499,anual:4990,eur:{precio:25,anual:249},pd:"Para un negocio que empieza con su primer asistente.",
+ {id:"gratis",n:"Gratis",precio:0,anual:0,eur:{precio:0,anual:0},pd:"Prueba LumiBots gratis, sin tarjeta.",
+  feats:["1 bot de prueba","Plantillas de giros y áreas incluidas","Hasta 50 pares de conocimiento","Simulador de chat completo","Dashboard esencial","Canal web"]},
+ {id:"starter",n:"Starter",precio:399,anual:3990,eur:{precio:19,anual:190},pd:"Para un negocio que empieza con su primer asistente.",
   feats:["1 bot activo","Giros de negocio y 3 áreas internas","Hasta 200 pares de conocimiento","Dashboard con métricas esenciales","Exportación de registros en CSV","Canal web + WhatsApp"]},
- {id:"pro",n:"Pro",precio:1299,anual:12990,eur:{precio:65,anual:649},destacado:true,pd:"Para empresas que quieren bots en varias áreas.",
+ {id:"pro",n:"Pro",precio:999,anual:9990,eur:{precio:49,anual:490},destacado:true,pd:"Para empresas que quieren bots en varias áreas.",
   feats:["5 bots activos","Los 12 giros y las 10 áreas especialistas","Conocimiento ilimitado con carga masiva","Dashboard completo con embudo y rangos","Los 5 canales conectados","Soporte prioritario del propietario"]},
- {id:"empresa",n:"Empresa",precio:2999,anual:29990,eur:{precio:149,anual:1490},pd:"Para operaciones grandes y agencias.",
+ {id:"empresa",n:"Empresa",precio:2499,anual:24990,eur:{precio:119,anual:1190},pd:"Para operaciones grandes y agencias.",
   feats:["Bots ilimitados","Todo lo del plan Pro","Volúmenes altos de captura y almacenamiento","Respaldo completo de datos (JSON)","Marca blanca del widget","Acompañamiento de implementación"]}
 ];
 
 /* ════════ Estado y persistencia ════════ */
 const LS_KEY="lumibots_v2";
-const DEFAULT_CRED={usuario:"Andrés Acosta",pass:"Airbus380@"};
+const DEFAULT_CRED={usuario:"Andrés Acosta",ownerKey:"222-1765-406"};
 let state={bots:[],leads:[],licenses:[],config:{...DEFAULT_CRED},session:null};
 function save(){
   try{localStorage.setItem(LS_KEY,JSON.stringify(state))}
@@ -1051,7 +1044,7 @@ function makeMetrics(id){
 
 function seedLicenses(){
   state.licenses=[
-   {id:"lic-demo",key:"LUMI-2026-DEMO",cliente:"Laura Méndez",empresa:"Constructora Delta",email:"laura@constructoradelta.mx",plan:"pro",estado:"Activa",creado:"2026-07-15",fact:{periodo:"anual",monto:12990,moneda:"MXN",last4:"4242",marca:"VISA",fecha:"2026-07-15"}},
+   {id:"lic-demo",key:"LUMI-2026-DEMO",cliente:"Laura Méndez",empresa:"Constructora Delta",email:"laura@constructoradelta.mx",plan:"pro",estado:"Activa",creado:"2026-07-15",fact:{periodo:"anual",monto:9990,moneda:"MXN",last4:"4242",marca:"VISA",fecha:"2026-07-15"}},
    {id:"lic-p1",key:null,cliente:"Roberto Sandoval",empresa:"Farmacias Vida",email:"roberto@farmaciasvida.mx",plan:"starter",estado:"Pendiente",creado:"2026-07-29"}
   ];
 }
@@ -1114,17 +1107,13 @@ function login(role,licId){
   state.session={role,licId:licId||null};save();applySession();go("home");
   toast(role==="owner"?"👑 Bienvenido, propietario":"🔑 Bienvenido — licencia activa");
 }
-document.getElementById("gate-owner-btn").addEventListener("click",()=>{
-  const u=document.getElementById("gate-user").value.trim();
-  const p=document.getElementById("gate-pass").value;
-  const err=document.getElementById("gate-pin-err");
-  if(norm(u)===norm(state.config.usuario)&&p===state.config.pass){err.classList.remove("show");login("owner")}
-  else err.classList.add("show");
-});
-["gate-user","gate-pass"].forEach(id=>document.getElementById(id).addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("gate-owner-btn").click()}));
 document.getElementById("gate-key-btn").addEventListener("click",()=>{
   const ident=norm(document.getElementById("gate-cli-id").value.trim());
   const key=document.getElementById("gate-key").value.trim().toUpperCase();
+  /* acceso del propietario: nombre + clave secreta (nunca se muestra en pantalla) */
+  if(ident&&ident===norm(state.config.usuario)&&key===String(state.config.ownerKey||"").toUpperCase()){
+    document.getElementById("gate-key-err").classList.remove("show");login("owner");return;
+  }
   const l=state.licenses.find(x=>x.key===key);
   const err=document.getElementById("gate-key-err");
   if(!ident){err.textContent="⚠ Escribe tu nombre o tu correo.";err.classList.add("show");return}
@@ -1715,25 +1704,31 @@ function renderPlanes(){
     <div class="plan ${p.destacado?"destacado":""}">
       ${p.destacado?'<span class="flag">Más elegido</span>':""}
       <h3>${p.n}</h3><p class="pd">${p.pd}</p>
-      <div class="price">${money(planPrecio(p))}<small> ${currency}/${billPeriod==="anual"?"año":"mes"}</small></div>
+      ${p.id==="gratis"
+        ?`<div class="price">${currency==="EUR"?"€0":"$0"}<small> para siempre</small></div>
+           <div class="price-eq" style="color:var(--ink-3)">sin tarjeta · actualiza cuando quieras</div>`
+        :`<div class="price">${money(planPrecio(p))}<small> ${currency}/${billPeriod==="anual"?"año":"mes"}</small></div>
       ${billPeriod==="anual"?`<div class="price-eq">equivale a ${money(Math.round(curOf(p).anual/12))}/mes · ahorras ${money(curOf(p).precio*12-curOf(p).anual)}</div>`:""}
-      <div class="price-eq" style="color:var(--ink-3)">≈ ${currency==="MXN"?money(billPeriod==="anual"?p.eur.anual:p.eur.precio,"EUR")+" EUR":money(billPeriod==="anual"?p.anual:p.precio,"MXN")+" MXN"}/${billPeriod==="anual"?"año":"mes"}</div>
+      <div class="price-eq" style="color:var(--ink-3)">≈ ${currency==="MXN"?money(billPeriod==="anual"?p.eur.anual:p.eur.precio,"EUR")+" EUR":money(billPeriod==="anual"?p.anual:p.precio,"MXN")+" MXN"}/${billPeriod==="anual"?"año":"mes"}</div>`}
       <ul>${p.feats.map(f=>`<li>${f}</li>`).join("")}</ul>
-      <button class="btn ${p.destacado?"btn-primary":"btn-ghost"}" data-buy="${p.id}">💳 Contratar ${p.n}</button>
+      <button class="btn ${p.destacado?"btn-primary":"btn-ghost"}" data-buy="${p.id}">${p.id==="gratis"?"🎁 Empezar gratis":"💳 Contratar "+p.n}</button>
     </div>`).join("");
   document.querySelectorAll("[data-buy]").forEach(b=>b.addEventListener("click",()=>{
     buyPlan=b.dataset.buy;
     const p=PLANES.find(x=>x.id===buyPlan);
-    document.getElementById("buy-title").textContent="💳 Contratar plan "+p.n;
-    document.getElementById("buy-resumen").innerHTML=
-      `<span>Plan <b>${p.n}</b> · facturación ${billPeriod}${billPeriod==="anual"?" (2 meses gratis)":""}</span><b class="amt">${money(planPrecio(p))} ${currency}</b>`;
+    const gratis=buyPlan==="gratis";
+    document.getElementById("buy-title").textContent=gratis?"🎁 Crear cuenta gratis":"💳 Contratar plan "+p.n;
+    document.getElementById("buy-resumen").innerHTML=gratis
+      ?`<span>Plan <b>Gratis</b> · acceso básico de prueba</span><b class="amt">$0</b>`
+      :`<span>Plan <b>${p.n}</b> · facturación ${billPeriod}${billPeriod==="anual"?" (2 meses gratis)":""}</span><b class="amt">${money(planPrecio(p))} ${currency}</b>`;
     ["buy-nombre","buy-empresa","buy-email","buy-card","buy-titular","buy-exp","buy-cvv"].forEach(id=>document.getElementById(id).value="");
     document.getElementById("buy-brand").textContent="";
+    document.getElementById("pay-sec").style.display=gratis?"none":"";
     document.getElementById("buy-err").classList.remove("show");
     document.getElementById("buy-form").style.display="";
     document.getElementById("buy-ok").style.display="none";
     const btn=document.getElementById("buy-send");
-    btn.disabled=false;btn.textContent="Pagar "+money(planPrecio(p))+" "+currency;
+    btn.disabled=false;btn.textContent=gratis?"Crear mi cuenta gratis":"Pagar "+money(planPrecio(p))+" "+currency;
     document.getElementById("buy-overlay").classList.add("on");
   }));
 }
@@ -1761,30 +1756,35 @@ document.getElementById("buy-send").addEventListener("click",()=>{
         tit=document.getElementById("buy-titular").value.trim(),
         exp=document.getElementById("buy-exp").value.trim(),
         cvv=document.getElementById("buy-cvv").value.trim();
+  const gratis=buyPlan==="gratis";
   if(!n||!e)return bad("Escribe tu nombre y tu empresa.");
   if(!m||!m.includes("@"))return bad("Escribe un correo válido.");
-  if(card.length<15||!luhn(card))return bad("El número de tarjeta no es válido.");
-  if(!tit)return bad("Escribe el nombre del titular de la tarjeta.");
-  const em=exp.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
-  if(!em)return bad("El vencimiento debe tener formato MM/AA.");
-  const now=new Date(),yy=2000+ +em[2],mm=+em[1];
-  if(yy<now.getFullYear()||(yy===now.getFullYear()&&mm<now.getMonth()+1))return bad("La tarjeta está vencida.");
-  if(cvv.length<3)return bad("El CVV debe tener 3 o 4 dígitos.");
+  if(!gratis){
+    if(card.length<15||!luhn(card))return bad("El número de tarjeta no es válido.");
+    if(!tit)return bad("Escribe el nombre del titular de la tarjeta.");
+    const em=exp.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+    if(!em)return bad("El vencimiento debe tener formato MM/AA.");
+    const now=new Date(),yy=2000+ +em[2],mm=+em[1];
+    if(yy<now.getFullYear()||(yy===now.getFullYear()&&mm<now.getMonth()+1))return bad("La tarjeta está vencida.");
+    if(cvv.length<3)return bad("El CVV debe tener 3 o 4 dígitos.");
+  }
   err.classList.remove("show");
   const p=PLANES.find(x=>x.id===buyPlan);
   const btn=document.getElementById("buy-send");
-  btn.disabled=true;btn.textContent="Procesando pago…";
+  btn.disabled=true;btn.textContent=gratis?"Creando tu cuenta…":"Procesando pago…";
   setTimeout(()=>{
     const l={id:"lic"+Math.random().toString(36).slice(2,8),key:makeKey(),cliente:n,empresa:e,email:m,
       plan:buyPlan,estado:"Activa",creado:hoy(),
-      fact:{periodo:billPeriod,monto:planPrecio(p),moneda:currency,last4:card.slice(-4),marca:brandOf(card),fecha:hoy()}};
+      fact:gratis?{periodo:"gratis",monto:0,moneda:currency,last4:"",marca:"—",fecha:hoy()}
+                 :{periodo:billPeriod,monto:planPrecio(p),moneda:currency,last4:card.slice(-4),marca:brandOf(card),fecha:hoy()}};
     state.licenses.unshift(l);save();lastKey=l.key;
     document.getElementById("buy-form").style.display="none";
     document.getElementById("buy-ok").style.display="";
-    document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+" · tarjeta •••• "+card.slice(-4);
+    document.getElementById("buy-ok-title").textContent=gratis?"¡Tu cuenta gratis está activa!":"¡Pago exitoso — tu licencia está activa!";
+    document.getElementById("buy-ok-msg").textContent=gratis?"Plan Gratis · acceso básico activado":"Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+" · tarjeta •••• "+card.slice(-4);
     document.getElementById("buy-ok-key").textContent=l.key;
     if(esOwner())renderAdmin();
-  },1700);
+  },gratis?900:1700);
 });
 document.getElementById("buy-ok-copy").addEventListener("click",()=>{
   navigator.clipboard?.writeText(lastKey).then(()=>toast("📋 Clave copiada")).catch(()=>toast("Copia la clave manualmente"));
@@ -2022,7 +2022,7 @@ function renderAdmin(){
     else acts=`<button class="lic-btn ok" data-lact="${l.id}">▶ Reactivar</button><button class="lic-btn bad" data-ldel="${l.id}">✕ Revocar</button>`;
     return `<tr>
       <td><b>${esc(l.cliente)}</b><br><span style="font-size:12.5px;color:var(--ink-2)">${esc(l.empresa)} · ${esc(l.email)}</span></td>
-      <td>${plan?plan.n:l.plan}<br><span style="font-size:12px;color:var(--ink-2)">${l.fact?((l.fact.periodo==="anual"?"Anual · ":"Mensual · ")+money(l.fact.monto,l.fact.moneda||"MXN")+" "+(l.fact.moneda||"MXN")+(l.fact.last4?" · •••• "+l.fact.last4:"")):"$"+(plan?plan.precio:0).toLocaleString("es-MX")+"/mes"}</span></td>
+      <td>${plan?plan.n:l.plan}<br><span style="font-size:12px;color:var(--ink-2)">${l.fact?(l.fact.periodo==="gratis"?"Gratis · $0":((l.fact.periodo==="anual"?"Anual · ":"Mensual · ")+money(l.fact.monto,l.fact.moneda||"MXN")+" "+(l.fact.moneda||"MXN")+(l.fact.last4?" · •••• "+l.fact.last4:""))):"$"+(plan?plan.precio:0).toLocaleString("es-MX")+"/mes"}</span></td>
       <td>${l.key?`<span class="lic-key">${l.key}</span>`:`<span style="color:var(--ink-3);font-size:12.5px">— se genera al autorizar</span>`}</td>
       <td style="white-space:nowrap;font-variant-numeric:tabular-nums">${l.creado}</td>
       <td><span class="st-pill st-${l.estado.toLowerCase()}">${l.estado}</span></td>
@@ -2083,8 +2083,8 @@ document.getElementById("btn-save-cred").addEventListener("click",()=>{
   const u=document.getElementById("cfg-user").value.trim();
   const p=document.getElementById("cfg-pass").value;
   if(u)state.config.usuario=u;
-  if(p){if(p.length<6){toast("La contraseña debe tener al menos 6 caracteres");return}state.config.pass=p}
-  if(!u&&!p){toast("Escribe un usuario nuevo, una contraseña nueva, o ambos");return}
+  if(p){if(p.length<6){toast("La clave debe tener al menos 6 caracteres");return}state.config.ownerKey=p}
+  if(!u&&!p){toast("Escribe un usuario nuevo, una clave nueva, o ambos");return}
   save();document.getElementById("cfg-pass").value="";
   toast("🔐 Credenciales actualizadas — úsalas en tu próximo acceso");
 });
@@ -2228,6 +2228,18 @@ const I18N_TEXT={
 "Bots ilimitados":"Unlimited bots","Todo lo del plan Pro":"Everything in Pro","Volúmenes altos de captura y almacenamiento":"High-volume capture and storage","Respaldo completo de datos (JSON)":"Full data backup (JSON)","Marca blanca del widget":"White-label widget","Acompañamiento de implementación":"Implementation support",
 "💳 Contratar Starter":"💳 Get Starter","💳 Contratar Pro":"💳 Get Pro","💳 Contratar Empresa":"💳 Get Empresa",
 "MXN/año":"MXN/yr","MXN/mes":"MXN/mo","EUR/año":"EUR/yr","EUR/mes":"EUR/mo",
+/* plan gratis y puerta única */
+"Prueba LumiBots gratis, sin tarjeta.":"Try LumiBots free, no card needed.",
+"Gratis":"Free","para siempre":"forever","sin tarjeta · actualiza cuando quieras":"no card · upgrade anytime",
+"1 bot de prueba":"1 trial bot","Plantillas de giros y áreas incluidas":"Industry and area templates included","Hasta 50 pares de conocimiento":"Up to 50 knowledge pairs","Simulador de chat completo":"Full chat simulator","Dashboard esencial":"Essential dashboard","Canal web":"Web channel",
+"🎁 Empezar gratis":"🎁 Start free","🎁 Crear cuenta gratis":"🎁 Create free account","Crear mi cuenta gratis":"Create my free account","Creando tu cuenta…":"Creating your account…",
+"¡Tu cuenta gratis está activa!":"Your free account is active!","Plan Gratis · acceso básico activado":"Free plan · basic access enabled",
+" · acceso básico de prueba":" · basic trial access","Gratis · $0":"Free · $0",
+"🔑 Entrar a la plataforma":"🔑 Sign in to the platform",
+"Escribe tu nombre o tu correo y tu clave de acceso.":"Enter your name or email and your access key.",
+"Entrar":"Sign in","🧪 Demo de cliente:":"🧪 Client demo:",
+"Cambia el usuario y la clave con los que entras a la plataforma.":"Change the username and key you sign in with.",
+"Nueva clave de acceso":"New access key",
 /* checkout */
 "Tus datos":"Your details","Pago con tarjeta":"Card payment",
 "Tu nombre *":"Your name *","Empresa *":"Company *","Correo electrónico *":"Email *",
@@ -2334,7 +2346,7 @@ const I18N_TEXT={
 "— chatbots especialistas para todas las áreas y todos los giros · Hecho con cariño y colores suaves ✦":"— specialist chatbots for every department and every industry · Made with care and soft colors ✦"
 };
 const I18N_ATTR={
-"Usuario":"Username","Contraseña":"Password","Tu nombre o correo":"Your name or email","Clave · LUMI-XXXX-XXXX":"Key · LUMI-XXXX-XXXX",
+"Usuario":"Username","Contraseña":"Password","Tu nombre o correo":"Your name or email","Clave de acceso":"Access key",
 "Escribe un mensaje…":"Type a message…","Enviar":"Send","Cerrar chat":"Close chat","Cerrar sesión":"Sign out","Cambiar idioma / Switch language":"Cambiar idioma / Switch language",
 "Nombre y apellido":"First and last name","Nombre de tu empresa":"Your company name","tu@empresa.com":"you@company.com",
 "Como aparece en la tarjeta":"As shown on the card","MM/AA":"MM/YY",

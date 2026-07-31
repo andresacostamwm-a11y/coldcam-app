@@ -45,9 +45,14 @@ claro frente al servicio hecho a mano mexicano:
 
 | Plan | Mensual MXN | Anual MXN | Mensual EUR | Anual EUR | Ancla competitiva |
 |---|---|---|---|---|---|
-| **Starter** | **$499** | **$4,990** | **€25** | **€249** | = Tidio de entrada; mitad de un ManyChat completo |
-| **Pro** ⭐ | **$1,299** | **$12,990** | **€65** | **€649** | = Chatfuel; 1/3 del servicio mexicano hecho a mano |
-| **Empresa** | **$2,999** | **$29,990** | **€149** | **€1,490** | 33% más barato que Kosmo/Aurora, con bots ilimitados |
+| **Gratis** | **$0** | — | **€0** | — | puerta de entrada: prueba sin tarjeta, convierte a Starter/Pro |
+| **Starter** | **$399** | **$3,990** | **€19** | **€190** | debajo de Tidio de entrada; compra sin pensarlo |
+| **Pro** ⭐ | **$999** | **$9,990** | **€49** | **€490** | debajo de Chatfuel; 1/4 del servicio mexicano hecho a mano |
+| **Empresa** | **$2,499** | **$24,990** | **€119** | **€1,190** | ~40% más barato que Kosmo/Aurora, con bots ilimitados |
+
+*Modelo freemium: el plan Gratis alimenta el embudo; el precio agresivo de
+Starter y Pro acelera el volumen. Cuando el 40%+ compre sin negociar, sube
+los precios.*
 
 *Anual = 10 meses (2 gratis). Los precios en EUR son precios de lista propios
 (no conversión al día): psicológicamente limpios para clientes europeos y con

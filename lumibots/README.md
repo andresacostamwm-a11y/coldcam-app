@@ -15,13 +15,16 @@ Abre `index.html` en cualquier navegador moderno. No necesita servidor ni
 dependencias: todo vive en un solo archivo y los datos se guardan en el
 `localStorage` del navegador.
 
-**Accesos:**
+**Accesos (una sola ventana):**
 
-- 👑 Propietario: usuario y contraseña propios (configurables en el panel
-  Admin, donde también se cambian).
-- 🔑 Cliente: su nombre o correo + la clave de licencia que el propietario
-  autorizó (demo: `Laura Méndez` + `LUMI-2026-DEMO`). La identidad debe
-  coincidir con la registrada en la licencia.
+- 👑 Propietario: entra por la misma ventana de licencias con su usuario y su
+  clave secreta de propietario (configurables en el panel Admin; la clave
+  nunca se muestra en pantalla).
+- 🔑 Cliente: su nombre o correo + la clave de su licencia (demo:
+  `Laura Méndez` + `LUMI-2026-DEMO`). La identidad debe coincidir con la
+  registrada en la licencia.
+- 🎁 Plan Gratis: cualquier visitante puede crear una cuenta básica de prueba
+  sin tarjeta desde la página de planes.
 
 ## Qué incluye
 
@@ -58,7 +61,7 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
 ### Licencias (modo negocio)
 - **Puerta de acceso privada**: propietario con usuario y contraseña;
   clientes con su nombre o correo más su clave de licencia.
-- **Página de planes** (Starter/Pro/Empresa): el cliente compra, la solicitud
+- **Página de planes** (Gratis/Starter/Pro/Empresa): el cliente compra, la solicitud
   llega al propietario, este la **autoriza** y se genera la clave
   `LUMI-XXXX-XXXX` para compartir.
 - **Panel del propietario**: licencias activas/pendientes/suspendidas, ingreso
