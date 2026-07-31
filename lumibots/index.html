@@ -10,10 +10,9 @@
 <meta property="og:title" content="LumiBots Studio Premium — Chatbots para todas las áreas de tu empresa">
 <meta property="og:description" content="Crea asistentes virtuales especialistas para atención al cliente, finanzas, compras, mantenimiento, marketing y más. Dashboard detallado, información en volumen y licencias para tus clientes.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://andresacostamwm-a11y.github.io/coldcam-app/">
-<meta property="og:image" content="https://andresacostamwm-a11y.github.io/coldcam-app/og-image.jpg">
+<meta property="og:image" content="og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://andresacostamwm-a11y.github.io/coldcam-app/og-image.jpg">
+<meta name="twitter:image" content="og-image.jpg">
 <style>
 :root{
   --paper:#FBFAF6;
@@ -535,7 +534,12 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <div class="gate-hint">🧪 Demo de cliente: <code>Laura Méndez</code> + clave <code>LUMI-2026-DEMO</code></div>
       </div>
     </div>
-    <div class="gate-buy">
+    <div style="margin:38px 0 8px;text-align:center">
+      <h2 style="color:#fff;font-size:clamp(20px,3vw,28px);letter-spacing:-.6px">🎬 Mira cómo funciona en 1 minuto</h2>
+      <p style="color:rgba(224,236,255,.85);font-size:14px;margin-top:6px">Con narración por voz — actívala o silénciala con el botón 🔊</p>
+    </div>
+    <div id="gate-player-slot" style="text-align:left"></div>
+    <div class="gate-buy" style="margin-top:30px">
       <span>¿Aún no tienes acceso? Compra un plan y el propietario autorizará tu licencia.</span>
       <button class="btn btn-ghost" id="gate-buy-btn">💳 Ver planes y comprar</button>
     </div>
@@ -595,6 +599,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <h2>Mira cómo funciona en 1 minuto</h2>
       <p>Un recorrido guiado e interactivo: reproduce, pausa, adelanta o salta directo al capítulo que te interese.</p>
     </div>
+    <div id="home-player-slot">
     <div class="player">
       <div class="pl-screen" id="pl-screen">
         <div class="scene on" id="sc-0">
@@ -650,10 +655,12 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       </div>
       <div class="pl-bar">
         <button class="pl-btn" id="pl-play" aria-label="Reproducir o pausar">▶</button>
+        <button class="pl-btn" id="pl-sound" aria-label="Activar o silenciar narración" title="Narración por voz" style="background:#fff;color:var(--accent-deep);border:1.5px solid var(--line)">🔊</button>
         <div class="pl-track" id="pl-track"><div class="pl-fill" id="pl-fill"></div></div>
         <span class="pl-time" id="pl-time">0:00 / 1:12</span>
       </div>
       <div class="pl-chaps" id="pl-chaps"></div>
+    </div>
     </div>
   </section>
 
@@ -1222,10 +1229,18 @@ function esOwner(){return state.session&&state.session.role==="owner"}
 function miLic(){return state.session&&state.session.role==="cliente"?state.licenses.find(l=>l.id===state.session.licId):null}
 function visibleBots(){return esOwner()?state.bots:state.bots.filter(b=>b.owner===(state.session?state.session.licId:"—"))}
 
+function movePlayer(toGate){
+  const pl=document.querySelector(".player");
+  const g=document.getElementById("gate-player-slot"),h=document.getElementById("home-player-slot");
+  if(!pl||!g||!h)return;
+  const target=toGate?g:h;
+  if(pl.parentNode!==target)target.appendChild(pl);
+}
 function applySession(){
   const gate=document.getElementById("gate");
   const chip=document.getElementById("session-chip");
   const admin=document.getElementById("tab-admin");
+  movePlayer(!state.session);
   if(!state.session){gate.classList.add("on");return}
   gate.classList.remove("on");
   if(esOwner()){
@@ -2307,7 +2322,7 @@ const PL_CAP=[
  {t:58,es:"Cada cliente trabaja en su propio espacio; tú lo controlas todo como propietario.",en:"Each client works in their own workspace; you control everything as the owner."},
  {t:64,es:"Crea tu primer chatbot hoy — gratis y en unos 5 minutos.",en:"Create your first chatbot today — free and in about 5 minutes."}
 ];
-const PL={t:0,playing:false,cur:0,last:0,ended:false};
+const PL={t:0,playing:false,cur:0,last:0,ended:false,capIdx:-1};
 function plFmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
 function plSceneIdx(t){let i=0;for(let k=0;k<PL_CH.length;k++)if(t>=PL_CH[k].t)i=k;return i}
 function plActivate(i,force){
@@ -2335,12 +2350,29 @@ function plCounts(){
     setTimeout(()=>{b.style.height=b.dataset.h+"%"},250+k*160);
   });
 }
-function plCaption(){
-  let cap=PL_CAP[0];
-  for(const c of PL_CAP)if(PL.t>=c.t)cap=c;
+let plSound=true;
+function plSpeak(txt){
+  if(!plSound||!("speechSynthesis" in window))return;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(txt);
+    u.lang=lang==="en"?"en-US":"es-MX";
+    const vs=speechSynthesis.getVoices();
+    const pref=lang==="en"?["en-US","en-GB","en"]:["es-MX","es-419","es-US","es-ES","es"];
+    for(const p of pref){const v=vs.find(x=>x.lang.replace("_","-").startsWith(p));if(v){u.voice=v;break}}
+    u.rate=1.03;u.pitch=1;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function plCaption(force){
+  let idx=0;
+  for(let i=0;i<PL_CAP.length;i++)if(PL.t>=PL_CAP[i].t)idx=i;
+  const cap=PL_CAP[idx];
   const el=document.getElementById("pl-caption-txt");
   const txt=lang==="en"?cap.en:cap.es;
   if(el.textContent!==txt)el.textContent=txt;
+  if(PL.playing&&(idx!==PL.capIdx||force)){PL.capIdx=idx;plSpeak(txt)}
+  else if(idx!==PL.capIdx)PL.capIdx=idx;
 }
 function plRender(){
   document.getElementById("pl-fill").style.width=(PL.t/PL_DUR*100)+"%";
@@ -2362,11 +2394,13 @@ function plPlay(){
   PL.playing=true;PL.last=performance.now();
   document.getElementById("pl-play").textContent="⏸";
   document.getElementById("pl-bigplay").classList.add("hide");
+  plCaption(true);
   requestAnimationFrame(plTick);
 }
 function plPause(){
   PL.playing=false;
   document.getElementById("pl-play").textContent="▶";
+  if("speechSynthesis" in window)try{speechSynthesis.cancel()}catch(e){}
 }
 function plSeek(t){
   PL.t=Math.max(0,Math.min(PL_DUR,t));PL.ended=false;
@@ -2388,6 +2422,12 @@ function plInit(){
     plSeek((e.clientX-r.left)/r.width*PL_DUR);
   });
   document.getElementById("pl-play").addEventListener("click",()=>PL.playing?plPause():plPlay());
+  document.getElementById("pl-sound").addEventListener("click",()=>{
+    plSound=!plSound;
+    document.getElementById("pl-sound").textContent=plSound?"🔊":"🔇";
+    if(!plSound&&"speechSynthesis" in window)try{speechSynthesis.cancel()}catch(e){}
+    else if(plSound&&PL.playing)plCaption(true);
+  });
   document.getElementById("pl-bigplay").addEventListener("click",plPlay);
   document.getElementById("pl-screen").addEventListener("click",e=>{
     if(e.target.closest(".pl-bigplay")||e.target.closest("[data-go]"))return;
@@ -2436,6 +2476,8 @@ const I18N_TEXT={
 "● En línea — responde al instante":"● Online — instant replies",
 /* video demo */
 "Video demo":"Video demo","Mira cómo funciona en 1 minuto":"See how it works in 1 minute",
+"🎬 Mira cómo funciona en 1 minuto":"🎬 See how it works in 1 minute",
+"Con narración por voz — actívala o silénciala con el botón 🔊":"With voice narration — toggle it with the 🔊 button",
 "Un recorrido guiado e interactivo: reproduce, pausa, adelanta o salta directo al capítulo que te interese.":"A guided, interactive tour: play, pause, scrub or jump straight to the chapter you care about.",
 "Chatbots que atienden, venden y organizan tu empresa — 24/7":"Chatbots that serve, sell and organize your company — 24/7",
 "🪄 Asistente de creación guiada":"🪄 Guided creation wizard",
@@ -2624,7 +2666,7 @@ const I18N_ATTR={
 "Ej. Clínica Dental Sonría":"E.g. Sunrise Dental Clinic","miempresa.com":"mycompany.com","Lun a Vie 9:00–18:00":"Mon–Fri 9:00–18:00","Ej. Clínica dental familiar":"E.g. Family dental clinic","Ej. Luna, Max, Sol…":"E.g. Luna, Max, Sol…",
 "Pregunta":"Question","Respuesta del bot":"Bot answer","Buscar en el conocimiento…":"Search the knowledge…",
 "Tu usuario":"Your username","••••••••":"••••••••","Empresa del cliente":"Client company","cliente@empresa.com":"client@company.com",
-"Clic para cambiar el estado":"Click to change status","Quitar":"Remove"
+"Clic para cambiar el estado":"Click to change status","Quitar":"Remove","Narración por voz":"Voice narration"
 };
 const I18N_RULES=[
  [/^Rendimiento en los últimos (\d+) días\.$/,m=>`Performance over the last ${m[1]} days.`],
