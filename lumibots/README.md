@@ -142,9 +142,21 @@ sesión anterior.
 ### Licencias (modo negocio)
 - **Puerta de acceso privada**: propietario con usuario y contraseña;
   clientes con su nombre o correo más su clave de licencia.
-- **Página de planes** (Gratis/Starter/Pro/Empresa): el cliente compra, la solicitud
-  llega al propietario, este la **autoriza** y se genera la clave
-  `LUMI-XXXX-XXXX` para compartir.
+- **Página de planes** (Gratis/Starter/Pro/Empresa) con **cobro real por
+  Stripe**. La app **no pide ni guarda datos de tarjeta**: el cliente deja
+  nombre, empresa y correo, y se le envía a la pasarela de Stripe, donde paga.
+  El dinero entra en la cuenta de Stripe del propietario y de ahí se deposita
+  en su banco.
+  - Los enlaces de pago se configuran en **Admin → Cobro con Stripe**: uno por
+    plan y periodo (Starter/Pro/Empresa × mensual/anual), con enlace opcional
+    aparte en euros; si falta el de euros se usa el de pesos.
+  - Cada compra crea una licencia **Pendiente** con una referencia `LB…` que
+    viaja a Stripe como `client_reference_id`, y el correo del cliente va
+    precargado en la pasarela. Al confirmarse el pago, el propietario la
+    **autoriza** desde Admin y se genera la clave `LUMI-XXXX-XXXX`.
+  - **Sin enlaces configurados** la app no simula ningún cobro: registra la
+    solicitud y avisa al cliente de que el propietario le contactará.
+- El plan Gratis se activa al instante, sin pasar por Stripe.
 - **Panel del propietario**: licencias activas/pendientes/suspendidas, ingreso
   mensual, suspender/reactivar/revocar accesos, licencias manuales y cambio
   de usuario/contraseña del propietario.

@@ -614,6 +614,18 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
 .gate-card{color:var(--ink)}
 .gate-buy{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.24);color:rgba(228,238,255,.92);backdrop-filter:blur(8px);box-shadow:0 14px 40px rgba(4,16,45,.35)}
 .cta-band{background:linear-gradient(125deg,#0A1E4E 0%,#12377F 48%,#1E63C8 100%);border:1px solid rgba(255,255,255,.14);color:#fff;box-shadow:0 20px 50px rgba(10,30,78,.35)}
+.stripe-box{display:flex;gap:12px;align-items:flex-start;background:var(--mint-soft);
+  border:1.5px solid var(--mint);border-radius:14px;padding:13px 15px;margin-bottom:4px}
+.stripe-ico{font-size:22px;line-height:1.2}
+.stripe-box b{font-size:14px;color:var(--ink)}
+.stripe-box p{font-size:12.8px;color:var(--ink-2);line-height:1.5;margin-top:3px}
+.pay-grid{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px 10px;align-items:center}
+.pay-grid label{font-size:12.5px;font-weight:800;color:var(--ink-2)}
+.pay-grid input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;
+  font-family:inherit;font-size:12.5px;background:#fff;color:var(--ink)}
+.pay-grid input:focus{outline:none;border-color:var(--accent)}
+.pay-grid .hd{font-size:11.5px;font-weight:900;color:var(--ink-3);text-transform:uppercase;letter-spacing:.4px}
+@media (max-width:560px){.pay-grid{grid-template-columns:1fr}.pay-grid .hd{display:none}}
 /* generador de narración con ElevenLabs */
 .xi-box{border:1.5px solid var(--accent);background:var(--accent-soft);border-radius:16px;padding:14px 16px;margin-bottom:16px}
 .xi-box h4{font-size:15px;letter-spacing:-.2px;margin-bottom:5px;color:var(--accent-deep)}
@@ -1026,8 +1038,19 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <p class="ps">Cambia el usuario y la clave con los que entras a la plataforma.</p>
         <div class="admin-cfg">
           <div class="f-field"><label>Usuario</label><input id="cfg-user" placeholder="Tu usuario"></div>
-          <div class="f-field"><label>Nueva clave de acceso <em>(mín. 6 caracteres)</em></label><input id="cfg-pass" type="password" placeholder="••••••••"></div>
+          <div class="f-field"><label>Nueva clave de acceso <em>(mín. 4 caracteres)</em></label><input id="cfg-pass" type="password" placeholder="••••••••"></div>
           <button class="mini-btn solid" id="btn-save-cred" style="height:46px">Guardar</button>
+        </div>
+      </div>
+
+      <!-- cobro con Stripe -->
+      <div class="admin-card" style="margin-top:18px">
+        <h3>💳 Cobro con Stripe</h3>
+        <p class="hint">Crea un <b>enlace de pago</b> por plan en tu panel de Stripe (Productos → Enlaces de pago), con cobro <b>recurrente</b> mensual o anual, y pega aquí cada dirección. Mientras estén vacíos, el cliente deja su solicitud y tú le cobras por fuera. La app nunca ve las tarjetas: el pago ocurre en Stripe y el dinero se deposita en tu cuenta bancaria.</p>
+        <div class="pay-grid" id="stripe-grid"></div>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button class="mini-btn solid" id="btn-save-stripe">Guardar enlaces</button>
+          <span class="hint" id="stripe-estado" style="align-self:center"></span>
         </div>
       </div>
     </div>
@@ -1093,16 +1116,15 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <div class="f-field full"><label>Correo electrónico *</label><input id="buy-email" type="email" placeholder="tu@empresa.com"></div>
       </div>
       <div id="pay-sec">
-      <h4 class="pay-h">Pago con tarjeta</h4>
-      <div class="f-grid">
-        <div class="f-field full"><label>Número de tarjeta *</label>
-          <div class="card-row"><input id="buy-card" inputmode="numeric" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number"><span class="card-brand" id="buy-brand"></span></div>
+      <h4 class="pay-h">Pago seguro</h4>
+      <div class="stripe-box" id="stripe-box">
+        <span class="stripe-ico">🔒</span>
+        <div>
+          <b>Pagas en la pasarela segura de Stripe</b>
+          <p>Al pulsar el botón te llevamos a la pantalla de pago de Stripe, donde introduces tu tarjeta. <b>Tus datos de tarjeta nunca pasan por esta página.</b> Cuando el pago se confirme recibirás tu clave de acceso en el correo que escribiste.</p>
         </div>
-        <div class="f-field full"><label>Titular de la tarjeta *</label><input id="buy-titular" placeholder="Como aparece en la tarjeta" autocomplete="cc-name"></div>
-        <div class="f-field"><label>Vencimiento (MM/AA) *</label><input id="buy-exp" placeholder="MM/AA" maxlength="5" inputmode="numeric" autocomplete="cc-exp"></div>
-        <div class="f-field"><label>CVV *</label><input id="buy-cvv" type="password" placeholder="•••" maxlength="4" inputmode="numeric" autocomplete="cc-csc"></div>
       </div>
-      <p class="pay-note">🔒 Modo demostración: no se realiza ningún cargo real y el número de tarjeta <b>no se guarda</b> (solo los últimos 4 dígitos, para el comprobante). Al conectar Stripe o Mercado Pago, este mismo formulario procesará cobros reales.</p>
+      <p class="pay-note" id="stripe-falta" style="display:none">⚠ El cobro con tarjeta todavía no está disponible. Deja tus datos y el propietario se pondrá en contacto contigo para completar la compra.</p>
       </div>
       <p class="f-err" id="buy-err">⚠ Revisa los campos marcados.</p>
       <div class="code-actions">
@@ -1651,7 +1673,7 @@ function go(v){
   if(v==="bots")renderBots();
   if(v==="dash")renderDash();
   if(v==="planes")renderPlanes();
-  if(v==="admin")renderAdmin();
+  if(v==="admin"){renderAdmin();if(typeof renderStripe==="function")renderStripe()}
 }
 document.addEventListener("click",e=>{
   const g=e.target.closest("[data-go]");
@@ -2286,71 +2308,88 @@ function renderPlanes(){
     document.getElementById("buy-resumen").innerHTML=gratis
       ?`<span>Plan <b>Gratis</b> · acceso básico de prueba</span><b class="amt">$0</b>`
       :`<span>Plan <b>${p.n}</b> · facturación ${billPeriod}${billPeriod==="anual"?" (2 meses gratis)":""}</span><b class="amt">${money(planPrecio(p))} ${currency}</b>`;
-    ["buy-nombre","buy-empresa","buy-email","buy-card","buy-titular","buy-exp","buy-cvv"].forEach(id=>document.getElementById(id).value="");
-    document.getElementById("buy-brand").textContent="";
+    ["buy-nombre","buy-empresa","buy-email"].forEach(id=>{const el=document.getElementById(id);if(el)el.value=""});
     document.getElementById("pay-sec").style.display=gratis?"none":"";
     document.getElementById("buy-err").classList.remove("show");
     document.getElementById("buy-form").style.display="";
     document.getElementById("buy-ok").style.display="none";
     const btn=document.getElementById("buy-send");
-    btn.disabled=false;btn.textContent=gratis?"Crear mi cuenta gratis":"Pagar "+money(planPrecio(p))+" "+currency;
+    btn.disabled=false;
+    const hayLink=!!stripeLink(buyPlan,billPeriod,currency);
+    btn.textContent=gratis?"Crear mi cuenta gratis":(hayLink?"🔒 Pagar "+money(planPrecio(p))+" "+currency+" en Stripe":"Solicitar este plan");
+    document.getElementById("stripe-box").style.display=(gratis||!hayLink)?"none":"";
+    document.getElementById("stripe-falta").style.display=(!gratis&&!hayLink)?"":"none";
+    document.getElementById("buy-ok-key").style.display="";
     document.getElementById("buy-overlay").classList.add("on");
   }));
 }
-/* validación de tarjeta (algoritmo de Luhn) — el número nunca se persiste */
-function luhn(s){let sum=0,alt=false;for(let i=s.length-1;i>=0;i--){let d=+s[i];if(alt){d*=2;if(d>9)d-=9}sum+=d;alt=!alt}return sum%10===0}
-function brandOf(n){if(/^4/.test(n))return"VISA";if(/^(5[1-5]|2[2-7])/.test(n))return"MASTERCARD";if(/^3[47]/.test(n))return"AMEX";return n?"·":""}
-document.getElementById("buy-card").addEventListener("input",e=>{
-  const v=e.target.value.replace(/\D/g,"").slice(0,16);
-  e.target.value=v.replace(/(.{4})/g,"$1 ").trim();
-  document.getElementById("buy-brand").textContent=brandOf(v);
-});
-document.getElementById("buy-exp").addEventListener("input",e=>{
-  const v=e.target.value.replace(/\D/g,"").slice(0,4);
-  e.target.value=v.length>2?v.slice(0,2)+"/"+v.slice(2):v;
-});
-document.getElementById("buy-cvv").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"").slice(0,4)});
+/* ════════ Cobro real con Stripe ════════
+   La app no toca ninguna tarjeta: manda al cliente a la pasarela de Stripe.
+   Los enlaces de pago los configura el propietario desde el panel Admin. */
+function stripeLinks(){return (state.config&&state.config.stripe)||{}}
+function stripeLink(plan,periodo,moneda){
+  const L=stripeLinks(), k=plan+"-"+periodo;
+  const e=L[k]||{};
+  return (moneda==="EUR"?(e.eur||e.mxn):(e.mxn||e.eur))||"";
+}
+function stripeListo(){return Object.keys(stripeLinks()).some(k=>{const e=stripeLinks()[k];return e&&(e.mxn||e.eur)})}
 document.getElementById("buy-close").addEventListener("click",()=>document.getElementById("buy-overlay").classList.remove("on"));
 document.getElementById("buy-send").addEventListener("click",()=>{
   const err=document.getElementById("buy-err");
   if(esDemo()){err.textContent="⚠ Estás en la demostración: sal de ella y entra con tu clave para contratar.";err.classList.add("show");return}
-  const bad=msg=>{err.textContent="⚠ "+msg;err.classList.add("show")};
+  const bad=m=>{err.textContent="⚠ "+m;err.classList.add("show")};
   const n=document.getElementById("buy-nombre").value.trim(),
         e=document.getElementById("buy-empresa").value.trim(),
-        m=document.getElementById("buy-email").value.trim(),
-        card=document.getElementById("buy-card").value.replace(/\s/g,""),
-        tit=document.getElementById("buy-titular").value.trim(),
-        exp=document.getElementById("buy-exp").value.trim(),
-        cvv=document.getElementById("buy-cvv").value.trim();
+        m=document.getElementById("buy-email").value.trim();
   const gratis=buyPlan==="gratis";
   if(!n||!e)return bad("Escribe tu nombre y tu empresa.");
   if(!m||!m.includes("@"))return bad("Escribe un correo válido.");
-  if(!gratis){
-    if(card.length<15||!luhn(card))return bad("El número de tarjeta no es válido.");
-    if(!tit)return bad("Escribe el nombre del titular de la tarjeta.");
-    const em=exp.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
-    if(!em)return bad("El vencimiento debe tener formato MM/AA.");
-    const now=new Date(),yy=2000+ +em[2],mm=+em[1];
-    if(yy<now.getFullYear()||(yy===now.getFullYear()&&mm<now.getMonth()+1))return bad("La tarjeta está vencida.");
-    if(cvv.length<3)return bad("El CVV debe tener 3 o 4 dígitos.");
-  }
   err.classList.remove("show");
   const p=PLANES.find(x=>x.id===buyPlan);
   const btn=document.getElementById("buy-send");
-  btn.disabled=true;btn.textContent=gratis?"Creando tu cuenta…":"Procesando pago…";
-  setTimeout(()=>{
-    const l={id:"lic"+Math.random().toString(36).slice(2,8),key:makeKey(),cliente:n,empresa:e,email:m,
-      plan:buyPlan,estado:"Activa",creado:hoy(),
-      fact:gratis?{periodo:"gratis",monto:0,moneda:currency,last4:"",marca:"—",fecha:hoy()}
-                 :{periodo:billPeriod,monto:planPrecio(p),moneda:currency,last4:card.slice(-4),marca:brandOf(card),fecha:hoy()}};
-    state.licenses.unshift(l);save();lastKey=l.key;
-    document.getElementById("buy-form").style.display="none";
-    document.getElementById("buy-ok").style.display="";
-    document.getElementById("buy-ok-title").textContent=gratis?"¡Tu cuenta gratis está activa!":"¡Pago exitoso — tu licencia está activa!";
-    document.getElementById("buy-ok-msg").textContent=gratis?"Plan Gratis · acceso básico activado":"Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+" · tarjeta •••• "+card.slice(-4);
-    document.getElementById("buy-ok-key").textContent=l.key;
-    if(esOwner())renderAdmin();
-  },gratis?900:1700);
+
+  if(gratis){ /* el plan gratuito se activa al momento */
+    btn.disabled=true;btn.textContent="Creando tu cuenta…";
+    setTimeout(()=>{
+      const l={id:"lic"+Math.random().toString(36).slice(2,8),key:makeKey(),cliente:n,empresa:e,email:m,
+        plan:"gratis",estado:"Activa",creado:hoy(),
+        fact:{periodo:"gratis",monto:0,moneda:currency,last4:"",marca:"—",fecha:hoy()}};
+      state.licenses.unshift(l);save();lastKey=l.key;
+      document.getElementById("buy-form").style.display="none";
+      document.getElementById("buy-ok").style.display="";
+      document.getElementById("buy-ok-title").textContent="¡Tu cuenta gratis está activa!";
+      document.getElementById("buy-ok-msg").textContent="Plan Gratis · acceso básico activado";
+      document.getElementById("buy-ok-key").textContent=l.key;
+      document.getElementById("buy-ok-key").style.display="";
+      if(esOwner())renderAdmin();
+    },900);
+    return;
+  }
+
+  /* plan de pago: queda como solicitud pendiente y se envía a Stripe */
+  const ref="LB"+Date.now().toString(36).toUpperCase();
+  const l={id:"lic"+Math.random().toString(36).slice(2,8),key:makeKey(),cliente:n,empresa:e,email:m,
+    plan:buyPlan,estado:"Pendiente",creado:hoy(),ref:ref,
+    fact:{periodo:billPeriod,monto:planPrecio(p),moneda:currency,last4:"",marca:"Stripe",fecha:hoy()}};
+  state.licenses.unshift(l);save();lastKey=l.key;
+  if(esOwner())renderAdmin();
+
+  const url=stripeLink(buyPlan,billPeriod,currency);
+  document.getElementById("buy-form").style.display="none";
+  document.getElementById("buy-ok").style.display="";
+  const key=document.getElementById("buy-ok-key");
+  if(url){
+    const sep=url.includes("?")?"&":"?";
+    const dest=url+sep+"prefilled_email="+encodeURIComponent(m)+"&client_reference_id="+encodeURIComponent(ref);
+    document.getElementById("buy-ok-title").textContent="Te llevamos al pago seguro";
+    document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+". Completa el pago en Stripe; en cuanto se confirme recibirás tu clave de acceso en "+m+".";
+    key.textContent="Referencia "+ref;key.style.display="";
+    window.open(dest,"_blank","noopener");
+  }else{
+    document.getElementById("buy-ok-title").textContent="Solicitud recibida";
+    document.getElementById("buy-ok-msg").textContent="Plan "+p.n+" · "+(billPeriod==="anual"?"anual":"mensual")+" · "+money(planPrecio(p))+" "+currency+". El propietario se pondrá en contacto contigo en "+m+" para completar el pago y activarte la licencia.";
+    key.style.display="none";
+  }
 });
 document.getElementById("buy-ok-copy").addEventListener("click",()=>{
   navigator.clipboard?.writeText(lastKey).then(()=>toast("📋 Clave copiada")).catch(()=>toast("Copia la clave manualmente"));
@@ -2648,6 +2687,33 @@ document.getElementById("lic-create").addEventListener("click",()=>{
   renderAdmin();
   navigator.clipboard?.writeText(l.key).catch(()=>{});
   toast("🔑 Licencia creada — clave "+l.key+" lista para compartir");
+});
+function renderStripe(){
+  const g=document.getElementById("stripe-grid");if(!g)return;
+  const L=stripeLinks();
+  const filas=[];
+  filas.push('<span></span><span class="hd">Enlace en MXN</span><span class="hd">Enlace en EUR (opcional)</span>');
+  PLANES.filter(p=>p.id!=="gratis").forEach(p=>["mensual","anual"].forEach(per=>{
+    const k=p.id+"-"+per,e=L[k]||{};
+    filas.push('<label>'+p.n+' · '+per+'</label>'
+      +'<input data-sl="'+k+'|mxn" placeholder="https://buy.stripe.com/…" value="'+esc(e.mxn||"")+'">'
+      +'<input data-sl="'+k+'|eur" placeholder="https://buy.stripe.com/…" value="'+esc(e.eur||"")+'">');
+  }));
+  g.innerHTML=filas.join("");
+  const n=Object.keys(L).filter(k=>L[k]&&(L[k].mxn||L[k].eur)).length;
+  document.getElementById("stripe-estado").textContent=n?("✓ "+n+" de 6 planes con cobro activo"):"Sin enlaces: los clientes quedan como solicitud pendiente";
+}
+document.getElementById("btn-save-stripe").addEventListener("click",()=>{
+  const out={};let malos=0;
+  document.querySelectorAll("[data-sl]").forEach(i=>{
+    const [k,cur]=i.dataset.sl.split("|");const v=i.value.trim();
+    if(!v)return;
+    if(!/^https:\/\//i.test(v)){malos++;return}
+    out[k]=out[k]||{};out[k][cur]=v;
+  });
+  if(malos){toast("⚠ "+malos+" enlace(s) no válidos: deben empezar por https://");return}
+  state.config.stripe=out;save();renderStripe();
+  toast("💳 Enlaces de cobro guardados");
 });
 document.getElementById("btn-save-cred").addEventListener("click",()=>{
   const u=document.getElementById("cfg-user").value.trim();
