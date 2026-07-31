@@ -15,6 +15,10 @@ Abre `index.html` en cualquier navegador moderno. No necesita servidor ni
 dependencias: todo vive en un solo archivo y los datos se guardan en el
 `localStorage` del navegador.
 
+La sesión **no sobrevive al cierre de la página**: al abrir el enlace siempre
+se ve la pantalla de entrada con la ficha del propietario, nunca la app de una
+sesión anterior.
+
 **Accesos (una sola ventana):**
 
 - 👑 Propietario (único usuario con acceso completo y de modificación):
@@ -52,11 +56,10 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   captura y políticas realistas pregeneradas.
 - **Personalidad configurable**: objetivo, tono (amigable/formal/divertido),
   nombre, color del widget y mensaje de bienvenida.
-- **Avatares**: 8 retratos de persona dibujados en vector —4 mujeres y 4
-  hombres, con distintos tonos de piel, peinados, edades, gafas y barba— más
-  los 24 símbolos de siempre. Los retratos van incrustados en SVG, así que se
-  ven nítidos en cualquier pantalla, pesan poco y no dependen de fotos con
-  derechos de terceros.
+- **Avatares**: 6 retratos fotográficos —3 mujeres y 3 hombres— recortados al
+  rostro, cuadrados de 320 px e incrustados en la página, más los 24 símbolos
+  de siempre. Las fotos las aporta el propietario; deben tener licencia
+  comercial (ver la nota de derechos más abajo).
 - **Tipo de letra del chat**: seis familias a elegir —Moderna, Clásica,
   Redonda, Elegante, Técnica y Compacta— con una muestra de cada una escrita
   en su propia tipografía. Se aplica al simulador de chat y viaja en el código
@@ -150,3 +153,12 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
 
 Incluye tres bots de demostración (dos de giro y uno de área interna de
 Mantenimiento) con métricas y registros de ejemplo.
+
+## Nota sobre derechos de imagen
+
+Los retratos que usa la app son fotografías aportadas por el propietario. Antes
+de venderla conviene tener por escrito la licencia comercial de cada una: las
+imágenes descargadas de internet, las que llevan marca de agua de un banco de
+imágenes y las de personas conocidas no se pueden usar en un producto que se
+comercializa. Sustituirlas es inmediato: basta cambiar las entradas de
+`PERSONAS` en `index.html` por las nuevas imágenes en base64.
