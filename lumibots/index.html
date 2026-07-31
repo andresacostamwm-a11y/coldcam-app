@@ -449,6 +449,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
 
 <!-- ══════════ PUERTA DE ACCESO ══════════ -->
 <div class="gate" id="gate">
+  <button class="btn-out" id="gate-lang" style="position:fixed;top:18px;right:18px;z-index:5;width:auto;padding:6px 14px;font-weight:800;font-size:13px;background:rgba(255,255,255,.92)" title="Cambiar idioma / Switch language">EN</button>
   <div class="gate-in">
     <div class="gate-brand"><span class="brand-mark">✦</span> LumiBots Studio</div>
     <div><span class="gate-badge">Premium · Acceso con licencia</span></div>
@@ -496,6 +497,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <button class="nav-tab" data-go="planes">Planes</button>
       <button class="nav-tab hidden" id="tab-admin" data-go="admin">👑 Admin</button>
     </div>
+    <button class="btn-out" id="btn-lang" style="width:auto;padding:0 10px;font-weight:800;font-size:12.5px" title="Cambiar idioma / Switch language">EN</button>
     <span class="session-chip" id="session-chip"></span>
     <button class="nav-cta" data-go="wizard">＋ Nuevo bot</button>
     <button class="btn-out" id="btn-logout" title="Cerrar sesión" aria-label="Cerrar sesión">⎋</button>
@@ -978,21 +980,21 @@ const TEMPLATES=[...INDUSTRIES,...AREAS];
 
 /* ════════ Catálogo de datos capturables (15) ════════ */
 const LEAD_FIELDS=[
- {id:"nombre",em:"👤",n:"Nombre completo",d:"Para saludar y dar seguimiento",q:"¿Me compartes tu nombre completo? 😊"},
- {id:"email",em:"✉️",n:"Correo electrónico",d:"Para enviar información y confirmaciones",q:"¡Gracias! ¿Cuál es tu correo electrónico?"},
- {id:"telefono",em:"📱",n:"Teléfono / WhatsApp",d:"Para contacto directo del equipo",q:"Perfecto. ¿A qué número de teléfono o WhatsApp te podemos contactar?"},
- {id:"empresa",em:"🏢",n:"Empresa",d:"Útil para ventas B2B",q:"¿De qué empresa nos escribes?"},
- {id:"interes",em:"⭐",n:"Servicio de interés",d:"Qué producto o servicio busca",q:"¿Qué servicio o producto te interesa principalmente?"},
- {id:"fecha",em:"📅",n:"Fecha preferida",d:"Para citas, reservas y entregas",q:"¿Qué día y hora te acomodan mejor?"},
- {id:"presupuesto",em:"💵",n:"Presupuesto",d:"Para filtrar oportunidades",q:"¿Tienes un presupuesto aproximado en mente?"},
- {id:"depto",em:"🏷️",n:"Departamento",d:"Área que hace la solicitud",q:"¿De qué departamento o área nos escribes?"},
- {id:"folio",em:"🔢",n:"Folio / N.º de orden",d:"Pedido, factura o ticket a rastrear",q:"¿Cuál es el folio o número de orden?"},
- {id:"monto",em:"💰",n:"Monto",d:"Importe de la solicitud o gasto",q:"¿De qué monto estamos hablando? (aproximado está bien)"},
- {id:"proveedor",em:"🤝",n:"Proveedor",d:"Para órdenes de compra",q:"¿Con qué proveedor, o prefieres que Compras lo sugiera?"},
- {id:"urgencia",em:"⚡",n:"Nivel de urgencia",d:"Crítica, alta, media o baja",q:"¿Qué urgencia tiene: crítica, alta, media o baja?"},
- {id:"equipo",em:"⚙️",n:"Equipo / Activo",d:"Máquina, vehículo o dispositivo",q:"¿Qué equipo o activo es? (nombre, modelo o número)"},
- {id:"ubicacion",em:"📍",n:"Ubicación",d:"Planta, sucursal o dirección",q:"¿En qué ubicación, planta o sucursal?"},
- {id:"comentario",em:"📝",n:"Descripción / Comentario",d:"Detalle libre de la solicitud",q:"Cuéntame brevemente el detalle de tu solicitud."}
+ {id:"nombre",em:"👤",n:"Nombre completo",d:"Para saludar y dar seguimiento",q:"¿Me compartes tu nombre completo? 😊",qe:"May I have your full name? 😊"},
+ {id:"email",em:"✉️",n:"Correo electrónico",d:"Para enviar información y confirmaciones",q:"¡Gracias! ¿Cuál es tu correo electrónico?",qe:"Thanks! What is your email address?"},
+ {id:"telefono",em:"📱",n:"Teléfono / WhatsApp",d:"Para contacto directo del equipo",q:"Perfecto. ¿A qué número de teléfono o WhatsApp te podemos contactar?",qe:"Perfect. What phone or WhatsApp number can we reach you at?"},
+ {id:"empresa",em:"🏢",n:"Empresa",d:"Útil para ventas B2B",q:"¿De qué empresa nos escribes?",qe:"Which company are you writing from?"},
+ {id:"interes",em:"⭐",n:"Servicio de interés",d:"Qué producto o servicio busca",q:"¿Qué servicio o producto te interesa principalmente?",qe:"Which service or product are you mainly interested in?"},
+ {id:"fecha",em:"📅",n:"Fecha preferida",d:"Para citas, reservas y entregas",q:"¿Qué día y hora te acomodan mejor?",qe:"What day and time work best for you?"},
+ {id:"presupuesto",em:"💵",n:"Presupuesto",d:"Para filtrar oportunidades",q:"¿Tienes un presupuesto aproximado en mente?",qe:"Do you have an approximate budget in mind?"},
+ {id:"depto",em:"🏷️",n:"Departamento",d:"Área que hace la solicitud",q:"¿De qué departamento o área nos escribes?",qe:"Which department or area are you writing from?"},
+ {id:"folio",em:"🔢",n:"Folio / N.º de orden",d:"Pedido, factura o ticket a rastrear",q:"¿Cuál es el folio o número de orden?",qe:"What is the reference or order number?"},
+ {id:"monto",em:"💰",n:"Monto",d:"Importe de la solicitud o gasto",q:"¿De qué monto estamos hablando? (aproximado está bien)",qe:"What amount are we talking about? (an estimate is fine)"},
+ {id:"proveedor",em:"🤝",n:"Proveedor",d:"Para órdenes de compra",q:"¿Con qué proveedor, o prefieres que Compras lo sugiera?",qe:"Which supplier — or should Purchasing suggest one?"},
+ {id:"urgencia",em:"⚡",n:"Nivel de urgencia",d:"Crítica, alta, media o baja",q:"¿Qué urgencia tiene: crítica, alta, media o baja?",qe:"How urgent is it: critical, high, medium or low?"},
+ {id:"equipo",em:"⚙️",n:"Equipo / Activo",d:"Máquina, vehículo o dispositivo",q:"¿Qué equipo o activo es? (nombre, modelo o número)",qe:"Which equipment or asset is it? (name, model or number)"},
+ {id:"ubicacion",em:"📍",n:"Ubicación",d:"Planta, sucursal o dirección",q:"¿En qué ubicación, planta o sucursal?",qe:"At which location, plant or branch?"},
+ {id:"comentario",em:"📝",n:"Descripción / Comentario",d:"Detalle libre de la solicitud",q:"Cuéntame brevemente el detalle de tu solicitud.",qe:"Briefly tell me the details of your request."}
 ];
 
 const OBJETIVOS=[["ventas","💼 Vender más"],["leads","📥 Capturar información"],["citas","📅 Agendar citas"],["soporte","🛟 Dar soporte"],["faq","💡 Responder dudas"],["procesos","⚙️ Automatizar procesos internos"]];
@@ -1642,7 +1644,7 @@ function reply(txt){
     s.leadIdx++;
     if(s.leadIdx<b.leadFields.length){
       const f=LEAD_FIELDS.find(x=>x.id===b.leadFields[s.leadIdx]);
-      botSay(tone(b,f.q));
+      botSay(tone(b,(lang==="en"&&f.qe)?f.qe:f.q));
     }else{
       s.leadIdx=-1;
       const lead={bot:b.id,fecha:hoy(),datos:{...s.leadData},canal:"Web (prueba)",
@@ -1650,8 +1652,8 @@ function reply(txt){
       state.leads.unshift(lead);save();
       const nombre=s.leadData.nombre?s.leadData.nombre.split(" ")[0]:"";
       botSay(tone(b,b.tipo==="area"
-        ?`¡Listo${nombre?", "+nombre:""}! 🎉 Tu solicitud quedó registrada con el equipo de ${TEMPLATES.find(x=>x.id===b.industria)?.n||"el área"} y tiene seguimiento. ¿Necesitas algo más?`
-        :`¡Perfecto${nombre?", "+nombre:""}! 🎉 Ya registré tus datos. Nuestro equipo te contactará muy pronto. ¿Puedo ayudarte con algo más?`));
+        ?L(`¡Listo${nombre?", "+nombre:""}! 🎉 Tu solicitud quedó registrada con el equipo de ${TEMPLATES.find(x=>x.id===b.industria)?.n||"el área"} y tiene seguimiento. ¿Necesitas algo más?`,`Done${nombre?", "+nombre:""}! 🎉 Your request was logged with the ${TEMPLATES.find(x=>x.id===b.industria)?.n||"area"} team and will be followed up. Anything else?`)
+        :L(`¡Perfecto${nombre?", "+nombre:""}! 🎉 Ya registré tus datos. Nuestro equipo te contactará muy pronto. ¿Puedo ayudarte con algo más?`,`Perfect${nombre?", "+nombre:""}! 🎉 Your details are saved. Our team will contact you very soon. Anything else I can help with?`)));
       const body=document.getElementById("cm-body");
       const badge=document.createElement("div");badge.className="lead-badge";badge.textContent="📥 Información capturada y almacenada en el dashboard";
       setTimeout(()=>{body.appendChild(badge);body.scrollTop=body.scrollHeight},900);
@@ -1660,36 +1662,37 @@ function reply(txt){
     }
     return;
   }
-  const wantsLead=/(cita|reserv|agendar|cotiz|comprar|contratar|inscrib|visita|demo|interesa|quiero (uno|el|la|info)|me apunto|asesor|humano|persona|vendedor|llamen|contacten|reembolso|orden de compra|reportar|reporte|falla|ticket|solicitud|solicitar|registrar|queja|devoluci|garantia|vacaciones|constancia|refaccion|envio|acceso|contrase|recordatorio|viaje|reunion|levantar)/.test(t);
+  const wantsLead=/(cita|reserv|agendar|cotiz|comprar|contratar|inscrib|visita|demo|interesa|quiero (uno|el|la|info)|me apunto|asesor|humano|persona|vendedor|llamen|contacten|reembolso|orden de compra|reportar|reporte|falla|ticket|solicitud|solicitar|registrar|queja|devoluci|garantia|vacaciones|constancia|refaccion|envio|acceso|contrase|recordatorio|viaje|reunion|levantar|appointment|book|quote|order|buy|sign ?up|interested|agent|human|refund|report|fault|ticket|request|complaint|return|warranty|vacation|shipment|password|reminder|meeting|trip)/.test(t);
   if(wantsLead){startLead();return}
-  if(/(^|\s)(hola|buenas|buenos dias|buen dia|hey|que tal|saludos)/.test(t)){
-    botSay(tone(b,`¡Hola! 😊 Soy ${b.nombreBot}, el asistente de ${b.empresa}. ¿En qué te puedo ayudar?`));return}
-  if(/(gracias|perfecto|genial|excelente|ok\b|listo)/.test(t)){
-    botSay(tone(b,"¡Con mucho gusto! 😊 Si necesitas algo más, aquí estaré."));return}
-  if(/(horario|a que hora|abren|cierran|dias)/.test(t)&&b.horario){
-    botSay(tone(b,`Nuestro horario de atención es: ${b.horario}. ¿Te ayudo con algo más?`));return}
-  if(/(donde|ubicacion|direccion|sucursal|como llego)/.test(t)){
-    botSay(tone(b,`Puedes encontrarnos en ${b.web?("nuestro sitio "+b.web+" o "):""}contactarnos al ${b.tel||"teléfono de la empresa"}. ¿Quieres que un asesor te comparta la ubicación exacta?`));return}
-  if(/(telefono|whatsapp|numero|contacto|correo|email)/.test(t)){
-    botSay(tone(b,`Claro: ${b.tel?("nos encuentras en el "+b.tel):"deja tus datos y te contactamos"}${b.web?(" y en "+b.web):""}. ¿Prefieres que nosotros te llamemos?`));return}
-  if(/(servicio|producto|que (ofrecen|venden|hacen|cubre)|catalogo|menu|funciones)/.test(t)&&b.servicios.length){
-    botSay(tone(b,`Esto es lo que cubro: ${b.servicios.join(" · ")}. ¿Con cuál te ayudo? Puedo registrar tu solicitud al momento.`));return}
+  if(/(^|\s)(hola|buenas|buenos dias|buen dia|hey|que tal|saludos|hi|hello|good morning|good afternoon)/.test(t)){
+    botSay(tone(b,L(`¡Hola! 😊 Soy ${b.nombreBot}, el asistente de ${b.empresa}. ¿En qué te puedo ayudar?`,`Hi! 😊 I am ${b.nombreBot}, the assistant for ${b.empresa}. How can I help you?`)));return}
+  if(/(gracias|perfecto|genial|excelente|ok\b|listo|thank|great|awesome)/.test(t)){
+    botSay(tone(b,L("¡Con mucho gusto! 😊 Si necesitas algo más, aquí estaré.","My pleasure! 😊 I will be right here if you need anything else.")));return}
+  if(/(horario|a que hora|abren|cierran|dias|schedule|hours|open|close)/.test(t)&&b.horario){
+    botSay(tone(b,L(`Nuestro horario de atención es: ${b.horario}. ¿Te ayudo con algo más?`,`Our business hours are: ${b.horario}. Anything else I can help with?`)));return}
+  if(/(donde|ubicacion|direccion|sucursal|como llego|where|location|address)/.test(t)){
+    botSay(tone(b,L(`Puedes encontrarnos en ${b.web?("nuestro sitio "+b.web+" o "):""}contactarnos al ${b.tel||"teléfono de la empresa"}. ¿Quieres que un asesor te comparta la ubicación exacta?`,`You can find us at ${b.web?(b.web+" or "):""}reach us at ${b.tel||"the company phone"}. Want an agent to share the exact location?`)));return}
+  if(/(telefono|whatsapp|numero|contacto|correo|email|phone|number|contact|mail)/.test(t)){
+    botSay(tone(b,L(`Claro: ${b.tel?("nos encuentras en el "+b.tel):"deja tus datos y te contactamos"}${b.web?(" y en "+b.web):""}. ¿Prefieres que nosotros te llamemos?`,`Sure: ${b.tel?("you can reach us at "+b.tel):"leave your details and we will contact you"}${b.web?(" and at "+b.web):""}. Would you rather we call you?`)));return}
+  if(/(servicio|producto|que (ofrecen|venden|hacen|cubre)|catalogo|menu|funciones|services?|products?|offer|sell|catalog)/.test(t)&&b.servicios.length){
+    botSay(tone(b,L(`Esto es lo que cubro: ${b.servicios.join(" · ")}. ¿Con cuál te ayudo? Puedo registrar tu solicitud al momento.`,`Here is what I cover: ${b.servicios.join(" · ")}. Which one can I help with? I can log your request right away.`)));return}
   let best=null,bestScore=0;
   for(const f of b.faqs){
     const words=norm(f.q).split(/\W+/).filter(w=>w.length>3);
     let sc=0;for(const w of words)if(t.includes(w))sc++;
-    if(/(precio|costo|cuanto)/.test(t)&&/(precio|costo|cuanto)/.test(norm(f.q)))sc+=2;
+    if(/(precio|costo|cuanto|price|cost|how much)/.test(t)&&/(precio|costo|cuanto|price|cost)/.test(norm(f.q)))sc+=2;
     if(sc>bestScore){bestScore=sc;best=f}
   }
   if(best&&bestScore>0){botSay(tone(b,best.a));return}
-  botSay(tone(b,`Buena pregunta 🤔 No tengo ese dato a la mano, pero puedo registrar tu consulta para que el equipo de ${b.empresa} te responda con el dato exacto. ¿Te parece?`));
+  botSay(tone(b,L(`Buena pregunta 🤔 No tengo ese dato a la mano, pero puedo registrar tu consulta para que el equipo de ${b.empresa} te responda con el dato exacto. ¿Te parece?`,`Good question 🤔 I do not have that on hand, but I can log your query so the ${b.empresa} team gets back to you with the exact answer. Sound good?`)));
 }
 function startLead(){
   const b=chatBot,s=chatSession;
   if(!b.leadFields.length){botSay(tone(b,"¡Claro! Nuestro equipo te atenderá enseguida."));return}
   s.leadIdx=0;s.leadData={};
   const f=LEAD_FIELDS.find(x=>x.id===b.leadFields[0]);
-  botSay(tone(b,(b.tipo==="area"?"¡Claro! Registro tu solicitud paso a paso. ":"¡Excelente decisión! 🙌 Para darte seguimiento solo necesito unos datos. ")+f.q));
+  const q0=(lang==="en"&&f.qe)?f.qe:f.q;
+  botSay(tone(b,(b.tipo==="area"?L("¡Claro! Registro tu solicitud paso a paso. ","Sure! I will log your request step by step. "):L("¡Excelente decisión! 🙌 Para darte seguimiento solo necesito unos datos. ","Great choice! 🙌 I just need a few details to follow up. "))+q0));
 }
 
 /* ════════ Planes y compra ════════ */
@@ -1800,7 +1803,7 @@ let dashBot=null,dashRange=14;
 function dayLabels(n){
   const out=[];const now=new Date();
   for(let i=n-1;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);
-    out.push(d.toLocaleDateString("es-MX",{day:"numeric",month:"short"}))}
+    out.push(d.toLocaleDateString(lang==="en"?"en-US":"es-MX",{day:"numeric",month:"short"}))}
   return out;
 }
 function renderDash(){
@@ -2144,10 +2147,290 @@ function startNet(host){
 startNet(document.querySelector(".hero"));
 startNet(document.getElementById("gate"));
 
+
+/* ════════ Idioma ES/EN ════════ */
+let lang=localStorage.getItem("lumibots_lang")||"es";
+function L(es,en){return lang==="en"?en:es}
+const I18N_TEXT={
+/* nav */
+"Inicio":"Home","Crear bot":"Create bot","Mis bots":"My bots","Planes":"Plans","👑 Admin":"👑 Admin","＋ Nuevo bot":"＋ New bot",
+/* puerta */
+"Premium · Acceso con licencia":"Premium · License access",
+"Bienvenido a tu estudio de chatbots":"Welcome to your chatbot studio",
+"Esta plataforma es privada. Entra como propietario para administrar todo, o con la clave de licencia que el propietario te autorizó.":"This platform is private. Sign in as the owner to manage everything, or with the license key the owner authorized for you.",
+"👑 Soy el propietario":"👑 I am the owner",
+"Acceso total: todos los bots, el dashboard global y el panel de licencias de clientes.":"Full access: every bot, the global dashboard and the client license panel.",
+"Entrar como propietario":"Sign in as owner",
+"⚠ Usuario o contraseña incorrectos.":"⚠ Wrong username or password.",
+"🔐 Puedes cambiar tu usuario y contraseña en el panel Admin.":"🔐 You can change your username and password in the Admin panel.",
+"🔑 Tengo una licencia":"🔑 I have a license",
+"Escribe tu nombre o tu correo y la clave que el propietario te compartió al autorizar tu compra.":"Enter your name or email and the key the owner shared when your purchase was authorized.",
+"Entrar con mi licencia":"Sign in with my license",
+"⚠ Datos no válidos o licencia inactiva.":"⚠ Invalid details or inactive license.",
+"⚠ Escribe tu nombre o tu correo.":"⚠ Enter your name or email.",
+"⚠ El nombre o correo no coincide con esta licencia.":"⚠ The name or email does not match this license.",
+"⚠ Tu licencia está suspendida. Contacta al propietario.":"⚠ Your license is suspended. Contact the owner.",
+"⚠ Tu compra aún no ha sido autorizada por el propietario.":"⚠ Your purchase has not been authorized by the owner yet.",
+"⚠ Clave no válida o licencia inactiva.":"⚠ Invalid key or inactive license.",
+"🧪 Demo:":"🧪 Demo:","+ clave":"+ key",
+"¿Aún no tienes acceso? Compra un plan y el propietario autorizará tu licencia.":"No access yet? Buy a plan and get your license key.",
+"💳 Ver planes y comprar":"💳 See plans & buy",
+/* hero */
+"La plataforma de chatbots más completa en español":"The most complete chatbot platform for business",
+"Chatbots premium para":"Premium chatbots for","todas las áreas":"every department","de tu empresa":"of your company",
+"LumiBots Studio Premium arma asistentes virtuales especialistas para atención al cliente, finanzas, compras, mantenimiento, marketing y cualquier área o giro. Capturan y almacenan información en gran volumen, y tú lo ves todo en un dashboard claro y detallado.":"LumiBots Studio Premium builds specialist virtual assistants for customer service, finance, purchasing, maintenance, marketing and any area or industry. They capture and store information at scale, and you see it all in a clear, detailed dashboard.",
+"✨ Crear un chatbot ahora":"✨ Create a chatbot now","▶ Ver demo en vivo":"▶ Watch live demo",
+"giros de negocio":"business industries","áreas internas especialistas":"specialist internal areas","tipos de dato capturables":"capturable data types","conocimiento por volumen":"bulk knowledge",
+"● En línea — responde al instante":"● Online — instant replies",
+/* áreas */
+"Especialistas por área":"Specialists by area","Un bot experto para cada departamento":"An expert bot for every department",
+"No solo atiende clientes: LumiBots crea asistentes internos con conocimiento especialista de cada área de tu organización.":"Not just customer service: LumiBots builds internal assistants with specialist knowledge for every area of your organization.",
+"Finanzas":"Finance","Compras":"Purchasing","Atención al cliente":"Customer service","Mantenimiento":"Maintenance","Recursos Humanos":"Human Resources","Ventas":"Sales","Logística":"Logistics","Soporte TI":"IT Support","Asistencia personal":"Personal assistant",
+/* features */
+"Todo incluido":"All included","Más que un constructor de bots: tu plataforma completa":"More than a bot builder: your complete platform",
+"Tomamos lo mejor de las plataformas de chatbots y lo llevamos a nivel premium.":"We took the best of chatbot platforms and raised it to premium level.",
+"Asistente guiado especialista":"Guided specialist wizard",
+"Te preguntamos lo esencial — giro o área, servicios, horarios, tono — y armamos el bot con conocimiento experto listo para editar.":"We ask the essentials — industry or area, services, hours, tone — and build the bot with expert knowledge ready to edit.",
+"Información en gran volumen":"Information at scale",
+"Importa cientos de preguntas y respuestas de golpe (pegado masivo o CSV), y cada dato capturado queda almacenado y exportable.":"Import hundreds of Q&A pairs at once (bulk paste or CSV), and every captured data point is stored and exportable.",
+"Dashboard bien detallado":"A truly detailed dashboard",
+"Conversaciones por día con rangos de 7/14/30 días, embudo de conversión, canales, temas más consultados y tabla de registros con CSV.":"Daily conversations with 7/14/30-day ranges, conversion funnel, channels, top topics and a records table with CSV export.",
+"Licencias para tus clientes":"Licenses for your clients",
+"Tú eres el propietario: tus clientes compran un plan, tú autorizas su licencia y cada uno trabaja en su propio espacio.":"You are the owner: your clients buy a plan, you control their license and each works in their own workspace.",
+"Multicanal real":"Truly multichannel",
+"Web, WhatsApp, Instagram, Messenger y Telegram con la misma personalidad y la misma bandeja de resultados.":"Web, WhatsApp, Instagram, Messenger and Telegram with the same personality and the same results inbox.",
+"Simulador antes de publicar":"Simulator before publishing",
+"Conversa con tu bot, afina sus respuestas y velo capturar información real antes de conectarlo a tus canales.":"Chat with your bot, fine-tune its answers and watch it capture real information before connecting it to your channels.",
+/* comparativa */
+"Comparativa":"Comparison","¿Por qué LumiBots Premium y no otra plataforma?":"Why LumiBots Premium and not another platform?",
+"Comparado con constructores de bots típicos (incluidos los de código abierto tipo \"forja\"), esto es lo que ganas.":"Compared with typical bot builders (including open-source ones), this is what you gain.",
+"Capacidad":"Capability","Plataformas típicas":"Typical platforms",
+"Plantillas por giro de negocio":"Templates by business industry","✓ 12 industrias listas":"✓ 12 ready industries","~11, con configuración técnica":"~11, with technical setup",
+"Bots para áreas internas (finanzas, compras, mantenimiento…)":"Bots for internal areas (finance, purchasing, maintenance…)","✓ 10 áreas especialistas":"✓ 10 specialist areas","No existe":"Does not exist",
+"Carga de conocimiento en volumen":"Bulk knowledge loading","✓ Pegado masivo y CSV":"✓ Bulk paste and CSV","Pregunta por pregunta":"One question at a time",
+"Sistema de licencias para revender":"License system for reselling","✓ Compra → tu autorización → clave":"✓ Purchase → your approval → key","Manual, fuera de la plataforma":"Manual, outside the platform",
+"Simulador de chat con captura real":"Chat simulator with real capture","✓ Incluido":"✓ Included","Limitado o inexistente":"Limited or nonexistent",
+"Dashboard detallado por bot":"Detailed per-bot dashboard","✓ Métricas, embudo, temas, CSV":"✓ Metrics, funnel, topics, CSV","Métricas básicas":"Basic metrics",
+"Respaldo total de tus datos":"Full data backup","✓ Exporta/importa todo en JSON":"✓ Export/import everything in JSON","A veces bloqueado por plan":"Sometimes plan-gated",
+/* cta */
+"Tu equipo de asistentes que nunca duerme":"Your team of assistants that never sleeps",
+"Crea un bot para tus clientes o para cualquier área de tu empresa en unos 5 minutos. Sin código, sin complicaciones.":"Create a bot for your customers or any area of your company in about 5 minutes. No code, no hassle.",
+"✨ Empezar ahora":"✨ Start now",
+/* planes */
+"Planes y membresías":"Plans & memberships","Elige tu plan y paga con tarjeta":"Choose your plan and pay by card",
+"Precios en pesos mexicanos (MXN) o euros (EUR) — tú eliges. Tu licencia se activa al instante al completar el pago, y el propietario conserva el control para pausar o revocar accesos.":"Prices in Mexican pesos (MXN) or euros (EUR) — your choice. Your license activates instantly on payment, and the owner keeps control to pause or revoke access.",
+"Mensual":"Monthly","Anual":"Annual","🎁 Anual = 2 meses gratis":"🎁 Annual = 2 months free","Más elegido":"Most popular",
+"Para un negocio que empieza con su primer asistente.":"For a business starting with its first assistant.",
+"Para empresas que quieren bots en varias áreas.":"For companies that want bots across several areas.",
+"Para operaciones grandes y agencias.":"For large operations and agencies.",
+"1 bot activo":"1 active bot","Giros de negocio y 3 áreas internas":"Business industries and 3 internal areas","Hasta 200 pares de conocimiento":"Up to 200 knowledge pairs","Dashboard con métricas esenciales":"Dashboard with essential metrics","Exportación de registros en CSV":"CSV record export","Canal web + WhatsApp":"Web + WhatsApp channel",
+"5 bots activos":"5 active bots","Los 12 giros y las 10 áreas especialistas":"All 12 industries and 10 specialist areas","Conocimiento ilimitado con carga masiva":"Unlimited knowledge with bulk import","Dashboard completo con embudo y rangos":"Full dashboard with funnel and ranges","Los 5 canales conectados":"All 5 channels connected","Soporte prioritario del propietario":"Priority support from the owner",
+"Bots ilimitados":"Unlimited bots","Todo lo del plan Pro":"Everything in Pro","Volúmenes altos de captura y almacenamiento":"High-volume capture and storage","Respaldo completo de datos (JSON)":"Full data backup (JSON)","Marca blanca del widget":"White-label widget","Acompañamiento de implementación":"Implementation support",
+"💳 Contratar Starter":"💳 Get Starter","💳 Contratar Pro":"💳 Get Pro","💳 Contratar Empresa":"💳 Get Empresa",
+"MXN/año":"MXN/yr","MXN/mes":"MXN/mo","EUR/año":"EUR/yr","EUR/mes":"EUR/mo",
+/* checkout */
+"Tus datos":"Your details","Pago con tarjeta":"Card payment",
+"Tu nombre *":"Your name *","Empresa *":"Company *","Correo electrónico *":"Email *",
+"Número de tarjeta *":"Card number *","Titular de la tarjeta *":"Cardholder name *","Vencimiento (MM/AA) *":"Expiry (MM/YY) *","CVV *":"CVV *",
+"🔒 Modo demostración: no se realiza ningún cargo real y el número de tarjeta":"🔒 Demo mode: no real charge is made and the card number",
+"no se guarda":"is never stored",
+"(solo los últimos 4 dígitos, para el comprobante). Al conectar Stripe o Mercado Pago, este mismo formulario procesará cobros reales.":"(only the last 4 digits, for the receipt). Once Stripe or Mercado Pago is connected, this same form will process real payments.",
+"⚠ Revisa los campos marcados.":"⚠ Check the highlighted fields.",
+"⚠ Escribe tu nombre y tu empresa.":"⚠ Enter your name and company.",
+"⚠ Escribe un correo válido.":"⚠ Enter a valid email.",
+"⚠ El número de tarjeta no es válido.":"⚠ The card number is not valid.",
+"⚠ Escribe el nombre del titular de la tarjeta.":"⚠ Enter the cardholder name.",
+"⚠ El vencimiento debe tener formato MM/AA.":"⚠ Expiry must be in MM/YY format.",
+"⚠ La tarjeta está vencida.":"⚠ The card is expired.",
+"⚠ El CVV debe tener 3 o 4 dígitos.":"⚠ CVV must be 3 or 4 digits.",
+"Cancelar":"Cancel","Procesando pago…":"Processing payment…",
+"¡Pago exitoso — tu licencia está activa!":"Payment successful — your license is active!",
+"Guarda esta clave: con ella y tu nombre o correo entras a la plataforma. El comprobante quedó registrado con el propietario.":"Save this key: use it with your name or email to sign in. The receipt was recorded with the owner.",
+"📋 Copiar clave":"📋 Copy key","Ir a iniciar sesión":"Go to sign in",
+/* wizard */
+"Empresa":"Company","Personalidad":"Personality","Conocimiento":"Knowledge","Captura de datos":"Data capture","Canales y estilo":"Channels & style",
+"🏢 Cuéntanos de tu empresa":"🏢 Tell us about your company",
+"Con estos datos pre-armamos el conocimiento especialista de tu bot. Los campos con * son necesarios.":"With this we pre-build your bot's specialist knowledge. Fields with * are required.",
+"¿Para quién es este bot? *":"Who is this bot for? *",
+"Para mis clientes":"For my customers","Atiende al público según el giro de tu negocio":"Serves the public based on your business industry",
+"Para un área interna":"For an internal area","Finanzas, compras, mantenimiento, RH, TI y más":"Finance, purchasing, maintenance, HR, IT and more",
+"Nombre de la empresa *":"Company name *","Giro del negocio *":"Business industry *","Área o departamento *":"Area or department *","— elige el más cercano":"— pick the closest one",
+"Restaurante":"Restaurant","Salud / Clínica":"Health / Clinic","Belleza / Barbería":"Beauty / Barbershop","Inmobiliaria":"Real estate","Tienda / eCommerce":"Store / eCommerce","Educación":"Education","Legal / Despacho":"Legal / Law firm","Hotel / Turismo":"Hotel / Tourism","Automotriz":"Automotive","Tecnología / SaaS":"Tech / SaaS","Servicios profesionales":"Professional services",
+"Sitio web":"Website","(opcional)":"(optional)","Teléfono / WhatsApp":"Phone / WhatsApp","Horario de atención":"Business hours","¿Qué hace tu empresa?":"What does your company do?","(1 línea)":"(1 line)",
+"🎭 Dale personalidad a tu bot":"🎭 Give your bot a personality",
+"El objetivo define qué hará el bot; el tono, cómo hablará.":"The goal defines what the bot does; the tone, how it speaks.",
+"¿Qué quieres lograr? *":"What do you want to achieve? *","— puedes elegir varios":"— you can pick several",
+"💼 Vender más":"💼 Sell more","📥 Capturar información":"📥 Capture information","📅 Agendar citas":"📅 Book appointments","🛟 Dar soporte":"🛟 Provide support","💡 Responder dudas":"💡 Answer questions","⚙️ Automatizar procesos internos":"⚙️ Automate internal processes",
+"Tono de voz *":"Tone of voice *","Amigable":"Friendly","Formal":"Formal","Divertido":"Playful",
+"Cercano y cálido, con emojis. Ideal para la mayoría de los negocios.":"Warm and close, with emojis. Ideal for most businesses.",
+"Profesional y respetuoso, de usted. Para despachos, clínicas y B2B.":"Professional and respectful. For law firms, clinics and B2B.",
+"Relajado y con chispa. Para marcas jóvenes y creativas.":"Relaxed and witty. For young, creative brands.",
+"Nombre del asistente":"Assistant name","Avatar":"Avatar","Mensaje de bienvenida":"Welcome message","— lo generamos por ti, edítalo si quieres":"— we generate it for you, edit as you like",
+"🧠 Revisa lo que tu bot sabrá":"🧠 Review what your bot will know",
+"Servicios o productos que ofrece":"Services or products offered","Funciones que cubre":"Functions covered","＋ Agregar":"＋ Add",
+"Base de conocimiento (preguntas y respuestas)":"Knowledge base (questions & answers)",
+"🗄️ Importar en volumen":"🗄️ Bulk import","＋ Agregar otra pregunta":"＋ Add another question",
+"📥 ¿Qué información capturará y almacenará?":"📥 What information will it capture and store?",
+"💡 Consejo: de 3 a 5 datos es el punto dulce — suficientes para dar seguimiento sin cansar a quien escribe. Todos los registros se pueden exportar a CSV.":"💡 Tip: 3 to 5 fields is the sweet spot — enough to follow up without tiring the person. All records can be exported to CSV.",
+"🎨 Canales, estilo y ¡despegue!":"🎨 Channels, style and liftoff!",
+"Elige dónde vivirá tu bot y cómo se verá el widget. Revisa el resumen y crea tu bot.":"Choose where your bot will live and how the widget looks. Review the summary and create your bot.",
+"Canales donde estará activo *":"Channels where it will be active *",
+"🌐 Sitio web":"🌐 Website","Color del widget":"Widget color","Vista previa":"Preview",
+"Continuar →":"Continue →","← Atrás":"← Back","🚀 Crear mi chatbot":"🚀 Create my chatbot",
+"⚠ Escribe el nombre de tu empresa.":"⚠ Enter your company name.","⚠ Elige el giro de tu negocio.":"⚠ Pick your business industry.","⚠ Elige el área o departamento.":"⚠ Pick the area or department.","⚠ Elige al menos un objetivo para tu bot.":"⚠ Pick at least one goal for your bot.","⚠ Deja al menos una pregunta con su respuesta.":"⚠ Keep at least one question with its answer.","⚠ Elige al menos un dato para capturar.":"⚠ Pick at least one field to capture.","⚠ Activa al menos un canal.":"⚠ Enable at least one channel.",
+"Armando tu chatbot…":"Building your chatbot…",
+"Estamos entrenando a tu asistente con la información de tu empresa.":"We are training your assistant with your company information.",
+"Leyendo la información de tu empresa":"Reading your company information","Cargando plantilla especialista y base de conocimiento":"Loading specialist template and knowledge base","Entrenando respuestas con tu tono de voz":"Training answers with your tone of voice","Configurando la captura y almacenamiento de datos":"Setting up data capture and storage","Conectando canales y widget":"Connecting channels and widget","¡Bot listo y en línea!":"Bot ready and online!",
+/* mis bots */
+"Administra, prueba y publica tus asistentes virtuales.":"Manage, test and publish your virtual assistants.",
+"＋ Crear nuevo bot":"＋ Create new bot","Activo":"Active","🏛️ Área interna":"🏛️ Internal area","🏪 Clientes":"🏪 Customers",
+"💬 Probar bot":"💬 Test bot","📎 Instalar":"📎 Install","⬇ Exportar":"⬇ Export","🗑 Eliminar bot":"🗑 Delete bot",
+"convers.":"convos","registros":"records","pares":"pairs",
+/* dashboard */
+"⬇ Exportar registros (CSV)":"⬇ Export records (CSV)","Rango:":"Range:",
+"💬 Conversaciones":"💬 Conversations","📥 Leads capturados":"📥 Leads captured","📥 Solicitudes registradas":"📥 Requests logged","🎯 Tasa de conversión":"🎯 Conversion rate","⚡ Respuesta media":"⚡ Avg. response","⭐ Satisfacción":"⭐ Satisfaction",
+"registros / conversaciones":"records / conversations","instantánea 24/7":"instant 24/7","de 5.0 · encuesta al cierre":"out of 5.0 · exit survey",
+"Conversaciones por día":"Conversations per day","Conversaciones por canal":"Conversations by channel",
+"Embudo de conversión":"Conversion funnel","Del primer mensaje al dato almacenado":"From first message to stored data",
+"Temas más consultados":"Top topics","Qué preguntan en este periodo":"What people ask in this period",
+"Solicitudes recientes":"Recent requests","Leads recientes":"Recent leads",
+"Conversaciones":"Conversations","Consultas resueltas":"Solved queries","Flujos de captura":"Capture flows","Solicitudes creadas":"Requests created","Leads capturados":"Leads captured",
+"Contacto":"Contact","Datos capturados":"Captured data","Interés":"Interest","Canal":"Channel","Fecha":"Date","Estado":"Status",
+"Nuevo":"New","Contactado":"Contacted","Cerrado":"Closed",
+"Precios y costos":"Prices & costs","Horarios":"Hours","Agendar / reservar":"Book / reserve","Ubicación y contacto":"Location & contact","Otros temas":"Other topics",
+/* admin */
+"👑 Panel del propietario":"👑 Owner panel",
+"Licencias de clientes, ingresos y respaldo de toda la plataforma.":"Client licenses, revenue and full-platform backup.",
+"＋ Crear licencia manual":"＋ Create manual license",
+"🔑 Licencias activas":"🔑 Active licenses","📨 Solicitudes de compra":"📨 Purchase requests","💵 Ingreso mensual":"💵 Monthly revenue","🤖 Bots en la plataforma":"🤖 Bots on the platform",
+"esperan tu autorización":"awaiting your approval","todo al día":"all clear",
+"Licencias y solicitudes":"Licenses & requests",
+"Autoriza compras, comparte claves y controla el acceso de cada cliente.":"Approve purchases, share keys and control each client's access.",
+"Cliente":"Client","Clave de licencia":"License key","Alta":"Created","Acciones":"Actions",
+"Activa":"Active","Pendiente":"Pending","Suspendida":"Suspended",
+"✓ Autorizar":"✓ Approve","✕ Rechazar":"✕ Reject","⏸ Suspender":"⏸ Suspend","▶ Reactivar":"▶ Reactivate","✕ Revocar":"✕ Revoke","— se genera al autorizar":"— generated on approval",
+"🗄️ Almacenamiento de la plataforma":"🗄️ Platform storage",
+"Todo lo que tus bots capturan y saben, medido en tiempo real.":"Everything your bots capture and know, measured in real time.",
+"⬇ Respaldo completo (JSON)":"⬇ Full backup (JSON)","⬆ Restaurar respaldo":"⬆ Restore backup",
+"🔐 Seguridad del propietario":"🔐 Owner security",
+"Cambia el usuario y la contraseña con los que entras a la plataforma.":"Change the username and password you sign in with.",
+"Usuario":"Username","Nueva contraseña":"New password","(mín. 6 caracteres)":"(min. 6 characters)","Guardar":"Save",
+/* modales */
+"Sí, continuar":"Yes, continue","¿Confirmar?":"Confirm?",
+"Revocar licencia":"Revoke license","Eliminar bot":"Delete bot","Restaurar respaldo":"Restore backup",
+"Esto reemplaza TODOS los datos actuales (bots, registros y licencias) con el contenido del respaldo.":"This replaces ALL current data (bots, records and licenses) with the backup contents.",
+"🔑 Crear licencia manual":"🔑 Create manual license",
+"Para clientes que te pagan por fuera. La clave se genera al instante, lista para compartir.":"For clients who pay you offline. The key is generated instantly, ready to share.",
+"Nombre del cliente *":"Client name *","Correo":"Email","Crear licencia":"Create license",
+"⚠ Escribe al menos el nombre del cliente.":"⚠ Enter at least the client name.",
+"🗄️ Importar conocimiento en volumen":"🗄️ Bulk-import knowledge",
+"📄 Cargar archivo CSV/TXT":"📄 Load CSV/TXT file","Importar":"Import",
+"📎 Instala tu bot en tu sitio web":"📎 Install your bot on your website",
+"Copia este fragmento y pégalo antes de":"Copy this snippet and paste it before","en tu página. El widget aparecerá con tus colores.":"on your page. The widget will appear with your colors.",
+"Cerrar":"Close","Copiar código":"Copy code",
+"● En línea — modo de prueba":"● Online — test mode",
+"📥 Información capturada y almacenada en el dashboard":"📥 Information captured and stored in the dashboard",
+/* footer */
+"— chatbots especialistas para todas las áreas y todos los giros · Hecho con cariño y colores suaves ✦":"— specialist chatbots for every department and every industry · Made with care and soft colors ✦"
+};
+const I18N_ATTR={
+"Usuario":"Username","Contraseña":"Password","Tu nombre o correo":"Your name or email","Clave · LUMI-XXXX-XXXX":"Key · LUMI-XXXX-XXXX",
+"Escribe un mensaje…":"Type a message…","Enviar":"Send","Cerrar chat":"Close chat","Cerrar sesión":"Sign out","Cambiar idioma / Switch language":"Cambiar idioma / Switch language",
+"Nombre y apellido":"First and last name","Nombre de tu empresa":"Your company name","tu@empresa.com":"you@company.com",
+"Como aparece en la tarjeta":"As shown on the card","MM/AA":"MM/YY",
+"Ej. Clínica Dental Sonría":"E.g. Sunrise Dental Clinic","miempresa.com":"mycompany.com","Lun a Vie 9:00–18:00":"Mon–Fri 9:00–18:00","Ej. Clínica dental familiar":"E.g. Family dental clinic","Ej. Luna, Max, Sol…":"E.g. Luna, Max, Sol…",
+"Pregunta":"Question","Respuesta del bot":"Bot answer","Buscar en el conocimiento…":"Search the knowledge…",
+"Tu usuario":"Your username","••••••••":"••••••••","Empresa del cliente":"Client company","cliente@empresa.com":"client@company.com",
+"Clic para cambiar el estado":"Click to change status","Quitar":"Remove"
+};
+const I18N_RULES=[
+ [/^Rendimiento en los últimos (\d+) días\.$/,m=>`Performance over the last ${m[1]} days.`],
+ [/^Últimos (\d+) días · todos los canales$/,m=>`Last ${m[1]} days · all channels`],
+ [/^Últimos (\d+) días$/,m=>`Last ${m[1]} days`],
+ [/^(\d+) días$/,m=>`${m[1]} days`],
+ [/^([▲▼]) (\d+)% vs periodo previo$/,m=>`${m[1]} ${m[2]}% vs previous period`],
+ [/^▲ (\d+) desde el simulador$/,m=>`▲ ${m[1]} from the simulator`],
+ [/^equivale a (.+)\/mes · ahorras (.+)$/,m=>`that is ${m[1]}/mo · you save ${m[2]}`],
+ [/^≈ (.+)\/año$/,m=>`≈ ${m[1]}/yr`],
+ [/^≈ (.+)\/mes$/,m=>`≈ ${m[1]}/mo`],
+ [/^Pagar (.+)$/,m=>`Pay ${m[1]}`],
+ [/^💳 Contratar plan (.+)$/,m=>`💳 Get the ${m[1]} plan`],
+ [/^ · facturación anual \(2 meses gratis\)$/,()=>" · annual billing (2 months free)"],
+ [/^ · facturación mensual$/,()=>" · monthly billing"],
+ [/^Plan (.+) · anual · (.+) · tarjeta •••• (\d+)$/,m=>`${m[1]} plan · annual · ${m[2]} · card •••• ${m[3]}`],
+ [/^Plan (.+) · mensual · (.+) · tarjeta •••• (\d+)$/,m=>`${m[1]} plan · monthly · ${m[2]} · card •••• ${m[3]}`],
+ [/^Anual · (.+)$/,m=>`Annual · ${m[1]}`],
+ [/^Mensual · (.+)$/,m=>`Monthly · ${m[1]}`],
+ [/^\$(.+)\/mes$/,m=>`$${m[1]}/mo`],
+ [/^(\d+) suspendidas$/,m=>`${m[1]} suspended`],
+ [/^(\d+) registros capturados$/,m=>`${m[1]} records captured`],
+ [/^MXN equiv\.\/mes · \$(.+) cobrados$/,m=>`MXN equiv./mo · $${m[1]} charged`],
+ [/^MXN por licencias activas$/,()=>"MXN from active licenses"],
+ [/^usados de (.+) locales$/,m=>`used of ${m[1]} local`],
+ [/^🤖 (\d+) bots$/,m=>`🤖 ${m[1]} bots`],
+ [/^🗄️ (\d+) pares de conocimiento$/,m=>`🗄️ ${m[1]} knowledge pairs`],
+ [/^🗄️ (\d+) pares$/,m=>`🗄️ ${m[1]} pairs`],
+ [/^📥 (\d+) registros$/,m=>`📥 ${m[1]} records`],
+ [/^🔑 (\d+) licencias$/,m=>`🔑 ${m[1]} licenses`],
+ [/^Capturados por (.+) — incluye tus pruebas del simulador$/,m=>`Captured by ${m[1]} — includes your simulator tests`],
+ [/^Información capturada y almacenada por (.+) — incluye tus pruebas del simulador$/,m=>`Captured and stored by ${m[1]} — includes your simulator tests`],
+ [/^Se eliminará la licencia de (.+) y perderá el acceso a la plataforma\.$/,m=>`The license for ${m[1]} will be deleted and they will lose access.`],
+ [/^Se eliminará (.+) junto con todos sus registros capturados\. Esta acción no se puede deshacer\.$/,m=>`${m[1]} will be deleted along with all its captured records. This cannot be undone.`],
+ [/^Generamos respuestas especialistas para (.+)$/,m=>`We generated specialist answers for ${m[1]}`],
+ [/^✓ (.+)$/,m=>{const r=I18N_TEXT[m[1]];return r?"✓ "+r:undefined}]
+];
+const ES_STORE=new WeakMap();
+function trNode(n){
+  if(!ES_STORE.has(n))ES_STORE.set(n,n.nodeValue);
+  const es=ES_STORE.get(n);
+  if(lang==="es"){if(n.nodeValue!==es)n.nodeValue=es;return}
+  const t=es.trim();if(!t)return;
+  let out=I18N_TEXT[t];
+  if(out===undefined){for(const [re,fn] of I18N_RULES){const m=t.match(re);if(m){out=fn(m);break}}}
+  if(out!==undefined&&out!==null){const nv=es.replace(t,out);if(n.nodeValue!==nv)n.nodeValue=nv}
+}
+function trAttrs(el){
+  for(const a of ["placeholder","title","aria-label"]){
+    if(!el.hasAttribute||!el.hasAttribute(a))continue;
+    const key="__esAttr_"+a;
+    if(!el[key])el[key]=el.getAttribute(a);
+    const es=el[key];
+    const nv=lang==="en"?(I18N_ATTR[es]||es):es;
+    if(el.getAttribute(a)!==nv)el.setAttribute(a,nv);
+  }
+}
+function translateTree(root){
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{
+    const p=n.parentNode&&n.parentNode.nodeName;
+    return (p==="SCRIPT"||p==="STYLE")?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}});
+  let n;while((n=w.nextNode()))trNode(n);
+  if(root.querySelectorAll)root.querySelectorAll("[placeholder],[title],[aria-label]").forEach(trAttrs);
+  if(root.nodeType===1)trAttrs(root);
+}
+let trScheduled=false;
+function scheduleTranslate(){
+  if(trScheduled)return;trScheduled=true;
+  requestAnimationFrame(()=>{trScheduled=false;translateTree(document.body)});
+}
+new MutationObserver(scheduleTranslate).observe(document.body,{childList:true,subtree:true});
+function setLang(l){
+  lang=l;localStorage.setItem("lumibots_lang",l);
+  document.documentElement.lang=l;
+  const label=l==="es"?"EN":"ES";
+  const b=document.getElementById("btn-lang");if(b)b.textContent=label;
+  const g=document.getElementById("gate-lang");if(g)g.textContent=label;
+  translateTree(document.body);
+  const dv=document.getElementById("view-dash");
+  if(dv&&dv.classList.contains("on"))renderDash();
+}
+document.getElementById("btn-lang").addEventListener("click",()=>setLang(lang==="es"?"en":"es"));
+document.getElementById("gate-lang").addEventListener("click",()=>setLang(lang==="es"?"en":"es"));
+
 /* init */
 load();
 applySession();
 playHeroDemo();
+setLang(lang);
 </script>
 </body>
 </html>
