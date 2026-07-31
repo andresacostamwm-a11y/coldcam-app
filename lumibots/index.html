@@ -50,7 +50,7 @@ a{color:var(--accent-deep);text-decoration:none}
 
 /* ── Navbar ─────────────────────────────── */
 .nav{position:sticky;top:0;z-index:50;background:rgba(251,250,246,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:12px 24px}
+.nav-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:12px 24px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.3px;margin-right:10px}
 .brand-mark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--lilac),var(--sky) 55%,var(--mint));display:grid;place-items:center;font-size:17px;box-shadow:var(--shadow-sm)}
 .brand small{font-weight:700;color:var(--warn);font-size:10px;letter-spacing:.14em;text-transform:uppercase;display:block;line-height:1}
@@ -292,12 +292,14 @@ h2{font-size:clamp(26px,3.2vw,36px);letter-spacing:-.8px;font-weight:800;margin:
 .rng{padding:7px 14px;border-radius:99px;border:1.5px solid var(--line);background:#fff;font-size:13px;font-weight:700;color:var(--ink-2)}
 .rng.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:22px}
+.tiles.four{grid-template-columns:repeat(4,1fr)}
 .tile{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow-sm)}
 .tile .tl{font-size:12.5px;font-weight:700;color:var(--ink-2);letter-spacing:.03em;display:flex;align-items:center;gap:7px}
 .tile .tv{font-size:29px;font-weight:800;letter-spacing:-.8px;margin:7px 0 3px;font-variant-numeric:tabular-nums}
 .tile .td{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
 .td.up{color:var(--good)}.td.dn{color:#B3475F}.td.nt{color:var(--ink-3)}
 .dash-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:16px}
+.dash-grid.half{grid-template-columns:1fr 1fr}
 .panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm)}
 .panel h3{font-size:15.5px;letter-spacing:-.2px;margin-bottom:2px}
 .panel .ps{font-size:12.5px;color:var(--ink-2);margin-bottom:14px}
@@ -387,8 +389,8 @@ footer b{color:var(--ink-2)}
 @media (max-width:960px){
   .hero-grid{grid-template-columns:1fr}
   .feat-grid{grid-template-columns:1fr 1fr}
-  .tiles{grid-template-columns:repeat(2,1fr)}
-  .dash-grid{grid-template-columns:1fr}
+  .tiles,.tiles.four{grid-template-columns:repeat(2,1fr)}
+  .dash-grid,.dash-grid.half{grid-template-columns:1fr}
   .ind-grid{grid-template-columns:repeat(3,1fr)}
   .areas-band{grid-template-columns:repeat(3,1fr)}
   .plans-grid{grid-template-columns:1fr}
@@ -400,6 +402,8 @@ footer b{color:var(--ink-2)}
   .wiz-card{padding:24px}
   .summary{grid-template-columns:1fr}
   .nav-tabs{order:3;width:100%}
+  .hbar-row{grid-template-columns:92px 1fr 38px}
+  .funnel-row{grid-template-columns:106px 1fr 46px}
 }
 
 /* ── Tema azul futurista (hero, gate, cta) ── */
@@ -637,7 +641,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <div><h2>👑 Panel del propietario</h2><p>Licencias de clientes, ingresos y respaldo de toda la plataforma.</p></div>
       <button class="btn btn-primary" id="btn-new-lic">＋ Crear licencia manual</button>
     </div>
-    <div class="tiles" id="admin-tiles" style="grid-template-columns:repeat(4,1fr)"></div>
+    <div class="tiles four" id="admin-tiles"></div>
     <div class="panel" style="margin-bottom:16px">
       <div class="panel-head"><div><h3>Licencias y solicitudes</h3><p class="ps" style="margin:0">Autoriza compras, comparte claves y controla el acceso de cada cliente.</p></div></div>
       <div class="lic-table-wrap" id="lic-table"></div>
@@ -726,6 +730,38 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
     <div class="code-actions">
       <button class="mini-btn" id="buy-close">Cancelar</button>
       <button class="mini-btn solid" id="buy-send">Enviar solicitud de compra</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- confirmación propia (los iframes bloquean confirm/prompt nativos) -->
+<div class="overlay" id="confirm-overlay" role="dialog" aria-modal="true" aria-label="Confirmar acción">
+  <div class="code-modal" style="max-width:440px">
+    <h3 id="confirm-title">¿Confirmar?</h3>
+    <p id="confirm-msg"></p>
+    <div class="code-actions">
+      <button class="mini-btn" id="confirm-no">Cancelar</button>
+      <button class="mini-btn solid" id="confirm-yes">Sí, continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- licencia manual -->
+<div class="overlay" id="lic-overlay" role="dialog" aria-modal="true" aria-label="Crear licencia manual">
+  <div class="code-modal">
+    <h3>🔑 Crear licencia manual</h3>
+    <p>Para clientes que te pagan por fuera. La clave se genera al instante, lista para compartir.</p>
+    <div class="f-grid">
+      <div class="f-field"><label>Nombre del cliente *</label><input id="lic-nombre" placeholder="Nombre y apellido"></div>
+      <div class="f-field"><label>Empresa</label><input id="lic-empresa" placeholder="Empresa del cliente"></div>
+      <div class="f-field"><label>Correo</label><input id="lic-email" type="email" placeholder="cliente@empresa.com"></div>
+      <div class="f-field"><label>Plan</label><select id="lic-plan"><option value="starter">Starter · $490/mes</option><option value="pro" selected>Pro · $990/mes</option><option value="empresa">Empresa · $2,490/mes</option></select></div>
+    </div>
+    <p class="f-err" id="lic-err">⚠ Escribe al menos el nombre del cliente.</p>
+    <div class="code-actions">
+      <button class="mini-btn" id="lic-close">Cancelar</button>
+      <button class="mini-btn solid" id="lic-create">Crear licencia</button>
     </div>
   </div>
 </div>
@@ -1024,7 +1060,7 @@ function applySession(){
   if(!state.session){gate.classList.add("on");return}
   gate.classList.remove("on");
   if(esOwner()){
-    chip.className="session-chip";chip.textContent="👑 Propietario";
+    chip.className="session-chip";chip.textContent="👑 "+(state.config.usuario||"Propietario");
     admin.classList.remove("hidden");
   }else{
     const l=miLic();
@@ -1086,6 +1122,22 @@ document.addEventListener("click",e=>{
   const g=e.target.closest("[data-go]");
   if(g)go(g.dataset.go);
 });
+
+/* confirmación propia */
+let confirmCb=null;
+function askConfirm(title,msg,cb){
+  document.getElementById("confirm-title").textContent=title;
+  document.getElementById("confirm-msg").textContent=msg;
+  confirmCb=cb;document.getElementById("confirm-overlay").classList.add("on");
+}
+document.getElementById("confirm-yes").addEventListener("click",()=>{
+  document.getElementById("confirm-overlay").classList.remove("on");
+  const cb=confirmCb;confirmCb=null;if(cb)cb();
+});
+document.getElementById("confirm-no").addEventListener("click",()=>{
+  document.getElementById("confirm-overlay").classList.remove("on");confirmCb=null;
+});
+
 let toastT;
 function toast(msg){
   const t=document.getElementById("toast");t.textContent=msg;t.classList.add("on");
@@ -1295,8 +1347,15 @@ function bindStep(){
     collect();draft.servicios.splice(+b.dataset.serv,1);renderWizard();
   }));
   card.querySelector("#serv-add")?.addEventListener("click",()=>{
-    const s=prompt(draft.tipo==="area"?"Nombre de la función:":"Nombre del servicio o producto:");
-    if(s&&s.trim()){collect();draft.servicios.push(s.trim());renderWizard()}
+    const btn=card.querySelector("#serv-add");if(!btn)return;
+    const inp=document.createElement("input");
+    inp.className="kb-search";inp.style.maxWidth="230px";
+    inp.placeholder=draft.tipo==="area"?"Nueva función + Enter":"Nuevo servicio + Enter";
+    btn.replaceWith(inp);inp.focus();
+    let done=false;
+    const commit=()=>{if(done)return;done=true;const v=inp.value.trim();collect();if(v)draft.servicios.push(v);renderWizard()};
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter")commit();else if(e.key==="Escape"){done=true;renderWizard()}});
+    inp.addEventListener("blur",commit);
   });
   card.querySelector("#faq-add")?.addEventListener("click",()=>{collect();faqFilter="";draft.faqs.push({q:"",a:""});renderWizard()});
   card.querySelectorAll("[data-fdel]").forEach(b=>b.addEventListener("click",()=>{
@@ -1439,6 +1498,7 @@ function renderBots(){
         <button class="mini-btn" data-dashbot="${b.id}">📊 Dashboard</button>
         <button class="mini-btn" data-embed="${b.id}">📎 Instalar</button>
         <button class="mini-btn" data-export="${b.id}">⬇ Exportar</button>
+        <button class="mini-btn danger" data-delbot="${b.id}" style="grid-column:1/-1">🗑 Eliminar bot</button>
       </div>
     </div>`;
   }).join("");
@@ -1446,6 +1506,15 @@ function renderBots(){
   g.querySelectorAll("[data-dashbot]").forEach(b=>b.addEventListener("click",()=>{dashBot=b.dataset.dashbot;go("dash")}));
   g.querySelectorAll("[data-embed]").forEach(b=>b.addEventListener("click",()=>openEmbed(b.dataset.embed)));
   g.querySelectorAll("[data-export]").forEach(b=>b.addEventListener("click",()=>exportBot(b.dataset.export)));
+  g.querySelectorAll("[data-delbot]").forEach(b=>b.addEventListener("click",()=>{
+    const bot=state.bots.find(x=>x.id===b.dataset.delbot);if(!bot)return;
+    askConfirm("Eliminar bot","Se eliminará "+bot.nombreBot+" · "+bot.empresa+" junto con todos sus registros capturados. Esta acción no se puede deshacer.",()=>{
+      state.bots=state.bots.filter(x=>x.id!==bot.id);
+      state.leads=state.leads.filter(l=>l.bot!==bot.id);
+      if(dashBot===bot.id)dashBot=null;
+      save();renderBots();toast("🗑 Bot eliminado junto con sus registros");
+    });
+  }));
 }
 function exportBot(id){
   const b=state.bots.find(x=>x.id===id);if(!b)return;
@@ -1682,7 +1751,7 @@ function renderDash(){
       <div class="chart-box" id="bar-box"></div>
     </div>
   </div>
-  <div class="dash-grid" style="grid-template-columns:1fr 1fr">
+  <div class="dash-grid half">
     <div class="panel">
       <h3>Embudo de conversión</h3><p class="ps">Del primer mensaje al dato almacenado</p>
       ${fun.map(([n,v,c],i)=>`<div class="funnel-row"><span class="lbl">${n}</span><div class="funnel-track"><div class="funnel-fill" style="width:${Math.max(4,(v/(fun[0][1]||1)*100)).toFixed(0)}%;background:${c}"></div></div><b>${v}<div class="funnel-pct">${i===0?"100%":((v/(fun[0][1]||1))*100).toFixed(0)+"%"}</div></b></div>`).join("")}
@@ -1699,6 +1768,12 @@ function renderDash(){
 
   drawLine(document.getElementById("line-box"),days,dayLabels(dashRange));
   drawBars(document.getElementById("bar-box"),canalesEntries);
+  document.querySelectorAll("[data-cyc]").forEach(x=>x.addEventListener("click",()=>{
+    const l=realLeads[+x.dataset.cyc];if(!l)return;
+    const orden=["Nuevo","Contactado","Cerrado"];
+    l.estado=orden[(orden.indexOf(l.estado)+1)%orden.length];
+    save();renderDash();
+  }));
 }
 function topIntents(b,tot){
   const r=rng(hashStr(b.id)+3);
@@ -1720,7 +1795,7 @@ function leadsTable(b,realLeads){
       <td style="color:var(--ink-2);font-size:13px">${otros||"—"}</td>
       <td>${esc(l.interes)}</td><td>${esc(l.canal)}</td>
       <td style="font-variant-numeric:tabular-nums;white-space:nowrap">${l.fecha}</td>
-      <td><span class="st-pill st-${l.estado.toLowerCase()}">${l.estado}</span></td></tr>`;
+      <td><button class="st-pill st-${l.estado.toLowerCase()}" data-cyc="${i}" title="Clic para cambiar el estado">${l.estado}</button></td></tr>`;
   }).join("")}</tbody></table>`;
 }
 function drawLine(box,days,labels){
@@ -1854,8 +1929,9 @@ function renderAdmin(){
   }));
   document.querySelectorAll("[data-ldel]").forEach(b=>b.addEventListener("click",()=>{
     const l=state.licenses.find(x=>x.id===b.dataset.ldel);if(!l)return;
-    if(!confirm("¿Revocar la licencia de "+l.cliente+" ("+l.empresa+")? Perderá el acceso."))return;
-    state.licenses=state.licenses.filter(x=>x.id!==l.id);save();renderAdmin();toast("Licencia eliminada");
+    askConfirm("Revocar licencia","Se eliminará la licencia de "+l.cliente+" ("+l.empresa+") y perderá el acceso a la plataforma.",()=>{
+      state.licenses=state.licenses.filter(x=>x.id!==l.id);save();renderAdmin();toast("Licencia eliminada");
+    });
   }));
   const cu=document.getElementById("cfg-user");if(cu&&!cu.value)cu.value=state.config.usuario||"";
   const bytes=new Blob([JSON.stringify(state)]).size;
@@ -1868,11 +1944,22 @@ function renderAdmin(){
     <div class="store-meta"><span>🤖 ${state.bots.length} bots</span><span>🗄️ ${pares} pares de conocimiento</span><span>📥 ${state.leads.length} registros</span><span>🔑 ${state.licenses.length} licencias</span></div>`;
 }
 document.getElementById("btn-new-lic").addEventListener("click",()=>{
-  const cliente=prompt("Nombre del cliente:");if(!cliente)return;
-  const empresa=prompt("Empresa del cliente:")||"—";
-  const plan=(prompt("Plan (starter / pro / empresa):","pro")||"pro").toLowerCase();
-  const l={id:"lic"+Math.random().toString(36).slice(2,8),key:makeKey(),cliente:cliente.trim(),empresa:empresa.trim(),email:"—",plan:PLANES.find(p=>p.id===plan)?plan:"pro",estado:"Activa",creado:hoy()};
-  state.licenses.unshift(l);save();renderAdmin();
+  ["lic-nombre","lic-empresa","lic-email"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("lic-err").classList.remove("show");
+  document.getElementById("lic-overlay").classList.add("on");
+  setTimeout(()=>document.getElementById("lic-nombre").focus(),150);
+});
+document.getElementById("lic-close").addEventListener("click",()=>document.getElementById("lic-overlay").classList.remove("on"));
+document.getElementById("lic-create").addEventListener("click",()=>{
+  const cliente=document.getElementById("lic-nombre").value.trim();
+  if(!cliente){document.getElementById("lic-err").classList.add("show");return}
+  const l={id:"lic"+Math.random().toString(36).slice(2,8),key:makeKey(),cliente,
+    empresa:document.getElementById("lic-empresa").value.trim()||"—",
+    email:document.getElementById("lic-email").value.trim()||"—",
+    plan:document.getElementById("lic-plan").value,estado:"Activa",creado:hoy()};
+  state.licenses.unshift(l);save();
+  document.getElementById("lic-overlay").classList.remove("on");
+  renderAdmin();
   navigator.clipboard?.writeText(l.key).catch(()=>{});
   toast("🔑 Licencia creada — clave "+l.key+" lista para compartir");
 });
@@ -1899,9 +1986,12 @@ document.getElementById("restore-file").addEventListener("change",e=>{
     try{
       const s=JSON.parse(String(r.result));
       if(!s.bots||!s.licenses)throw new Error("formato");
-      if(!confirm("Esto reemplaza TODOS los datos actuales con el respaldo. ¿Continuar?"))return;
-      s.session=state.session;state=s;save();renderAdmin();
-      toast("⬆ Respaldo restaurado correctamente");
+      askConfirm("Restaurar respaldo","Esto reemplaza TODOS los datos actuales (bots, registros y licencias) con el contenido del respaldo.",()=>{
+        s.session=state.session;
+        s.config=Object.assign({...DEFAULT_CRED},s.config||{});
+        state=s;save();applySession();renderAdmin();
+        toast("⬆ Respaldo restaurado correctamente");
+      });
     }catch(err){toast("⚠ El archivo no es un respaldo válido de LumiBots")}
   };
   r.readAsText(f);e.target.value="";
