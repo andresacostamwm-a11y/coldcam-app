@@ -552,6 +552,31 @@ footer b{color:var(--ink-2)}
   .owner-info b{font-size:16.5px}
 }
 
+/* ── Demostración guiada ── */
+.tour-ring{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(6,16,42,.58),0 0 0 3px var(--accent),0 0 26px rgba(107,127,227,.7);
+  pointer-events:none;z-index:300;transition:top .3s,left .3s,width .3s,height .3s}
+.tour-ring.hide{box-shadow:0 0 0 9999px rgba(6,16,42,.58);width:0;height:0}
+.tour-tip{position:fixed;z-index:301;width:min(330px,90vw);background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 22px 55px rgba(3,12,35,.5)}
+.tour-tip .tstep{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep)}
+.tour-tip h4{font-size:17px;margin:6px 0 6px;letter-spacing:-.2px}
+.tour-tip p{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.tour-tip .tbar{display:flex;gap:9px;align-items:center;margin-top:14px}
+.tour-tip .tbar .grow{flex:1}
+.tour-prog{height:6px;border-radius:99px;background:var(--line);overflow:hidden;width:74px;flex:none}
+.tour-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--mint));border-radius:99px;transition:width .35s ease}
+@media (max-width:520px){
+  .tour-tip .tbar{flex-wrap:wrap;row-gap:10px}
+  .tour-tip .tbar .grow{flex:1 1 100%;height:0}
+  .tour-prog{width:100%}
+}
+.tour-btn{padding:9px 16px;border-radius:11px;font-size:13.5px;font-weight:800;background:var(--accent);color:#fff}
+.tour-btn.ghost{background:#FDFCFA;border:1.5px solid var(--line);color:var(--ink-2)}
+.tour-hand{position:fixed;z-index:302;font-size:26px;pointer-events:none;animation:tapPulse 1.3s ease-in-out infinite;filter:drop-shadow(0 4px 10px rgba(3,12,35,.5))}
+@keyframes tapPulse{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(0,-7px) scale(1.12)}}
+.demo-chip{background:var(--peach-soft)!important;color:#8a5a17!important;border-color:#EFD7B8!important}
+.demo-banner{background:linear-gradient(120deg,var(--peach-soft),var(--gold-soft));border:1px solid #EFD7B8;border-radius:14px;
+  padding:11px 18px;margin:14px 0 0;font-size:13.5px;color:#7a5a17;font-weight:700;text-align:center}
+
 /* ── Tema azul futurista (hero, gate, cta) ── */
 .net-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .gate .net-canvas{position:fixed}
@@ -616,7 +641,11 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <div class="gate-hint">🧪 Demo de cliente: <code>Laura Méndez</code> + clave <code>LUMI-2026-DEMO</code></div>
       </div>
     </div>
-    <div class="gate-buy" style="margin-top:30px">
+    <div class="gate-buy" style="margin-top:24px;background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.34)">
+      <span><b>¿Quieres verlo por dentro antes de decidir?</b> Recorre la plataforma paso a paso, sin registrarte.</span>
+      <button class="btn btn-primary" id="gate-demo-btn">▶ Probar la demostración guiada</button>
+    </div>
+    <div class="gate-buy" style="margin-top:16px">
       <span>¿Aún no tienes acceso? Compra un plan y el propietario autorizará tu licencia.</span>
       <button class="btn btn-ghost" id="gate-buy-btn">💳 Ver planes y comprar</button>
     </div>
@@ -651,6 +680,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
         <p class="lead">LumiBots Studio Premium arma asistentes virtuales especialistas para atención al cliente, finanzas, compras, mantenimiento, marketing y cualquier área o giro. Capturan y almacenan información en gran volumen, y tú lo ves todo en un dashboard claro y detallado.</p>
         <div class="hero-actions">
           <button class="btn btn-primary" data-go="wizard">✨ Crear un chatbot ahora</button>
+          <button class="btn btn-ghost" id="home-demo-btn">▶ Demostración guiada</button>
           <button class="btn btn-ghost" id="btn-demo-home">▶ Ver demo en vivo</button>
         </div>
         <div class="hero-stats">
@@ -1094,6 +1124,20 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
   </div>
 </div>
 
+<div class="tour-ring" id="tour-ring" style="display:none"></div>
+<div class="tour-hand" id="tour-hand" style="display:none">👆</div>
+<div class="tour-tip" id="tour-tip" style="display:none">
+  <span class="tstep" id="tour-step"></span>
+  <h4 id="tour-title"></h4>
+  <p id="tour-text"></p>
+  <div class="tbar">
+    <span class="tour-prog"><i id="tour-prog"></i></span>
+    <span class="grow"></span>
+    <button class="tour-btn ghost" id="tour-exit">Salir</button>
+    <button class="tour-btn" id="tour-next">Siguiente →</button>
+  </div>
+</div>
+
 <div class="toast" id="toast">✓ Listo</div>
 
 <footer>
@@ -1306,6 +1350,7 @@ const LS_KEY="lumibots_v2";
 const DEFAULT_CRED={usuario:"Andrés Acosta",ownerKey:"222-1765-406"};
 let state={bots:[],leads:[],licenses:[],config:{...DEFAULT_CRED},session:null};
 function save(){
+  if(typeof esDemo==="function"&&esDemo())return; /* la demo no guarda nada */
   try{localStorage.setItem(LS_KEY,JSON.stringify(state))}
   catch(e){toast("⚠ Espacio local lleno — descarga un respaldo desde Admin y limpia datos")}
 }
@@ -1381,7 +1426,7 @@ function seedDemo(){
 /* ════════ Sesión y puerta de acceso ════════ */
 function esOwner(){return state.session&&state.session.role==="owner"}
 function miLic(){return state.session&&state.session.role==="cliente"?state.licenses.find(l=>l.id===state.session.licId):null}
-function visibleBots(){return esOwner()?state.bots:state.bots.filter(b=>b.owner===(state.session?state.session.licId:"—"))}
+function visibleBots(){return (esOwner()||esDemo())?state.bots.filter(b=>b.owner==="owner"):state.bots.filter(b=>b.owner===(state.session?state.session.licId:"—"))}
 
 function movePlayer(toGate){
   const pl=document.querySelector(".player");
@@ -1395,11 +1440,23 @@ function applySession(){
   const chip=document.getElementById("session-chip");
   const admin=document.getElementById("tab-admin");
   movePlayer(!state.session);
+  let db=document.getElementById("demo-note");
+  if(esDemo()){
+    if(!db){
+      db=document.createElement("div");db.id="demo-note";db.className="demo-banner";
+      db.style.cssText="position:fixed;left:50%;transform:translateX(-50%);bottom:14px;z-index:120;max-width:92vw;box-shadow:var(--shadow)";
+      db.textContent="▶ Estás en la demostración — nada se guarda. Elige tu plan para tener tu bot de verdad.";
+      document.body.appendChild(db);
+    }
+  }else if(db)db.remove();
   const bv=document.getElementById("btn-voice");
   if(bv)bv.style.display=(state.session&&state.session.role==="owner")?"":"none";
   if(!state.session){gate.classList.add("on");return}
   gate.classList.remove("on");
-  if(esOwner()){
+  if(esDemo()){
+    chip.className="session-chip demo-chip";chip.textContent="▶ Demo · "+DEMO_NAME;
+    admin.classList.add("hidden");
+  }else if(esOwner()){
     chip.className="session-chip";chip.innerHTML='<span class="chip-photo"></span>'+esc(state.config.usuario||"Propietario");
     admin.classList.remove("hidden");
   }else{
@@ -1799,6 +1856,15 @@ function buildBot(){
     if(i>0){const p=document.getElementById("bl-"+(i-1));p.classList.remove("doing");p.classList.add("on");p.querySelector(".st").textContent="✓"}
     if(i>=BUILD_STEPS.length){
       clearInterval(iv);
+      if(esDemo()){
+        document.getElementById("build-title").textContent="✅ Así se crea tu bot";
+        const list=document.getElementById("build-list");
+        const note=document.createElement("div");note.className="demo-banner";
+        note.textContent="Esto es una demostración, así que el bot no se guarda. Con tu plan contratado, aquí ya tendrías tu asistente funcionando.";
+        list.appendChild(note);
+        setTimeout(()=>{go("bots");if(tourI>=0)tourNext()},2200);
+        return;
+      }
       const bot={...draft,id:uid(),owner:esOwner()?"owner":(state.session?state.session.licId:"owner"),creado:hoy()};
       bot.metrics=makeMetrics(bot.id);
       state.bots.unshift(bot);save();
@@ -2059,6 +2125,7 @@ document.getElementById("buy-cvv").addEventListener("input",e=>{e.target.value=e
 document.getElementById("buy-close").addEventListener("click",()=>document.getElementById("buy-overlay").classList.remove("on"));
 document.getElementById("buy-send").addEventListener("click",()=>{
   const err=document.getElementById("buy-err");
+  if(esDemo()){err.textContent="⚠ Estás en la demostración: sal de ella y entra con tu clave para contratar.";err.classList.add("show");return}
   const bad=msg=>{err.textContent="⚠ "+msg;err.classList.add("show")};
   const n=document.getElementById("buy-nombre").value.trim(),
         e=document.getElementById("buy-empresa").value.trim(),
@@ -3297,7 +3364,10 @@ const I18N_TEXT={
 "giros de negocio":"business industries","áreas internas especialistas":"specialist internal areas","tipos de dato capturables":"capturable data types","conocimiento por volumen":"bulk knowledge",
 "● En línea — responde al instante":"● Online — instant replies",
 /* video demo */
-"Video demo":"Video demo","Cómo tener tu chatbot en 5 minutos":"How to get your chatbot in 5 minutes",
+"Video demo":"Video demo","▶ Probar la demostración guiada":"▶ Try the guided demo","▶ Demostración guiada":"▶ Guided demo",
+"¿Quieres verlo por dentro antes de decidir? Recorre la plataforma paso a paso, sin registrarte.":"Want to look inside before deciding? Walk through the platform step by step, no sign-up.",
+"Salir":"Exit","Siguiente →":"Next →","Lo hago yo →":"Do it for me →","Terminar":"Finish",
+"▶ Estás en la demostración — nada se guarda. Elige tu plan para tener tu bot de verdad.":"▶ You are in the demo — nothing is saved. Choose your plan to get your real bot.","Cómo tener tu chatbot en 5 minutos":"How to get your chatbot in 5 minutes",
 "🎬 Cómo tener tu chatbot en 5 minutos":"🎬 See how it works in 1 minute",
 "Con narración en tu idioma — cámbiala o siléncialA con el botón del reproductor":"🎙️ Narrated by Andrés Acosta — switch or mute the narration with the player button",
 "Elige tu plan, paga, crea tu bot y ponlo a atender: te lo enseñamos paso a paso. Salta al capítulo que necesites.":"Choose your plan, pay, build your bot and put it to work — we walk you through every step. Jump to any chapter.",
@@ -3600,6 +3670,141 @@ function setLang(l){
 }
 document.getElementById("btn-lang").addEventListener("click",()=>setLang(lang==="es"?"en":"es"));
 document.getElementById("gate-lang").addEventListener("click",()=>setLang(lang==="es"?"en":"es"));
+
+/* ════════ Demostración guiada paso a paso ════════ */
+const DEMO_NAME="Andrés Acosta";
+function esDemo(){return !!(state.session&&state.session.role==="demo")}
+const TOUR=[
+ {t:"Bienvenido a la demostración",
+  x:"Te voy a mostrar, paso a paso, cómo tener tu propio chatbot. Nada de lo que hagas aquí se guarda: es solo para que veas cómo funciona.",
+  next:true},
+ {sel:'.nav-tab[data-go="wizard"]',t:"Paso 1 · Crear tu bot",
+  x:"Todo empieza aquí. Pulsa «Crear bot» para abrir el asistente guiado.",click:true},
+ {sel:'[data-aud="giro"]',t:"¿Para quién es tu bot?",
+  x:"Elige si atenderá a tus clientes o a un área interna de tu empresa. Pulsa «Para mis clientes».",click:true},
+ {sel:'[data-ind="salud"]',t:"Elige tu giro",
+  x:"Selecciona el giro de tu negocio. Con eso preparamos el conocimiento del bot por ti. Pulsa «Salud / Clínica».",
+  click:true,before(){const e=document.getElementById("f-empresa");if(e&&!e.value){e.value="Mi Empresa Demo";draft.empresa="Mi Empresa Demo"}}},
+ {sel:'#w-next',t:"Continúa",x:"Ya tienes lo esencial de tu empresa. Pulsa «Continuar».",click:true,
+  before(){const e=document.getElementById("f-empresa");if(e)e.value="Mi Empresa Demo";
+    const h=document.getElementById("f-horario");if(h&&!h.value)h.value="Lun a Sáb 9:00–19:00"}},
+ {sel:'[data-obj="citas"]',t:"Paso 2 · Qué quieres lograr",
+  x:"Marca el objetivo de tu asistente. Pulsa «Agendar citas».",click:true},
+ {sel:'#w-next',t:"Su personalidad ya está lista",
+  x:"El nombre, el tono y el saludo se generan solos. Pulsa «Continuar».",click:true},
+ {sel:'#docs-open',t:"Paso 3 · Entrénalo con tus archivos",
+  x:"Aquí subes los PDF, Word o Excel de tu empresa y el bot aprende a responder con tu información. Ya trae preguntas listas para tu giro.",next:true},
+ {sel:'#w-next',t:"Su conocimiento está listo",x:"Pulsa «Continuar» para seguir.",click:true},
+ {sel:'#w-next',t:"Paso 4 · Qué datos capturará",
+  x:"Estos son los datos que tu bot pedirá a cada cliente: nombre, teléfono, fecha… Pulsa «Continuar».",click:true},
+ {sel:'#w-next',t:"Paso 5 · Canales y despegue",
+  x:"Eliges dónde vivirá tu bot y su color. Pulsa «Crear mi chatbot» para ver qué pasa.",click:true},
+ {sel:'.nav-tab[data-go="bots"]',t:"Aquí vivirían tus bots",
+  x:"Cada bot que crees aparece en «Mis bots», listo para probar, instalar en tu web o medir. Pulsa «Mis bots».",click:true},
+ {sel:'[data-chat]',t:"Paso 6 · Pruébalo",
+  x:"Puedes conversar con tu bot igual que lo haría un cliente. Pulsa «Probar bot».",click:true},
+ {sel:'#cm-body',t:"Así atiende a tus clientes",
+  x:"Responde precios y dudas, y cuando alguien quiere una cita le pide sus datos y los guarda al instante. Escríbele si quieres.",next:true},
+ {sel:'.nav-tab[data-go="dash"]',t:"Paso 7 · Tus resultados",
+  x:"Todo lo que capta tu bot llega aquí. Pulsa «Dashboard».",click:true,before(){document.getElementById("cm-close")?.click()}},
+ {sel:'#dash-content',t:"Conversaciones, clientes y descargas",
+  x:"Ves conversaciones por día, tu embudo, los temas que más preguntan y la lista de clientes captados, que puedes descargar en CSV.",next:true},
+ {sel:'.nav-tab[data-go="planes"]',t:"Paso 8 · Ten el tuyo de verdad",
+  x:"Esto es todo lo que incluye. Pulsa «Planes» para ver cómo obtener el tuyo.",click:true},
+ {sel:'#plans-grid',t:"Elige tu plan y págalo aquí",
+  x:"Empieza gratis sin tarjeta, o elige Starter, Pro o Empresa. Al pagar recibes tu clave y creas tus bots de verdad — esta vez sí se guardan.",next:true},
+ {t:"Fin de la demostración",
+  x:"Ya sabes cómo funciona. Cuando quieras el tuyo, elige tu plan: en 5 minutos tienes tu asistente atendiendo.",
+  next:true,last:true}
+];
+let tourI=-1,tourClickTarget=null,tourClickFn=null;
+function tourEl(s){
+  if(!s)return null;
+  const list=document.querySelectorAll(s);
+  for(const e of list){const r=e.getBoundingClientRect();if(r.width&&r.height)return e}
+  return null;
+}
+function tourClear(){
+  if(tourClickTarget&&tourClickFn)tourClickTarget.removeEventListener("click",tourClickFn);
+  tourClickTarget=null;tourClickFn=null;
+}
+function tourStop(){
+  tourClear();tourI=-1;
+  ["tour-ring","tour-tip","tour-hand"].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display="none"});
+}
+function tourPlace(el){
+  const ring=document.getElementById("tour-ring"),tip=document.getElementById("tour-tip"),hand=document.getElementById("tour-hand");
+  if(!el){
+    ring.style.display="none";hand.style.display="none";
+    tip.style.display="";tip.style.left="50%";tip.style.top="50%";tip.style.transform="translate(-50%,-50%)";
+    return;
+  }
+  const r=el.getBoundingClientRect(),pad=8;
+  ring.style.display="";ring.style.transform="";
+  ring.style.top=(r.top-pad)+"px";ring.style.left=(r.left-pad)+"px";
+  ring.style.width=(r.width+pad*2)+"px";ring.style.height=(r.height+pad*2)+"px";
+  hand.style.display="";
+  hand.style.left=(r.left+r.width/2-13)+"px";
+  hand.style.top=(r.bottom+6)+"px";
+  tip.style.display="";tip.style.transform="";
+  const tw=Math.min(330,innerWidth*0.9),th=tip.offsetHeight||190;
+  let left=Math.min(Math.max(12,r.left+r.width/2-tw/2),innerWidth-tw-12);
+  let top=r.bottom+52;
+  if(top+th>innerHeight-12)top=Math.max(12,r.top-th-22);
+  tip.style.left=left+"px";tip.style.top=top+"px";
+}
+function tourShow(){
+  const s=TOUR[tourI];if(!s)return tourStop();
+  tourClear();
+  if(s.before)try{s.before()}catch(e){}
+  document.getElementById("tour-step").textContent=(tourI+1)+" / "+TOUR.length;
+  document.getElementById("tour-title").textContent=s.t;
+  document.getElementById("tour-text").textContent=s.x;
+  document.getElementById("tour-prog").style.width=(((tourI+1)/TOUR.length)*100).toFixed(0)+"%";
+  const nb=document.getElementById("tour-next");
+  nb.textContent=s.last?"Terminar":(s.click?"Lo hago yo →":"Siguiente →");
+  setTimeout(()=>{
+    const el=tourEl(s.sel);
+    if(el&&el.scrollIntoView)el.scrollIntoView({block:"center",behavior:"smooth"});
+    setTimeout(()=>{
+      tourPlace(el);
+      if(s.click&&el){
+        tourClickTarget=el;
+        tourClickFn=()=>{setTimeout(()=>tourNext(),650)};
+        el.addEventListener("click",tourClickFn,{once:true});
+      }
+    },s.sel?320:0);
+  },60);
+}
+let tourLast=0;
+function tourNext(){
+  const now=(performance&&performance.now)?performance.now():Date.now();
+  if(now-tourLast<450)return; /* evita avanzar dos veces con un solo clic */
+  tourLast=now;
+  const s=TOUR[tourI];
+  if(s&&s.last){tourStop();go("planes");return}
+  tourI++;
+  if(tourI>=TOUR.length)return tourStop();
+  tourShow();
+}
+function tourManual(){
+  const s=TOUR[tourI];
+  if(s&&s.click){const el=tourEl(s.sel);if(el){tourClear();el.click();setTimeout(()=>tourNext(),650);return}}
+  tourNext();
+}
+function startDemo(){
+  state.session={role:"demo",licId:null};
+  guestPlanes=false;
+  applySession();go("home");
+  tourI=0;
+  setTimeout(()=>tourShow(),700);
+  toast("▶ Demostración de "+DEMO_NAME+" — nada se guarda");
+}
+document.getElementById("tour-next").addEventListener("click",tourManual);
+document.getElementById("tour-exit").addEventListener("click",()=>{tourStop();toast("Demostración terminada")});
+document.getElementById("gate-demo-btn").addEventListener("click",startDemo);
+document.getElementById("home-demo-btn")?.addEventListener("click",startDemo);
+addEventListener("resize",()=>{if(tourI>=0&&TOUR[tourI])tourPlace(tourEl(TOUR[tourI].sel))});
 
 /* init */
 load();

@@ -25,6 +25,13 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   registrada en la licencia.
 - 🎁 Plan Gratis: cualquier visitante puede crear una cuenta básica de prueba
   sin tarjeta desde la página de planes.
+- ▶️ Demostración guiada: sin clave, desde el botón «Probar la demostración
+  guiada» de la puerta de acceso. Entra con el nombre **Andrés Acosta** y una
+  guía paso a paso lleva al visitante por cada pestaña —crear el bot, entrenarlo,
+  probarlo y ver el panel— hasta terminar en la página de planes. Es solo
+  demostración: no guarda nada en el navegador, no crea bots reales y no permite
+  contratar; su único fin es que el visitante aprenda cómo acceder y crear el
+  suyo.
 
 ## Qué incluye
 
