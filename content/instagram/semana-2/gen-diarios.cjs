@@ -1,7 +1,8 @@
 // Carruseles diarios 31 jul - 4 ago (identidad v2, sin solapes, outfits rotados).
-// v4 PRINCIPIANTES + AVATAR XL: imagen de Andres mas grande (505px) e integrada
-// con el diseno (aura, anillos holograficos, red neuronal por detras); el texto
-// nunca la cubre. Datos re-verificados 30-jul-2026. Uso: node gen-diarios.cjs <cc|ag|sk|gpt|vs>
+// v5 LEGIBLE: tipografia ~20% mas grande en todo, avatar de Andres aun mayor
+// (560px de ancho, 1240px de alto) con aura y anillos; textos condensados para
+// que quepan sin solapar. Datos re-verificados 30-jul-2026.
+// Uso: node gen-diarios.cjs <cc|ag|sk|gpt|vs>
 const { chromium } = require('playwright');
 
 const AV = {
@@ -38,243 +39,243 @@ html,body { width:1080px; height:1350px; }
 body { font-family:'Roboto',sans-serif; position:relative; overflow:hidden; color:#fff;
   background:linear-gradient(160deg,#05080F 0%,#0A1220 55%,#060B14 100%); }
 svg.net { position:absolute; inset:0; }
-.avbox { position:absolute; right:0; bottom:0; width:505px; height:1180px;
+.avbox { position:absolute; right:0; bottom:0; width:560px; height:1240px;
   display:flex; align-items:flex-end; justify-content:flex-end; z-index:1; }
-.avbox img { position:relative; z-index:2; max-width:505px; max-height:1180px;
+.avbox img { position:relative; z-index:2; max-width:560px; max-height:1240px;
   object-fit:contain; object-position:bottom right;
   filter:drop-shadow(-16px 0 50px rgba(0,0,0,0.82)); }
-.aura { position:absolute; right:-70px; bottom:-40px; width:660px; height:920px;
+.aura { position:absolute; right:-70px; bottom:-40px; width:720px; height:980px;
   background:radial-gradient(ellipse at 60% 68%, rgba(232,163,61,0.26) 0%, rgba(53,199,232,0.12) 45%, transparent 72%); }
 .ring { position:absolute; border-radius:50%; }
-.r1 { right:28px; bottom:16px; width:440px; height:102px;
+.r1 { right:28px; bottom:16px; width:480px; height:110px;
   border:2px solid rgba(53,199,232,0.5); box-shadow:0 0 36px rgba(53,199,232,0.3); }
-.r2 { right:62px; bottom:34px; width:372px; height:80px; border:2px solid rgba(232,163,61,0.55); }
-.slide { position:absolute; inset:0; padding:48px 60px 44px 42px; display:flex; flex-direction:column; z-index:2; }
-.col { width:528px; display:flex; flex-direction:column; flex:1; }
-.countL { display:inline-block; border:2px solid #C9932F; border-radius:14px; padding:7px 20px;
-  font-family:'Oswald',sans-serif; font-size:27px; font-weight:600; color:#F0D9A6;
+.r2 { right:66px; bottom:35px; width:400px; height:86px; border:2px solid rgba(232,163,61,0.55); }
+.slide { position:absolute; inset:0; padding:44px 40px 40px 36px; display:flex; flex-direction:column; z-index:2; }
+.col { width:470px; display:flex; flex-direction:column; flex:1; }
+.countL { display:inline-block; border:2px solid #C9932F; border-radius:14px; padding:8px 22px;
+  font-family:'Oswald',sans-serif; font-size:30px; font-weight:600; color:#F0D9A6;
   align-self:flex-start; margin-bottom:14px; }
-.countR { position:absolute; top:46px; right:50px; background:rgba(10,14,24,0.85);
-  border-radius:999px; padding:11px 26px; font-size:29px; font-weight:700; color:#EAF2FA; z-index:3; }
+.countR { position:absolute; top:42px; right:44px; background:rgba(10,14,24,0.85);
+  border-radius:999px; padding:12px 28px; font-size:31px; font-weight:700; color:#EAF2FA; z-index:3; }
 .tgold { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
-  font-size:56px; line-height:1.04; letter-spacing:1px;
+  font-size:62px; line-height:1.04; letter-spacing:1px;
   background:linear-gradient(180deg,#F8E2A6 8%,#E9B95B 55%,#C08A2E 100%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
   filter:drop-shadow(0 4px 18px rgba(0,0,0,0.85)); }
-.tsub { font-size:27px; color:#E9EFF6; margin-top:10px; line-height:1.32;
+.tsub { font-size:30px; color:#E9EFF6; margin-top:10px; line-height:1.3;
   text-shadow:0 2px 12px rgba(0,0,0,0.7); }
 .tsub b { color:#F0B54A; }
 .cap { display:inline-flex; align-items:center; gap:10px; border:2px solid #E8A33D; border-radius:12px;
-  padding:8px 18px; margin:12px 0 14px; font-family:'Oswald',sans-serif; font-size:23px; font-weight:600;
-  letter-spacing:2px; text-transform:uppercase; color:#F0B54A; align-self:flex-start;
+  padding:9px 18px; margin:12px 0 14px; font-family:'Oswald',sans-serif; font-size:26px; font-weight:600;
+  letter-spacing:1.5px; text-transform:uppercase; color:#F0B54A; align-self:flex-start;
   background:rgba(232,163,61,0.07); }
-.card { display:flex; align-items:flex-start; gap:16px; border:2px solid rgba(232,163,61,0.6);
-  border-radius:16px; background:rgba(10,16,28,0.78); padding:13px 16px; margin-bottom:10px; }
-.hex { min-width:50px; height:50px; display:flex; align-items:center; justify-content:center;
-  font-size:23px; color:#F0B54A; border:2px solid #C9932F; border-radius:12px;
+.card { display:flex; align-items:flex-start; gap:14px; border:2px solid rgba(232,163,61,0.6);
+  border-radius:16px; background:rgba(10,16,28,0.78); padding:14px 16px; margin-bottom:12px; }
+.hex { min-width:46px; height:46px; display:flex; align-items:center; justify-content:center;
+  font-size:24px; color:#F0B54A; border:2px solid #C9932F; border-radius:12px;
   background:rgba(232,163,61,0.09); }
-.card h3 { font-family:'Oswald',sans-serif; font-size:24px; font-weight:600; color:#F0B54A;
+.card h3 { font-family:'Oswald',sans-serif; font-size:28px; font-weight:600; color:#F0B54A;
   letter-spacing:1px; margin-bottom:4px; text-transform:uppercase; }
-.card p { font-size:21px; line-height:1.3; color:#E7EDF4; }
+.card p { font-size:25px; line-height:1.28; color:#E7EDF4; }
 .card p b { color:#fff; }
 .h1 { font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase;
-  font-size:82px; line-height:1.05; text-shadow:0 4px 24px rgba(0,0,0,0.85); }
+  font-size:88px; line-height:1.05; text-shadow:0 4px 24px rgba(0,0,0,0.85); }
 .gold { color:#F0B54A; } .cyan { color:#35C7E8; }
 .sub { font-family:'Oswald',sans-serif; font-weight:600; text-transform:uppercase; color:#35C7E8;
-  font-size:38px; letter-spacing:2px; margin-top:22px; line-height:1.18;
+  font-size:42px; letter-spacing:2px; margin-top:22px; line-height:1.18;
   text-shadow:0 3px 18px rgba(0,0,0,0.8); }
-.pill { display:inline-block; padding:11px 24px; border:2px solid #E8A33D; border-radius:999px;
-  color:#F0B54A; font-size:25px; font-weight:700; letter-spacing:2px; margin-bottom:30px;
+.pill { display:inline-block; padding:12px 26px; border:2px solid #E8A33D; border-radius:999px;
+  color:#F0B54A; font-size:27px; font-weight:700; letter-spacing:2px; margin-bottom:30px;
   align-self:flex-start; text-transform:uppercase; }
-p.body { font-size:30px; line-height:1.38; color:#E6EDF5; text-shadow:0 2px 12px rgba(0,0,0,0.7); }
+p.body { font-size:34px; line-height:1.36; color:#E6EDF5; text-shadow:0 2px 12px rgba(0,0,0,0.7); }
 p.body b { color:#F0B54A; }
 .mt { margin-top:18px; }
 .vcenter { flex:1; display:flex; flex-direction:column; justify-content:center; }
 .grow { flex:1; }
-.firma { font-family:'Dancing Script',cursive; font-size:48px;
+.firma { font-family:'Dancing Script',cursive; font-size:54px;
   background:linear-gradient(180deg,#F8E2A6,#D9A441); -webkit-background-clip:text;
   background-clip:text; color:transparent; filter:drop-shadow(0 2px 10px rgba(0,0,0,0.8)); }
-.rol { font-size:20px; letter-spacing:3px; color:#9FB2C8; text-transform:uppercase; margin-top:2px; }
+.rol { font-size:22px; letter-spacing:3px; color:#9FB2C8; text-transform:uppercase; margin-top:2px; }
 `;
 
-const FOOT = `<div style="width:528px;"><div class="firma">Ing. Andrés Acosta</div><div class="rol">IA &amp; Automatización</div></div>`;
+const FOOT = `<div style="width:470px;"><div class="firma">Ing. Andrés Acosta</div><div class="rol">IA &amp; Automatización</div></div>`;
 const card = (ico, t, p) => `<div class="card"><div class="hex">${ico}</div><div><h3>${t}</h3><p>${p}</p></div></div>`;
 const av = (k) => `<div class="avbox"><div class="aura"></div><div class="ring r1"></div><div class="ring r2"></div><img src="${AV[k]}"></div>`;
 const cover = (n, o, pill, h1, sub, body) => `${NET}${av(o)}<div class="slide"><div class="countR">${n}/10</div>
 <div class="col vcenter"><div class="pill">${pill}</div><div class="h1">${h1}</div><div class="sub">${sub}</div>
-<p class="body mt" style="font-size:33px;">${body}</p></div>${FOOT}</div>`;
+<p class="body mt" style="font-size:37px;">${body}</p></div>${FOOT}</div>`;
 const stmt = (n, o, h1, bodies) => `${NET}${av(o)}<div class="slide"><div class="countR">${n}/10</div>
-<div class="col vcenter"><div class="h1" style="font-size:62px;">${h1}</div>${bodies.map(b => `<p class="body mt">${b}</p>`).join('')}</div>${FOOT}</div>`;
+<div class="col vcenter"><div class="h1" style="font-size:66px;">${h1}</div>${bodies.map(b => `<p class="body mt">${b}</p>`).join('')}</div>${FOOT}</div>`;
 const cards = (n, o, title, sub, cap, cs) => `${NET}${av(o)}<div class="slide"><div class="col">
 <div class="countL">${n}/10</div><div class="tgold">${title}</div><div class="tsub">${sub}</div>
 <div class="cap">${cap}</div>${cs.map(c => card(...c)).join('')}<div class="grow"></div>${FOOT}</div></div>`;
 
 const DAYS = {
 cc: { out: ['traje','azulcielo','tablet','negrabeige','blancamarino','burdeos','grisperla','marinocrema','gris','camel'], S: [
-cover('1','traje','Guía desde cero · Jul 2026','CLAUDE<br><span class="gold">CODE</span>','La IA que trabaja<br>en tu ordenador','Qué es, cómo se instala gratis en 5 minutos y qué puede hacer por ti — <b>paso a paso y sin tecnicismos</b>.'),
-stmt('2','azulcielo','NO ES UN CHAT.<br><span class="gold">ES UN ASISTENTE QUE HACE.</span>',['Un chat normal te responde con texto y ahí acaba. Claude Code además <b>usa tu ordenador</b>: lee tus archivos, los organiza, crea documentos y programas, y te entrega el trabajo terminado.','<span class="cyan">A eso se le llama "agente": una IA que da los pasos por sí sola hasta acabar la tarea.</span>']),
-cards('3','tablet','QUÉ ES EXACTAMENTE','Un programa de Anthropic (la empresa creadora de Claude) que se maneja escribiendo en la terminal: la ventana donde se dan órdenes al ordenador.','🧠 En 3 ideas',[
-['💬','Le hablas normal','Escribes en español lo que necesitas: <b>"ordena mis fotos por fecha"</b> o "resume estos PDF". No hace falta saber programar para empezar.'],
-['🤖','Él hace el trabajo','Lee tus archivos, te <b>propone un plan</b>, lo ejecuta y te enseña el resultado. Tú apruebas los pasos importantes.'],
-['🧠','Su cerebro: Opus 5','El modelo más potente de Anthropic (julio 2026). Su memoria de trabajo llega a <b>1 millón de tokens</b>: como leer un libro entero de una vez sin olvidar nada.']]),
-cards('4','negrabeige','CÓMO SE INSTALA','De cero a funcionando en 5 minutos. Solo necesitas un ordenador (Windows, Mac o Linux) e internet.','🚀 3 pasos',[
-['1️⃣','Instala Node.js','Descárgalo gratis en nodejs.org (es el "motor" que Claude Code necesita). Instalación de <b>siguiente → siguiente → listo</b>.'],
-['2️⃣','Copia un comando','Abre la terminal y pega: <b>npm install -g @anthropic-ai/claude-code</b>. Tarda un minuto.'],
-['3️⃣','Escribe "claude"','Se abre el asistente y te pide entrar con tu <b>cuenta de Claude</b> (plan Pro o superior) o con una clave de la API. Y ya está.']]),
-cards('5','blancamarino','QUÉ PUEDE HACER POR TI','No es solo para programadores: sirve para cualquier persona que trabaje con archivos y documentos.','💡 Ejemplos reales',[
-['📂','Ordenar tu caos','Cientos de fotos, facturas o documentos <b>organizados y renombrados en minutos</b>, con el criterio que tú le digas.'],
-['📊','Informes y resúmenes','Lee tus documentos y te crea <b>resúmenes, tablas comparativas o presentaciones</b> listas para enviar.'],
-['🌐','Crear desde cero','Páginas web, hojas de cálculo automatizadas, pequeños programas: <b>tú lo describes, él lo construye</b> delante de ti.']]),
-cards('6','burdeos','MINI DICCIONARIO','Tres palabras que verás siempre. Entiéndelas y el resto es fácil.','📖 Sin miedo a la jerga',[
-['🧵','Contexto','La "memoria de la conversación": todo lo que la IA ha leído en la sesión. Más contexto = <b>puede con proyectos más grandes</b> sin perderse.'],
-['🤖','Agente','Una IA que no solo responde: <b>decide pasos y usa herramientas</b> (archivos, internet, programas) hasta terminar el objetivo.'],
-['🧩','Subagente','Ayudantes que Claude Code crea para <b>repartirse el trabajo en paralelo</b>. Desde julio pueden crear a su vez sus propios ayudantes.']]),
-cards('7','grisperla','TRUCOS QUE MARCAN LA DIFERENCIA','Tres funciones (nuevas o mejoradas en julio 2026) explicadas en fácil.','🆕 Nivel siguiente',[
-['📄','CLAUDE.md','Un archivo de texto con tus reglas: "responde en español", "no toques esta carpeta". Lo lee <b>siempre al empezar</b>, como su manual de tu casa.'],
-['🎯','Skills','Instrucciones guardadas que se activan solas cuando tocan. <b>Le enseñas tu método una vez</b> y lo aplica siempre igual.'],
-['🔌','MCP','El "enchufe universal" que lo conecta con tus apps: Gmail, Slack, bases de datos… Renovado en julio con <b>inicio de sesión más seguro</b>.']]),
-cards('8','marinocrema','ERRORES DE NOVATO','Los 3 fallos más comunes al empezar — y cómo evitarlos desde el día uno.','❌ Que no te pasen',[
-['🧨','Pedirlo todo de golpe','Mejor tareas pequeñas y claras, de una en una: <b>"haz esto y avísame cuando acabes"</b>. Acabarás antes.'],
-['👀','Aprobar sin leer','Cuando te proponga cambios, <b>léelos antes de aceptar</b>. Tú eres el jefe; él, el ayudante.'],
-['💾','Trabajar sin red','Usa copias de seguridad (o git, si lo conoces): si algo sale mal, <b>vuelves atrás en segundos</b>.']]),
-cards('9','gris','EMPIEZA HOY MISMO','Tres tareas fáciles y sin ningún riesgo para tu primer día.','✅ Prueba esto',[
-['1️⃣','Pregunta','"Explícame qué hay en esta carpeta y para qué sirve cada cosa" — solo lee, <b>no cambia nada</b>.'],
-['2️⃣','Organiza','"Ordena estos archivos por tipo y fecha" — hazlo primero en una <b>carpeta de prueba</b>.'],
-['3️⃣','Crea','"Hazme una página web sencilla sobre mí" — y ábrela en tu navegador. <b>Verlo funcionar engancha</b>.']]),
-stmt('10','camel','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel para instalarlo con calma','💬 Comenta <b>"CODE"</b> y te mando la guía completa de inicio','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Mañana: agentes de IA — qué son y cómo tener el tuyo.</span>']),
+cover('1','traje','Guía desde cero · Jul 2026','CLAUDE<br><span class="gold">CODE</span>','La IA que trabaja<br>en tu ordenador','Qué es, cómo se instala gratis y qué puede hacer por ti — <b>sin tecnicismos</b>.'),
+stmt('2','azulcielo','NO ES UN CHAT.<br><span class="gold">ES UN ASISTENTE QUE HACE.</span>',['Un chat te responde y ahí acaba. Claude Code además <b>usa tu ordenador</b>: lee tus archivos, crea documentos y te entrega el trabajo hecho.','<span class="cyan">Eso es un "agente": una IA que da los pasos por sí sola hasta acabar la tarea.</span>']),
+cards('3','tablet','QUÉ ES EXACTAMENTE','Un programa de Anthropic que se maneja desde la terminal: la ventana de órdenes del ordenador.','🧠 En 3 ideas',[
+['💬','Le hablas normal','Escribes en español: <b>"ordena mis fotos por fecha"</b>. Sin saber programar.'],
+['🤖','Él hace el trabajo','Lee tus archivos, <b>propone un plan</b>, lo ejecuta y te enseña el resultado.'],
+['🧠','Cerebro: Opus 5','Memoria de <b>1 millón de tokens</b>: como leer un libro entero sin olvidar nada.']]),
+cards('4','negrabeige','CÓMO SE INSTALA','De cero a funcionando en 5 minutos, en Windows, Mac o Linux.','🚀 3 pasos',[
+['1️⃣','Instala Node.js','Gratis en nodejs.org. Instalación de <b>siguiente → siguiente → listo</b>.'],
+['2️⃣','Copia un comando','En la terminal: <b>npm install -g @anthropic-ai/claude-code</b>.'],
+['3️⃣','Escribe "claude"','Entra con tu <b>cuenta de Claude</b> (Pro o superior) y ya está.']]),
+cards('5','blancamarino','QUÉ HACE POR TI','No es solo para programadores: sirve si trabajas con archivos y documentos.','💡 Ejemplos reales',[
+['📂','Ordena tu caos','Fotos, facturas y documentos <b>organizados en minutos</b> con tu criterio.'],
+['📊','Informes','Lee tus documentos y crea <b>resúmenes y tablas</b> listos para enviar.'],
+['🌐','Crea desde cero','Webs, hojas de cálculo, programas: <b>tú lo describes, él lo construye</b>.']]),
+cards('6','burdeos','MINI DICCIONARIO','Tres palabras que verás siempre, explicadas sin miedo a la jerga.','📖 Apréndetelas',[
+['🧵','Contexto','La memoria de la sesión. Más contexto = <b>proyectos más grandes</b>.'],
+['🤖','Agente','IA que <b>decide pasos y usa herramientas</b> hasta terminar el objetivo.'],
+['🧩','Subagente','Ayudantes que crea para <b>repartirse el trabajo en paralelo</b>.']]),
+cards('7','grisperla','TRUCOS CLAVE','Tres funciones de julio 2026 que marcan la diferencia.','🆕 Nivel siguiente',[
+['📄','CLAUDE.md','Tus reglas en un archivo de texto. Lo lee <b>siempre al empezar</b>.'],
+['🎯','Skills','<b>Le enseñas tu método una vez</b> y lo aplica siempre igual.'],
+['🔌','MCP','El "enchufe" con tus apps: Gmail, Slack… ahora <b>más seguro</b>.']]),
+cards('8','marinocrema','ERRORES DE NOVATO','Los 3 fallos más comunes al empezar — evítalos desde el día uno.','❌ Que no te pasen',[
+['🧨','Pedirlo todo de golpe','Mejor tareas <b>pequeñas y claras</b>, de una en una.'],
+['👀','Aprobar sin leer','<b>Lee los cambios</b> antes de aceptar. Tú eres el jefe.'],
+['💾','Trabajar sin red','Con copias de seguridad <b>vuelves atrás en segundos</b>.']]),
+cards('9','gris','EMPIEZA HOY','Tres tareas fáciles y sin ningún riesgo para tu primer día.','✅ Prueba esto',[
+['1️⃣','Pregunta','"¿Qué hay en esta carpeta?" — solo lee, <b>no cambia nada</b>.'],
+['2️⃣','Organiza','"Ordena estos archivos" — hazlo en una <b>carpeta de prueba</b>.'],
+['3️⃣','Crea','"Hazme una web sencilla sobre mí". <b>Verlo funcionar engancha</b>.']]),
+stmt('10','camel','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel para instalarlo con calma','💬 Comenta <b>"CODE"</b> y te mando la guía completa','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Mañana: agentes de IA — cómo tener el tuyo.</span>']),
 ]},
 ag: { out: ['blancamarino','burdeos','holo','grisperla','marinocrema','azulcielo','negrabeige','bomber','chaleco','traje'], S: [
-cover('1','blancamarino','Explicado desde cero','AGENTES<br><span class="gold">DE IA</span>','Qué son y cómo tener<br>el tuyo sin ser experto','La diferencia real entre un chatbot y un agente, <b>con ejemplos de la vida diaria</b> y un camino para empezar.'),
-stmt('2','burdeos','UN CHATBOT RESPONDE.<br><span class="gold">UN AGENTE TRABAJA.</span>',['Al chatbot le preguntas y te contesta. Al agente le das <b>un objetivo</b> — "revisa mi correo y resume lo urgente" — y él solo da todos los pasos hasta entregártelo hecho.','<span class="cyan">Y en 2026 ya puedes tener uno sin escribir ni una línea de código.</span>']),
-cards('3','holo','CÓMO PIENSA UN AGENTE','El ciclo que repite una y otra vez hasta terminar tu encargo. Entender esto es entenderlo todo.','🔁 El ciclo de 4 pasos',[
-['🎯','1. Objetivo','Tú le dices <b>qué quieres conseguir</b>, no cómo hacerlo. Como a un buen empleado.'],
-['🗺️','2. Plan','Divide tu encargo en <b>pasos pequeños</b> por sí solo y decide el orden.'],
-['🛠️','3. Herramientas','Usa lo que haga falta: leer archivos, <b>buscar en internet</b>, escribir documentos, enviar mensajes.'],
-['✅','4. Verificación','Comprueba su propio resultado y lo <b>corrige antes de entregártelo</b>.']]),
-cards('4','grisperla','3 FORMAS DE TENER UNO','Ordenadas de más fácil a más avanzada. Empieza por la primera y sube cuando lo necesites.','🧭 Elige tu nivel',[
-['🖥️','Ya montados','Claude Code o Claude Cowork: agentes <b>listos para usar desde el primer día</b>, sin programar nada.'],
-['🛠️','Agent SDK','Para quien programa: el "kit de construcción" de Anthropic (en Python o TypeScript) para <b>meter un agente dentro de tu propia app</b>.'],
-['☁️','Managed Agents','Anthropic aloja tu agente en su nube, con <b>memoria y seguridad incluidas</b>. Lo más nuevo de 2026.']]),
-cards('5','marinocrema','LA MEMORIA','La diferencia entre un juguete y un ayudante de verdad es que <b>recuerde</b>.','💾 Explicado en simple',[
-['🧠','Sin memoria','Cada conversación empieza de cero y <b>le repites todo</b> una y otra vez. Agotador.'],
-['📁','Con memoria','El agente guarda notas de lo que aprende ("a Andrés le gusta así") y <b>las relee la próxima vez</b>.'],
-['🤝','Memoria compartida','En Managed Agents, lo que aprende un agente <b>pueden usarlo los demás</b> agentes de tu equipo. Novedad de este año.']]),
-cards('6','azulcielo','MCP: SUS MANOS','Las siglas que más verás este año: el estándar que conecta tu agente con tus aplicaciones.','🔌 El enchufe universal',[
-['📬','Conecta tus apps','Gmail, Slack, Notion, tu calendario, tu tienda online… con MCP el agente <b>puede usarlas por ti</b>.'],
-['🔐','Siempre con permiso','Tú decides a qué puede acceder. La versión de julio 2026 añade <b>inicio de sesión seguro</b> (el mismo sistema que usan los bancos).'],
-['♻️','Una vez, para todos','Conectas una aplicación una sola vez y <b>todos tus agentes</b> pueden usarla desde entonces.']]),
-cards('7','negrabeige','SEGURIDAD PRIMERO','Los agentes son potentes. Estas 3 reglas de oro evitan sustos.','🛡️ No las saltes',[
-['✋','Tú apruebas lo delicado','Pagos, correos a clientes, borrar archivos: configúralo para que <b>siempre te pregunte antes</b>.'],
-['🧪','Prueba en pequeño','Primero con datos de prueba o copias. Cuando confíes en él, <b>pásale lo real</b>.'],
-['📊','Revisa sus entregas','Los primeros días revísalo todo: así descubres <b>qué puedes delegarle</b> con tranquilidad y qué no.']]),
-cards('8','bomber','IDEAS PARA EMPEZAR','Tres agentes útiles de verdad que puedes tener funcionando esta misma semana.','💡 Fáciles y seguros',[
-['📥','El que ordena tu correo','Cada mañana clasifica tu bandeja y te deja un resumen con <b>solo lo importante</b>.'],
-['🔎','El investigador','Le das un tema y te trae un <b>informe con sus fuentes</b>, listo para leer en 5 minutos.'],
-['📅','El de la agenda','Cada tarde te prepara el <b>resumen de tus reuniones de mañana</b> con lo que necesitas saber.']]),
-cards('9','chaleco','TU PRIMER AGENTE, HOY','El camino recomendado si empiezas totalmente de cero.','✅ 3 pasos',[
-['1️⃣','Empieza con uno ya hecho','Claude Code o Cowork: es <b>un agente ya montado</b> — solo tienes que hablarle.'],
-['2️⃣','Dale una tarea que odies','Ordenar facturas, renombrar fotos, resumir documentos: <b>esa es la mejor primera prueba</b>.'],
-['3️⃣','Ajusta y repite','Corrige sus instrucciones hasta que lo haga <b>exactamente como tú</b>. Ya tienes tu primer agente.']]),
-stmt('10','traje','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel como tu hoja de ruta','💬 Comenta <b>"AGENTE"</b> y te mando la guía para montar el primero','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Construyo agentes a diario — esto sale de práctica real.</span>']),
+cover('1','blancamarino','Explicado desde cero','AGENTES<br><span class="gold">DE IA</span>','Qué son y cómo tener<br>el tuyo sin ser experto','La diferencia real entre un chatbot y un agente, <b>con ejemplos de la vida diaria</b>.'),
+stmt('2','burdeos','UN CHATBOT RESPONDE.<br><span class="gold">UN AGENTE TRABAJA.</span>',['Al chatbot le preguntas y te contesta. Al agente le das <b>un objetivo</b> y él solo da todos los pasos hasta entregártelo hecho.','<span class="cyan">Y en 2026 puedes tener uno sin escribir código.</span>']),
+cards('3','holo','CÓMO PIENSA','El ciclo que repite una y otra vez hasta terminar tu encargo.','🔁 4 pasos',[
+['🎯','1. Objetivo','Le dices <b>qué conseguir</b>, no cómo hacerlo.'],
+['🗺️','2. Plan','Divide el encargo en <b>pasos pequeños</b> él solo.'],
+['🛠️','3. Herramientas','Lee archivos, <b>busca en internet</b>, escribe documentos.'],
+['✅','4. Verificación','<b>Corrige su resultado</b> antes de entregártelo.']]),
+cards('4','grisperla','3 FORMAS DE TENER UNO','Ordenadas de más fácil a más avanzada. Empieza por la primera.','🧭 Tu nivel',[
+['🖥️','Ya montados','Claude Code o Cowork: <b>listos desde el día uno</b>, sin programar.'],
+['🛠️','Agent SDK','El kit de Anthropic para <b>meter un agente en tu app</b>.'],
+['☁️','Managed Agents','Anthropic aloja tu agente con <b>memoria y seguridad incluidas</b>.']]),
+cards('5','marinocrema','LA MEMORIA','Un ayudante de verdad es el que <b>recuerda</b>.','💾 En simple',[
+['🧠','Sin memoria','Cada chat empieza de cero y <b>le repites todo</b>. Agotador.'],
+['📁','Con memoria','Guarda notas de lo que aprende y <b>las relee la próxima vez</b>.'],
+['🤝','Compartida','Lo que aprende un agente <b>lo usan los demás</b> de tu equipo.']]),
+cards('6','azulcielo','MCP: SUS MANOS','El estándar que conecta tu agente con tus aplicaciones.','🔌 El enchufe',[
+['📬','Conecta tus apps','Gmail, Slack, Notion, calendario… el agente <b>las usa por ti</b>.'],
+['🔐','Con permiso','Tú decides el acceso, con <b>inicio de sesión seguro</b> (jul 2026).'],
+['♻️','Una vez, todos','Conectas una app y <b>todos tus agentes</b> pueden usarla.']]),
+cards('7','negrabeige','SEGURIDAD PRIMERO','Los agentes son potentes. Tres reglas de oro evitan sustos.','🛡️ No las saltes',[
+['✋','Apruebas lo delicado','Pagos, correos, borrar: que <b>siempre pregunte antes</b>.'],
+['🧪','Prueba en pequeño','Primero con copias de prueba; cuando confíes, <b>lo real</b>.'],
+['📊','Revisa entregas','Al principio revísalo todo: sabrás <b>qué delegarle</b>.']]),
+cards('8','bomber','IDEAS PARA EMPEZAR','Agentes útiles de verdad que puedes tener esta semana.','💡 Fáciles',[
+['📥','Ordena tu correo','Clasifica tu bandeja y resume <b>solo lo importante</b>.'],
+['🔎','El investigador','Te trae un <b>informe con fuentes</b> listo en 5 minutos.'],
+['📅','El de la agenda','Cada tarde, el <b>resumen de tus reuniones de mañana</b>.']]),
+cards('9','chaleco','TU PRIMER AGENTE','El camino recomendado si empiezas totalmente de cero.','✅ 3 pasos',[
+['1️⃣','Uno ya hecho','Claude Code o Cowork: <b>solo tienes que hablarle</b>.'],
+['2️⃣','Una tarea que odies','Facturas, fotos, resúmenes: <b>la mejor primera prueba</b>.'],
+['3️⃣','Ajusta y repite','Corrige sus instrucciones hasta que lo haga <b>como tú</b>.']]),
+stmt('10','traje','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel como tu hoja de ruta','💬 Comenta <b>"AGENTE"</b> y te mando la guía de inicio','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Construyo agentes a diario — esto es práctica real.</span>']),
 ]},
 sk: { out: ['grisperla','marinocrema','tablet','azulcielo','burdeos','negrabeige','blancamarino','camel','gris','brazos'], S: [
-cover('1','grisperla','Explicado desde cero','SKILLS<br><span class="gold">DE CLAUDE</span>','Enséñale una vez,<br>lo hará siempre','Qué son las skills, cómo crear la primera en 10 minutos y por qué <b>ahorran horas cada semana</b>.'),
-stmt('2','marinocrema','¿REPITES EL MISMO<br><span class="gold">PROMPT CADA SEMANA?</span>',['Eso que copias y pegas una y otra vez puede guardarse como una <b>skill</b>: instrucciones que Claude usará por sí solo, justo cuando toquen.','<span class="cyan">Piensa en ella como una receta guardada: no la buscas — se cocina sola cuando pides ese plato.</span>']),
-cards('3','tablet','QUÉ ES UNA SKILL','La explicación más simple posible: una carpeta con una receta dentro.','📁 Así de fácil',[
-['📄','Un archivo de texto','Se llama SKILL.md. Dentro escribes las instrucciones <b>en tu idioma, como una receta</b>: pasos, reglas, ejemplos.'],
-['🏷️','Nombre y descripción','Las dos únicas líneas obligatorias al principio. La descripción le dice a Claude <b>cuándo debe usarla</b>.'],
-['📎','Extras opcionales','En la misma carpeta puedes meter plantillas, ejemplos o pequeños programas <b>para que los use</b> al trabajar.']]),
-cards('4','azulcielo','LA MAGIA: SE ACTIVA SOLA','No tienes que acordarte de que existe. Esa es exactamente la gracia.','✨ Cómo decide',[
-['🔎','Mira tu petición','Cada vez que pides algo, Claude repasa tus skills y comprueba <b>si alguna encaja</b> con lo que quieres.'],
-['🎯','Si encaja, la usa','Carga tus instrucciones guardadas y las sigue <b>al pie de la letra</b>, sin que se lo pidas.'],
-['🪶','Si no, no molesta','Una skill "dormida" apenas ocupa memoria (~100 tokens, unas 75 palabras). Puedes tener <b>decenas sin problema</b>.']]),
-cards('5','burdeos','DÓNDE FUNCIONAN','Las creas una vez y te sirven en muchos sitios. Son un estándar abierto.','🌍 Muy portables',[
-['👤','Para ti','En tu carpeta personal: tu método te acompaña <b>en todos tus proyectos</b>.'],
-['📦','Para tu equipo','En la carpeta del proyecto: <b>todos trabajan igual</b>, con las mismas reglas.'],
-['🔌','En otras apps','Desde diciembre de 2025 son un estándar abierto adoptado por <b>más de 26 plataformas</b> (Cursor, VS Code, Gemini CLI y más).']]),
-cards('6','negrabeige','CREA LA TUYA EN 10 MIN','El paso a paso completo. De verdad que no hay más.','🛠️ Manos a la obra',[
-['1️⃣','Crea la carpeta','Con el nombre de tu skill. Ejemplo: <b>informe-semanal</b>.'],
-['2️⃣','Escribe SKILL.md','Arriba: nombre y descripción. Debajo: <b>tus instrucciones paso a paso</b>, como se las darías a un ayudante nuevo.'],
-['3️⃣','Guárdala y pruébala','Pídele a Claude algo relacionado y verás cómo <b>la usa él solo</b>. Si no la usa, mejora la descripción.']]),
-cards('7','blancamarino','EL SECRETO: LA DESCRIPCIÓN','El 90% de las skills que "no funcionan" fallan solo en esto.','🎯 Escríbela así',[
-['🗣️','Sé literal','"Úsala cuando pida un informe semanal, un resumen de ventas o métricas del mes". Claude <b>no adivina</b>: díselo con las palabras que usarías tú.'],
-['🚫','Di cuándo NO','"No la uses para informes de clientes" — así evitas que <b>salte cuando no toca</b>.'],
-['🧪','Prueba y ajusta','¿No se activa? Reescribe la descripción con otras palabras. <b>Dos o tres intentos</b> y quedará fina.']]),
-cards('8','camel','IDEAS QUE AHORRAN HORAS','Skills reales que puedes copiar hoy mismo para tu día a día.','💡 Mi top 3',[
-['📊','Tu informe tipo','Tu formato exacto de informe o reporte: <b>siempre igual, sin repetir instrucciones</b>.'],
-['✍️','Tu forma de escribir','Tu tono para correos y publicaciones: Claude escribe <b>sonando a ti</b>.'],
-['🎨','Tu marca','Colores, plantillas y reglas de diseño: <b>así se hacen estos carruseles</b> que estás viendo.']]),
-cards('9','gris','EMPIEZA HOY','De prompt repetido a skill guardada en menos de media hora.','✅ Plan de 3 pasos',[
-['1️⃣','Encuentra al candidato','¿Qué instrucción escribiste <b>más de dos veces</b> esta semana? Esa es tu primera skill.'],
-['2️⃣','Conviértela','Carpeta + SKILL.md con nombre, descripción clara y <b>tus pasos de siempre</b>.'],
-['3️⃣','Ponla a prueba','Haz 5 peticiones reales: ¿se activa cuando debe <b>y solo cuando debe</b>? Lista.']]),
-stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel para crear tu primera skill','💬 Comenta <b>"SKILL"</b> y te mando una plantilla lista para rellenar','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Si lo has explicado dos veces, es una skill.</span>']),
+cover('1','grisperla','Explicado desde cero','SKILLS<br><span class="gold">DE CLAUDE</span>','Enséñale una vez,<br>lo hará siempre','Qué son, cómo crear la primera en 10 minutos y por qué <b>ahorran horas</b>.'),
+stmt('2','marinocrema','¿REPITES EL MISMO<br><span class="gold">PROMPT CADA SEMANA?</span>',['Eso que copias y pegas puede guardarse como una <b>skill</b>: instrucciones que Claude usa por sí solo, justo cuando tocan.','<span class="cyan">Como una receta guardada: se cocina sola al pedir el plato.</span>']),
+cards('3','tablet','QUÉ ES UNA SKILL','Una carpeta con una receta dentro. Así de fácil.','📁 3 piezas',[
+['📄','Un archivo de texto','SKILL.md: tus instrucciones <b>como una receta</b>, pasos y reglas.'],
+['🏷️','Nombre y descripción','La descripción le dice a Claude <b>cuándo debe usarla</b>.'],
+['📎','Extras opcionales','Plantillas, ejemplos o programas <b>para que los use</b>.']]),
+cards('4','azulcielo','SE ACTIVA SOLA','No tienes que acordarte de que existe. Esa es la gracia.','✨ Cómo decide',[
+['🔎','Mira tu petición','Comprueba <b>si alguna skill encaja</b> con lo que pides.'],
+['🎯','Si encaja, la usa','Sigue tus instrucciones <b>al pie de la letra</b>.'],
+['🪶','Si no, no molesta','Dormida ocupa ~100 tokens: ten <b>decenas sin problema</b>.']]),
+cards('5','burdeos','DÓNDE FUNCIONAN','Las creas una vez y te sirven en muchos sitios.','🌍 Portables',[
+['👤','Para ti','Tu método te acompaña <b>en todos tus proyectos</b>.'],
+['📦','Para tu equipo','En la carpeta del proyecto: <b>todos trabajan igual</b>.'],
+['🔌','En otras apps','Estándar abierto en <b>más de 26 plataformas</b> (Cursor, VS Code…).']]),
+cards('6','negrabeige','LA TUYA EN 10 MIN','El paso a paso completo. De verdad que no hay más.','🛠️ Manos a la obra',[
+['1️⃣','Crea la carpeta','Con el nombre de tu skill: <b>informe-semanal</b>.'],
+['2️⃣','Escribe SKILL.md','Nombre, descripción y <b>tus pasos</b>, como a un ayudante nuevo.'],
+['3️⃣','Pruébala','Pide algo relacionado y verás cómo <b>la usa él solo</b>.']]),
+cards('7','blancamarino','EL SECRETO','El 90% de las skills que "no funcionan" fallan en la descripción.','🎯 Escríbela así',[
+['🗣️','Sé literal','"Úsala cuando pida el informe semanal". Claude <b>no adivina</b>.'],
+['🚫','Di cuándo NO','"No para informes de clientes": evita que <b>salte de más</b>.'],
+['🧪','Prueba y ajusta','¿No se activa? Reescríbela. <b>Dos intentos</b> y queda fina.']]),
+cards('8','camel','AHORRAN HORAS','Skills reales que puedes copiar hoy mismo.','💡 Mi top 3',[
+['📊','Tu informe tipo','Tu formato exacto de reporte: <b>siempre igual</b>.'],
+['✍️','Tu estilo','Correos y publicaciones <b>sonando a ti</b>.'],
+['🎨','Tu marca','Colores y plantillas: <b>así se hacen estos carruseles</b>.']]),
+cards('9','gris','EMPIEZA HOY','De prompt repetido a skill guardada en media hora.','✅ 3 pasos',[
+['1️⃣','El candidato','Lo que escribiste <b>más de dos veces</b> esta semana.'],
+['2️⃣','Conviértela','Carpeta + SKILL.md con <b>descripción clara</b>.'],
+['3️⃣','A prueba','5 peticiones: ¿se activa <b>solo cuando debe</b>? Lista.']]),
+stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> este carrusel para crear tu primera skill','💬 Comenta <b>"SKILL"</b> y te mando mi plantilla','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Si lo has explicado dos veces, es una skill.</span>']),
 ]},
 gpt: { out: ['negrabeige','blancamarino','holo','marinocrema','grisperla','azulcielo','burdeos','traje','bomber','chaleco'], S: [
-cover('1','negrabeige','Lanzado · 9 julio 2026','GPT-5.6<br><span class="gold">SOL · TERRA · LUNA</span>','Las 3 versiones<br>explicadas fácil','Qué es cada una, cuánto cuestan y <b>cuál te conviene a ti</b> — sin tecnicismos y con ejemplos.'),
-stmt('2','blancamarino','YA NO HAY UN CHATGPT.<br><span class="gold">HAY TRES.</span>',['OpenAI lanzó GPT-5.6 en tres versiones con nombre propio. La idea es simple: <b>no pagar el más caro</b> para tareas sencillas.','<span class="cyan">Sol = el más inteligente · Terra = el equilibrado · Luna = el rápido y barato.</span>']),
-cards('3','holo','SOL ☀️ — EL CEREBRO','La versión más potente. Para cuando el problema es difícil de verdad.','🧠 El tope de gama',[
-['🎓','Para qué sirve','Análisis complejos, investigar a fondo, <b>proyectos largos</b> donde no puede perderse.'],
-['⚡','Modo Ultra','Un botón extra: piensa aún más antes de responder. En pruebas difíciles de programación <b>sube de 88,8% a 91,9% de acierto</b>.'],
-['💰','Lo que cuesta','Por API: $5 por millón de palabras-fragmento (tokens) de entrada y <b>$30 por millón de salida</b>. Solo pagas lo que usas.']]),
-cards('4','marinocrema','TERRA 🌍 — EL EQUILIBRADO','La versión para el día a día. La que la mayoría debería usar casi siempre.','⚖️ Calidad-precio',[
-['💪','Rinde como los grandes','Da resultados al nivel del anterior tope de gama (GPT-5.5) <b>a la mitad de precio</b>.'],
-['🏗️','Para qué sirve','Escribir, resumir, responder correos, ayudarte a pensar: <b>el 80% de lo que haces</b> con la IA.'],
-['💰','Lo que cuesta','$2,50 entrada / <b>$15 salida</b> por millón de tokens. La mejor relación calidad-precio de la familia.']]),
-cards('5','grisperla','LUNA 🌙 — EL VELOZ','La versión rápida y barata. Para tareas simples en grandes cantidades.','🚀 Volumen y velocidad',[
-['⏱️','Responde al instante','El más rápido de los tres: ideal cuando <b>la velocidad importa más</b> que la profundidad.'],
-['🏷️','Para qué sirve','Clasificar mensajes, extraer datos, resúmenes cortos, <b>respuestas automáticas</b>.'],
-['💰','Lo que cuesta','$1 entrada / <b>$6 salida</b> por millón de tokens. Perfecto para automatizar sin miedo a la factura.']]),
-cards('6','azulcielo','¿CUÁL ELIJO YO?','Guía rápida según tu situación. Y recuerda: puedes combinar.','🧭 Decisión fácil',[
-['🙋','Si estás empezando','Terra. Es el equilibrio: <b>calidad alta sin pagar de más</b>. Cambia a Sol solo para lo difícil.'],
-['💼','Si es para tu trabajo','Terra para el día a día + <b>Sol para análisis importantes</b>. Combinar es lo inteligente.'],
-['🏭','Si automatizas mucho','Luna para el volumen (miles de tareas simples) y <b>guarda Sol para lo crítico</b>.']]),
-cards('7','burdeos','NOVEDADES QUE IMPORTAN','Dos funciones nuevas explicadas en lenguaje humano.','🆕 Julio 2026',[
-['🧑‍💻','Herramientas más listas','El modelo ahora escribe mini-programas para usar tus herramientas de golpe, en vez de ir una a una: <b>más rápido y más barato</b>.'],
-['🔒','Y más seguro','Esos mini-programas corren en una "caja cerrada" <b>sin acceso a internet</b>: no pueden tocar nada que no deban.'],
-['🤖','Equipos de IA (beta)','Ya puede coordinar <b>varios GPT trabajando en paralelo</b> en la misma tarea. Aún en pruebas.']]),
-cards('8','traje','¿Y FRENTE A CLAUDE?','La pregunta del millón, respondida con datos y sin fanatismos.','⚖️ La foto real',[
-['🤝','Van casi empatados','En el examen más famoso de programación (SWE-bench), Claude Opus 5 saca <b>97,0%</b> y GPT-5.6 Sol <b>96,2%</b>. Décimas.'],
-['🎯','Cada uno brilla en algo','GPT-5.6 es más rápido en tareas de terminal; Claude aguanta <b>proyectos más grandes</b> sin perderse.'],
-['💡','Mi consejo','Prueba los dos con tu caso real y quédate con el que mejor te funcione. <b>Muchos usamos ambos</b>.']]),
-cards('9','bomber','PRUÉBALO ESTA SEMANA','Un plan sencillo para saber en 3 días cuál es tu versión.','✅ Sin gastar de más',[
-['1️⃣','Haz tu lista','Apunta las 5 tareas que <b>más repites</b> con la IA (correos, resúmenes, ideas…).'],
-['2️⃣','Pruébalas en Terra','Es el punto de partida ideal. ¿Alguna se le atasca? <b>Súbela a Sol</b>.'],
-['3️⃣','Detecta lo simple','Lo que sea mecánico y masivo, <b>a Luna</b>. Tu bolsillo lo nota.']]),
-stmt('10','chaleco','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> esta guía para elegir bien','💬 Comenta <b>"GPT"</b> y te mando la tabla comparativa completa','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Mañana: Claude Code vs Codex — ¿cuál te conviene?</span>']),
+cover('1','negrabeige','Lanzado · 9 julio 2026','GPT-5.6','Sol · Terra · Luna<br>explicados fácil','Qué es cada versión, cuánto cuestan y <b>cuál te conviene a ti</b>.'),
+stmt('2','blancamarino','YA NO HAY UN CHATGPT.<br><span class="gold">HAY TRES.</span>',['OpenAI lanzó GPT-5.6 en tres versiones. La idea: <b>no pagar el más caro</b> para tareas sencillas.','<span class="cyan">Sol = el listo · Terra = el equilibrado · Luna = el rápido.</span>']),
+cards('3','holo','SOL: EL CEREBRO','La versión más potente, para lo difícil de verdad.','🧠 Tope de gama',[
+['🎓','Para qué','Análisis complejos y <b>proyectos largos</b> sin perderse.'],
+['⚡','Modo Ultra','Piensa más: sube de 88,8% a <b>91,9%</b> en pruebas de código.'],
+['💰','Precio API','$5 entrada / <b>$30 salida</b> por millón de tokens.']]),
+cards('4','marinocrema','TERRA: EQUILIBRIO','Para el día a día. La que usarás casi siempre.','⚖️ Calidad-precio',[
+['💪','Rinde alto','Nivel del anterior tope de gama <b>a mitad de precio</b>.'],
+['🏗️','Para qué','Escribir, resumir, correos: <b>el 80% de tu uso</b>.'],
+['💰','Precio API','$2,50 entrada / <b>$15 salida</b> por millón de tokens.']]),
+cards('5','grisperla','LUNA: EL VELOZ','Rápida y barata, para tareas simples en gran volumen.','🚀 Velocidad',[
+['⏱️','Al instante','La más rápida: ideal cuando <b>la velocidad importa más</b>.'],
+['🏷️','Para qué','Clasificar, extraer datos, <b>respuestas automáticas</b>.'],
+['💰','Precio API','$1 entrada / <b>$6 salida</b> por millón de tokens.']]),
+cards('6','azulcielo','¿CUÁL ELIJO?','Guía rápida según tu situación. Y puedes combinar.','🧭 Decisión fácil',[
+['🙋','Si empiezas','Terra: <b>calidad alta sin pagar de más</b>.'],
+['💼','Para tu trabajo','Terra a diario + <b>Sol para lo importante</b>.'],
+['🏭','Si automatizas','Luna para el volumen y <b>Sol para lo crítico</b>.']]),
+cards('7','burdeos','NOVEDADES','Dos funciones nuevas explicadas en lenguaje humano.','🆕 Julio 2026',[
+['🧑‍💻','Herramientas listas','Usa tus herramientas de golpe: <b>más rápido y barato</b>.'],
+['🔒','Más seguro','Sus mini-programas corren <b>sin acceso a internet</b>.'],
+['🤖','Equipos de IA','Coordina <b>varios GPT en paralelo</b>. Aún en beta.']]),
+cards('8','traje','¿Y FRENTE A CLAUDE?','La pregunta del millón, respondida con datos.','⚖️ La foto real',[
+['🤝','Casi empate','SWE-bench: Claude Opus 5 <b>97,0%</b> vs Sol <b>96,2%</b>.'],
+['🎯','Cada uno brilla','GPT más rápido en terminal; Claude <b>aguanta más proyecto</b>.'],
+['💡','Mi consejo','Prueba ambos con tu caso real. <b>Muchos usamos los dos</b>.']]),
+cards('9','bomber','PRUÉBALO','Un plan de 3 días para descubrir tu versión.','✅ Sin gastar de más',[
+['1️⃣','Haz tu lista','Las 5 tareas que <b>más repites</b> con la IA.'],
+['2️⃣','Todas en Terra','¿Alguna se le atasca? <b>Súbela a Sol</b>.'],
+['3️⃣','Detecta lo simple','Lo mecánico y masivo, <b>a Luna</b>.']]),
+stmt('10','chaleco','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> esta guía para elegir bien','💬 Comenta <b>"GPT"</b> y te mando la comparativa completa','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Mañana: Claude Code vs Codex — ¿cuál te conviene?</span>']),
 ]},
 vs: { out: ['burdeos','grisperla','tablet','blancamarino','azulcielo','marinocrema','negrabeige','gris','camel','brazos'], S: [
-cover('1','burdeos','Comparativa honesta · Jul 2026','CLAUDE CODE<br><span class="gold">VS CODEX</span>','¿Cuál te conviene?<br>Explicado fácil','Los dos asistentes de programación del momento, comparados <b>con datos y sin fanatismos</b>.'),
-stmt('2','grisperla','LOS DOS SON BUENÍSIMOS.<br><span class="gold">LA DIFERENCIA ESTÁ EN EL ESTILO.</span>',['Ambos hacen lo mismo a grandes rasgos: <b>programan y automatizan por ti</b>. Pero trabajan de forma distinta, y eso decide cuál encaja contigo.','<span class="cyan">Aquí va la comparación clara que me habría gustado leer a mí.</span>']),
-cards('3','tablet','QUIÉN ES QUIÉN','Las presentaciones básicas, por si llegas de nuevas.','👋 Los contendientes',[
-['🟣','Claude Code','De Anthropic (los creadores de Claude). Un asistente que trabaja en tu ordenador: <b>lee, planifica, ejecuta y te enseña</b> cada cambio.'],
-['🟢','Codex','De OpenAI (los creadores de ChatGPT). Su asistente equivalente, <b>incluido en los planes de ChatGPT</b> — hasta en el gratuito.'],
-['🖥️','En común','Los dos funcionan en la terminal y en tu editor, y pueden <b>trabajar solos en segundo plano</b>.']]),
-cards('4','blancamarino','DOS ESTILOS DE TRABAJO','La diferencia más importante no son los números: es la filosofía.','🧠 Filosofías',[
-['🟣','Claude: contigo al mando','Te propone un plan, te enseña los cambios y <b>tú apruebas cada paso importante</b>. Control total.'],
-['🟢','Codex: más independiente','Le das la tarea y <b>se la lleva a su nube</b>: vuelve con el resultado hecho. Más delegación, menos control.'],
-['🎯','La pregunta clave','¿Prefieres supervisar el proceso o <b>solo ver el resultado final</b>? Esa respuesta ya elige por ti.']]),
-cards('5','azulcielo','QUÉ DICEN LAS PRUEBAS','Resultados de exámenes independientes de julio 2026, en cristiano.','📊 Datos, no opiniones',[
-['🤝','Casi empate arriba','En el examen estrella de programación (SWE-bench): Claude <b>97,0%</b> vs GPT-5.6 <b>96,2%</b>. Diferencia mínima.'],
-['🟢','Codex gana en rapidez','En tareas puras de terminal es más veloz y su modo Ultra llega al <b>91,9% de acierto</b>.'],
-['🟣','Claude gana en fondo','En proyectos grandes y tareas largas lidera <b>9 de 12 pruebas</b>, con hasta 14,6 puntos de ventaja en la más dura.']]),
+cover('1','burdeos','Comparativa honesta · Jul 2026','<span style="font-size:72px;">CLAUDE CODE<br><span class="gold">VS CODEX</span></span>','¿Cuál te conviene?<br>Explicado fácil','Los dos asistentes del momento, comparados <b>con datos y sin fanatismos</b>.'),
+stmt('2','grisperla','LOS DOS SON BUENÍSIMOS.<br><span class="gold">EL ESTILO DECIDE.</span>',['Ambos <b>programan y automatizan por ti</b>, pero trabajan distinto — y eso decide cuál encaja contigo.','<span class="cyan">La comparación clara que me habría gustado leer a mí.</span>']),
+cards('3','tablet','QUIÉN ES QUIÉN','Las presentaciones básicas, por si llegas de nuevas.','👋 Contendientes',[
+['🟣','Claude Code','De Anthropic: <b>lee, planifica, ejecuta y te enseña</b> cada cambio.'],
+['🟢','Codex','De OpenAI: <b>incluido en los planes de ChatGPT</b>, hasta el gratis.'],
+['🖥️','En común','Terminal y editor; <b>trabajan solos en segundo plano</b>.']]),
+cards('4','blancamarino','DOS ESTILOS','La diferencia más importante no son los números: es la filosofía.','🧠 Filosofías',[
+['🟣','Contigo al mando','Te enseña el plan y <b>tú apruebas cada paso</b>.'],
+['🟢','Más independiente','Se lleva la tarea a su nube y <b>vuelve con el resultado</b>.'],
+['🎯','La clave','¿Supervisar o <b>solo ver el final</b>? Eso ya elige por ti.']]),
+cards('5','azulcielo','LAS PRUEBAS','Exámenes independientes de julio 2026, en cristiano.','📊 Datos',[
+['🤝','Empate arriba','SWE-bench: Claude <b>97,0%</b> vs GPT-5.6 <b>96,2%</b>.'],
+['🟢','Codex: rapidez','En terminal es más veloz; Ultra llega al <b>91,9%</b>.'],
+['🟣','Claude: fondo','Lidera <b>9 de 12 pruebas</b>; hasta +14,6 pts en la más dura.']]),
 cards('6','marinocrema','PRECIOS EN SIMPLE','Cuánto cuesta cada uno de verdad, sin letra pequeña.','💰 Tu bolsillo',[
-['🟢','Codex','Va <b>incluido en tu plan de ChatGPT</b> (incluso el gratuito, con límites). Si ya pagas ChatGPT, probarlo te sale gratis.'],
-['🟣','Claude Code','Con el <b>plan Pro de Claude</b> (o pagando por uso: $5/$25 por millón de tokens). La suscripción es lo cómodo para empezar.'],
-['🧮','El coste real','No es el precio por mensaje: es <b>cuántas veces tienes que repetir</b> hasta que quede bien. Ahí se decide.']]),
-cards('7','negrabeige','ELIGE CLAUDE CODE SI…','Estos tres perfiles le sacan más partido.','🟣 Su terreno',[
-['🏗️','Proyectos grandes','Su memoria de 1 millón de tokens aguanta <b>proyectos enteros</b> sin perderse por el camino.'],
-['🔍','Quieres control','Ver el plan y aprobar cada cambio te da <b>tranquilidad y aprendizaje</b>.'],
-['🧩','Quieres ecosistema','Skills, conexiones con tus apps (MCP) y ayudantes en paralelo: <b>el kit más completo</b>.']]),
+['🟢','Codex','<b>Incluido en tu plan de ChatGPT</b>, incluso el gratuito.'],
+['🟣','Claude Code','Con el <b>plan Pro</b> o por uso: $5/$25 por millón de tokens.'],
+['🧮','El coste real','Es <b>cuántas veces repites</b> hasta que quede bien.']]),
+cards('7','negrabeige','ELIGE CLAUDE SI…','Estos tres perfiles le sacan más partido.','🟣 Su terreno',[
+['🏗️','Proyectos grandes','1 millón de tokens: <b>proyectos enteros</b> sin perderse.'],
+['🔍','Quieres control','Ver el plan y aprobar cada cambio da <b>tranquilidad</b>.'],
+['🧩','Ecosistema','Skills + MCP + subagentes: <b>el kit más completo</b>.']]),
 cards('8','gris','ELIGE CODEX SI…','Y estos tres perfiles encajan mejor con él.','🟢 Su terreno',[
-['💳','Ya pagas ChatGPT','Está incluido: <b>coste extra cero</b> para empezar hoy mismo.'],
-['⚡','Tareas rápidas','Scripts, arreglos pequeños, pruebas: <b>velocidad pura</b>.'],
-['☁️','Prefieres delegar','Mandar la tarea y <b>recibirla hecha</b>, sin supervisar el proceso.']]),
-cards('9','camel','MI VEREDICTO HONESTO','Después de usar los dos a diario en proyectos reales.','⚖️ Sin fanatismos',[
-['🤝','No hay un ganador único','Hay un ganador <b>para tu caso</b>. Y puede que sean los dos: yo los combino.'],
-['🧪','Haz tu propia prueba','La misma tarea real en ambos. Compara resultado, tiempo y <b>cuántas correcciones</b> necesitaste.'],
-['🎯','La habilidad que importa','Explicar bien la tarea (contexto + qué quieres + cómo sabrás que está bien) <b>vale para los dos</b>.']]),
-stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> esta comparativa para decidir con calma','💬 Comenta <b>"VS"</b> y te mando la tabla completa con todos los datos','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Yo uso los dos a diario — esto sale de práctica real.</span>']),
+['💳','Ya pagas ChatGPT','Está incluido: <b>coste extra cero</b> para empezar hoy.'],
+['⚡','Tareas rápidas','Scripts y arreglos pequeños: <b>velocidad pura</b>.'],
+['☁️','Prefieres delegar','Mandar la tarea y <b>recibirla hecha</b>.']]),
+cards('9','camel','MI VEREDICTO','Después de usar los dos a diario en proyectos reales.','⚖️ Sin fanatismos',[
+['🤝','No hay un ganador','Hay un ganador <b>para tu caso</b>. Yo los combino.'],
+['🧪','Tu propia prueba','La misma tarea en ambos; compara <b>correcciones</b>.'],
+['🎯','Lo que importa','Explicar bien la tarea <b>vale para los dos</b>.']]),
+stmt('10','brazos','¿TE<br><span class="gold">SIRVIÓ?</span>',['📌 <b>Guarda</b> esta comparativa para decidir con calma','💬 Comenta <b>"VS"</b> y te mando la tabla completa','➕ <b>Sígueme</b>: IA explicada en simple, cada semana','<span class="cyan">Yo uso los dos a diario — esto es práctica real.</span>']),
 ]},
 };
 
