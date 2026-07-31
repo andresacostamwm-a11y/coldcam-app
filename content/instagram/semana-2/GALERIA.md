@@ -1,4 +1,4 @@
-# 📱 Galería de revisión — Semana 2 (v5 · Letra grande + Avatar XXL)
+# 📱 Galería de revisión — Semana 2 (v6 · INTERACTIVO (poses dinámicas))
 
 Las 50 slides definitivas de los 5 carruseles, en orden de publicación.
 Abre esta página en el navegador y desplázate para verlas todas.
@@ -8,86 +8,86 @@ Abre esta página en el navegador y desplázate para verlas todas.
 
 ### Slide 1/10
 
-![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/dfe3aa6a-2ab4-4b2d-babe-286d4f9fd9c7.png)
+![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/c59212eb-b694-44ab-bea5-4669a2889aae.png)
 
 ### Slide 2/10
 
-![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/856086e3-a381-4e11-aac4-4c2cbea002fc.png)
+![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/eda8a627-1bb8-4f67-8c0e-5924b0e2004e.png)
 
 ### Slide 3/10
 
-![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/8b989d4a-43f0-4c7b-becf-ab37488d9b11.png)
+![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/628ff1dc-c96b-4c50-af7e-f65a2f32494e.png)
 
 ### Slide 4/10
 
-![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/49bd9270-8a99-41c5-b22a-131958fc13ca.png)
+![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/f6655149-59b4-4fb0-8eec-3252a40c5c47.png)
 
 ### Slide 5/10
 
-![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/7ecd3251-62ad-42e0-b9e6-ab112bf04b52.png)
+![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/cd9f64f7-37ce-47db-b0e7-993a0aef6a36.png)
 
 ### Slide 6/10
 
-![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/63a0e546-558c-417c-b115-5ad37482b766.png)
+![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/6601433c-d757-48f7-b7ab-64c405590635.png)
 
 ### Slide 7/10
 
-![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/2a6ad11e-0347-4260-9236-82ac523be9d9.png)
+![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/76543585-7bab-4756-a3e9-22aa87e57138.png)
 
 ### Slide 8/10
 
-![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/63db7ab1-9cd3-4ee0-9069-b3575d6e6548.png)
+![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/c0cd69f8-0f12-4f5e-a50e-e3bba3615dda.png)
 
 ### Slide 9/10
 
-![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/3c5cb0c5-ab8f-4b94-9f66-8cec750c25f1.png)
+![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/da2b6b88-732d-47b7-abdd-c164e50cd20e.png)
 
 ### Slide 10/10
 
-![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/3d5f1b58-a4e9-4913-9e4f-4068eef2e7b0.png)
+![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/f83d676c-d165-4554-aee0-edfb8b1d6b58.png)
 
 
 ## Sábado 1 agosto — Agentes de IA explicados fácil
 
 ### Slide 1/10
 
-![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/d8ce82df-907f-4a01-bc62-011c73296cb6.png)
+![Slide 1](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/53d2f135-5e2b-4026-8385-a5893d9556f9.png)
 
 ### Slide 2/10
 
-![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/36e8d1a1-4ab2-4ca6-9700-ad3ca4c27e49.png)
+![Slide 2](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/d9f3a147-b447-4078-ab77-bf3dba0ca4ea.png)
 
 ### Slide 3/10
 
-![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/8ac2a45e-85e3-40cb-b263-8aefdfdb2c8f.png)
+![Slide 3](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/b65d653e-4e78-4fb3-9d14-1d982c0e5ad1.png)
 
 ### Slide 4/10
 
-![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/15fc36a6-0cae-4785-8950-7ad723a3baeb.png)
+![Slide 4](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/527a3eeb-922d-43d5-bc28-3757294f4d41.png)
 
 ### Slide 5/10
 
-![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/0bf7bf04-7cd3-4373-b485-75d8fa6690f1.png)
+![Slide 5](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/a8d110b3-dc87-419e-a222-1b8535c57ce9.png)
 
 ### Slide 6/10
 
-![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/4288787e-edde-45d7-8ff1-375e09f3077e.png)
+![Slide 6](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/0a4476cc-ba83-40b6-a56b-4f13e95bf612.png)
 
 ### Slide 7/10
 
-![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/f4bbfdd6-bbf3-4a44-abf3-ab2979d2edc1.png)
+![Slide 7](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/5f8190b1-2c5d-48a3-b57d-f80d4434ae4a.png)
 
 ### Slide 8/10
 
-![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/d3eb40d7-76f4-400c-a165-8243196663eb.png)
+![Slide 8](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/c6ecef06-0af4-41fd-884a-eca2d0fb8541.png)
 
 ### Slide 9/10
 
-![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/638d3303-224b-40c7-a8b8-e69b94d4b96b.png)
+![Slide 9](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/4996764d-7424-4944-8574-8c91f284f431.png)
 
 ### Slide 10/10
 
-![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/3ed97c9d-84db-4f3b-b966-75afc420abbb.png)
+![Slide 10](https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/9bd73a3f-b0f3-4896-a2f4-bc538c7a0f0b.png)
 
 
 ## Domingo 2 agosto — Skills de Claude para principiantes

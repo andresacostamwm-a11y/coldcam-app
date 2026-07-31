@@ -1,4 +1,4 @@
-# Carruseles diarios — Semana 2 (vie 31 jul → mar 4 ago 2026) · Versión PRINCIPIANTES v5 · LETRA GRANDE + AVATAR XXL
+# Carruseles diarios — Semana 2 (vie 31 jul → mar 4 ago 2026) · Versión PRINCIPIANTES v6 · INTERACTIVO (poses dinámicas por slide)
 
 Generados con `gen-diarios.cjs` @ 4010b94 (plantilla OFICIAL v2 + tipografía
 ~20% más grande en todo, avatar de Andrés de 560px integrado con aura
@@ -17,16 +17,16 @@ Base CDN: `https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UO
 ## Viernes 31 julio — ¿Qué es Claude Code? (desde cero)
 
 Slides s01→s10:
-1. dfe3aa6a-2ab4-4b2d-babe-286d4f9fd9c7
-2. 856086e3-a381-4e11-aac4-4c2cbea002fc
-3. 8b989d4a-43f0-4c7b-becf-ab37488d9b11
-4. 49bd9270-8a99-41c5-b22a-131958fc13ca
-5. 7ecd3251-62ad-42e0-b9e6-ab112bf04b52
-6. 63a0e546-558c-417c-b115-5ad37482b766
-7. 2a6ad11e-0347-4260-9236-82ac523be9d9
-8. 63db7ab1-9cd3-4ee0-9069-b3575d6e6548
-9. 3c5cb0c5-ab8f-4b94-9f66-8cec750c25f1
-10. 3d5f1b58-a4e9-4913-9e4f-4068eef2e7b0
+1. c59212eb-b694-44ab-bea5-4669a2889aae
+2. eda8a627-1bb8-4f67-8c0e-5924b0e2004e
+3. 628ff1dc-c96b-4c50-af7e-f65a2f32494e
+4. f6655149-59b4-4fb0-8eec-3252a40c5c47
+5. cd9f64f7-37ce-47db-b0e7-993a0aef6a36
+6. 6601433c-d757-48f7-b7ab-64c405590635
+7. 76543585-7bab-4756-a3e9-22aa87e57138
+8. c0cd69f8-0f12-4f5e-a50e-e3bba3615dda
+9. da2b6b88-732d-47b7-abdd-c164e50cd20e
+10. f83d676c-d165-4554-aee0-edfb8b1d6b58
 
 **Caption:**
 ¿Has oído hablar de Claude Code y no sabes qué es? Te lo explico desde cero, sin tecnicismos 🤖
@@ -48,16 +48,16 @@ Fuentes: documentación oficial de Anthropic (verificado 30-jul-2026).
 ## Sábado 1 agosto — Agentes de IA explicados fácil
 
 Slides s01→s10:
-1. d8ce82df-907f-4a01-bc62-011c73296cb6
-2. 36e8d1a1-4ab2-4ca6-9700-ad3ca4c27e49
-3. 8ac2a45e-85e3-40cb-b263-8aefdfdb2c8f
-4. 15fc36a6-0cae-4785-8950-7ad723a3baeb
-5. 0bf7bf04-7cd3-4373-b485-75d8fa6690f1
-6. 4288787e-edde-45d7-8ff1-375e09f3077e
-7. f4bbfdd6-bbf3-4a44-abf3-ab2979d2edc1
-8. d3eb40d7-76f4-400c-a165-8243196663eb
-9. 638d3303-224b-40c7-a8b8-e69b94d4b96b
-10. 3ed97c9d-84db-4f3b-b966-75afc420abbb
+1. 53d2f135-5e2b-4026-8385-a5893d9556f9
+2. d9f3a147-b447-4078-ab77-bf3dba0ca4ea
+3. b65d653e-4e78-4fb3-9d14-1d982c0e5ad1
+4. 527a3eeb-922d-43d5-bc28-3757294f4d41
+5. a8d110b3-dc87-419e-a222-1b8535c57ce9
+6. 0a4476cc-ba83-40b6-a56b-4f13e95bf612
+7. 5f8190b1-2c5d-48a3-b57d-f80d4434ae4a
+8. c6ecef06-0af4-41fd-884a-eca2d0fb8541
+9. 4996764d-7424-4944-8574-8c91f284f431
+10. 9bd73a3f-b0f3-4896-a2f4-bc538c7a0f0b
 
 **Caption:**
 "Agente de IA" es la palabra de moda… pero ¿qué significa de verdad? 🧠
