@@ -1054,7 +1054,7 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
       <!-- cobro con Stripe -->
       <div class="admin-card" style="margin-top:18px">
         <h3>💳 Cobro con Stripe</h3>
-        <p class="hint">Crea un <b>enlace de pago</b> por plan en tu panel de Stripe (Productos → Enlaces de pago), con cobro <b>recurrente</b> mensual o anual, y pega aquí cada dirección. Mientras estén vacíos, el cliente deja su solicitud y tú le cobras por fuera. La app nunca ve las tarjetas: el pago ocurre en Stripe y el dinero se deposita en tu cuenta bancaria.</p>
+        <p class="hint" style="background:var(--peach-soft);border-radius:10px;padding:9px 11px"><b>⚠ Ojo:</b> lo que escribas aquí se guarda <b>solo en este dispositivo</b>, para que puedas probarlo. Para que tus clientes lo vean en el sitio publicado hay que dejarlo escrito dentro de la propia página: pásame los enlaces y los incrusto.</p><p class="hint">Crea un <b>enlace de pago</b> por plan en tu panel de Stripe (Productos → Enlaces de pago), con cobro <b>recurrente</b> mensual o anual, y pega aquí cada dirección. Mientras estén vacíos, el cliente deja su solicitud y tú le cobras por fuera. La app nunca ve las tarjetas: el pago ocurre en Stripe y el dinero se deposita en tu cuenta bancaria.</p>
         <div class="pay-grid" id="stripe-grid"></div>
         <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
           <button class="mini-btn solid" id="btn-save-stripe">Guardar enlaces</button>
@@ -1498,6 +1498,10 @@ function avaHTML(a,px){
 }
 function avaTxt(a){return PERSONAS[a]?PERSONAS[a].n:(a||"")}
 
+const DEFAULT_PAY={
+  stripe:{},   /* enlaces de Stripe publicados, uno por plan-periodo */
+  paypal:{email:"andresacosta.mwm@hotmail.com",recurrente:true}
+};
 const PLANES=[
  {id:"gratis",n:"Gratis",precio:0,anual:0,eur:{precio:0,anual:0},maxBots:0,pd:"Conoce la plataforma por dentro, sin tarjeta.",
   feats:["Demostración guiada paso a paso","Explora los 12 giros y las 10 áreas","Prueba el simulador de chat","Mira el dashboard con datos de ejemplo","⚠ No incluye crear tu bot: para eso contrata un plan de pago"]},
@@ -2354,13 +2358,13 @@ function renderPlanes(){
 /* ════════ Cobro real con Stripe ════════
    La app no toca ninguna tarjeta: manda al cliente a la pasarela de Stripe.
    Los enlaces de pago los configura el propietario desde el panel Admin. */
-function stripeLinks(){return (state.config&&state.config.stripe)||{}}
+function stripeLinks(){return Object.assign({},DEFAULT_PAY.stripe,(state.config&&state.config.stripe)||{})}
 function stripeLink(plan,periodo,moneda){
   const L=stripeLinks(), k=plan+"-"+periodo;
   const e=L[k]||{};
   return (moneda==="EUR"?(e.eur||e.mxn):(e.mxn||e.eur))||"";
 }
-function paypalCfg(){return (state.config&&state.config.paypal)||{}}
+function paypalCfg(){return Object.assign({},DEFAULT_PAY.paypal,(state.config&&state.config.paypal)||{})}
 function paypalLink(plan,periodo,moneda,ref){
   const c=paypalCfg(); if(!c.email&&!c.link) return "";
   const p=PLANES.find(x=>x.id===plan); if(!p) return "";
