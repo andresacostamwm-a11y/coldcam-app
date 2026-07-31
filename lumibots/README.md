@@ -51,7 +51,16 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   Asistencia personal — cada una con preguntas frecuentes, funciones, flujos de
   captura y políticas realistas pregeneradas.
 - **Personalidad configurable**: objetivo, tono (amigable/formal/divertido),
-  nombre, avatar, color del widget y mensaje de bienvenida.
+  nombre, color del widget y mensaje de bienvenida.
+- **Avatares**: 8 retratos de persona dibujados en vector —4 mujeres y 4
+  hombres, con distintos tonos de piel, peinados, edades, gafas y barba— más
+  los 24 símbolos de siempre. Los retratos van incrustados en SVG, así que se
+  ven nítidos en cualquier pantalla, pesan poco y no dependen de fotos con
+  derechos de terceros.
+- **Tipo de letra del chat**: seis familias a elegir —Moderna, Clásica,
+  Redonda, Elegante, Técnica y Compacta— con una muestra de cada una escrita
+  en su propia tipografía. Se aplica al simulador de chat y viaja en el código
+  de instalación del widget. Usa fuentes del sistema, sin descargas externas.
 
 ### Información en volumen
 - **Entrenamiento con archivos de la empresa**: sube PDF, Word (.docx),
@@ -92,8 +101,10 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   reconstruye con las duraciones reales de cada clip.
   Modos de narración:
   0. 🎧 **Narración incrustada en castellano (por omisión)** — 13 clips con
-     **voz masculina de España**, generados con un sintetizador neuronal y
-     masterizados, que viajan dentro de la propia página (~325 KB). Suenan
+     **voz masculina de España**, generados con un sintetizador neuronal de
+     calidad media (22 kHz) y masterizados con presencia y aire, en un tono
+     algo más brillante para que suene positiva. Viajan dentro de la propia
+     página (~380 KB). Suenan
      igual en cualquier teléfono u ordenador porque no dependen de las voces
      instaladas en el sistema. En inglés todavía no hay clips, así que ahí se
      usa la narración del navegador.
