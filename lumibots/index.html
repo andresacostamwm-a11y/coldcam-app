@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LumiBots Studio — Crea chatbots que iluminan tu negocio</title>
+<style>
+:root{
+  --paper:#FBFAF6;
+  --card:#FFFFFF;
+  --ink:#33323E;
+  --ink-2:#6E6D7A;
+  --ink-3:#9C9BA8;
+  --line:#ECEAE2;
+  --accent:#6B7FE3;
+  --accent-deep:#4E63C9;
+  --accent-soft:#EDF0FD;
+  --mint:#7ED9B4;      --mint-soft:#E9F8F1;
+  --peach:#F6C79A;     --peach-soft:#FDF3E7;
+  --sky:#A9D3F2;       --sky-soft:#EBF4FC;
+  --lilac:#CDC2F0;     --lilac-soft:#F3F0FC;
+  --rose-soft:#FCEFF2;
+  --good:#2E9E6B;
+  --warn:#C98500;
+  --chart-1:#2a78d6; --chart-2:#eb6834; --chart-3:#1baf7a;
+  --grid:#e1e0d9;
+  --shadow:0 10px 30px rgba(90,100,150,.10);
+  --shadow-sm:0 4px 14px rgba(90,100,150,.08);
+  --radius:18px;
+  --font:-apple-system,"SF Pro Text","Segoe UI",system-ui,Roboto,"Helvetica Neue",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:15px;color:var(--ink)}
+a{color:var(--accent-deep);text-decoration:none}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}}
+
+/* ── Navbar ─────────────────────────────── */
+.nav{position:sticky;top:0;z-index:50;background:rgba(251,250,246,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1140px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:14px 24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.3px;margin-right:14px}
+.brand-mark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--lilac),var(--sky) 55%,var(--mint));display:grid;place-items:center;font-size:17px;box-shadow:var(--shadow-sm)}
+.brand small{font-weight:600;color:var(--ink-3);font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:block;line-height:1}
+.nav-tabs{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+.nav-tab{padding:8px 15px;border-radius:99px;font-size:14.5px;font-weight:600;color:var(--ink-2);transition:background .15s,color .15s}
+.nav-tab:hover{background:var(--accent-soft);color:var(--accent-deep)}
+.nav-tab.on{background:var(--ink);color:#fff}
+.nav-cta{padding:9px 18px;border-radius:99px;background:var(--accent);color:#fff;font-weight:700;font-size:14.5px;box-shadow:0 6px 16px rgba(107,127,227,.35);transition:transform .15s,box-shadow .15s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 9px 22px rgba(107,127,227,.42)}
+
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.view{display:none}
+.view.on{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ── Hero ───────────────────────────────── */
+.hero{background:
+  radial-gradient(700px 420px at 12% 0%, var(--lilac-soft) 0%, transparent 60%),
+  radial-gradient(700px 420px at 88% 8%, var(--sky-soft) 0%, transparent 60%),
+  radial-gradient(600px 400px at 55% 100%, var(--mint-soft) 0%, transparent 65%);
+  padding:72px 0 60px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:52px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 16px;font-size:13px;font-weight:700;color:var(--accent-deep);letter-spacing:.04em;box-shadow:var(--shadow-sm)}
+.eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-size:clamp(34px,4.6vw,54px);line-height:1.08;letter-spacing:-1.4px;font-weight:800;margin:20px 0 18px;text-wrap:balance}
+h1 .hl{background:linear-gradient(120deg,var(--accent) 0%,#8f7fe0 55%,#4fb98d 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:18px;color:var(--ink-2);max-width:56ch;margin-bottom:28px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:14px;font-weight:700;font-size:15.5px;transition:transform .15s,box-shadow .15s}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(107,127,227,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(107,127,227,.42)}
+.btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink);box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{background:var(--accent-soft)}
+.hero-stats{display:flex;gap:34px;margin-top:38px;flex-wrap:wrap}
+.hstat b{display:block;font-size:26px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.hstat span{font-size:13px;color:var(--ink-2)}
+
+/* hero demo chat */
+.demo-chat{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;transform:rotate(.6deg)}
+.demo-chat .dc-head{display:flex;align-items:center;gap:12px;padding:15px 18px;background:linear-gradient(120deg,var(--accent-soft),var(--lilac-soft))}
+.dc-ava{width:38px;height:38px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:19px;box-shadow:var(--shadow-sm)}
+.dc-head b{font-size:14.5px}
+.dc-head small{display:block;font-size:12px;color:var(--good);font-weight:600}
+.dc-body{padding:16px;display:flex;flex-direction:column;gap:10px;min-height:250px}
+.msg{max-width:82%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.45;animation:msgIn .3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg.bot{background:var(--accent-soft);border-bottom-left-radius:5px;align-self:flex-start}
+.msg.user{background:var(--mint-soft);border-bottom-right-radius:5px;align-self:flex-end}
+.typing{display:inline-flex;gap:4px;padding:12px 15px;background:var(--accent-soft);border-radius:16px;border-bottom-left-radius:5px;align-self:flex-start}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:tp 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+
+/* ── Sections ───────────────────────────── */
+.section{padding:64px 0}
+.sec-head{text-align:center;max-width:640px;margin:0 auto 42px}
+.sec-head .kicker{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep)}
+h2{font-size:clamp(26px,3.2vw,36px);letter-spacing:-.8px;font-weight:800;margin:10px 0 12px;text-wrap:balance}
+.sec-head p{color:var(--ink-2);font-size:16.5px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s}
+.feat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.feat .ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:22px;margin-bottom:16px}
+.feat h3{font-size:17px;margin-bottom:7px;letter-spacing:-.2px}
+.feat p{font-size:14.5px;color:var(--ink-2)}
+.t-lilac{background:var(--lilac-soft)}.t-mint{background:var(--mint-soft)}.t-sky{background:var(--sky-soft)}.t-peach{background:var(--peach-soft)}.t-rose{background:var(--rose-soft)}.t-acc{background:var(--accent-soft)}
+
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:st}
+.step-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);position:relative}
+.step-card::before{counter-increment:st;content:counter(st,decimal-leading-zero);position:absolute;top:18px;right:20px;font-size:13px;font-weight:800;color:var(--ink-3);letter-spacing:.06em}
+.step-card .ico{font-size:26px;margin-bottom:12px}
+.step-card h3{font-size:15.5px;margin-bottom:6px}
+.step-card p{font-size:13.5px;color:var(--ink-2)}
+
+.compare{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.compare table{width:100%;border-collapse:collapse;font-size:14.5px}
+.compare th,.compare td{padding:14px 20px;text-align:left;border-bottom:1px solid var(--line)}
+.compare tr:last-child td{border-bottom:none}
+.compare thead th{background:var(--accent-soft);font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-deep)}
+.compare td:nth-child(2){font-weight:700}
+.yes{color:var(--good);font-weight:700}.no{color:var(--ink-3)}
+.cta-band{background:linear-gradient(120deg,var(--accent-soft),var(--lilac-soft) 50%,var(--mint-soft));border:1px solid var(--line);border-radius:24px;padding:52px 40px;text-align:center;margin:20px 0 70px}
+.cta-band p{color:var(--ink-2);max-width:52ch;margin:0 auto 24px}
+
+/* ── Wizard ─────────────────────────────── */
+.wiz{max-width:860px;margin:0 auto;padding:48px 0 80px}
+.wiz-progress{display:flex;gap:8px;margin-bottom:34px}
+.wp{flex:1;text-align:center}
+.wp .bar{height:6px;border-radius:99px;background:var(--line);margin-bottom:8px;overflow:hidden}
+.wp.on .bar,.wp.done .bar{background:linear-gradient(90deg,var(--accent),var(--mint))}
+.wp span{font-size:12px;font-weight:700;color:var(--ink-3)}
+.wp.on span{color:var(--accent-deep)}
+.wp.done span{color:var(--good)}
+.wiz-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:38px}
+.wiz-card h2{font-size:24px;margin:0 0 6px}
+.wiz-card>p.sub{color:var(--ink-2);margin-bottom:26px;font-size:15px}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.f-field{display:flex;flex-direction:column;gap:7px}
+.f-field.full{grid-column:1/-1}
+.f-field label{font-size:13.5px;font-weight:700}
+.f-field label em{color:var(--ink-3);font-weight:500;font-style:normal;font-size:12.5px}
+.f-field input,.f-field select,.f-field textarea{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:#FDFCFA;transition:border-color .15s,box-shadow .15s}
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.f-field textarea{resize:vertical;min-height:84px}
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ind{border:1.5px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;background:#FDFCFA;transition:all .15s;font-size:13px;font-weight:600;color:var(--ink-2)}
+.ind .em{display:block;font-size:24px;margin-bottom:6px}
+.ind:hover{border-color:var(--accent);background:var(--accent-soft)}
+.ind.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:1.5px solid var(--line);border-radius:99px;padding:9px 16px;font-size:14px;font-weight:600;color:var(--ink-2);background:#FDFCFA;transition:all .15s}
+.chip:hover{border-color:var(--accent)}
+.chip.sel{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip.sel.g-mint{background:var(--mint);border-color:var(--mint);color:#1d5c42}
+.tone-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tone{border:1.5px solid var(--line);border-radius:14px;padding:16px;background:#FDFCFA;text-align:left;transition:all .15s}
+.tone b{display:block;font-size:14.5px;margin-bottom:3px}
+.tone span{font-size:12.5px;color:var(--ink-2)}
+.tone.sel{border-color:var(--accent);background:var(--accent-soft)}
+.faq-list{display:flex;flex-direction:column;gap:12px}
+.faq-item{border:1.5px solid var(--line);border-radius:14px;padding:14px;background:#FDFCFA;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+.faq-item .qa{display:flex;flex-direction:column;gap:8px}
+.faq-item input,.faq-item textarea{border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:14px;background:#fff}
+.faq-item textarea{min-height:52px;resize:vertical}
+.faq-del{width:32px;height:32px;border-radius:9px;background:var(--rose-soft);color:#B3475F;font-weight:800;font-size:15px}
+.add-line{border:1.5px dashed var(--line);border-radius:14px;padding:12px;width:100%;font-weight:700;color:var(--accent-deep);font-size:14px}
+.add-line:hover{background:var(--accent-soft);border-color:var(--accent)}
+.lead-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.lead-opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:14px;padding:13px 16px;background:#FDFCFA;transition:all .15s;text-align:left;width:100%}
+.lead-opt .em{font-size:20px}
+.lead-opt b{display:block;font-size:14px}
+.lead-opt span{font-size:12.5px;color:var(--ink-2)}
+.lead-opt .tick{margin-left:auto;width:22px;height:22px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;color:#fff;flex:none}
+.lead-opt.sel{border-color:var(--mint);background:var(--mint-soft)}
+.lead-opt.sel .tick{background:var(--good);border-color:var(--good)}
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.sw{width:38px;height:38px;border-radius:12px;border:2.5px solid transparent;transition:transform .12s}
+.sw:hover{transform:scale(1.1)}
+.sw.sel{border-color:var(--ink);transform:scale(1.08)}
+.ava-row{display:flex;gap:8px;flex-wrap:wrap}
+.ava{width:44px;height:44px;border-radius:13px;border:1.5px solid var(--line);background:#FDFCFA;font-size:21px;transition:all .12s}
+.ava.sel{border-color:var(--accent);background:var(--accent-soft);transform:scale(1.06)}
+.wiz-nav{display:flex;justify-content:space-between;margin-top:30px;gap:12px}
+.summary{background:var(--accent-soft);border-radius:16px;padding:20px 22px;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;font-size:14px}
+.summary div b{color:var(--ink-2);font-weight:600;font-size:12px;display:block;text-transform:uppercase;letter-spacing:.05em}
+.f-err{color:#B3475F;font-size:13px;font-weight:600;margin-top:12px;display:none}
+.f-err.show{display:block}
+
+/* build screen */
+.build{max-width:520px;margin:70px auto;text-align:center;padding-bottom:60px}
+.build .orb{width:88px;height:88px;margin:0 auto 26px;border-radius:28px;background:linear-gradient(135deg,var(--lilac),var(--sky),var(--mint));display:grid;place-items:center;font-size:40px;animation:orbFloat 2.4s ease-in-out infinite;box-shadow:var(--shadow)}
+@keyframes orbFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-9px) rotate(2deg)}}
+.build-list{margin-top:30px;display:flex;flex-direction:column;gap:12px;text-align:left}
+.bl{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 18px;font-size:14.5px;font-weight:600;color:var(--ink-3);opacity:.45;transition:all .3s}
+.bl.on{opacity:1;color:var(--ink)}
+.bl .st{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:12px;flex:none}
+.bl.on .st{border-color:var(--good);background:var(--good);color:#fff}
+.bl.doing .st{border-color:var(--accent);animation:spinB 1s linear infinite}
+@keyframes spinB{to{transform:rotate(360deg)}}
+
+/* ── Mis bots ───────────────────────────── */
+.page-head{display:flex;align-items:end;justify-content:space-between;gap:20px;padding:46px 0 26px;flex-wrap:wrap}
+.page-head p{color:var(--ink-2)}
+.bots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;padding-bottom:70px}
+.bot-card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-sm);padding:24px;display:flex;flex-direction:column;gap:14px;transition:transform .18s,box-shadow .18s}
+.bot-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.bc-top{display:flex;gap:14px;align-items:center}
+.bc-ava{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:25px;flex:none}
+.bc-top h3{font-size:17px;letter-spacing:-.2px}
+.bc-top small{color:var(--ink-2);font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;border-radius:99px;padding:4px 11px}
+.pill.live{background:var(--mint-soft);color:#1d6b48}
+.pill.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--good)}
+.bc-meta{display:flex;gap:16px;font-size:13px;color:var(--ink-2);border-top:1px dashed var(--line);border-bottom:1px dashed var(--line);padding:11px 0;font-variant-numeric:tabular-nums}
+.bc-meta b{color:var(--ink)}
+.bc-ch{display:flex;gap:6px;flex-wrap:wrap}
+.tagc{font-size:12px;font-weight:600;background:var(--sky-soft);color:#2b5d86;border-radius:8px;padding:4px 9px}
+.bc-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:2px}
+.mini-btn{padding:10px;border-radius:11px;font-size:13.5px;font-weight:700;border:1.5px solid var(--line);background:#FDFCFA;transition:all .15s}
+.mini-btn:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-deep)}
+.mini-btn.solid{background:var(--accent);border-color:var(--accent);color:#fff}
+.mini-btn.solid:hover{background:var(--accent-deep)}
+.empty{background:#fff;border:1.5px dashed var(--line);border-radius:22px;padding:60px 30px;text-align:center;grid-column:1/-1}
+.empty .em{font-size:42px}
+.empty p{color:var(--ink-2);margin:8px 0 20px}
+
+/* ── Dashboard ──────────────────────────── */
+.dash{padding-bottom:80px}
+.bot-select{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:24px}
+.bsel{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;border:1.5px solid var(--line);background:#fff;font-size:14px;font-weight:700;color:var(--ink-2);transition:all .15s}
+.bsel.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:22px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow-sm)}
+.tile .tl{font-size:12.5px;font-weight:700;color:var(--ink-2);letter-spacing:.03em;display:flex;align-items:center;gap:7px}
+.tile .tv{font-size:29px;font-weight:800;letter-spacing:-.8px;margin:7px 0 3px;font-variant-numeric:tabular-nums}
+.tile .td{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.td.up{color:var(--good)}.td.dn{color:#B3475F}.td.nt{color:var(--ink-3)}
+.dash-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm)}
+.panel h3{font-size:15.5px;letter-spacing:-.2px;margin-bottom:2px}
+.panel .ps{font-size:12.5px;color:var(--ink-2);margin-bottom:14px}
+.chart-box{position:relative}
+.chart-box svg{display:block;width:100%;height:auto}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:7px 11px;border-radius:9px;opacity:0;transition:opacity .1s;white-space:nowrap;z-index:5;transform:translate(-50%,-115%);font-variant-numeric:tabular-nums}
+.tip small{display:block;font-weight:500;color:#CFCEDA;font-size:11px}
+.hbar-row{display:grid;grid-template-columns:130px 1fr 44px;align-items:center;gap:12px;margin-bottom:12px;font-size:13.5px}
+.hbar-row .lbl{color:var(--ink-2);font-weight:600;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hbar-track{height:14px;border-radius:7px;background:var(--paper);overflow:hidden}
+.hbar-fill{height:100%;border-radius:7px;background:var(--chart-1);transition:width .6s ease}
+.hbar-row b{font-variant-numeric:tabular-nums;text-align:right}
+.leads-panel{overflow-x:auto}
+table.leads{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+table.leads th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);padding:10px 12px;border-bottom:1.5px solid var(--line)}
+table.leads td{padding:12px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.leads tr:last-child td{border-bottom:none}
+table.leads tr:hover td{background:var(--paper)}
+.lead-ava{width:32px;height:32px;border-radius:50%;display:inline-grid;place-items:center;font-size:12.5px;font-weight:800;color:#fff;margin-right:10px;vertical-align:middle}
+.st-pill{font-size:11.5px;font-weight:700;border-radius:99px;padding:4px 11px}
+.st-nuevo{background:var(--sky-soft);color:#2b5d86}
+.st-contactado{background:var(--peach-soft);color:#8a5a17}
+.st-cerrado{background:var(--mint-soft);color:#1d6b48}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:6px}
+.link-btn{font-size:13px;font-weight:700;color:var(--accent-deep);padding:7px 13px;border-radius:9px;border:1.5px solid var(--line);background:#FDFCFA}
+.link-btn:hover{background:var(--accent-soft);border-color:var(--accent)}
+.legend{display:flex;gap:16px;font-size:12.5px;color:var(--ink-2);font-weight:600;margin-bottom:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* ── Chat tester (modal) ────────────────── */
+.overlay{position:fixed;inset:0;background:rgba(51,50,62,.35);backdrop-filter:blur(3px);z-index:90;display:none;align-items:center;justify-content:center;padding:20px}
+.overlay.on{display:flex;animation:fadeUp .25s ease}
+.chat-modal{width:min(420px,100%);height:min(640px,92vh);background:#fff;border-radius:24px;box-shadow:0 30px 70px rgba(50,55,90,.3);display:flex;flex-direction:column;overflow:hidden}
+.cm-head{display:flex;align-items:center;gap:12px;padding:16px 18px;color:#fff}
+.cm-head .dc-ava{background:rgba(255,255,255,.9)}
+.cm-head b{font-size:15px}
+.cm-head small{display:block;font-size:12px;opacity:.9;font-weight:600}
+.cm-close{margin-left:auto;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.22);color:#fff;font-size:16px;font-weight:800}
+.cm-body{flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:10px;background:var(--paper)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 10px;background:var(--paper)}
+.qk{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--accent-deep);transition:all .15s}
+.qk:hover{background:var(--accent-soft);border-color:var(--accent)}
+.cm-input{display:flex;gap:10px;padding:14px 16px;border-top:1px solid var(--line);background:#fff}
+.cm-input input{flex:1;border:1.5px solid var(--line);border-radius:99px;padding:11px 18px;font-size:14.5px}
+.cm-input input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.cm-send{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;font-size:17px;flex:none;transition:transform .12s}
+.cm-send:hover{transform:scale(1.07)}
+.lead-badge{align-self:center;font-size:12px;font-weight:700;background:var(--mint-soft);color:#1d6b48;border-radius:99px;padding:5px 14px;margin:4px 0}
+
+/* code modal */
+.code-modal{width:min(560px,100%);background:#fff;border-radius:22px;box-shadow:0 30px 70px rgba(50,55,90,.3);padding:30px}
+.code-modal h3{font-size:19px;margin-bottom:6px}
+.code-modal p{color:var(--ink-2);font-size:14px;margin-bottom:16px}
+pre.snippet{background:#33323E;color:#E8F0E9;border-radius:14px;padding:18px;font-size:13px;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.6}
+.code-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+
+/* toast */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:13px 22px;border-radius:14px;box-shadow:var(--shadow);z-index:120;transition:transform .3s ease,opacity .3s ease;display:flex;gap:9px;align-items:center;opacity:0;visibility:hidden;pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
+
+footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--ink-3);font-size:13.5px}
+footer b{color:var(--ink-2)}
+
+@media (max-width:960px){
+  .hero-grid{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .steps-row{grid-template-columns:1fr 1fr}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .dash-grid{grid-template-columns:1fr}
+  .ind-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:600px){
+  .feat-grid,.steps-row,.f-grid,.lead-grid,.tone-grid{grid-template-columns:1fr}
+  .ind-grid{grid-template-columns:repeat(2,1fr)}
+  .wiz-card{padding:24px}
+  .summary{grid-template-columns:1fr}
+  .nav-tabs{order:3;width:100%}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <div class="brand"><span class="brand-mark">✦</span><span>LumiBots<small>Studio</small></span></div>
+    <div class="nav-tabs" role="tablist">
+      <button class="nav-tab on" data-go="home">Inicio</button>
+      <button class="nav-tab" data-go="wizard">Crear bot</button>
+      <button class="nav-tab" data-go="bots">Mis bots</button>
+      <button class="nav-tab" data-go="dash">Dashboard</button>
+    </div>
+    <button class="nav-cta" data-go="wizard">＋ Nuevo bot</button>
+  </div>
+</nav>
+
+<!-- ══════════ INICIO ══════════ -->
+<main id="view-home" class="view on">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> Chatbots con IA para toda empresa</span>
+        <h1>Crea chatbots que <span class="hl">iluminan</span> tu negocio en minutos</h1>
+        <p class="lead">LumiBots Studio arma un asistente virtual profesional para tu empresa — cualquier giro, cualquier tamaño. Responde a tus clientes 24/7, agenda citas, captura leads y te muestra todo en un dashboard claro y detallado.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-go="wizard">✨ Crear mi chatbot gratis</button>
+          <button class="btn btn-ghost" id="btn-demo-home">▶ Ver demo en vivo</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat"><b>12</b><span>giros de negocio listos</span></div>
+          <div class="hstat"><b>5 min</b><span>de idea a bot publicado</span></div>
+          <div class="hstat"><b>5</b><span>canales: Web, WhatsApp y más</span></div>
+        </div>
+      </div>
+      <div class="demo-chat" aria-label="Demostración del chatbot">
+        <div class="dc-head">
+          <span class="dc-ava">🦷</span>
+          <div><b>Luna · Clínica Dental Sonría</b><small>● En línea — responde al instante</small></div>
+        </div>
+        <div class="dc-body" id="hero-demo-body"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="sec-head">
+      <span class="kicker">Todo incluido</span>
+      <h2>Más que un constructor de bots: tu equipo de atención completo</h2>
+      <p>Tomamos lo mejor de las plataformas de chatbots y lo hicimos más simple, más claro y más bonito.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><span class="ico t-acc">🪄</span><h3>Asistente guiado inteligente</h3><p>Te preguntamos lo esencial de tu empresa — giro, servicios, horarios, tono — y armamos el bot por ti, con respuestas listas para tu industria.</p></div>
+      <div class="feat"><span class="ico t-mint">📥</span><h3>Captura de leads automática</h3><p>Tu bot pide nombre, correo, teléfono o lo que tú definas, en el momento justo de la conversación. Cada dato queda guardado en tu panel.</p></div>
+      <div class="feat"><span class="ico t-sky">📊</span><h3>Dashboard bien detallado</h3><p>Conversaciones por día, leads por canal, temas más consultados, tasa de conversión y tabla de prospectos con exportación a CSV.</p></div>
+      <div class="feat"><span class="ico t-peach">💬</span><h3>Multicanal real</h3><p>Web, WhatsApp, Instagram, Messenger y Telegram con la misma personalidad y la misma bandeja de resultados.</p></div>
+      <div class="feat"><span class="ico t-lilac">🎨</span><h3>Con tu marca, en colores suaves</h3><p>Elige el color, el avatar y el nombre de tu asistente. El widget se ve profesional y ligero en cualquier sitio web.</p></div>
+      <div class="feat"><span class="ico t-rose">🧪</span><h3>Pruébalo antes de publicar</h3><p>Un simulador de chat en vivo te deja conversar con tu bot, afinar sus respuestas y verlo capturar leads antes de conectarlo.</p></div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="sec-head">
+      <span class="kicker">Así de fácil</span>
+      <h2>De cero a chatbot publicado en 4 pasos</h2>
+      <p>El orden importa: cada paso alimenta al siguiente para que el bot salga bien armado a la primera.</p>
+    </div>
+    <div class="steps-row">
+      <div class="step-card"><span class="ico">🏢</span><h3>Cuéntanos de tu empresa</h3><p>Nombre, giro, horarios y qué ofreces. Con eso pre-armamos el conocimiento del bot.</p></div>
+      <div class="step-card"><span class="ico">🎭</span><h3>Define su personalidad</h3><p>Objetivo, tono de voz, nombre y avatar. Formal, amigable o divertido: tú decides.</p></div>
+      <div class="step-card"><span class="ico">🧠</span><h3>Revisa su conocimiento</h3><p>Ajusta las preguntas frecuentes que generamos para tu industria y agrega las tuyas.</p></div>
+      <div class="step-card"><span class="ico">🚀</span><h3>Publica y mide</h3><p>Pruébalo en vivo, cópialo a tu web y sigue cada conversación desde el dashboard.</p></div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="sec-head">
+      <span class="kicker">Comparativa</span>
+      <h2>¿Por qué LumiBots y no otra plataforma?</h2>
+      <p>Comparado con los constructores de bots típicos (incluidos los de código abierto tipo "forja"), esto es lo que ganas.</p>
+    </div>
+    <div class="compare">
+      <table>
+        <thead><tr><th>Capacidad</th><th>LumiBots Studio</th><th>Plataformas típicas</th></tr></thead>
+        <tbody>
+          <tr><td>Configuración guiada por giro de negocio</td><td class="yes">✓ 12 industrias con plantillas</td><td class="no">Configuración manual o técnica</td></tr>
+          <tr><td>Tiempo hasta el primer bot</td><td class="yes">✓ ~5 minutos, sin código</td><td class="no">Horas y conocimientos técnicos</td></tr>
+          <tr><td>Simulador de chat antes de publicar</td><td class="yes">✓ Incluido, con captura de leads real</td><td class="no">Limitado o inexistente</td></tr>
+          <tr><td>Dashboard detallado por bot</td><td class="yes">✓ Métricas, temas, leads y CSV</td><td class="no">Métricas básicas</td></tr>
+          <tr><td>Diseño claro y amable</td><td class="yes">✓ Interfaz luminosa, sin fricción</td><td class="no">Paneles densos y oscuros</td></tr>
+          <tr><td>Tus datos</td><td class="yes">✓ Exportables en JSON/CSV</td><td class="no">A veces bloqueados en el plan</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="cta-band">
+      <h2>Tu próximo empleado estrella no duerme, no se enferma y sonríe siempre</h2>
+      <p>Crea tu primer chatbot ahora mismo. Sin tarjeta, sin código, sin complicaciones — solo responde unas preguntas y mira la magia.</p>
+      <button class="btn btn-primary" data-go="wizard">✨ Empezar ahora — es gratis</button>
+    </div>
+  </section>
+</main>
+
+<!-- ══════════ WIZARD ══════════ -->
+<main id="view-wizard" class="view">
+  <div class="wrap wiz" id="wiz-root">
+    <div class="wiz-progress" id="wiz-progress"></div>
+    <div class="wiz-card" id="wiz-card"></div>
+  </div>
+  <div class="wrap build" id="build-screen" style="display:none">
+    <div class="orb">🤖</div>
+    <h2 id="build-title">Armando tu chatbot…</h2>
+    <p style="color:var(--ink-2)">Estamos entrenando a tu asistente con la información de tu empresa.</p>
+    <div class="build-list" id="build-list"></div>
+  </div>
+</main>
+
+<!-- ══════════ MIS BOTS ══════════ -->
+<main id="view-bots" class="view">
+  <div class="wrap">
+    <div class="page-head">
+      <div><h2>Mis bots</h2><p>Administra, prueba y publica tus asistentes virtuales.</p></div>
+      <button class="btn btn-primary" data-go="wizard">＋ Crear nuevo bot</button>
+    </div>
+    <div class="bots-grid" id="bots-grid"></div>
+  </div>
+</main>
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<main id="view-dash" class="view">
+  <div class="wrap dash">
+    <div class="page-head">
+      <div><h2>Dashboard</h2><p>Rendimiento de tus bots en los últimos 14 días.</p></div>
+      <button class="link-btn" id="btn-csv">⬇ Exportar leads (CSV)</button>
+    </div>
+    <div class="bot-select" id="dash-botsel"></div>
+    <div id="dash-content"></div>
+  </div>
+</main>
+
+<!-- chat tester -->
+<div class="overlay" id="chat-overlay" role="dialog" aria-modal="true" aria-label="Probar chatbot">
+  <div class="chat-modal">
+    <div class="cm-head" id="cm-head">
+      <span class="dc-ava" id="cm-ava">🤖</span>
+      <div><b id="cm-name">Bot</b><small id="cm-sub">● En línea</small></div>
+      <button class="cm-close" id="cm-close" aria-label="Cerrar chat">✕</button>
+    </div>
+    <div class="cm-body" id="cm-body"></div>
+    <div class="quick" id="cm-quick"></div>
+    <div class="cm-input">
+      <input id="cm-text" placeholder="Escribe un mensaje…" autocomplete="off" aria-label="Mensaje">
+      <button class="cm-send" id="cm-send" aria-label="Enviar">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- embed code modal -->
+<div class="overlay" id="code-overlay" role="dialog" aria-modal="true" aria-label="Código de instalación">
+  <div class="code-modal">
+    <h3>📎 Instala tu bot en tu sitio web</h3>
+    <p>Copia este fragmento y pégalo antes de <code>&lt;/body&gt;</code> en tu página. El widget aparecerá con tus colores.</p>
+    <pre class="snippet" id="code-snippet"></pre>
+    <div class="code-actions">
+      <button class="mini-btn" id="code-close">Cerrar</button>
+      <button class="mini-btn solid" id="code-copy">Copiar código</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Listo</div>
+
+<footer>
+  <div class="wrap"><b>LumiBots Studio</b> — chatbots luminosos para empresas de todos los giros · Hecho con cariño y colores suaves ✦</div>
+</footer>
+
+<script>
+"use strict";
+/* ════════ Datos por industria ════════ */
+const INDUSTRIES=[
+ {id:"restaurante",n:"Restaurante",em:"🍽️",serv:["Reservas de mesa","Menú del día","Pedidos a domicilio","Eventos privados"],
+  faqs:[["¿Cuál es su horario?","Abrimos de martes a domingo de 13:00 a 23:00. Los lunes descansamos 😊"],
+        ["¿Tienen servicio a domicilio?","¡Sí! Hacemos entregas en un radio de 5 km. El pedido mínimo es de $200."],
+        ["¿Puedo reservar una mesa?","Claro, con gusto te aparto una mesa. ¿Para cuántas personas y a qué hora?"],
+        ["¿Tienen opciones vegetarianas?","Sí, contamos con una sección vegetariana y vegana en el menú, con 8 platillos."]],
+  bienv:"¡Hola! 🍽️ Bienvenido a {empresa}. Puedo ayudarte con reservas, el menú o pedidos a domicilio. ¿Qué se te antoja hoy?",
+  quick:["Ver menú","Reservar mesa","¿Hacen entregas?","Horario"]},
+ {id:"salud",n:"Salud / Clínica",em:"🩺",serv:["Citas médicas","Limpieza dental","Estudios de laboratorio","Planes de pago"],
+  faqs:[["¿Cómo agendo una cita?","Puedo agendarla por aquí mismo. Solo necesito tu nombre, teléfono y el día que prefieras."],
+        ["¿Aceptan seguro médico?","Trabajamos con las principales aseguradoras. Compárteme el nombre de la tuya y lo confirmo."],
+        ["¿Cuánto cuesta la consulta?","La consulta general tiene un costo de $500 e incluye valoración completa."],
+        ["¿Atienden urgencias?","Sí, tenemos atención de urgencias en horario extendido. Llama al teléfono de la clínica si es grave."]],
+  bienv:"¡Hola! 🩺 Soy el asistente de {empresa}. Puedo agendarte una cita, darte precios o resolver tus dudas. ¿En qué te ayudo?",
+  quick:["Agendar cita","Precios","¿Aceptan seguro?","Urgencias"]},
+ {id:"belleza",n:"Belleza / Barbería",em:"💈",serv:["Corte de cabello","Barba y afeitado","Color y tratamiento","Manicura y pedicura"],
+  faqs:[["¿Cuáles son sus precios?","Corte desde $180, barba $120, color desde $650. ¿Quieres agendar?"],
+        ["¿Atienden sin cita?","Sí, pero con cita te garantizamos tu lugar sin espera. ¿Te agendo?"],
+        ["¿Cuál es su horario?","De lunes a sábado de 10:00 a 20:00 y domingos de 11:00 a 16:00."],
+        ["¿Tienen promociones?","¡Sí! Martes y miércoles el corte + barba tiene 20% de descuento."]],
+  bienv:"¡Hola! 💈 Bienvenido a {empresa}. ¿Quieres agendar tu cita o conocer precios y promociones?",
+  quick:["Agendar cita","Precios","Promociones","Horario"]},
+ {id:"inmobiliaria",n:"Inmobiliaria",em:"🏠",serv:["Venta de propiedades","Renta","Avalúos","Asesoría hipotecaria"],
+  faqs:[["¿Qué propiedades tienen disponibles?","Tenemos casas y departamentos en venta y renta. ¿Buscas comprar o rentar, y en qué zona?"],
+        ["¿Qué requisitos piden para rentar?","Identificación, comprobante de ingresos, aval o póliza y un mes de depósito."],
+        ["¿Ayudan con crédito hipotecario?","Sí, te asesoramos gratis con Infonavit, Fovissste y créditos bancarios."],
+        ["¿Puedo agendar una visita?","¡Por supuesto! Dime qué propiedad te interesa y coordino la visita con un asesor."]],
+  bienv:"¡Hola! 🏠 Soy el asistente de {empresa}. ¿Buscas comprar, rentar o vender una propiedad?",
+  quick:["Quiero comprar","Quiero rentar","Agendar visita","Crédito hipotecario"]},
+ {id:"tienda",n:"Tienda / eCommerce",em:"🛍️",serv:["Catálogo de productos","Envíos a todo el país","Cambios y devoluciones","Pagos a meses"],
+  faqs:[["¿Cuánto tarda el envío?","De 2 a 5 días hábiles a todo el país. Envío gratis en compras mayores a $999."],
+        ["¿Puedo devolver un producto?","Sí, tienes 30 días para cambios o devoluciones sin costo."],
+        ["¿Qué formas de pago aceptan?","Tarjetas, transferencia, PayPal y meses sin intereses con tarjetas participantes."],
+        ["¿Cómo rastreo mi pedido?","Compárteme tu número de pedido y te digo el estatus al momento."]],
+  bienv:"¡Hola! 🛍️ Bienvenido a {empresa}. Puedo ayudarte con productos, envíos o el estatus de tu pedido. ¿Qué necesitas?",
+  quick:["Ver catálogo","Rastrear pedido","Formas de pago","Devoluciones"]},
+ {id:"educacion",n:"Educación",em:"🎓",serv:["Inscripciones","Cursos y diplomados","Becas","Certificaciones"],
+  faqs:[["¿Cuánto cuestan los cursos?","Los cursos van de $1,500 a $4,900 según duración. ¿Cuál te interesa?"],
+        ["¿Cuándo inician las clases?","Tenemos inicios cada mes. La próxima generación arranca el primer lunes del mes entrante."],
+        ["¿Tienen modalidad en línea?","Sí, todos nuestros programas están disponibles en línea y en vivo, con grabaciones incluidas."],
+        ["¿Ofrecen becas?","Sí, becas de hasta 40% por promedio o situación económica. Te comparto los requisitos."]],
+  bienv:"¡Hola! 🎓 Soy el asistente de {empresa}. ¿Quieres información de cursos, inscripciones o becas?",
+  quick:["Ver cursos","Inscribirme","Becas","Modalidad en línea"]},
+ {id:"legal",n:"Legal / Despacho",em:"⚖️",serv:["Consulta inicial","Contratos","Derecho laboral","Derecho familiar"],
+  faqs:[["¿Cuánto cuesta una consulta?","La primera consulta de valoración es gratuita y dura 30 minutos."],
+        ["¿Qué áreas manejan?","Civil, mercantil, laboral, familiar y corporativo."],
+        ["¿Qué documentos necesito llevar?","Depende del caso; en la primera consulta te damos la lista exacta. Basta tu identificación."],
+        ["¿Atienden en línea?","Sí, ofrecemos videollamadas con la misma validez que una cita presencial."]],
+  bienv:"Buen día. ⚖️ Soy el asistente de {empresa}. ¿Sobre qué tema legal necesita orientación?",
+  quick:["Agendar consulta","Áreas de práctica","Costos","Cita en línea"]},
+ {id:"fitness",n:"Gym / Fitness",em:"💪",serv:["Membresías","Clases grupales","Entrenador personal","Plan de nutrición"],
+  faqs:[["¿Cuánto cuesta la membresía?","Mensual $549, trimestral $1,450 y anual $4,990 con inscripción gratis."],
+        ["¿Puedo tomar una clase de prueba?","¡Claro! Tu primera clase es totalmente gratis. ¿Cuándo te gustaría venir?"],
+        ["¿Cuál es el horario?","Lunes a viernes de 6:00 a 23:00, sábados y domingos de 8:00 a 18:00."],
+        ["¿Puedo congelar mi membresía?","Sí, hasta 30 días al año sin costo por motivos de viaje o salud."]],
+  bienv:"¡Hola! 💪 Bienvenido a {empresa}. ¿Listo para entrenar? Pregúntame por membresías, clases o tu pase gratis.",
+  quick:["Clase gratis","Precios","Horario","Entrenador personal"]},
+ {id:"turismo",n:"Hotel / Turismo",em:"🏝️",serv:["Habitaciones","Tours y actividades","Traslados","Paquetes todo incluido"],
+  faqs:[["¿A qué hora es el check-in?","Check-in a partir de las 15:00 y check-out a las 12:00. Early check-in sujeto a disponibilidad."],
+        ["¿Incluye desayuno?","Nuestras tarifas flexibles incluyen desayuno buffet para dos personas."],
+        ["¿Cuál es la política de cancelación?","Cancelación gratuita hasta 48 horas antes de tu llegada."],
+        ["¿Qué tours ofrecen?","Snorkel, zonas arqueológicas, cenotes y paseos al atardecer. ¿Cuál te llama la atención?"]],
+  bienv:"¡Hola! 🏝️ Bienvenido a {empresa}. ¿Buscas habitación, tours o un paquete completo? Cuéntame tus fechas.",
+  quick:["Ver habitaciones","Tours","Check-in","Cancelaciones"]},
+ {id:"automotriz",n:"Automotriz",em:"🚗",serv:["Servicio mecánico","Venta de autos","Refacciones","Seguros"],
+  faqs:[["¿Cómo agendo un servicio?","Dime marca, modelo y año de tu auto y el día que prefieres, y te agendo."],
+        ["¿Dan cotizaciones?","Sí, cotizamos sin costo. Descríbeme la falla o el servicio que necesitas."],
+        ["¿Los trabajos tienen garantía?","Todos nuestros servicios tienen garantía de 90 días o 5,000 km."],
+        ["¿Venden refacciones originales?","Manejamos refacciones originales y alternativas de calidad certificada."]],
+  bienv:"¡Hola! 🚗 Soy el asistente de {empresa}. ¿Necesitas servicio, cotización o refacciones para tu auto?",
+  quick:["Agendar servicio","Cotizar","Garantías","Refacciones"]},
+ {id:"tecnologia",n:"Tecnología / SaaS",em:"💻",serv:["Demo del producto","Planes y precios","Soporte técnico","Integraciones"],
+  faqs:[["¿Tienen prueba gratis?","Sí, 14 días de prueba con todas las funciones, sin tarjeta de crédito."],
+        ["¿Cuánto cuestan los planes?","Starter $290/mes, Pro $690/mes y Empresa a la medida. Todos con soporte incluido."],
+        ["¿Ofrecen soporte técnico?","Soporte por chat y correo en horario laboral; el plan Pro incluye soporte prioritario."],
+        ["¿Con qué herramientas se integra?","Con WhatsApp, Slack, HubSpot, Zapier y más de 50 aplicaciones."]],
+  bienv:"¡Hola! 💻 Soy el asistente de {empresa}. ¿Te muestro una demo, precios o resolvemos una duda técnica?",
+  quick:["Quiero una demo","Precios","Prueba gratis","Integraciones"]},
+ {id:"servicios",n:"Servicios profesionales",em:"🧰",serv:["Cotizaciones","Mantenimiento","Instalaciones","Pólizas de servicio"],
+  faqs:[["¿Cómo pido una cotización?","Cuéntame qué necesitas y tu zona, y te preparo una cotización sin compromiso."],
+        ["¿En qué zonas trabajan?","Cubrimos toda la ciudad y área metropolitana sin costo de traslado."],
+        ["¿Sus trabajos tienen garantía?","Sí, garantía por escrito de 6 meses en mano de obra."],
+        ["¿Atienden urgencias?","Sí, tenemos servicio de urgencias con atención el mismo día."]],
+  bienv:"¡Hola! 🧰 Soy el asistente de {empresa}. ¿Necesitas una cotización o agendar un servicio?",
+  quick:["Cotizar","Agendar servicio","Zonas de cobertura","Urgencias"]}
+];
+
+const LEAD_FIELDS=[
+ {id:"nombre",em:"👤",n:"Nombre completo",d:"Para saludar y dar seguimiento",q:"¿Me compartes tu nombre completo? 😊"},
+ {id:"email",em:"✉️",n:"Correo electrónico",d:"Para enviar información y cotizaciones",q:"¡Gracias! ¿Cuál es tu correo electrónico?"},
+ {id:"telefono",em:"📱",n:"Teléfono / WhatsApp",d:"Para contacto directo del equipo",q:"Perfecto. ¿A qué número de teléfono o WhatsApp te podemos contactar?"},
+ {id:"empresa",em:"🏢",n:"Empresa",d:"Útil para ventas B2B",q:"¿De qué empresa nos escribes?"},
+ {id:"interes",em:"⭐",n:"Servicio de interés",d:"Qué producto o servicio busca",q:"¿Qué servicio o producto te interesa principalmente?"},
+ {id:"fecha",em:"📅",n:"Fecha preferida",d:"Para citas y reservas",q:"¿Qué día y hora te acomodan mejor?"},
+ {id:"presupuesto",em:"💰",n:"Presupuesto",d:"Para filtrar oportunidades",q:"¿Tienes un presupuesto aproximado en mente?"}
+];
+
+const OBJETIVOS=[["ventas","💼 Vender más"],["leads","📥 Capturar leads"],["citas","📅 Agendar citas"],["soporte","🛟 Dar soporte"],["faq","💡 Responder dudas"]];
+const TONOS=[["amigable","Amigable","Cercano y cálido, con emojis. Ideal para la mayoría de los negocios."],["formal","Formal","Profesional y respetuoso, de usted. Para despachos, clínicas y B2B."],["divertido","Divertido","Relajado y con chispa. Para marcas jóvenes y creativas."]];
+const CANALES=[["web","🌐 Sitio web"],["whatsapp","💚 WhatsApp"],["instagram","📸 Instagram"],["messenger","💬 Messenger"],["telegram","✈️ Telegram"]];
+const WIDGET_COLORS=["#6B7FE3","#7ED9B4","#F6C79A","#A9D3F2","#CDC2F0","#F2B8C6","#8FD4D9","#E8D48A"];
+const AVATARES=["🤖","✨","🦷","🍽️","💈","🏠","🛍️","🎓","⚖️","💪","🏝️","🚗","💻","🧰","🌸","🐝"];
+
+/* ════════ Estado ════════ */
+const LS_KEY="lumibots_v1";
+let state={bots:[],leads:[]};
+function save(){localStorage.setItem(LS_KEY,JSON.stringify(state))}
+function load(){
+  try{const raw=localStorage.getItem(LS_KEY);if(raw){state=JSON.parse(raw);return}}catch(e){}
+  seedDemo();save();
+}
+function uid(){return "b"+Math.random().toString(36).slice(2,9)}
+function rng(seed){let s=seed;return()=> (s=(s*9301+49297)%233280)/233280}
+function hashStr(s){let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))%99991;return h}
+
+function makeMetrics(id){
+  const r=rng(hashStr(id));
+  const days=[...Array(14)].map(()=>Math.round(14+r()*46));
+  const canales={"Web":0,"WhatsApp":0,"Instagram":0,"Messenger":0,"Telegram":0};
+  const tot=days.reduce((a,b)=>a+b,0);
+  const w=[.34,.31,.15,.12,.08];Object.keys(canales).forEach((k,i)=>canales[k]=Math.round(tot*w[i]*(0.8+r()*0.4)));
+  return {days,canales,resp:(0.8+r()*2.2).toFixed(1),csat:(4.2+r()*0.7).toFixed(1),leadsBase:Math.round(tot*0.14+r()*20)};
+}
+
+function seedDemo(){
+  const d1={id:"demo-dental",empresa:"Clínica Dental Sonría",industria:"salud",nombreBot:"Luna",avatar:"🦷",tono:"amigable",
+    objetivo:["citas","leads"],color:"#A9D3F2",canales:["web","whatsapp","instagram"],horario:"Lun a Sáb 9:00–19:00",
+    web:"sonria.mx",tel:"55 1234 5678",desc:"Clínica dental familiar con 15 años de experiencia.",
+    bienvenida:"¡Hola! 🦷 Soy Luna, la asistente de Clínica Dental Sonría. Puedo agendarte una cita, darte precios o resolver tus dudas. ¿En qué te ayudo?",
+    faqs:INDUSTRIES.find(i=>i.id==="salud").faqs.map(f=>({q:f[0],a:f[1]})),
+    servicios:INDUSTRIES.find(i=>i.id==="salud").serv.slice(),
+    leadFields:["nombre","telefono","fecha"],creado:"2026-07-12"};
+  const d2={id:"demo-bistro",empresa:"Bistró La Terraza",industria:"restaurante",nombreBot:"Oli",avatar:"🍽️",tono:"divertido",
+    objetivo:["ventas","citas"],color:"#7ED9B4",canales:["web","whatsapp","messenger"],horario:"Mar a Dom 13:00–23:00",
+    web:"laterraza.rest",tel:"55 8765 4321",desc:"Cocina de autor en un jardín al aire libre.",
+    bienvenida:"¡Hola! 🍽️ Soy Oli, del Bistró La Terraza. ¿Reservamos mesa, vemos el menú o pedimos a domicilio?",
+    faqs:INDUSTRIES.find(i=>i.id==="restaurante").faqs.map(f=>({q:f[0],a:f[1]})),
+    servicios:INDUSTRIES.find(i=>i.id==="restaurante").serv.slice(),
+    leadFields:["nombre","telefono","fecha"],creado:"2026-07-21"};
+  d1.metrics=makeMetrics(d1.id);d2.metrics=makeMetrics(d2.id);
+  state.bots=[d1,d2];
+  state.leads=[
+    {bot:"demo-dental",fecha:"2026-07-30",datos:{nombre:"María Fernanda Ruiz",telefono:"55 3322 1144",fecha:"Viernes 10:00"},canal:"WhatsApp",interes:"Limpieza dental",estado:"Nuevo"},
+    {bot:"demo-dental",fecha:"2026-07-29",datos:{nombre:"Jorge Salinas",telefono:"55 9988 7766",fecha:"Sábado 12:00"},canal:"Web",interes:"Ortodoncia",estado:"Contactado"},
+    {bot:"demo-dental",fecha:"2026-07-28",datos:{nombre:"Lucía Andrade",telefono:"55 4455 6677",fecha:"Lunes 16:30"},canal:"Instagram",interes:"Blanqueamiento",estado:"Cerrado"},
+    {bot:"demo-bistro",fecha:"2026-07-30",datos:{nombre:"Carlos Peña",telefono:"55 1122 3344",fecha:"Sábado 21:00 · 4 personas"},canal:"Web",interes:"Reserva de mesa",estado:"Nuevo"},
+    {bot:"demo-bistro",fecha:"2026-07-27",datos:{nombre:"Ana Sofía Torres",telefono:"55 5566 7788",fecha:"Domingo 14:00 · 8 personas"},canal:"Messenger",interes:"Evento privado",estado:"Contactado"}
+  ];
+}
+
+/* ════════ Navegación ════════ */
+const views=["home","wizard","bots","dash"];
+function go(v){
+  views.forEach(x=>{
+    document.getElementById("view-"+x).classList.toggle("on",x===v);
+  });
+  document.querySelectorAll(".nav-tab").forEach(t=>t.classList.toggle("on",t.dataset.go===v));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(v==="wizard"){resetWizard();renderWizard()}
+  if(v==="bots")renderBots();
+  if(v==="dash")renderDash();
+}
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");
+  if(g){go(g.dataset.go)}
+});
+
+/* ════════ Toast ════════ */
+let toastT;
+function toast(msg){
+  const t=document.getElementById("toast");t.textContent=msg;t.classList.add("on");
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("on"),2600);
+}
+
+/* ════════ Demo del hero ════════ */
+const HERO_SCRIPT=[
+ ["bot","¡Hola! 🦷 Soy Luna, la asistente de Clínica Dental Sonría. ¿En qué te ayudo?"],
+ ["user","Hola, ¿cuánto cuesta una limpieza dental?"],
+ ["bot","La limpieza dental cuesta $650 e incluye revisión completa. ✨ ¿Te gustaría agendar una cita?"],
+ ["user","Sí, por favor"],
+ ["bot","¡Genial! ¿Me compartes tu nombre y un teléfono para confirmarte? 📅"],
+ ["user","Ana López · 55 1234 5678"],
+ ["bot","¡Listo, Ana! Te propongo el viernes a las 10:00. Te llega la confirmación por WhatsApp. 💙"]
+];
+function playHeroDemo(){
+  const body=document.getElementById("hero-demo-body");
+  body.innerHTML="";let i=0;
+  function next(){
+    if(i>=HERO_SCRIPT.length){setTimeout(playHeroDemo,6000);return}
+    const [who,txt]=HERO_SCRIPT[i++];
+    if(who==="bot"){
+      const t=document.createElement("div");t.className="typing";t.innerHTML="<i></i><i></i><i></i>";
+      body.appendChild(t);body.scrollTop=body.scrollHeight;
+      setTimeout(()=>{t.remove();addM()},700);
+    }else addM();
+    function addM(){
+      const m=document.createElement("div");m.className="msg "+who;m.textContent=txt;
+      body.appendChild(m);body.scrollTop=body.scrollHeight;
+      setTimeout(next,who==="bot"?1400:900);
+    }
+  }
+  next();
+}
+
+/* ════════ Wizard ════════ */
+const WIZ_STEPS=["Empresa","Personalidad","Conocimiento","Captura de datos","Canales y estilo"];
+let wstep=0,draft=null,editingId=null;
+function resetWizard(){
+  wstep=0;editingId=null;
+  draft={empresa:"",industria:null,web:"",tel:"",horario:"",desc:"",objetivo:[],tono:"amigable",
+    nombreBot:"",avatar:"🤖",bienvenida:"",faqs:[],servicios:[],leadFields:["nombre","email","telefono"],
+    canales:["web","whatsapp"],color:"#6B7FE3"};
+  document.getElementById("build-screen").style.display="none";
+  document.getElementById("wiz-root").style.display="";
+}
+function ind(){return INDUSTRIES.find(i=>i.id===draft.industria)}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+function renderWizard(){
+  const prog=document.getElementById("wiz-progress");
+  prog.innerHTML=WIZ_STEPS.map((s,i)=>`<div class="wp ${i===wstep?"on":i<wstep?"done":""}"><div class="bar"></div><span>${i<wstep?"✓ ":""}${s}</span></div>`).join("");
+  const card=document.getElementById("wiz-card");
+  card.innerHTML=[stepEmpresa,stepPersona,stepConocimiento,stepLeads,stepCanales][wstep]();
+  bindStep();
+  card.querySelector(".f-err")?.classList.remove("show");
+}
+
+function navBtns(last){
+  return `<div class="wiz-nav">
+    ${wstep>0?`<button class="btn btn-ghost" id="w-back">← Atrás</button>`:`<span></span>`}
+    <button class="btn btn-primary" id="w-next">${last?"🚀 Crear mi chatbot":"Continuar →"}</button>
+  </div><p class="f-err" id="w-err"></p>`;
+}
+
+function stepEmpresa(){
+  return `<h2>🏢 Cuéntanos de tu empresa</h2>
+  <p class="sub">Con estos datos pre-armamos el conocimiento de tu bot. Los campos con * son necesarios.</p>
+  <div class="f-grid">
+    <div class="f-field full"><label>Nombre de la empresa *</label><input id="f-empresa" placeholder="Ej. Clínica Dental Sonría" value="${esc(draft.empresa)}" maxlength="60"></div>
+    <div class="f-field full"><label>Giro del negocio * <em>— elige el más cercano</em></label>
+      <div class="ind-grid">${INDUSTRIES.map(i=>`<button type="button" class="ind ${draft.industria===i.id?"sel":""}" data-ind="${i.id}"><span class="em">${i.em}</span>${i.n}</button>`).join("")}</div>
+    </div>
+    <div class="f-field"><label>Sitio web <em>(opcional)</em></label><input id="f-web" placeholder="miempresa.com" value="${esc(draft.web)}"></div>
+    <div class="f-field"><label>Teléfono / WhatsApp <em>(opcional)</em></label><input id="f-tel" placeholder="55 1234 5678" value="${esc(draft.tel)}"></div>
+    <div class="f-field"><label>Horario de atención</label><input id="f-horario" placeholder="Lun a Vie 9:00–18:00" value="${esc(draft.horario)}"></div>
+    <div class="f-field"><label>¿Qué hace tu empresa? <em>(1 línea)</em></label><input id="f-desc" placeholder="Ej. Clínica dental familiar" value="${esc(draft.desc)}" maxlength="120"></div>
+  </div>${navBtns(false)}`;
+}
+
+function stepPersona(){
+  return `<h2>🎭 Dale personalidad a tu bot</h2>
+  <p class="sub">El objetivo define qué hará el bot; el tono, cómo hablará con tus clientes.</p>
+  <div class="f-field" style="margin-bottom:22px"><label>¿Qué quieres lograr? * <em>— puedes elegir varios</em></label>
+    <div class="chips">${OBJETIVOS.map(([id,n])=>`<button type="button" class="chip ${draft.objetivo.includes(id)?"sel":""}" data-obj="${id}">${n}</button>`).join("")}</div>
+  </div>
+  <div class="f-field" style="margin-bottom:22px"><label>Tono de voz *</label>
+    <div class="tone-grid">${TONOS.map(([id,n,d])=>`<button type="button" class="tone ${draft.tono===id?"sel":""}" data-tone="${id}"><b>${n}</b><span>${d}</span></button>`).join("")}</div>
+  </div>
+  <div class="f-grid">
+    <div class="f-field"><label>Nombre del asistente</label><input id="f-nbot" placeholder="Ej. Luna, Max, Sol…" value="${esc(draft.nombreBot)}" maxlength="20"></div>
+    <div class="f-field"><label>Avatar</label><div class="ava-row">${AVATARES.map(a=>`<button type="button" class="ava ${draft.avatar===a?"sel":""}" data-ava="${a}">${a}</button>`).join("")}</div></div>
+    <div class="f-field full"><label>Mensaje de bienvenida <em>— lo generamos por ti, edítalo si quieres</em></label>
+      <textarea id="f-bienv">${esc(draft.bienvenida||sugerirBienvenida())}</textarea></div>
+  </div>${navBtns(false)}`;
+}
+function sugerirBienvenida(){
+  const i=ind();if(!i)return "";
+  return i.bienv.replace("{empresa}",draft.empresa||"nuestra empresa");
+}
+
+function stepConocimiento(){
+  if(!draft.faqs.length&&ind())draft.faqs=ind().faqs.map(f=>({q:f[0],a:f[1]}));
+  if(!draft.servicios.length&&ind())draft.servicios=ind().serv.slice();
+  return `<h2>🧠 Revisa lo que tu bot sabrá</h2>
+  <p class="sub">Generamos estas respuestas para tu giro <b>${ind()?ind().em+" "+ind().n:""}</b>. Edítalas con tus datos reales — mientras más precisas, mejor tu bot.</p>
+  <div class="f-field" style="margin-bottom:22px"><label>Servicios o productos que ofrece</label>
+    <div class="chips" id="serv-chips">${draft.servicios.map((s,i)=>`<button type="button" class="chip sel g-mint" data-serv="${i}" title="Quitar">${esc(s)} ✕</button>`).join("")}
+    <button type="button" class="chip" id="serv-add">＋ Agregar</button></div>
+  </div>
+  <div class="f-field"><label>Preguntas frecuentes y sus respuestas</label>
+  <div class="faq-list" id="faq-list">${draft.faqs.map((f,i)=>`
+    <div class="faq-item"><div class="qa">
+      <input data-fq="${i}" value="${esc(f.q)}" placeholder="Pregunta">
+      <textarea data-fa="${i}" placeholder="Respuesta del bot">${esc(f.a)}</textarea>
+    </div><button type="button" class="faq-del" data-fdel="${i}" aria-label="Eliminar pregunta">✕</button></div>`).join("")}
+  </div>
+  <button type="button" class="add-line" id="faq-add" style="margin-top:12px">＋ Agregar otra pregunta</button>
+  </div>${navBtns(false)}`;
+}
+
+function stepLeads(){
+  return `<h2>📥 ¿Qué datos capturará de tus clientes?</h2>
+  <p class="sub">Cuando alguien quiera agendar, cotizar o comprar, el bot pedirá estos datos en orden y los guardará en tu dashboard.</p>
+  <div class="lead-grid">${LEAD_FIELDS.map(f=>`
+    <button type="button" class="lead-opt ${draft.leadFields.includes(f.id)?"sel":""}" data-lead="${f.id}">
+      <span class="em">${f.em}</span><span><b>${f.n}</b><span>${f.d}</span></span>
+      <span class="tick">${draft.leadFields.includes(f.id)?"✓":""}</span>
+    </button>`).join("")}
+  </div>
+  <p style="margin-top:18px;font-size:13.5px;color:var(--ink-2)">💡 Consejo: 3 datos es el punto dulce — suficiente para dar seguimiento sin espantar al cliente.</p>
+  ${navBtns(false)}`;
+}
+
+function stepCanales(){
+  const i=ind();
+  return `<h2>🎨 Canales, estilo y ¡despegue!</h2>
+  <p class="sub">Elige dónde vivirá tu bot y cómo se verá el widget. Revisa el resumen y crea tu bot.</p>
+  <div class="f-field" style="margin-bottom:22px"><label>Canales donde estará activo *</label>
+    <div class="chips">${CANALES.map(([id,n])=>`<button type="button" class="chip ${draft.canales.includes(id)?"sel":""}" data-canal="${id}">${n}</button>`).join("")}</div>
+  </div>
+  <div class="f-grid" style="margin-bottom:24px">
+    <div class="f-field"><label>Color del widget</label>
+      <div class="swatches">${WIDGET_COLORS.map(c=>`<button type="button" class="sw ${draft.color===c?"sel":""}" data-color="${c}" style="background:${c}" aria-label="Color ${c}"></button>`).join("")}</div>
+    </div>
+    <div class="f-field"><label>Vista previa</label>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--paper);border-radius:14px;padding:12px 16px">
+        <span style="width:46px;height:46px;border-radius:50%;background:${draft.color};display:grid;place-items:center;font-size:22px;box-shadow:var(--shadow-sm)">${draft.avatar}</span>
+        <div style="font-size:13.5px"><b>${esc(draft.nombreBot||"Tu asistente")}</b><br><span style="color:var(--ink-2)">${esc(draft.empresa||"Tu empresa")}</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="summary">
+    <div><b>Empresa</b>${esc(draft.empresa||"—")}</div>
+    <div><b>Giro</b>${i?i.em+" "+i.n:"—"}</div>
+    <div><b>Asistente</b>${draft.avatar} ${esc(draft.nombreBot||"Sin nombre")} · tono ${draft.tono}</div>
+    <div><b>Objetivos</b>${draft.objetivo.map(o=>OBJETIVOS.find(x=>x[0]===o)?.[1].split(" ").slice(1).join(" ")).join(", ")||"—"}</div>
+    <div><b>Conocimiento</b>${draft.faqs.length} preguntas · ${draft.servicios.length} servicios</div>
+    <div><b>Captura</b>${draft.leadFields.map(l=>LEAD_FIELDS.find(f=>f.id===l)?.n).join(", ")||"—"}</div>
+  </div>
+  ${navBtns(true)}`;
+}
+
+function bindStep(){
+  const card=document.getElementById("wiz-card");
+  card.querySelector("#w-back")?.addEventListener("click",()=>{collect();wstep--;renderWizard()});
+  card.querySelector("#w-next")?.addEventListener("click",()=>{
+    collect();
+    const err=validate();
+    if(err){const e=card.querySelector("#w-err");e.textContent="⚠ "+err;e.classList.add("show");return}
+    if(wstep<4){wstep++;renderWizard()}else buildBot();
+  });
+  card.querySelectorAll("[data-ind]").forEach(b=>b.addEventListener("click",()=>{
+    collect();draft.industria=b.dataset.ind;draft.faqs=[];draft.servicios=[];draft.bienvenida="";renderWizard();
+  }));
+  card.querySelectorAll("[data-obj]").forEach(b=>b.addEventListener("click",()=>{
+    const o=b.dataset.obj;draft.objetivo=draft.objetivo.includes(o)?draft.objetivo.filter(x=>x!==o):[...draft.objetivo,o];
+    b.classList.toggle("sel");
+  }));
+  card.querySelectorAll("[data-tone]").forEach(b=>b.addEventListener("click",()=>{
+    draft.tono=b.dataset.tone;card.querySelectorAll("[data-tone]").forEach(x=>x.classList.toggle("sel",x===b));
+  }));
+  card.querySelectorAll("[data-ava]").forEach(b=>b.addEventListener("click",()=>{
+    draft.avatar=b.dataset.ava;card.querySelectorAll("[data-ava]").forEach(x=>x.classList.toggle("sel",x===b));
+  }));
+  card.querySelectorAll("[data-serv]").forEach(b=>b.addEventListener("click",()=>{
+    collect();draft.servicios.splice(+b.dataset.serv,1);renderWizard();
+  }));
+  card.querySelector("#serv-add")?.addEventListener("click",()=>{
+    const s=prompt("Nombre del servicio o producto:");
+    if(s&&s.trim()){collect();draft.servicios.push(s.trim());renderWizard()}
+  });
+  card.querySelector("#faq-add")?.addEventListener("click",()=>{collect();draft.faqs.push({q:"",a:""});renderWizard()});
+  card.querySelectorAll("[data-fdel]").forEach(b=>b.addEventListener("click",()=>{
+    collect();draft.faqs.splice(+b.dataset.fdel,1);renderWizard();
+  }));
+  card.querySelectorAll("[data-lead]").forEach(b=>b.addEventListener("click",()=>{
+    const l=b.dataset.lead;
+    draft.leadFields=draft.leadFields.includes(l)?draft.leadFields.filter(x=>x!==l):[...draft.leadFields,l];
+    b.classList.toggle("sel");b.querySelector(".tick").textContent=b.classList.contains("sel")?"✓":"";
+  }));
+  card.querySelectorAll("[data-canal]").forEach(b=>b.addEventListener("click",()=>{
+    const c=b.dataset.canal;
+    draft.canales=draft.canales.includes(c)?draft.canales.filter(x=>x!==c):[...draft.canales,c];
+    b.classList.toggle("sel");
+  }));
+  card.querySelectorAll("[data-color]").forEach(b=>b.addEventListener("click",()=>{
+    collect();draft.color=b.dataset.color;renderWizard();
+  }));
+}
+
+function collect(){
+  const $=id=>document.getElementById(id);
+  if($("f-empresa"))draft.empresa=$("f-empresa").value.trim();
+  if($("f-web"))draft.web=$("f-web").value.trim();
+  if($("f-tel"))draft.tel=$("f-tel").value.trim();
+  if($("f-horario"))draft.horario=$("f-horario").value.trim();
+  if($("f-desc"))draft.desc=$("f-desc").value.trim();
+  if($("f-nbot"))draft.nombreBot=$("f-nbot").value.trim();
+  if($("f-bienv"))draft.bienvenida=$("f-bienv").value.trim();
+  document.querySelectorAll("[data-fq]").forEach(i=>draft.faqs[+i.dataset.fq].q=i.value.trim());
+  document.querySelectorAll("[data-fa]").forEach(i=>draft.faqs[+i.dataset.fa].a=i.value.trim());
+}
+function validate(){
+  if(wstep===0){
+    if(!draft.empresa)return "Escribe el nombre de tu empresa.";
+    if(!draft.industria)return "Elige el giro de tu negocio.";
+  }
+  if(wstep===1){
+    if(!draft.objetivo.length)return "Elige al menos un objetivo para tu bot.";
+    if(!draft.nombreBot)draft.nombreBot="Lumi";
+    if(!draft.bienvenida)draft.bienvenida=sugerirBienvenida();
+  }
+  if(wstep===2){
+    draft.faqs=draft.faqs.filter(f=>f.q&&f.a);
+    if(!draft.faqs.length)return "Deja al menos una pregunta con su respuesta.";
+  }
+  if(wstep===3&&!draft.leadFields.length)return "Elige al menos un dato para capturar (recomendamos nombre y teléfono).";
+  if(wstep===4&&!draft.canales.length)return "Activa al menos un canal.";
+  return null;
+}
+
+const BUILD_STEPS=["Leyendo la información de tu empresa","Cargando plantilla del giro y preguntas frecuentes","Entrenando respuestas con tu tono de voz","Configurando la captura de leads","Conectando canales y widget","¡Bot listo y en línea!"];
+function buildBot(){
+  document.getElementById("wiz-root").style.display="none";
+  const bs=document.getElementById("build-screen");bs.style.display="";
+  const list=document.getElementById("build-list");
+  list.innerHTML=BUILD_STEPS.map((s,i)=>`<div class="bl" id="bl-${i}"><span class="st"></span>${s}</div>`).join("");
+  let i=0;
+  const iv=setInterval(()=>{
+    if(i>0){const p=document.getElementById("bl-"+(i-1));p.classList.remove("doing");p.classList.add("on");p.querySelector(".st").textContent="✓"}
+    if(i>=BUILD_STEPS.length){
+      clearInterval(iv);
+      const bot={...draft,id:uid(),creado:new Date().toISOString().slice(0,10)};
+      bot.metrics=makeMetrics(bot.id);
+      state.bots.unshift(bot);save();
+      document.getElementById("build-title").textContent="🎉 ¡"+(bot.nombreBot||"Tu bot")+" está listo!";
+      setTimeout(()=>{go("bots");openChat(bot.id);toast("✨ Bot creado — pruébalo ahora mismo")},700);
+      return;
+    }
+    document.getElementById("bl-"+i).classList.add("doing","on");
+    i++;
+  },620);
+}
+
+/* ════════ Mis bots ════════ */
+const SOFT_BG={"#6B7FE3":"var(--accent-soft)","#7ED9B4":"var(--mint-soft)","#F6C79A":"var(--peach-soft)","#A9D3F2":"var(--sky-soft)","#CDC2F0":"var(--lilac-soft)","#F2B8C6":"var(--rose-soft)","#8FD4D9":"var(--sky-soft)","#E8D48A":"var(--peach-soft)"};
+function renderBots(){
+  const g=document.getElementById("bots-grid");
+  if(!state.bots.length){
+    g.innerHTML=`<div class="empty"><div class="em">🌱</div><h3>Aún no tienes bots</h3><p>Crea tu primer asistente en unos 5 minutos.</p><button class="btn btn-primary" data-go="wizard">✨ Crear mi primer bot</button></div>`;
+    return;
+  }
+  g.innerHTML=state.bots.map(b=>{
+    const i=INDUSTRIES.find(x=>x.id===b.industria);
+    const nl=state.leads.filter(l=>l.bot===b.id).length+ (b.metrics.leadsBase||0);
+    const tot=b.metrics.days.reduce((a,x)=>a+x,0);
+    return `<div class="bot-card">
+      <div class="bc-top">
+        <span class="bc-ava" style="background:${SOFT_BG[b.color]||"var(--accent-soft)"}">${b.avatar}</span>
+        <div><h3>${esc(b.nombreBot)} · ${esc(b.empresa)}</h3><small>${i?i.em+" "+i.n:""}</small></div>
+      </div>
+      <div><span class="pill live">Activo</span></div>
+      <div class="bc-meta"><span>💬 <b>${tot}</b> convers.</span><span>📥 <b>${nl}</b> leads</span><span>⭐ <b>${b.metrics.csat}</b> CSAT</span></div>
+      <div class="bc-ch">${b.canales.map(c=>`<span class="tagc">${CANALES.find(x=>x[0]===c)?.[1]||c}</span>`).join("")}</div>
+      <div class="bc-actions">
+        <button class="mini-btn solid" data-chat="${b.id}">💬 Probar bot</button>
+        <button class="mini-btn" data-dashbot="${b.id}">📊 Dashboard</button>
+        <button class="mini-btn" data-embed="${b.id}">📎 Instalar</button>
+        <button class="mini-btn" data-export="${b.id}">⬇ Exportar</button>
+      </div>
+    </div>`;
+  }).join("");
+  g.querySelectorAll("[data-chat]").forEach(b=>b.addEventListener("click",()=>openChat(b.dataset.chat)));
+  g.querySelectorAll("[data-dashbot]").forEach(b=>b.addEventListener("click",()=>{dashBot=b.dataset.dashbot;go("dash")}));
+  g.querySelectorAll("[data-embed]").forEach(b=>b.addEventListener("click",()=>openEmbed(b.dataset.embed)));
+  g.querySelectorAll("[data-export]").forEach(b=>b.addEventListener("click",()=>exportBot(b.dataset.export)));
+}
+
+function exportBot(id){
+  const b=state.bots.find(x=>x.id===id);if(!b)return;
+  const blob=new Blob([JSON.stringify(b,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="lumibot-"+b.empresa.toLowerCase().replace(/\s+/g,"-")+".json";a.click();
+  URL.revokeObjectURL(a.href);toast("⬇ Configuración exportada en JSON");
+}
+function openEmbed(id){
+  const b=state.bots.find(x=>x.id===id);if(!b)return;
+  document.getElementById("code-snippet").textContent=
+`<!-- LumiBots widget · ${b.empresa} -->
+<script src="https://cdn.lumibots.app/widget.js"
+  data-bot="${b.id}"
+  data-color="${b.color}"
+  data-avatar="${b.avatar}"
+  data-nombre="${b.nombreBot}"><\/script>`;
+  document.getElementById("code-overlay").classList.add("on");
+}
+document.getElementById("code-close").addEventListener("click",()=>document.getElementById("code-overlay").classList.remove("on"));
+document.getElementById("code-copy").addEventListener("click",()=>{
+  navigator.clipboard?.writeText(document.getElementById("code-snippet").textContent)
+    .then(()=>toast("📋 Código copiado al portapapeles"))
+    .catch(()=>toast("Selecciona y copia el código manualmente"));
+});
+
+/* ════════ Motor del chat ════════ */
+let chatBot=null,chatSession=null;
+function tone(bot,txt){
+  if(bot.tono==="formal")return txt.replace(/¡Hola!/g,"Buen día.").replace(/😊|😄|🎉|✨/g,"").replace(/te /g,"le ").replace(/tu /g,"su ");
+  if(bot.tono==="divertido")return txt+" 😄";
+  return txt;
+}
+function openChat(id){
+  chatBot=state.bots.find(b=>b.id===id);if(!chatBot)return;
+  chatSession={leadIdx:-1,leadData:{},asked:false};
+  const ov=document.getElementById("chat-overlay");
+  document.getElementById("cm-head").style.background=`linear-gradient(120deg,${chatBot.color},${chatBot.color}CC)`;
+  document.getElementById("cm-ava").textContent=chatBot.avatar;
+  document.getElementById("cm-name").textContent=chatBot.nombreBot+" · "+chatBot.empresa;
+  document.getElementById("cm-sub").textContent="● En línea — modo de prueba";
+  document.getElementById("cm-body").innerHTML="";
+  ov.classList.add("on");
+  botSay(chatBot.bienvenida||sugerirBienvenidaFor(chatBot));
+  renderQuick();
+  setTimeout(()=>document.getElementById("cm-text").focus(),300);
+}
+function sugerirBienvenidaFor(b){
+  const i=INDUSTRIES.find(x=>x.id===b.industria);
+  return i?i.bienv.replace("{empresa}",b.empresa):"¡Hola! ¿En qué puedo ayudarte?";
+}
+function renderQuick(){
+  const q=document.getElementById("cm-quick");
+  const i=INDUSTRIES.find(x=>x.id===chatBot.industria);
+  const opts=(chatSession.leadIdx>=0)?[]:(i?i.quick:[]);
+  q.innerHTML=opts.map(o=>`<button class="qk">${o}</button>`).join("");
+  q.querySelectorAll(".qk").forEach(b=>b.addEventListener("click",()=>sendUser(b.textContent)));
+}
+function addMsg(who,txt){
+  const body=document.getElementById("cm-body");
+  const m=document.createElement("div");m.className="msg "+who;m.textContent=txt;
+  body.appendChild(m);body.scrollTop=body.scrollHeight;
+}
+function botSay(txt,delay){
+  const body=document.getElementById("cm-body");
+  const t=document.createElement("div");t.className="typing";t.innerHTML="<i></i><i></i><i></i>";
+  body.appendChild(t);body.scrollTop=body.scrollHeight;
+  setTimeout(()=>{t.remove();addMsg("bot",txt);renderQuick()},delay||500+Math.min(txt.length*8,900));
+}
+function sendUser(txt){
+  txt=txt.trim();if(!txt)return;
+  addMsg("user",txt);
+  document.getElementById("cm-text").value="";
+  setTimeout(()=>reply(txt),150);
+}
+document.getElementById("cm-send").addEventListener("click",()=>sendUser(document.getElementById("cm-text").value));
+document.getElementById("cm-text").addEventListener("keydown",e=>{if(e.key==="Enter")sendUser(e.target.value)});
+document.getElementById("cm-close").addEventListener("click",()=>document.getElementById("chat-overlay").classList.remove("on"));
+
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")}
+function reply(txt){
+  const b=chatBot,s=chatSession,t=norm(txt);
+  /* flujo de captura de lead en curso */
+  if(s.leadIdx>=0){
+    const field=b.leadFields[s.leadIdx];
+    s.leadData[field]=txt;
+    s.leadIdx++;
+    if(s.leadIdx<b.leadFields.length){
+      const f=LEAD_FIELDS.find(x=>x.id===b.leadFields[s.leadIdx]);
+      botSay(tone(b,f.q));
+    }else{
+      s.leadIdx=-1;
+      const lead={bot:b.id,fecha:new Date().toISOString().slice(0,10),datos:{...s.leadData},canal:"Web (prueba)",
+        interes:s.leadData.interes||b.servicios[0]||"General",estado:"Nuevo"};
+      state.leads.unshift(lead);save();
+      const nombre=s.leadData.nombre?s.leadData.nombre.split(" ")[0]:"";
+      botSay(tone(b,`¡Perfecto${nombre?", "+nombre:""}! 🎉 Ya registré tus datos. Nuestro equipo te contactará muy pronto. ¿Puedo ayudarte con algo más?`));
+      const body=document.getElementById("cm-body");
+      const badge=document.createElement("div");badge.className="lead-badge";badge.textContent="📥 Lead capturado y guardado en el dashboard";
+      setTimeout(()=>{body.appendChild(badge);body.scrollTop=body.scrollHeight},900);
+      s.leadData={};
+      return;
+    }
+    return;
+  }
+  /* intents */
+  const wantsLead=/(cita|reserv|agendar|cotiz|comprar|contratar|inscrib|visita|demo|interesa|quiero (uno|el|la|info)|me apunto|asesor|humano|persona|vendedor|llamen|contacten)/.test(t);
+  if(wantsLead){startLead();return}
+  if(/(^|\s)(hola|buenas|buenos dias|buen dia|hey|que tal|saludos)/.test(t)){
+    botSay(tone(b,`¡Hola! 😊 Soy ${b.nombreBot}, el asistente de ${b.empresa}. ¿En qué te puedo ayudar?`));return}
+  if(/(gracias|perfecto|genial|excelente|ok\b|listo)/.test(t)){
+    botSay(tone(b,"¡Con mucho gusto! 😊 Si necesitas algo más, aquí estaré."));return}
+  if(/(horario|a que hora|abren|cierran|dias)/.test(t)&&b.horario){
+    botSay(tone(b,`Nuestro horario de atención es: ${b.horario}. ¿Te ayudo con algo más?`));return}
+  if(/(donde|ubicacion|direccion|sucursal|como llego)/.test(t)){
+    botSay(tone(b,`Puedes encontrarnos en ${b.web?("nuestro sitio "+b.web+" o "):""}contactarnos al ${b.tel||"teléfono de la empresa"}. ¿Quieres que un asesor te comparta la ubicación exacta?`));return}
+  if(/(telefono|whatsapp|numero|contacto|correo|email)/.test(t)){
+    botSay(tone(b,`Claro: ${b.tel?("nos encuentras en el "+b.tel):"deja tus datos y te contactamos"}${b.web?(" y en "+b.web):""}. ¿Prefieres que nosotros te llamemos?`));return}
+  if(/(servicio|producto|que (ofrecen|venden|hacen)|catalogo|menu)/.test(t)&&b.servicios.length){
+    botSay(tone(b,`Esto es lo que ofrecemos: ${b.servicios.join(" · ")}. ¿Cuál te interesa? Puedo agendarte o cotizarte al momento.`));return}
+  /* búsqueda en FAQs por coincidencia de palabras */
+  let best=null,bestScore=0;
+  for(const f of b.faqs){
+    const words=norm(f.q).split(/\W+/).filter(w=>w.length>3);
+    let sc=0;for(const w of words)if(t.includes(w))sc++;
+    if(/(precio|costo|cuanto)/.test(t)&&/(precio|costo|cuanto)/.test(norm(f.q)))sc+=2;
+    if(sc>bestScore){bestScore=sc;best=f}
+  }
+  if(best&&bestScore>0){botSay(tone(b,best.a));return}
+  /* fallback */
+  botSay(tone(b,`Buena pregunta 🤔 No tengo ese dato a la mano, pero puedo pedirle a un asesor de ${b.empresa} que te contacte con la respuesta exacta. ¿Te parece?`));
+}
+function startLead(){
+  const b=chatBot,s=chatSession;
+  if(!b.leadFields.length){botSay(tone(b,"¡Claro! Nuestro equipo te atenderá enseguida."));return}
+  s.leadIdx=0;s.leadData={};
+  const f=LEAD_FIELDS.find(x=>x.id===b.leadFields[0]);
+  botSay(tone(b,"¡Excelente decisión! 🙌 Para darte seguimiento solo necesito unos datos. "+f.q));
+}
+
+/* ════════ Dashboard ════════ */
+let dashBot=null;
+const DAY_LABELS=(()=>{const out=[];const now=new Date();
+  for(let i=13;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);
+    out.push(d.toLocaleDateString("es-MX",{day:"numeric",month:"short"}))}return out})();
+
+function renderDash(){
+  const sel=document.getElementById("dash-botsel");
+  if(!state.bots.length){
+    sel.innerHTML="";
+    document.getElementById("dash-content").innerHTML=`<div class="empty"><div class="em">📊</div><h3>Sin datos todavía</h3><p>Crea un bot y las métricas aparecerán aquí.</p><button class="btn btn-primary" data-go="wizard">✨ Crear mi primer bot</button></div>`;
+    return;
+  }
+  if(!dashBot||!state.bots.find(b=>b.id===dashBot))dashBot=state.bots[0].id;
+  sel.innerHTML=state.bots.map(b=>`<button class="bsel ${b.id===dashBot?"on":""}" data-bsel="${b.id}">${b.avatar} ${esc(b.nombreBot)} · ${esc(b.empresa)}</button>`).join("");
+  sel.querySelectorAll("[data-bsel]").forEach(x=>x.addEventListener("click",()=>{dashBot=x.dataset.bsel;renderDash()}));
+
+  const b=state.bots.find(x=>x.id===dashBot);
+  const m=b.metrics;
+  const tot=m.days.reduce((a,x)=>a+x,0);
+  const realLeads=state.leads.filter(l=>l.bot===b.id);
+  const nLeads=realLeads.length+(m.leadsBase||0);
+  const conv=((nLeads/tot)*100).toFixed(1);
+  const last7=m.days.slice(7).reduce((a,x)=>a+x,0),prev7=m.days.slice(0,7).reduce((a,x)=>a+x,0);
+  const delta=prev7?(((last7-prev7)/prev7)*100).toFixed(0):0;
+
+  const intents=topIntents(b,tot);
+  const maxIntent=Math.max(...intents.map(i=>i[1]));
+  const canalesEntries=Object.entries(m.canales).filter(([c])=>{
+    const map={"Web":"web","WhatsApp":"whatsapp","Instagram":"instagram","Messenger":"messenger","Telegram":"telegram"};
+    return b.canales.includes(map[c]);
+  });
+
+  document.getElementById("dash-content").innerHTML=`
+  <div class="tiles">
+    <div class="tile"><span class="tl">💬 Conversaciones</span><div class="tv">${tot.toLocaleString("es-MX")}</div><span class="td ${delta>=0?"up":"dn"}">${delta>=0?"▲":"▼"} ${Math.abs(delta)}% vs semana previa</span></div>
+    <div class="tile"><span class="tl">📥 Leads capturados</span><div class="tv">${nLeads}</div><span class="td up">▲ ${realLeads.length} en pruebas</span></div>
+    <div class="tile"><span class="tl">🎯 Tasa de conversión</span><div class="tv">${conv}%</div><span class="td nt">leads / conversaciones</span></div>
+    <div class="tile"><span class="tl">⚡ Respuesta media</span><div class="tv">${m.resp}s</div><span class="td up">instantánea 24/7</span></div>
+    <div class="tile"><span class="tl">⭐ Satisfacción</span><div class="tv">${m.csat}</div><span class="td nt">de 5.0 · encuesta al cierre</span></div>
+  </div>
+  <div class="dash-grid">
+    <div class="panel">
+      <h3>Conversaciones por día</h3><p class="ps">Últimos 14 días · todos los canales</p>
+      <div class="chart-box" id="line-box"></div>
+    </div>
+    <div class="panel">
+      <h3>Conversaciones por canal</h3><p class="ps">Últimos 14 días</p>
+      <div class="chart-box" id="bar-box"></div>
+    </div>
+  </div>
+  <div class="dash-grid" style="grid-template-columns:1fr 1.6fr">
+    <div class="panel">
+      <h3>Temas más consultados</h3><p class="ps">Qué preguntan tus clientes</p>
+      ${intents.map(([n,v])=>`<div class="hbar-row"><span class="lbl">${n}</span><div class="hbar-track"><div class="hbar-fill" style="width:${(v/maxIntent*100).toFixed(0)}%"></div></div><b>${v}</b></div>`).join("")}
+    </div>
+    <div class="panel leads-panel">
+      <div class="panel-head"><div><h3>Leads recientes</h3><p class="ps" style="margin:0">Capturados por ${esc(b.nombreBot)} — incluye tus pruebas del simulador</p></div></div>
+      ${leadsTable(b,realLeads)}
+    </div>
+  </div>`;
+
+  drawLine(document.getElementById("line-box"),m.days);
+  drawBars(document.getElementById("bar-box"),canalesEntries);
+}
+
+function topIntents(b,tot){
+  const r=rng(hashStr(b.id)+3);
+  const base=["Precios y costos","Horarios","Agendar / reservar","Ubicación y contacto",(b.servicios[0]||"Servicios")];
+  const w=[.3,.2,.24,.14,.12];
+  return base.map((n,i)=>[n,Math.round(tot*w[i]*(0.75+r()*0.5))]).sort((a,b2)=>b2[1]-a[1]);
+}
+
+function leadsTable(b,realLeads){
+  const demo=realLeads;
+  if(!demo.length)return `<p style="color:var(--ink-2);font-size:14px;padding:16px 0">Aún no hay leads de este bot. Ábrelo con “Probar bot” y pide una cita o cotización — verás el lead aparecer aquí. ✨</p>`;
+  const colors=["#6B7FE3","#5AAE8C","#C98544","#7A6FC9","#4E8FBF"];
+  return `<table class="leads"><thead><tr><th>Contacto</th><th>Datos capturados</th><th>Interés</th><th>Canal</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>
+  ${demo.map((l,i)=>{
+    const nombre=l.datos.nombre||"(sin nombre)";
+    const ini=nombre.split(" ").map(p=>p[0]).slice(0,2).join("").toUpperCase();
+    const otros=Object.entries(l.datos).filter(([k])=>k!=="nombre").map(([k,v])=>`${LEAD_FIELDS.find(f=>f.id===k)?.em||"·"} ${esc(v)}`).join("  ");
+    return `<tr>
+      <td><span class="lead-ava" style="background:${colors[i%colors.length]}">${ini}</span><b>${esc(nombre)}</b></td>
+      <td style="color:var(--ink-2);font-size:13px">${otros||"—"}</td>
+      <td>${esc(l.interes)}</td><td>${esc(l.canal)}</td>
+      <td style="font-variant-numeric:tabular-nums;white-space:nowrap">${l.fecha}</td>
+      <td><span class="st-pill st-${l.estado.toLowerCase()}">${l.estado}</span></td></tr>`;
+  }).join("")}</tbody></table>`;
+}
+
+/* line chart: serie única, área suave, crosshair + tooltip */
+function drawLine(box,days){
+  const W=640,H=240,P={t:16,r:14,b:28,l:38};
+  const iw=W-P.l-P.r,ih=H-P.t-P.b;
+  const max=Math.max(...days)*1.15;
+  const X=i=>P.l+ i*(iw/(days.length-1));
+  const Y=v=>P.t+ih-(v/max)*ih;
+  const pts=days.map((v,i)=>[X(i),Y(v)]);
+  const path=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  const area=path+` L${X(days.length-1).toFixed(1)} ${(P.t+ih).toFixed(1)} L${P.l} ${(P.t+ih).toFixed(1)} Z`;
+  const gy=[0,.25,.5,.75,1].map(f=>P.t+ih*f);
+  const gv=[0,.25,.5,.75,1].map(f=>Math.round(max*(1-f)));
+  const last=pts[pts.length-1];
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Conversaciones por día, últimos 14 días">
+    <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a78d6" stop-opacity=".16"/><stop offset="1" stop-color="#2a78d6" stop-opacity="0"/></linearGradient></defs>
+    ${gy.map((y,i)=>`<line x1="${P.l}" y1="${y}" x2="${W-P.r}" y2="${y}" stroke="#e1e0d9" stroke-width="1"/>
+      <text x="${P.l-8}" y="${y+4}" text-anchor="end" font-size="10.5" fill="#898781" font-family="inherit">${gv[i]}</text>`).join("")}
+    <path d="${area}" fill="url(#ag)"/>
+    <path d="${path}" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${last[0]}" cy="${last[1]}" r="4.5" fill="#2a78d6" stroke="#fff" stroke-width="2"/>
+    <text x="${last[0]-8}" y="${last[1]-10}" text-anchor="end" font-size="11.5" font-weight="700" fill="#33323E" font-family="inherit">${days[days.length-1]}</text>
+    ${days.map((v,i)=>i%3===0||i===days.length-1?`<text x="${X(i)}" y="${H-8}" text-anchor="middle" font-size="10" fill="#898781" font-family="inherit">${DAY_LABELS[i]}</text>`:"").join("")}
+    <line id="ch-x" x1="0" x2="0" y1="${P.t}" y2="${P.t+ih}" stroke="#c3c2b7" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>
+    <circle id="ch-dot" r="4.5" fill="#2a78d6" stroke="#fff" stroke-width="2" opacity="0"/>
+    <rect x="${P.l}" y="${P.t}" width="${iw}" height="${ih}" fill="transparent" id="line-hover"/>
+  </svg><div class="tip" id="line-tip"></div>`;
+  const svg=box.querySelector("svg"),hover=box.querySelector("#line-hover"),
+    tip=box.querySelector("#line-tip"),chx=box.querySelector("#ch-x"),dot=box.querySelector("#ch-dot");
+  hover.addEventListener("mousemove",e=>{
+    const r=svg.getBoundingClientRect();
+    const mx=(e.clientX-r.left)*(W/r.width);
+    const i=Math.max(0,Math.min(days.length-1,Math.round((mx-P.l)/(iw/(days.length-1)))));
+    const [px,py]=pts[i];
+    chx.setAttribute("x1",px);chx.setAttribute("x2",px);chx.setAttribute("opacity","1");
+    dot.setAttribute("cx",px);dot.setAttribute("cy",py);dot.setAttribute("opacity","1");
+    tip.style.left=(px/W*100)+"%";tip.style.top=(py/H*100)+"%";
+    tip.innerHTML=`${days[i]} conversaciones<small>${DAY_LABELS[i]}</small>`;tip.style.opacity="1";
+  });
+  hover.addEventListener("mouseleave",()=>{tip.style.opacity="0";chx.setAttribute("opacity","0");dot.setAttribute("opacity","0")});
+}
+
+/* bar chart: barras verticales una serie, etiqueta de valor visible */
+function drawBars(box,entries){
+  const W=380,H=240,P={t:26,r:8,b:30,l:8};
+  const iw=W-P.l-P.r,ih=H-P.t-P.b;
+  const max=Math.max(...entries.map(e=>e[1]))*1.1||1;
+  const n=entries.length,bw=Math.min(46,(iw/n)*0.62),gap=(iw-bw*n)/(n+1);
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Conversaciones por canal">
+    <line x1="${P.l}" y1="${P.t+ih}" x2="${W-P.r}" y2="${P.t+ih}" stroke="#c3c2b7" stroke-width="1"/>
+    ${entries.map(([name,v],i)=>{
+      const h=Math.max(3,(v/max)*ih);
+      const x=P.l+gap+(bw+gap)*i, y=P.t+ih-h;
+      return `<g class="barg" data-i="${i}" style="cursor:default">
+        <rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="4" fill="#2a78d6"/>
+        <text x="${x+bw/2}" y="${y-7}" text-anchor="middle" font-size="11.5" font-weight="700" fill="#33323E" font-family="inherit">${v}</text>
+        <text x="${x+bw/2}" y="${H-9}" text-anchor="middle" font-size="10.5" fill="#898781" font-family="inherit">${name}</text>
+        <rect x="${x-gap/2}" y="${P.t}" width="${bw+gap}" height="${ih}" fill="transparent"/>
+      </g>`;
+    }).join("")}
+  </svg><div class="tip" id="bar-tip"></div>`;
+  const svg=box.querySelector("svg"),tip=box.querySelector("#bar-tip");
+  const tot=entries.reduce((a,e)=>a+e[1],0)||1;
+  box.querySelectorAll(".barg").forEach(g=>{
+    g.addEventListener("mousemove",e=>{
+      const i=+g.dataset.i,[name,v]=entries[i];
+      const r=svg.getBoundingClientRect();
+      tip.style.left=((e.clientX-r.left)/r.width*100)+"%";
+      tip.style.top=((e.clientY-r.top)/r.height*100-6)+"%";
+      tip.innerHTML=`${name}: ${v}<small>${(v/tot*100).toFixed(0)}% del total</small>`;tip.style.opacity="1";
+      g.querySelector("rect").setAttribute("fill","#1c5cab");
+    });
+    g.addEventListener("mouseleave",()=>{tip.style.opacity="0";g.querySelector("rect").setAttribute("fill","#2a78d6")});
+  });
+}
+
+/* CSV export */
+document.getElementById("btn-csv").addEventListener("click",()=>{
+  const b=state.bots.find(x=>x.id===dashBot);
+  const rows=state.leads.filter(l=>!b||l.bot===b.id);
+  if(!rows.length){toast("No hay leads que exportar todavía");return}
+  const cols=["fecha","canal","interes","estado","nombre","email","telefono","empresa","fecha_preferida","presupuesto"];
+  const csv=[cols.join(",")].concat(rows.map(l=>[
+    l.fecha,l.canal,l.interes,l.estado,l.datos.nombre||"",l.datos.email||"",l.datos.telefono||"",l.datos.empresa||"",l.datos.fecha||"",l.datos.presupuesto||""
+  ].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(","))).join("\n");
+  const blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="lumibots-leads.csv";a.click();
+  URL.revokeObjectURL(a.href);toast("⬇ Leads exportados a CSV");
+});
+
+/* demo button */
+document.getElementById("btn-demo-home").addEventListener("click",()=>{
+  const demo=state.bots.find(b=>b.id==="demo-dental")||state.bots[0];
+  if(demo)openChat(demo.id);else go("wizard");
+});
+
+/* overlays: cerrar con Escape / clic fuera */
+document.querySelectorAll(".overlay").forEach(ov=>ov.addEventListener("click",e=>{if(e.target===ov)ov.classList.remove("on")}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".overlay.on").forEach(o=>o.classList.remove("on"))});
+
+/* init */
+load();
+playHeroDemo();
+</script>
+</body>
+</html>
