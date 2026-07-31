@@ -70,11 +70,18 @@ dependencias: todo vive en un solo archivo y los datos se guardan en el
   licencias. Subtítulos bilingües y dos modos de narración:
   1. 🔊 Narración automática del navegador, sincronizada con cada paso
      (preferencia de voz `es-ES` / `en-GB`, ritmo narrativo).
-  2. 🎙️ **Voz del propietario** — se activa cuando ha grabado las 13 frases
-     desde el grabador integrado (teleprompter con el guion). Las grabaciones
-     se reproducen a través de una cadena de masterización de locución en
-     tiempo real: paso alto 85 Hz, corte de medios bajos, presencia en 3.4 kHz,
-     de-esser, aire, compresión 3.2:1 y nivelado automático.
+  2. 🎙️ **Narración propia** — se activa al completar las 13 frases, ya sea
+     grabándolas con el micrófono desde el teleprompter integrado o
+     **importando audios de un locutor profesional** (por ejemplo la voz
+     Gabriel Blanco de ElevenLabs, `RwzBDEn5f6FIgpAjH9YN`) con
+     🎧 Importar audios. El guion completo está en `GUION-NARRACION.md` y se
+     copia al portapapeles con un botón.
+     Al importar, la app **mide la duración real de cada clip y reconstruye la
+     línea de tiempo del video**: capítulos, subtítulos y animaciones se ajustan
+     para que cada escena dure exactamente lo que dura su frase. Todos los
+     clips pasan por una cadena de masterización de locución en tiempo real:
+     paso alto 85 Hz, corte de medios bajos, presencia en 3.4 kHz, de-esser,
+     aire, compresión 3.2:1 y nivelado automático.
   3. 🔇 Sin narración.
   La grabación de referencia del propietario (`voz-original-andres.m4a` y su
   versión masterizada `voz-narracion-andres.webm`) se conserva en el

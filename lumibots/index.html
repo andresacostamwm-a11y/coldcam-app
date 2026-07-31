@@ -1045,13 +1045,18 @@ h1 .hl{background:linear-gradient(120deg,#7FE3FF 0%,#B9C6FF 50%,#8FF0C8 100%);-w
 <div class="overlay" id="voice-overlay" role="dialog" aria-modal="true" aria-label="Grabar narración">
   <div class="code-modal">
     <h3>🎙️ Narra el video con tu voz</h3>
-    <p>Lee cada frase <b>tal como aparece</b> y grábala: así tu voz queda sincronizada con lo que muestra el video. Aplicamos masterización de locución automáticamente (ecualización, compresión y nivelado). Cuando estén las <b id="voice-total">13</b> frases, el video usará tu voz.</p>
+    <p>Dos formas de narrar el video, ambas quedan <b>sincronizadas automáticamente</b>: el video ajusta cada escena a la duración real de cada frase.</p>
+    <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:14px">
+    <b>A) Con locutor profesional:</b> pulsa <b>📋 Copiar el guion</b>, genera las <b id="voice-total">13</b> frases en ElevenLabs (una por audio, numeradas 01, 02, 03…), descárgalas y pulsa <b>🎧 Importar audios</b>.<br>
+    <b>B) Con tu propia voz:</b> graba cada frase aquí con el micrófono. En ambos casos aplicamos masterización de locución (ecualización, compresión y nivelado).</p>
     <div class="rec-bar">
       <span id="voice-count">0 de 0 grabadas</span>
       <span style="flex:1"></span>
-      <button class="mini-btn" id="voice-export">⬇ Exportar narración</button>
-      <label class="mini-btn" style="cursor:pointer">⬆ Importar<input type="file" id="voice-import" accept="application/json" style="display:none"></label>
-      <button class="mini-btn" id="voice-clear">🗑 Borrar todo</button>
+      <button class="mini-btn" id="voice-script">📋 Copiar el guion</button>
+      <label class="mini-btn solid" style="cursor:pointer">🎧 Importar audios (ElevenLabs)<input type="file" id="voice-audios" accept="audio/*" multiple style="display:none"></label>
+      <button class="mini-btn" id="voice-export">⬇ Exportar</button>
+      <label class="mini-btn" style="cursor:pointer">⬆ JSON<input type="file" id="voice-import" accept="application/json" style="display:none"></label>
+      <button class="mini-btn" id="voice-clear">🗑 Borrar</button>
     </div>
     <div class="rec-list" id="voice-list"></div>
     <p class="pay-note">🎤 Tu navegador pedirá permiso para usar el micrófono. Las grabaciones se guardan en tu dispositivo; usa <b>Exportar</b> para llevarlas al sitio publicado.</p>
@@ -2741,8 +2746,35 @@ function voiceReady(){ /* "mi voz" solo si el guion está grabado por completo *
   for(let i=0;i<PL_CAP.length;i++)if(!VOICE[lang+"-"+i])return false;
   return true;
 }
-function plScale(){return 1}
-function plDur(){return PL_BASE*plScale()}
+const CH_CAP=[0,2,4,6,8,10,12]; /* qué frase abre cada capítulo */
+let VOICE_D={};
+try{VOICE_D=JSON.parse(localStorage.getItem("lumibots_voice_d")||"{}")}catch(e){VOICE_D={}}
+function narrOn(){return voiceMode==="mine"&&voiceReady()}
+function capTimes(){
+  if(!narrOn())return PL_CAP.map(c=>c.t);
+  const gap=0.4,out=[];let t=0;
+  for(let i=0;i<PL_CAP.length;i++){out.push(t);t+=(VOICE_D[lang+"-"+i]||3.2)+gap}
+  return out;
+}
+function chapTimes(){const ct=capTimes();return CH_CAP.map(i=>ct[i]!=null?ct[i]:0)}
+function plDur(){
+  if(!narrOn())return PL_BASE;
+  const ct=capTimes(),last=PL_CAP.length-1;
+  return ct[last]+(VOICE_D[lang+"-"+last]||3.2)+0.8;
+}
+function plScale(){return plDur()/PL_BASE}
+async function measureVoice(i){
+  const d=VOICE[voiceKeyOf(i)];if(!d)return;
+  try{
+    const {buf}=await voiceBuffer(i,d);
+    VOICE_D[voiceKeyOf(i)]=+buf.duration.toFixed(2);
+    localStorage.setItem("lumibots_voice_d",JSON.stringify(VOICE_D));
+  }catch(e){}
+}
+async function measureAll(){
+  for(let i=0;i<PL_CAP.length;i++)if(VOICE[voiceKeyOf(i)]&&!VOICE_D[voiceKeyOf(i)])await measureVoice(i);
+  plRender();plSoundLabel();
+}
 function trackEl(){return null}
 const PL_CH=[
  {t:0,es:"Empieza aquí",en:"Start here"},
@@ -2783,7 +2815,7 @@ const PL_CAP=[
 ];
 const PL={t:0,playing:false,cur:0,last:0,ended:false,capIdx:-1};
 function plFmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
-function plSceneIdx(t){const s=plScale();let i=0;for(let k=0;k<PL_CH.length;k++)if(t>=PL_CH[k].t*s)i=k;return i}
+function plSceneIdx(t){const ct=chapTimes();let i=0;for(let k=0;k<ct.length;k++)if(t>=ct[k])i=k;return i}
 function plActivate(i,force){
   if(i===PL.cur&&!force)return;
   PL.cur=i;
@@ -2827,7 +2859,7 @@ function plSpeak(txt,idx){
 }
 function plCaption(force){
   let idx=0;
-  const sc=plScale();for(let i=0;i<PL_CAP.length;i++)if(PL.t>=PL_CAP[i].t*sc)idx=i;
+  const ct=capTimes();for(let i=0;i<PL_CAP.length;i++)if(PL.t>=ct[i])idx=i;
   const cap=PL_CAP[idx];
   const el=document.getElementById("pl-caption-txt");
   const txt=lang==="en"?cap.en:cap.es;
@@ -2839,6 +2871,7 @@ function plRender(){
   document.getElementById("pl-fill").style.width=(PL.t/plDur()*100)+"%";
   document.getElementById("pl-time").textContent=plFmt(PL.t)+" / "+plFmt(plDur());
   const pw=document.querySelector(".player");if(pw)pw.style.setProperty("--vs",plScale().toFixed(3));
+  if(PL.marks){const ct=chapTimes(),d=plDur();PL.marks.forEach((m,k)=>{m.style.left=(ct[k]/d*100)+"%";m.style.display=k?"":"none"})}
   plActivate(plSceneIdx(PL.t));
   plCaption();
 }
@@ -2879,9 +2912,9 @@ function plInit(){
   const chaps=document.getElementById("pl-chaps");
   chaps.innerHTML=PL_CH.map((c,i)=>`<button class="pl-chap ${i===0?"on":""}" data-chap="${i}"></button>`).join("");
   plChapLabels();
-  chaps.querySelectorAll("[data-chap]").forEach(b=>b.addEventListener("click",()=>plSeek(PL_CH[+b.dataset.chap].t*plScale())));
+  chaps.querySelectorAll("[data-chap]").forEach(b=>b.addEventListener("click",()=>plSeek(chapTimes()[+b.dataset.chap])));
   const track=document.getElementById("pl-track");
-  PL_CH.forEach(c=>{if(c.t>0){const m=document.createElement("i");m.className="pl-mark";m.style.left=(c.t/PL_BASE*100)+"%";track.appendChild(m)}});
+  PL.marks=PL_CH.map(()=>{const m=document.createElement("i");m.className="pl-mark";track.appendChild(m);return m});
   track.addEventListener("click",e=>{
     const r=track.getBoundingClientRect();
     plSeek((e.clientX-r.left)/r.width*plDur());
@@ -3018,7 +3051,7 @@ async function voiceToggle(i){
       stream.getTracks().forEach(t=>t.stop());
       const blob=new Blob(parts,{type:mr.mimeType||"audio/webm"});
       const fr=new FileReader();
-      fr.onload=()=>{VOICE[voiceKeyOf(i)]=String(fr.result);delete vCache[voiceKeyOf(i)];voiceSave();voiceRecIdx=-1;renderVoice();plSoundLabel();toast("🎙️ Frase "+(i+1)+" grabada")};
+      fr.onload=()=>{VOICE[voiceKeyOf(i)]=String(fr.result);delete vCache[voiceKeyOf(i)];delete VOICE_D[voiceKeyOf(i)];voiceSave();voiceRecIdx=-1;renderVoice();measureVoice(i).then(()=>{plRender();plSoundLabel()});toast("🎙️ Frase "+(i+1)+" grabada")};
       fr.readAsDataURL(blob);
     };
     voiceRec=mr;voiceRecIdx=i;mr.start();renderVoice();
@@ -3028,6 +3061,35 @@ function voiceStopRec(){
   if(voiceRec&&voiceRec.state!=="inactive")try{voiceRec.stop()}catch(e){}
   voiceRec=null;
 }
+
+/* copiar el guion para generarlo en ElevenLabs */
+document.getElementById("voice-script").addEventListener("click",()=>{
+  const txt=PL_CAP.map((c,i)=>(i+1)+". "+(lang==="en"?c.en:c.es)).join("\n\n");
+  navigator.clipboard?.writeText(txt)
+    .then(()=>toast("📋 Guion copiado — genera cada frase en ElevenLabs y vuelve a importar los audios"))
+    .catch(()=>toast("Copia el guion manualmente desde la lista"));
+});
+/* importar los audios generados, en orden */
+document.getElementById("voice-audios").addEventListener("change",async e=>{
+  const files=Array.from(e.target.files).sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:"base"}));
+  e.target.value="";
+  if(!files.length)return;
+  if(files.length!==PL_CAP.length&&!confirmSkip){
+    toast("⚠ Recibí "+files.length+" audios y el guion tiene "+PL_CAP.length+" frases — se asignarán en orden");
+  }
+  let n=0;
+  for(let i=0;i<files.length&&i<PL_CAP.length;i++){
+    const d=await new Promise(res=>{const r=new FileReader();r.onload=()=>res(String(r.result));r.onerror=()=>res(null);r.readAsDataURL(files[i])});
+    if(!d)continue;
+    VOICE[voiceKeyOf(i)]=d;delete vCache[voiceKeyOf(i)];delete VOICE_D[voiceKeyOf(i)];n++;
+  }
+  voiceSave();renderVoice();
+  await measureAll();
+  if(voiceReady()){voiceMode="mine";localStorage.setItem("lumibots_voicemode","mine");plSoundLabel();plRender()}
+  toast("🎧 "+n+" audios importados — el video ya está sincronizado con la narración");
+});
+const confirmSkip=true;
+
 document.getElementById("voice-close").addEventListener("click",()=>{
   voiceStopRec();document.getElementById("voice-overlay").classList.remove("on");
 });
@@ -3045,7 +3107,7 @@ document.getElementById("voice-import").addEventListener("change",e=>{
     try{
       const j=JSON.parse(String(r.result));
       if(typeof j!=="object")throw new Error();
-      VOICE=Object.assign(VOICE,j);vCache={};voiceSave();renderVoice();plSoundLabel();
+      VOICE=Object.assign(VOICE,j);vCache={};VOICE_D={};voiceSave();renderVoice();measureAll();
       toast("⬆ Narración importada");
     }catch(err){toast("⚠ Ese archivo no es una narración válida")}
   };
@@ -3053,7 +3115,7 @@ document.getElementById("voice-import").addEventListener("change",e=>{
 });
 document.getElementById("voice-clear").addEventListener("click",()=>{
   askConfirm("Borrar narración","Se eliminarán todas las grabaciones de tu voz guardadas en este dispositivo.",()=>{
-    VOICE={};vCache={};voiceSave();renderVoice();plSoundLabel();toast("Grabaciones borradas");
+    VOICE={};vCache={};VOICE_D={};localStorage.removeItem("lumibots_voice_d");voiceSave();renderVoice();plRender();plSoundLabel();toast("Narración borrada");
   });
 });
 
