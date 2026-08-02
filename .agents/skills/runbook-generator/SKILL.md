@@ -1,6 +1,6 @@
 ---
 name: "runbook-generator"
-description: "Runbook Generator"
+description: "Genera runbooks operativos estandarizados para un servicio (arranque, parada, health checks, despliegue, rollback, escalado e incidentes) a partir del nombre del servicio, y los exporta a Markdown. Úsalo cuando un servicio no tenga runbook, los runbooks estén inconsistentes entre equipos, se onboardee gente a on-call o se necesite documentación operativa repetible. Triggers: runbook, playbook operativo, procedimiento de rollback, documentación on-call, guardia, operaciones de servicio."
 ---
 
 # Runbook Generator

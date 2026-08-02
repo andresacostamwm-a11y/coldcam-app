@@ -1,6 +1,6 @@
 ---
 name: "observability-designer"
-description: "Observability Designer (POWERFUL)"
+description: "Diseña estrategias de observabilidad para producción: define SLIs, SLOs y SLAs con presupuestos de error y alertas por burn rate multi-ventana, cubre los tres pilares (métricas, logs, trazas) con golden signals y métodos RED y USE, y genera dashboards y reglas de alerta optimizadas contra el ruido. Triggers: observabilidad, SLO, SLI, SLA, error budget, alertas, Prometheus, Grafana, OpenTelemetry, trazas, golden signals, ruido de alertas, monitorización."
 ---
 
 # Observability Designer (POWERFUL)

@@ -1,6 +1,6 @@
 ---
 name: "contract-and-proposal-writer"
-description: "Contract & Proposal Writer"
+description: "Redacta documentos de negocio conscientes de la jurisdicción: contratos freelance (precio fijo y por horas), propuestas de proyecto con plazos y presupuesto, SOW con matriz de entregables, NDAs mutuos o unilaterales y MSAs, con cláusulas para US (Delaware), UE, Reino Unido y DACH más anexos de tratamiento de datos GDPR. No sustituye asesoría legal. Triggers: contrato, propuesta comercial, SOW, NDA, MSA, acuerdo de confidencialidad, cotización de proyecto, términos y condiciones, cláusula GDPR."
 ---
 
 # Contract & Proposal Writer

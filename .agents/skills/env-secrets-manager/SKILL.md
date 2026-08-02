@@ -1,6 +1,6 @@
 ---
 name: "env-secrets-manager"
-description: "Env & Secrets Manager"
+description: "Audita higiene de variables de entorno y seguridad de secretos: mantiene .env y .env.example sincronizados, detecta credenciales filtradas en el árbol de trabajo con severidad por hallazgo y guía la rotación y contención tras una fuga. Salida lista para checks de CI. Úsalo antes de commitear cambios de configuración o durante una auditoría. Triggers: secretos, .env, variables de entorno, API key filtrada, credenciales, rotar clave, secret scanning, fuga de token."
 ---
 
 # Env & Secrets Manager

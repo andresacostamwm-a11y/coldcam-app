@@ -1,6 +1,6 @@
 ---
 name: "skill-tester"
-description: "Skill Tester"
+description: "Valida, prueba y puntúa la calidad de skills de Claude (estructura de carpetas, frontmatter de SKILL.md, scripts Python, cobertura de documentación) y emite una nota por niveles BASIC/STANDARD/POWERFUL con recomendaciones de mejora. Úsalo cuando el usuario quiera testear, validar, auditar, puntuar o mejorar una skill, revisar si una skill está bien instalada o formada, o integrar validación de skills en pre-commit/CI. Triggers: skill tester, validar skill, probar skill, auditar skills, calidad de skill, SKILL.md inválido."
 ---
 
 # Skill Tester

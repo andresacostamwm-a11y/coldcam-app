@@ -1,6 +1,6 @@
 ---
 name: "challenge"
-description: "/em -challenge — Pre-Mortem Plan Analysis"
+description: "Aplica un pre-mortem a cualquier plan para encontrar sus debilidades antes de que lo haga la realidad: imagina que fracasó dentro de 12 meses y razona hacia atrás para exponer supuestos inflados, complejidad subestimada, dependencias sin cuestionar y timing irreal. No busca matar el plan sino hacerlo sobrevivir. Úsalo antes de comprometer presupuesto o equipo. Triggers: pre-mortem, revisar mi plan, qué puede salir mal, cuestionar plan, riesgos del proyecto, challenge, abogado del diablo."
 ---
 
 # /em:challenge — Pre-Mortem Plan Analysis

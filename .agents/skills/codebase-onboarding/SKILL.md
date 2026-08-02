@@ -1,6 +1,6 @@
 ---
 name: "codebase-onboarding"
-description: "Codebase Onboarding"
+description: "Analiza un repositorio y genera documentación de onboarding adaptada a la audiencia (ingeniero nuevo, tech lead, contractor): descubre arquitectura y stack, inventaría archivos y configs clave, y produce guías de setup local, tareas comunes, depuración y contribución. Úsalo al incorporar a alguien nuevo, tras un refactor grande o para preparar un handoff. Triggers: onboarding, incorporar desarrollador, entender el repo, documentar proyecto, handoff, guía de arranque, arquitectura del proyecto."
 ---
 
 # Codebase Onboarding

@@ -1,6 +1,6 @@
 ---
 name: "monorepo-navigator"
-description: "Monorepo Navigator"
+description: "Navega y optimiza monorepos con Turborepo, Nx, pnpm workspaces o Lerna: análisis de impacto entre paquetes, builds y tests selectivos solo de lo afectado, caché remota, grafo de dependencias en Mermaid, migración de multi-repo a monorepo y publicación con changesets. Úsalo cuando los builds sean lentos, cambie un paquete compartido o se planifique consolidar repos. Triggers: monorepo, workspace, Turborepo, Nx, pnpm workspaces, Lerna, changesets, paquetes afectados, build lento."
 ---
 
 # Monorepo Navigator

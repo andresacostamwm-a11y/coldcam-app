@@ -1,6 +1,6 @@
 ---
 name: "git-worktree-manager"
-description: "Git Worktree Manager"
+description: "Gestiona git worktrees para trabajo paralelo seguro: crea worktrees con nombres deterministas, asigna puertos sin conflicto, copia archivos .env, instala dependencias según lockfile y limpia worktrees obsoletos o ya fusionados. Optimizado para flujos multi-agente donde cada agente posee un worktree. Úsalo con 2+ ramas abiertas a la vez o para un hotfix sin tocar la rama actual. Triggers: worktree, ramas en paralelo, git worktree, hotfix aislado, entorno por rama, agentes en paralelo."
 ---
 
 # Git Worktree Manager

@@ -1,6 +1,6 @@
 ---
 name: "agent-workflow-designer"
-description: "Agent Workflow Designer"
+description: "Diseña flujos multi-agente de nivel producción: elige el patrón de orquestación adecuado, define contratos de handoff entre agentes especialistas, y establece manejo de errores, reintentos y control de coste y contexto en flujos largos. Genera configuraciones esqueleto. Úsalo cuando un solo prompt no baste o se necesiten agentes con fronteras explícitas. Triggers: multi-agente, orquestación de agentes, subagentes, handoff, workflow de agentes, patrón de orquestación, coste de contexto."
 ---
 
 # Agent Workflow Designer

@@ -1,6 +1,6 @@
 ---
 name: "hard-call"
-description: "/em -hard-call — Framework for Decisions With No Good Options"
+description: "Marco de decisión para dilemas sin buena opción: despedir a un socio, recortar plantilla, matar un producto que gusta a los clientes, pivotar o cerrar. Estructura el problema cuando los datos ya están claros pero el coste humano y la irreversibilidad lo hacen difícil, y ayuda a encontrar la opción menos mala. Triggers: decisión difícil, no hay buena opción, despedir, layoffs, cerrar la empresa, pivotar, matar un producto, dilema, decisión irreversible."
 ---
 
 # /em:hard-call — Framework for Decisions With No Good Options

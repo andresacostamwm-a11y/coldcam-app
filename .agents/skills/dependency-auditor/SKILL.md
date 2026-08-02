@@ -1,6 +1,6 @@
 ---
 name: "dependency-auditor"
-description: "Dependency Auditor"
+description: "Audita dependencias en proyectos multi-lenguaje (npm, pip/poetry, Go, Cargo, Bundler, Maven/Gradle, Composer, NuGet): detecta vulnerabilidades y CVEs, evalúa cumplimiento de licencias y riesgo legal, analiza el árbol transitivo y planifica upgrades seguros. Úsalo ante avisos de seguridad, auditorías, dependencias desactualizadas o dudas de licencias. Triggers: auditoría de dependencias, CVE, vulnerabilidad, npm audit, licencias, GPL, AGPL, actualizar dependencias, lockfile, supply chain."
 ---
 
 # Dependency Auditor

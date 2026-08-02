@@ -1,6 +1,6 @@
 ---
 name: "ci-cd-pipeline-builder"
-description: "CI/CD Pipeline Builder"
+description: "Genera pipelines CI/CD a partir del stack real detectado en el repositorio (lenguaje, runtime, lockfiles, comandos de build): recomienda etapas lint/test/build/deploy y emite pipelines iniciales de GitHub Actions o GitLab CI con caché y estrategias de matriz. Úsalo para arrancar CI en un repo nuevo, migrar entre plataformas o auditar si el pipeline coincide con el stack. Triggers: CI/CD, GitHub Actions, GitLab CI, pipeline, workflow de build, automatizar despliegue, integración continua."
 ---
 
 # CI/CD Pipeline Builder

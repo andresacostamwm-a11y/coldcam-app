@@ -1,6 +1,6 @@
 ---
 name: "stress-test"
-description: "/em -stress-test — Business Assumption Stress Testing"
+description: "Somete supuestos de negocio a estrés antes de que lo haga el mercado: proyecciones de ingresos, tamaño de mercado, foso competitivo, velocidad de contratación y retención de clientes. Ataca especialmente los supuestos en los que todo el equipo está de acuerdo, que son los más peligrosos. Triggers: stress test, validar supuestos, proyección de ingresos, tamaño de mercado, TAM, modelo financiero optimista, retención, cuestionar hipótesis de negocio."
 ---
 
 # /em:stress-test — Business Assumption Stress Testing

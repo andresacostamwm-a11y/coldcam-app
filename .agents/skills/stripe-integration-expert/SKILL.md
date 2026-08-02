@@ -1,6 +1,6 @@
 ---
 name: "stripe-integration-expert"
-description: "Stripe Integration Expert"
+description: "Implementa integraciones Stripe de nivel producción: suscripciones con trials, upgrades/downgrades y prorrateo, pagos únicos, facturación por uso (metered), Checkout Sessions, webhooks idempotentes con verificación de firma, portal de cliente y facturación. Cubre patrones para Next.js, Express y Django, con pruebas locales vía Stripe CLI. Triggers: Stripe, pagos, suscripción, checkout, webhook de Stripe, facturación, prorrateo, trial, portal de cliente, cobro recurrente."
 ---
 
 # Stripe Integration Expert

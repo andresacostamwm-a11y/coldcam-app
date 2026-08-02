@@ -1,6 +1,6 @@
 ---
 name: "migration-architect"
-description: "Migration Architect"
+description: "Planifica migraciones complejas con cero downtime: estrategia por fases con puertas de validación, análisis de compatibilidad (evolución de esquema, versionado de API, tipos de datos), estimación de plazos y generación de planes de rollback y recuperación de datos. Cubre patrones expand-contract y dual-write. Úsalo antes de migrar bases de datos, servicios o infraestructura. Triggers: migración, migrar base de datos, zero downtime, rollback, expand contract, dual write, cambio de esquema, replatform."
 ---
 
 # Migration Architect

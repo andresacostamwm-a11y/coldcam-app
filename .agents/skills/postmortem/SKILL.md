@@ -1,6 +1,6 @@
 ---
 name: "postmortem"
-description: "/em -postmortem — Honest Analysis of What Went Wrong"
+description: "Analiza con honestidad qué salió mal en un evento de negocio (un trato perdido, un trimestre fallado, una feature que fracasó, una contratación que no funcionó) evitando los dos modos de fallo habituales: la caza de culpables y el lavado de cara con acciones vagas. Produce causas reales y cambios concretos. Triggers: postmortem, retrospectiva, qué salió mal, análisis de fracaso, perdimos el cliente, fallamos el trimestre, lecciones aprendidas."
 ---
 
 # /em:postmortem — Honest Analysis of What Went Wrong

@@ -1,6 +1,6 @@
 ---
 name: "mcp-server-builder"
-description: "MCP Server Builder"
+description: "Diseña y genera servidores MCP listos para producción a partir de contratos OpenAPI: convierte endpoints en definiciones de herramientas MCP, genera scaffolds en Python o TypeScript, valida manifiestos y aplica chequeos de compatibilidad y versionado. Úsalo para exponer una API REST a un agente LLM, sustituir automatización de navegador por herramientas tipadas o publicar un MCP compartido. Triggers: MCP, Model Context Protocol, servidor MCP, herramientas para agentes, OpenAPI a MCP, tool manifest."
 ---
 
 # MCP Server Builder

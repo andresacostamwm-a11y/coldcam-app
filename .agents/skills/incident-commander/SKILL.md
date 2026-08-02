@@ -1,6 +1,6 @@
 ---
 name: "incident-commander"
-description: "Incident Commander Skill"
+description: "Dirige la respuesta a incidentes de principio a fin: clasifica severidad según impacto y urgencia, reconstruye la línea de tiempo a partir de logs y eventos dispersos, genera post-incident reviews con marcos de análisis de causa raíz y provee plantillas de comunicación a stakeholders y escalado. Triggers: incidente, caída, outage, sev1, severidad, guardia, postmortem, análisis de causa raíz, RCA, línea de tiempo del incidente, comunicación de crisis."
 ---
 
 # Incident Commander Skill

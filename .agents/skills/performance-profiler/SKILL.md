@@ -1,6 +1,6 @@
 ---
 name: "performance-profiler"
-description: "Performance Profiler"
+description: "Perfila rendimiento de aplicaciones Node.js, Python y Go: localiza cuellos de botella de CPU, memoria e I/O, genera flamegraphs, analiza tamaño de bundles, optimiza consultas de base de datos (EXPLAIN ANALYZE, N+1), detecta fugas de memoria y ejecuta pruebas de carga con k6 o Artillery, midiendo siempre antes y después. Triggers: rendimiento, lento, latencia, P99, optimizar, profiling, flamegraph, memory leak, consulta lenta, N+1, prueba de carga, bundle size."
 ---
 
 # Performance Profiler

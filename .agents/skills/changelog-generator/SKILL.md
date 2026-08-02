@@ -1,6 +1,6 @@
 ---
 name: "changelog-generator"
-description: "Changelog Generator"
+description: "Genera changelogs y release notes auditables a partir de Conventional Commits: parsea el historial de git, deduce el bump semántico (major/minor/patch) y renderiza secciones estilo Keep a Changelog, con salida JSON para CI y un linter que bloquea mensajes de commit inválidos. Úsalo antes de publicar un tag o en checks de PR. Triggers: changelog, release notes, notas de versión, conventional commits, semver, bump de versión, publicar release."
 ---
 
 # Changelog Generator

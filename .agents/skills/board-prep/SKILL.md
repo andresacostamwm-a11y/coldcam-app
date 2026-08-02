@@ -1,6 +1,6 @@
 ---
 name: "board-prep"
-description: "/em -board-prep — Board Meeting Preparation"
+description: "Prepara una reunión de consejo o comité anticipando la versión adversaria del board, no la amable: enumera cada pregunta difícil que harán, las cifras que hay que dominar de memoria y una narrativa que reconozca las debilidades sin perder la sala. Úsalo antes de un board meeting, comité de dirección o presentación a inversores. Triggers: consejo de administración, board meeting, junta directiva, presentación a inversores, comité de dirección, preparar reunión con inversores, preguntas difíciles del board."
 ---
 
 # /em:board-prep — Board Meeting Preparation

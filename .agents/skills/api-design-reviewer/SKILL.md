@@ -1,6 +1,6 @@
 ---
 name: "api-design-reviewer"
-description: "API Design Reviewer"
+description: "Revisa diseños de API REST/GraphQL: lintea convenciones de nombres, métodos HTTP, códigos de estado y formatos de error; detecta breaking changes entre versiones (endpoints eliminados, campos renombrados, cambios de tipo); y emite un scorecard de consistencia, documentación, seguridad, usabilidad y rendimiento. Úsalo al revisar una API antes de publicarla o versionarla. Triggers: revisar API, diseño de API, REST, OpenAPI, breaking change, versionado de API, contrato de API, código de estado HTTP."
 ---
 
 # API Design Reviewer

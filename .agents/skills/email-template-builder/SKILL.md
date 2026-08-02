@@ -1,6 +1,6 @@
 ---
 name: "email-template-builder"
-description: "Email Template Builder"
+description: "Construye sistemas de email transaccional completos: plantillas React Email y MJML (bienvenida, verificación, reset de contraseña, factura, notificación, digest), integración multi-proveedor (Resend, Postmark, SendGrid, AWS SES), servidor de previsualización, i18n, modo oscuro, optimización antispam y tracking. Triggers: email transaccional, plantilla de correo, React Email, MJML, Resend, SendGrid, Postmark, SES, correo de bienvenida, verificación por email."
 ---
 
 # Email Template Builder
