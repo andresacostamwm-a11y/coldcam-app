@@ -51,7 +51,18 @@ Base CDN: `https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UO
 
 ## Martes 4 agosto — Claude Code vs Codex (videos s01→s10)
 
-_pendiente_
+1. e22e1146-2bb1-4dd4-8229-2ad0d53c7c18
+2. d0d93b7d-a306-4a4d-927c-9c93bac88a86
+3. 16ea8922-041e-4ced-9064-f3b14a49d637
+4. 71afc367-02f3-490e-a059-6deaa8bb7e35
+5. 4e65a6ba-e495-48e3-83e7-8a41b035b7cc
+6. b1740ef6-6347-412a-a491-dadd211c1899
+7. 65e37a57-9117-4b08-91a7-dc13a8cabb02
+8. 08e0ae61-7be9-4b80-85e2-c3c1c8cd8bf5
+9. 324abfb9-3ee1-4074-ac69-8bbc8516eac3
+10. 09104b49-8687-413d-898d-91f60f0f1a50
+
+✅ 10/10 subidos y verificados.
 
 ---
 
