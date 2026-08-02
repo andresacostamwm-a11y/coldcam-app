@@ -16,21 +16,36 @@ Cada slide lleva un **tramo distinto y consecutivo** de la pista, así que al
 deslizar suena como una sola canción continua. Además añadí un **zoom lento**
 (efecto Ken Burns) para que se vea vivo en lugar de una foto congelada.
 
-## 🎧 Escucha la pista
+## 🎧 Escucha la pista — v2 "VIRAL 2026" (la actual)
 
 **Pista completa (48 s):**
-https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/59cbdd2e-0007-4780-85b5-5126fddb30c0.mp3
+https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/928ed4b5-53be-4fa1-b0b1-e3398164ee31.mp3
 
-**Slide 1 del domingo ya convertida a video con música:**
-https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/94a83b43-b952-40ba-a842-86e532e3b4a6.mp4
+**Slide 1 del domingo ya convertida a video con esta música:**
+https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/8ee285e6-a718-4e7f-bc50-9f0c86e9c77d.mp4
 
-### Sobre la pista
+### Sobre la pista v2
+- **Reggaetón / dembow moderno** — el sonido que domina el contenido viral
+  latino en 2026, no la electrónica genérica de stock.
+- 96 BPM, La menor (Am–F–C–G). Patrón dembow real: kick en 1-e-y-a
+  (pasos 0, 3, 8, 11) y caja en 4, 7, 12, 15.
+- **808 con glide y saturación** entre acordes — la firma del género.
+- Plucks oscuros como gancho melódico + **stabs tipo vocal-chop** con vibrato
+  en el drop, para que suene a canción y no a música de fondo.
+- Estructura con intro (2 compases), **drop** (compases 4–12) y outro, así el
+  carrusel arranca suave y sube justo cuando ya estás leyendo.
 - **Original, generada para tu marca** — 100 % libre de derechos, sin riesgo
   de copyright ni de que Instagram silencie el post.
-- Electrónica premium / synth oscuro, 100 BPM, tonalidad La menor (Am–F–C–G).
-- Kick, claps, hi-hats, bajo, pad de acordes y un arpegio brillante como
-  "toque tech" — pensada para acompañar sin tapar la lectura.
 - Reproducible con `gen-musica.py` (se puede ajustar tempo, tono o instrumentos).
+
+<details>
+<summary>Versión v1 (electrónica premium, reemplazada)</summary>
+
+Pista: https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/59cbdd2e-0007-4780-85b5-5126fddb30c0.mp3 ·
+Slide: https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UOJ/94a83b43-b952-40ba-a842-86e532e3b4a6.mp4
+
+Synth oscuro, 100 BPM, con arpegio brillante. Sonaba premium pero no "actual".
+</details>
 
 ## ⚖️ Lo que NO se puede automatizar (y por qué)
 
