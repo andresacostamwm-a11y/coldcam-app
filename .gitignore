@@ -6,3 +6,6 @@ node_modules/
 video/node_modules/
 static/videos/
 out/
+
+# TDAH: base de recordatorios (estado local, no versionar)
+.claude/recordatorios.db

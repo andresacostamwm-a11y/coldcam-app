@@ -10,5 +10,35 @@
       },
       "disabled": false
     }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat .claude/tdah-contexto.md 2>/dev/null || true",
+            "timeout": 5,
+            "statusMessage": "Recuperando contexto..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"Hoy es $(date '+%A %d/%m/%Y'), hora local $(date '+%H:%M')\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 .claude/skills/tdah-recordatorios/scripts/recordatorios.py check 2>/dev/null || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
   }
 }
