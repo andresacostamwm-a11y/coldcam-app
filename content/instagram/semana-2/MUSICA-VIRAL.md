@@ -1,44 +1,70 @@
-# 🎵 Música viral para los carruseles — Semana 2 (agosto 2026)
+# 🎤 Pop actual con cantantes originales — agosto 2026
 
-Tu nicho: **educación de IA en español, tono profesional-cercano, audiencia
-principiante en México/LatAm**, marca elegante (azul marino + dorado + cian).
-
-Eso descarta la música "meme" pura y pide **beats limpios, synth futurista o
-latino con energía** — algo que suene moderno sin restarle autoridad al
-contenido técnico.
+Actualizado el **2-ago-2026**. Tu nicho: educación de IA en español, tono
+profesional-cercano, audiencia principiante en México/LatAm, marca elegante
+(azul marino + dorado + cian).
 
 ---
 
-## ⚠️ Importante: la música se añade a mano
+## ⚖️ Lo primero: por qué esto se hace en la app y no desde aquí
 
-La API de Instagram **no permite añadir música** a carruseles ni Reels: no da
-acceso a los sonidos en tendencia ni al catálogo musical. Por eso los carruseles
-que publico salen sin audio, y la música hay que ponerla desde la app.
+Las canciones comerciales — Olivia Rodrigo, Ariana Grande, The Weeknd, Taylor
+Swift — **no se pueden incrustar en el archivo de video**. Sería infracción de
+copyright: Instagram silencia el audio o retira el post, y la cuenta acumula
+avisos.
 
-**Cómo añadirla (30 segundos por post):**
-1. Abre el post publicado en Instagram → menú **···** → **Editar**.
-2. Toca **Añadir música** y busca el tema de la lista de abajo.
-3. Elige el fragmento (el "drop" o el estribillo funciona mejor) y guarda.
+La licencia existe **solo** cuando el audio se añade desde el catálogo oficial
+de Instagram. Ahí sí obtienes la grabación original, la voz del cantante real y
+el clip oficial, con licencia válida y sin riesgo.
 
-> Alternativa: si algún día quieres que salga con música desde el inicio, hay que
-> publicarlo como **Reel** con el audio ya incrustado en el video.
+**La API de Instagram no da acceso a ese catálogo.** No es una limitación de la
+automatización que montamos: Meta simplemente no expone los sonidos en tendencia
+por API. Por eso este paso son 30 segundos tuyos por post, y no hay forma de
+saltárselo legalmente.
+
+### Cómo se añade (30 s por post)
+1. Abre el post publicado → menú **···** → **Editar**.
+2. **Añadir música** → busca el tema de la lista de abajo.
+3. Elige el fragmento (el estribillo o el drop funciona mejor) → **Guardar**.
 
 ---
 
-## 🔝 Recomendaciones por carrusel
+## 🔝 Pop actual — recomendaciones por carrusel
 
-| Día | Carrusel | Canción sugerida | Por qué encaja |
+| Día | Carrusel | Canción (artista original) | Por qué encaja |
 |---|---|---|---|
-| Vie 31 | ¿Qué es Claude Code? | **The Weeknd** (synth-pop) | Sintetizadores oscuros = mismo mood que tu paleta azul/neón. Millones de usos semanales. |
-| Sáb 1 | Agentes de IA | **"u + me = <3"** — Olivia Rodrigo | Está impulsando específicamente **carruseles** ahora mismo; empuja alcance en este formato. |
-| Dom 2 | Skills de Claude | **"Freakin' Out"** — Dexter and the Moonrocks | Energía de "descubrimiento"; va con el tono de "mira lo que puedes hacer". |
-| Lun 3 | GPT-5.6 (Sol/Terra/Luna) | **Shakira & Burna Boy** — tema oficial Mundial 2026 | El Mundial se juega en México: alcance enorme y audiencia local enganchada. |
-| Mar 4 | Claude Code vs Codex | **Luar La L × Omar Courtz** | Uno de los sonidos más virales del año en LatAm; perfecto para el formato "versus". |
+| Dom 2 | Skills de Claude | **"u + me = <3"** — Olivia Rodrigo | Instagram está empujando específicamente **carruseles** con este audio ahora mismo. Es el que más alcance te da en este formato. |
+| Lun 3 | GPT-5.6 (Sol/Terra/Luna) | **"Hate That I Made You Love Me"** — Ariana Grande | Tono reflexivo y cinematográfico: acompaña bien una comparativa de 3 modelos sin sonar a fiesta. |
+| Mar 4 | Claude Code vs Codex | **"Boston"** — Stella Lefty | Hit viral del momento (nº 3 del Hot 100). Energía de "versus" y muy reconocible. |
 
-### Comodines para historias y Reels
-- **"Lupita"** (reggaetón × balcánico) — muy usado, buen gancho para historias cortas.
-- **"Stupid Song"** — Olivia Rodrigo — también empuja carruseles.
-- **"Bangladesh"** — Ian McConnell — para contenido con humor absurdo (úsalo solo si haces un post en tono divertido; no encaja con lo técnico serio).
+### Comodines pop (para historias, Reels o si alguno ya saturó)
+- **"Stupid Song"** — Olivia Rodrigo · también impulsa carruseles.
+- **The Weeknd** (synth-pop) · sintetizadores oscuros = tu misma paleta azul/neón.
+- **"Freakin' Out"** — Dexter and the Moonrocks · energía de "mira lo que puedes hacer".
+- **Taylor Swift** (nº 2 del Hot 100) · máximo reconocimiento, tono neutro.
+
+> **No recomendado para ti:** "You Never Take Me to Bangladesh" y el formato
+> "Netflix Documentary". Son los dos audios más virales del mes, pero son de
+> humor absurdo y le restan autoridad a contenido técnico serio.
+
+---
+
+## 🔀 La decisión: música real vs. publicación 100 % automática
+
+No se puede tener las dos a la vez en el mismo post. Elige por carrusel:
+
+| | **A · Carrusel de imágenes** | **B · Carrusel de video** |
+|---|---|---|
+| Música | Canción pop real, cantante original | Pista original de marca (dembow 2026) |
+| Licencia | La de Instagram — válida | Tuya — sin riesgo |
+| Publicación | Automática, pero **la música la pones tú** (30 s) | 100 % automática, con audio desde el segundo 1 |
+| Alcance | ➕ El algoritmo empuja los sonidos en tendencia | ➖ Sin ese empujón |
+| Identidad | La del artista | La tuya, consistente en todos los posts |
+
+**Mi recomendación:** opción **A** para el domingo (el audio de Olivia Rodrigo
+está empujando carruseles justo ahora — ese alcance vale los 30 segundos), y
+opción **B** para lunes y martes, que son contenido de referencia y ganan más
+con identidad sonora propia que con un tema que en dos semanas ya saturó.
 
 ---
 
@@ -50,15 +76,16 @@ dentro de tu propia cuenta:
 **Instagram → Configuración → Panel profesional → Audio en tendencia**
 
 Ahí Instagram te muestra los sonidos que él mismo está impulsando para cuentas
-de empresa **en tu región**. Si un tema de esta lista no aparece o ya bajó,
-elige uno de ahí: siempre le va a ganar a una lista escrita días antes.
+de empresa **en tu región**. Si un tema de esta lista ya no aparece o bajó,
+elige uno de ahí: siempre le gana a una lista escrita días antes.
 
 ### Regla práctica para elegir
-1. Que tenga **menos de 2 semanas** en tendencia (después ya saturó).
-2. Que el fragmento elegido **no tenga letra distrayendo** en los primeros segundos.
+1. Que lleve **menos de 2 semanas** en tendencia (después ya saturó).
+2. Que el fragmento **no tenga letra distrayendo** en los primeros segundos.
 3. Volumen bajo: el carrusel se lee, la música solo acompaña.
 
 ---
 
-Fuentes consultadas (30-jul a 2-ago-2026): SocialBee, New Engen, Later,
-SocialPilot, Metricool, documentación oficial de Meta para desarrolladores.
+Fuentes consultadas (2-ago-2026): Billboard Hot 100 (semana del 1-ago-2026),
+SocialBee, New Engen, Metricool, documentación oficial de Meta para
+desarrolladores.
