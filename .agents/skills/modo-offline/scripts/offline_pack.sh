@@ -38,13 +38,17 @@ falla()  { printf '  [falla] %s\n' "$1"; }
 
 mkdir -p "$OUT"
 
+# Cuando lo invoca preparar-offline.sh (PACK_EMBEBIDO=1) se omiten las secciones
+# de conectividad y resumen, que ese script ya cubre por su cuenta.
+EMBEBIDO="${PACK_EMBEBIDO:-0}"
+
 # --- 0. hay red? -------------------------------------------------------------
-titulo "Conectividad"
+[[ "$EMBEBIDO" == "1" ]] || titulo "Conectividad"
 if curl -sSf -m 5 -o /dev/null https://pypi.org/simple/ 2>/dev/null; then
-  ok "hay red: se puede vendorizar"
+  [[ "$EMBEBIDO" == "1" ]] || ok "hay red: se puede vendorizar"
   HAY_RED=1
 else
-  aviso "sin red: solo se puede auditar lo ya descargado"
+  [[ "$EMBEBIDO" == "1" ]] || aviso "sin red: solo se puede auditar lo ya descargado"
   HAY_RED=0
   VERIFICAR=1
 fi
@@ -117,6 +121,7 @@ if hacer docs; then
 fi
 
 # --- 5. resumen --------------------------------------------------------------
+[[ "$EMBEBIDO" == "1" ]] && exit 0
 titulo "Resumen"
 [[ $HAY_RED -eq 1 && $VERIFICAR -eq 0 ]] \
   && ok "pack listo. Al perder la red: python3 scripts/offline_doctor.py" \

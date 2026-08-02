@@ -46,19 +46,24 @@ timeout, proxy y connection refused.
 | **degradado** (hay red, no hay `api.anthropic.com`) | Casi siempre es proxy o firewall. Revisa `HTTPS_PROXY`/`NO_PROXY` en la salida del doctor antes de dar por muerta la conexion. |
 | **offline** | Levantar el gateway local, seguir trabajando en local, encolar lo que necesite nube. |
 
-### Paso 3 — Gateway local (el nucleo)
+### Paso 3 — Arrancar el modo offline
+
+Un solo comando, idempotente (levanta motor local + gateway y aplica las variables):
 
 ```bash
-# 1. backend de modelo (una sola vez, requiere haber hecho `ollama pull` con red)
-ollama serve &
+source .claude/skills/modo-offline/scripts/iniciar-offline.sh
+claude       # Claude Code ya corre contra el modelo local
+```
 
-# 2. gateway compatible con la API de Anthropic
-python3 .claude/skills/modo-offline/scripts/local_gateway.py &
+El `source` es necesario para que `ANTHROPIC_BASE_URL` quede en el shell; si se
+ejecuta con `bash`, arranca los servicios igual pero avisa de que faltan las
+variables. Equivalente manual:
 
-# 3. apuntar cualquier cliente Anthropic al gateway
+```bash
+ollama serve &                                                    # backend
+python3 .claude/skills/modo-offline/scripts/local_gateway.py &    # gateway
 export ANTHROPIC_BASE_URL=http://127.0.0.1:8787
 export ANTHROPIC_API_KEY=offline        # no se valida, pero los SDK lo exigen
-claude                                   # Claude Code ya corre contra el modelo local
 ```
 
 Verificado contra el SDK oficial `anthropic`: respuestas normales, streaming SSE y
@@ -115,19 +120,34 @@ Resumen; el detalle por herramienta esta en `references/matriz-capacidades.md`.
 
 ## Preparacion (hazlo mientras hay red)
 
+**Un solo comando**, y termina probando de verdad que el modo offline funciona en esa
+maquina — antes de que haga falta:
+
 ```bash
-bash .claude/skills/modo-offline/scripts/offline_pack.sh              # vendoriza todo
-bash .claude/skills/modo-offline/scripts/offline_pack.sh --verificar  # audita que falta
-bash .claude/skills/modo-offline/scripts/offline_pack.sh --solo modelos --modelo qwen2.5-coder:7b
+bash .claude/skills/modo-offline/scripts/preparar-offline.sh
+bash .claude/skills/modo-offline/scripts/preparar-offline.sh --modelo qwen2.5-coder:14b
+bash .claude/skills/modo-offline/scripts/preparar-offline.sh --sin-modelo   # solo dependencias
 ```
 
-Deja en `.offline/` los wheels de `requirements.txt`, `video/node_modules`, los modelos
-de Ollama y un inventario de skills. Sin este paso previo, el modo offline se reduce a
-edicion manual: dilo claramente en vez de fingir capacidades.
+Instala Ollama, descarga el modelo (ajustando el tamano a la RAM detectada), vendoriza
+wheels y `node_modules`, escribe `.env.offline` y lanza una peticion real contra el
+modelo local. Si algo falla lo lista al final: **esos puntos hay que resolverlos con
+red**, no despues.
+
+Auditar sin descargar nada:
+
+```bash
+bash .claude/skills/modo-offline/scripts/offline_pack.sh --verificar
+```
+
+Sin esta preparacion previa, el modo offline se reduce a edicion manual: dilo
+claramente en vez de fingir capacidades.
 
 ## Archivos
 
 ```
+scripts/preparar-offline.sh  CON RED: deja la maquina lista y lo verifica (un comando)
+scripts/iniciar-offline.sh   SIN RED: arranca motor + gateway + variables (usar con source)
 scripts/offline_doctor.py    diagnostico y matriz de capacidades (--json)
 scripts/local_gateway.py     gateway Anthropic -> Ollama (stdlib, sin dependencias)
 scripts/offline_queue.py     cola de tareas bloqueadas + briefing al reconectar
