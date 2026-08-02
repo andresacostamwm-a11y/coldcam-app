@@ -150,7 +150,7 @@ for bar in range(BARS):
     outro = bar >= BARS - 2
 
     # Pad de fondo siempre
-    pad(t0, chord, BAR, amp=0.05 if not intro else 0.065)
+    pad(t0, [N[f] for f in chord], BAR, amp=0.05 if not intro else 0.065)
 
     # Batería dembow
     if not intro:
