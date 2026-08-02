@@ -38,14 +38,16 @@ Base CDN: `https://d2ol7oe51mr4n9.cloudfront.net/user_34dAShJQivWQzU0TFaGV5BF3UO
 
 1. a2fbf0a5-828e-40ed-92f4-3c533481c4a4
 2. 62be41cb-c8b7-4b60-9cba-2316a66c1e00
-3. _pendiente_
-4. _pendiente_
-5. _pendiente_
-6. _pendiente_
-7. _pendiente_
-8. _pendiente_
-9. _pendiente_
-10. _pendiente_
+3. d29b4e7d-3221-41eb-bd57-905f9ad6ac86
+4. 9e1e7d92-34fd-43b1-8911-e4489a425c42
+5. 8d0d2a4b-891d-4032-8a03-8302dbaab52e
+6. 06306174-89ca-4773-b7d7-9ee08bf0b0bc
+7. ed1b4c27-d64e-4de5-9877-0e072babce43
+8. 738bf48a-d29d-4eb8-aad1-16604e3a6a40
+9. 72f777dc-df1e-459d-9168-493b5d98ebab
+10. 22c8c593-cafc-4c3b-80d9-4590a4ce3d8a
+
+✅ 10/10 subidos y verificados (tamaño remoto == local, sin errores de decodificación).
 
 ## Martes 4 agosto — Claude Code vs Codex (videos s01→s10)
 
