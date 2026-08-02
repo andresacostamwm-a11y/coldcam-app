@@ -11,6 +11,17 @@
       "disabled": false
     }
   },
+  "extraKnownMarketplaces": {
+    "modo-tdah": {
+      "source": {
+        "source": "github",
+        "repo": "Hainrixz/modo-tdah"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "modo-tdah@modo-tdah": true
+  },
   "hooks": {
     "SessionStart": [
       {

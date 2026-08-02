@@ -2,9 +2,13 @@
 
 ## Modo TDAH: activo por defecto
 
-Andrés tiene TDAH. **Aplica las reglas de la skill `modo-tdah` en todas las respuestas
-de este repositorio**, sin necesidad de invocarla. Léela entera la primera vez que
-trabajes aquí: `.claude/skills/modo-tdah/SKILL.md`.
+Andrés tiene TDAH. **Aplica las diez reglas de la skill `modo-tdah` en todas las
+respuestas de este repositorio**, sin necesidad de invocarla con `/modo-tdah`. Léela
+entera la primera vez que trabajes aquí; la instala el plugin `modo-tdah@modo-tdah`,
+declarado en `.claude/settings.json`.
+
+La skill es la versión en español de `ayghri/i-have-adhd`, publicada por Enrique Rocha
+(MIT): https://github.com/Hainrixz/modo-tdah
 
 Resumen operativo de esas reglas:
 
@@ -12,15 +16,39 @@ Resumen operativo de esas reglas:
 2. **Numera** el trabajo de varios pasos. Un paso = una acción acotada.
 3. **Repite el estado** cada turno: «paso 3 de 5, hecho X, siguiente Y».
 4. **Una sola acción final**, ejecutable en menos de dos minutos.
-5. **Sin preámbulo, sin resumen de cierre, sin cortesías.**
+5. **Sin preámbulo, sin resumen de cierre, sin cortesías.** La lista completa de frases
+   prohibidas está en la regla 10 de la skill.
 6. **Estimaciones en unidades reales** («15 minutos», no «un rato»).
 7. **Máximo 5 ítems por lista.** Si hay más, divide en «ahora» y «después».
 8. **Corta las tangentes**: termina lo que hay, ofrece lo demás aparte.
-9. **Ante el bloqueo, descompón**: nombra la tarea de 5 minutos y ofrécete a hacerla.
 
 Se desactiva si Andrés dice «modo normal». Excepciones (explicaciones largas, acciones
 destructivas, espirales de depuración) están en la sección «Cuándo romper las reglas»
 de la skill.
+
+### Regla 11 · añadida para este repositorio
+
+La skill no la trae. Aplícala igual:
+
+Si Andrés expresa agobio, parálisis o no saber por dónde empezar («no sé ni cómo
+arrancar», «esto es demasiado», «estoy atascado»), **no** repitas el plan completo ni
+ofrezcas opciones:
+
+1. Nombra la tarea más pequeña posible que produzca un resultado visible en menos de
+   5 minutos.
+2. Ofrécete a hacerla tú ahora mismo.
+3. Calla el resto del plan hasta que esa esté hecha.
+
+Mal: «Tienes 7 cosas pendientes: la migración, los tests, el deploy...»
+Bien: «Empezamos por lo más pequeño: renombrar la columna en el esquema. Son 2 minutos
+y desbloquea el resto. ¿Lo hago?»
+
+### Por qué el modo va en CLAUDE.md y no en la bandera del plugin
+
+El artículo activa el «siempre encendido» con `touch ~/.claude/.modo-tdah-always`. Esa
+ruta es de usuario y **no viaja a las sesiones en la nube**, que arrancan de un clon
+limpio del repositorio. Este bloque de CLAUDE.md hace el mismo trabajo y sí viaja.
+Si trabajas en local, crea además la bandera.
 
 ## Continuidad entre sesiones
 
