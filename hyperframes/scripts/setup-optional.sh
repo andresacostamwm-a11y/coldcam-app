@@ -16,6 +16,10 @@ VENV="${HYPERFRAMES_VENV:-$HOME/.venv-hyperframes}"
 WHISPER_DIR="$HOME/.cache/hyperframes/whisper/whisper.cpp"   # ruta que busca el CLI
 JOBS="$(nproc 2>/dev/null || echo 4)"
 
+# Commit fijo en vez de la punta de main: sin esto cada ejecución compila un
+# árbol distinto y la instalación deja de ser reproducible o auditable.
+WHISPER_COMMIT="6b92fec9e7b07a37796debb4a24624327a312694"
+
 echo "==> Dependencias de compilación"
 if command -v apt-get >/dev/null 2>&1; then
   sudo=""; [ "$(id -u)" -ne 0 ] && sudo="sudo"
@@ -27,10 +31,13 @@ echo "==> whisper.cpp"
 # Compilar SIEMPRE en la ruta final: cmake graba rutas absolutas en el árbol de
 # build, así que mover el directorio después rompe `cmake --install` y el rpath
 # del binario (whisper-cli arranca pero no encuentra libwhisper.so).
-if [ ! -d "$WHISPER_DIR" ]; then
+if [ ! -d "$WHISPER_DIR/.git" ]; then
   mkdir -p "$(dirname "$WHISPER_DIR")"
-  git clone --depth 1 https://github.com/ggml-org/whisper.cpp.git "$WHISPER_DIR"
+  git clone https://github.com/ggml-org/whisper.cpp.git "$WHISPER_DIR"
 fi
+git -C "$WHISPER_DIR" fetch --quiet origin "$WHISPER_COMMIT" 2>/dev/null || git -C "$WHISPER_DIR" fetch --quiet origin
+git -C "$WHISPER_DIR" checkout --quiet "$WHISPER_COMMIT"
+echo "    whisper.cpp @ $(git -C "$WHISPER_DIR" rev-parse HEAD)"
 cmake -B "$WHISPER_DIR/build" -S "$WHISPER_DIR" \
   -DCMAKE_BUILD_TYPE=Release -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_EXAMPLES=ON
 cmake --build "$WHISPER_DIR/build" --config Release -j "$JOBS"
@@ -57,8 +64,9 @@ echo "==> MusicGen (torch CPU)"
 "$VENV/bin/pip" install --quiet transformers numpy
 
 echo
-echo "Listo. Exporta esta variable para que el CLI encuentre el entorno:"
+echo "Listo. Exporta estas variables:"
 echo
 echo "    export HYPERFRAMES_PYTHON=$VENV/bin/python"
+echo "    export HYPERFRAMES_NO_TELEMETRY=1   # apaga el envío del CLI y el del skill media-use"
 echo
 echo "Verifica con:  HYPERFRAMES_PYTHON=$VENV/bin/python npx hyperframes doctor"

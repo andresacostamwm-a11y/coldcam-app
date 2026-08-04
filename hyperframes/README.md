@@ -18,6 +18,9 @@ página frame a frame con Chrome headless y la codifica a MP4 con FFmpeg.
 
 `npx hyperframes doctor` reporta OK en todos los requisitos de render.
 
+Todo va a versión exacta, sin rangos `^`: `.npmrc` fija `save-exact=true` y `vendor/MANIFEST.txt`
+declara paquete, versión y SHA-256 de cada fichero. Audita el conjunto con `npm run audit`.
+
 ## Uso
 
 ```bash
@@ -48,7 +51,8 @@ hyperframes/
 │   ├── skeleton-d-cinematic-title.html # 1920x1080, 60s, 7 escenas, 3 shaders
 │   ├── preview.html                    # reproductor universal (copiar sin tocar)
 │   └── project-README.template.md      # README que la guía pide entregar en el ZIP
-├── vendor/                             # runtime servido en local (ver abajo)
+├── vendor/                             # runtime desde npm + MANIFEST.txt con SHA-256
+├── scripts/                            # audit, verify-vendor, vendor-runtime, setup-optional
 └── starter/                            # proyecto de prueba, renderizado y verificado
 ```
 
@@ -138,6 +142,67 @@ CMake graba rutas absolutas en el árbol de build, así que si compilas en un si
 directorio, `cmake --install` falla y el binario arranca pero no encuentra `libwhisper.so.1`.
 `hyperframes doctor` sólo comprueba que el fichero exista, así que en ese estado da un ✓ engañoso.
 
+## Seguridad
+
+`npm run audit` corre las cuatro comprobaciones y sale != 0 si alguna falla, así que sirve tal cual
+en CI o en un hook de pre-commit:
+
+| Paso | Qué comprueba |
+| ---- | ------------- |
+| `npm audit` | vulnerabilidades conocidas en el árbol de dependencias |
+| `npm audit signatures` | firma del registro npm de cada paquete instalado |
+| `verify-vendor.sh` | SHA-256 de cada fichero de `vendor/` contra el manifiesto |
+| `hyperframes lint` | validez estructural de las cuatro plantillas |
+
+Estado actual: 0 vulnerabilidades, 137 paquetes con firma verificada (24 con atestación), vendor
+íntegro, plantillas sin errores.
+
+### Procedencia del runtime: npm, no CDN
+
+La primera versión de `vendor/` venía de `cdn.jsdelivr.net`. Al comparar con los tarballs de npm
+salió que **el fichero del player no coincidía**: jsDelivr sirve una re-minificación propia hecha
+con Terser, y el propio fichero lleva escrito *"Do NOT use SRI with dynamically generated files"*.
+Es decir, era un blob de 58 KB sin forma de verificarlo.
+
+Ahora `vendor-runtime.sh` lo descarga con `npm pack`, que valida el hash de integridad contra el
+registro, y escribe `vendor/MANIFEST.txt` con procedencia y SHA-256. Los otros tres ficheros
+(GSAP, runtime, shader-transitions) sí eran idénticos al original; sólo cambió el player.
+
+### Telemetría: dos canales, un interruptor
+
+- El **CLI** envía telemetría por defecto. Queda desactivada en `~/.hyperframes/config.json`.
+- El skill **`media-use`** tiene su *propio* envío a PostHog (`scripts/lib/telemetry.mjs`), aparte
+  del CLI. Está documentado y es honesto — seudónimo, propiedades gruesas, `$ip:null`, nunca el
+  texto del prompt ni rutas de fichero — pero es un segundo canal que conviene conocer.
+
+Ambos respetan la misma variable, que es el control duradero (la config del CLI vive fuera del repo):
+
+```bash
+export HYPERFRAMES_NO_TELEMETRY=1   # o DO_NOT_TRACK=1
+```
+
+### Revisión de las skills instaladas
+
+Las 25 skills se ejecutan con permisos completos de agente — el propio instalador lo advierte al
+terminar. Revisadas 223 scripts (`.sh`, `.mjs`, `.js`, `.py`, `.cjs`) buscando patrones de riesgo:
+
+- Sin `curl | bash` ni `wget | sh`, sin `sudo`, sin `rm -rf /`, sin `base64 -d`.
+- Sin lecturas de credenciales. La única coincidencia (`~/.aws/credentials`) está en un `.md` de
+  documentación sobre el render en Lambda, no en código.
+- El único `eval(` es `model.eval()` de PyTorch — falso positivo.
+- Hosts a los que llaman: `w3.org` (namespaces SVG), `cdn.jsdelivr.net`, `gsap.com`, `github.com`,
+  `heygen.ai` y `us.i.posthog.com` (la telemetría de arriba). El resto son fixtures de test
+  (`example.com`, `evil.example`).
+- Los enlaces de `.claude/skills` no escapan del repo y ninguno está roto.
+
+No es una auditoría línea a línea de 223 ficheros; es un barrido de patrones. Suficiente para
+descartar lo evidente, no para certificar código de terceros.
+
+### Reproducibilidad
+
+`setup-optional.sh` fija whisper.cpp a un commit concreto en vez de la punta de `main`, para que
+dos ejecuciones compilen el mismo árbol.
+
 ## Verificación realizada
 
 Todo comprobado ejecutándolo, no leyendo la salida de `doctor` (que da falsos verdes):
@@ -152,7 +217,5 @@ Todo comprobado ejecutándolo, no leyendo la salida de `doctor` (que da falsos v
 
 ## Notas
 
-- **Telemetría:** el CLI la trae activada por defecto. Se desactiva con
-  `npx hyperframes telemetry disable` o `HYPERFRAMES_NO_TELEMETRY=1`.
 - **Docker** está presente pero el daemon no corre; sólo afecta al render en contenedor.
 - El render usa WebGL por software: ~2 min para 15 s a 1080x1920. Con GPU es bastante más rápido.

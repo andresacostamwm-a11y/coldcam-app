@@ -7,9 +7,12 @@
     "doctor": "hyperframes doctor",
     "lint": "hyperframes lint",
     "new": "hyperframes init",
-    "skills:update": "hyperframes skills update"
+    "skills:update": "hyperframes skills update",
+    "audit": "bash scripts/audit.sh",
+    "verify:vendor": "bash scripts/verify-vendor.sh",
+    "vendor": "bash scripts/vendor-runtime.sh"
   },
   "devDependencies": {
-    "hyperframes": "^0.7.90"
+    "hyperframes": "0.7.90"
   }
 }

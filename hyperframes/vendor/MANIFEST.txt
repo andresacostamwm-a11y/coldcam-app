@@ -1,0 +1,9 @@
+# Runtime de HyperFrames vendorizado desde el registro de npm.
+# Regenerar:  bash hyperframes/scripts/vendor-runtime.sh
+# Verificar:  bash hyperframes/scripts/verify-vendor.sh
+#
+# sha256  fichero  <-  paquete@versión  :  ruta en el tarball
+c174bfce53a729418d57a8ad8625e7247c793a22fef8e2851e3cfa3de9cd8280  gsap.min.js  <-  gsap@3.14.2  :  package/dist/gsap.min.js
+5766bdb0836d52f4733f31af8e19bc4c9c9035de10600595f33aee3eacf5f2e8  hyperframe.runtime.iife.js  <-  @hyperframes/core@0.7.90  :  package/dist/hyperframe.runtime.iife.js
+80313e432bcdfbd2aee18a2c584bb067b9af9db12b944dd3aefcbccb1f545f44  shader-transitions.global.js  <-  @hyperframes/shader-transitions@0.7.90  :  package/dist/index.global.js
+b438c06f5ed2aed134c60d14c4db8c66e55bc2db92cb609de0de8d3d7672d441  hyperframes-player.js  <-  @hyperframes/player@0.7.90  :  package/dist/hyperframes-player.js
