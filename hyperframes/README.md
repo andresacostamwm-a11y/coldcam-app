@@ -101,20 +101,58 @@ tl.set("#s4", { autoAlpha: 0 }, 10.0); // ocultar el ancla final en su tiempo de
 Está aplicado y marcado con un comentario `FIX` en los cuatro skeletons. Tras el arreglo la
 secuencia rinde limpia: escena 3 → shader `cinematic-zoom` → 4 → 5 → 6, sin superposición.
 
+## Componentes opcionales (audio local)
+
+Los tres opcionales que reporta `doctor` también están instalados. No los pide la guía: sólo hacen
+falta para captions automáticos, voiceover o música de fondo generados en local. El render a MP4
+funciona sin ellos.
+
+| Componente     | Qué es                        | Dónde                                        |
+| -------------- | ----------------------------- | -------------------------------------------- |
+| whisper.cpp    | transcripción → captions      | `/usr/local/bin/whisper-cli` + libs en `/usr/local/lib` |
+| Kokoro TTS     | voz local (Kokoro-82M)        | venv en `~/.venv-hyperframes`                |
+| MusicGen       | música de fondo local         | mismo venv (`torch` CPU + `transformers`)    |
+
+Para que el CLI encuentre el entorno Python:
+
+```bash
+export HYPERFRAMES_PYTHON=$HOME/.venv-hyperframes/bin/python
+```
+
+Reproducir la instalación completa en otra máquina:
+
+```bash
+bash hyperframes/scripts/setup-optional.sh
+```
+
+Dos decisiones del script que conviene conocer:
+
+- **venv aparte, no el Python del sistema.** El intérprete del sistema está marcado
+  `EXTERNALLY-MANAGED` (PEP 668) y además lo usa la app Flask del repo; `torch` no debe entrar ahí.
+- **Rueda CPU de PyTorch** (`--index-url https://download.pytorch.org/whl/cpu`). La rueda por
+  defecto de PyPI arrastra el stack CUDA completo (~2-3 GB de paquetes `nvidia-*`) que no sirve sin
+  GPU. Con el índice CPU el venv entero queda en 1,3 GB.
+
+Y un detalle que costó encontrar: **whisper.cpp hay que compilarlo directamente en su ruta final.**
+CMake graba rutas absolutas en el árbol de build, así que si compilas en un sitio y mueves el
+directorio, `cmake --install` falla y el binario arranca pero no encuentra `libwhisper.so.1`.
+`hyperframes doctor` sólo comprueba que el fichero exista, así que en ese estado da un ✓ engañoso.
+
 ## Verificación realizada
 
-- `hyperframes doctor` — todos los checks de render en verde.
+Todo comprobado ejecutándolo, no leyendo la salida de `doctor` (que da falsos verdes):
+
 - `starter/` — render real a MP4: 1920x1080, 30 fps, 10 s, H.264.
-- Prueba de shaders — Skeleton A relleno, 1080x1920, 15 s, 450 frames, con
-  `hasShaderTransitions: true` sobre WebGL por software (ANGLE/SwiftShader). Transición
-  verificada frame a frame.
+- Shaders — Skeleton A relleno, 1080x1920, 15 s, 450 frames, con `hasShaderTransitions: true` sobre
+  WebGL por software (ANGLE/SwiftShader). Transición verificada extrayendo frames del MP4.
+- TTS — `npx hyperframes tts` generó 3,2 s de voz en español (`ef_dora`) y 4,3 s en inglés.
+- whisper — transcribió el WAV del TTS palabra por palabra con timestamps, modelo `base.en`.
+  El ciclo TTS → whisper cierra correctamente.
+- MusicGen — clip generado con `facebook/musicgen-small` sobre torch CPU.
 
 ## Notas
 
 - **Telemetría:** el CLI la trae activada por defecto. Se desactiva con
   `npx hyperframes telemetry disable` o `HYPERFRAMES_NO_TELEMETRY=1`.
-- **Opcionales no instalados:** whisper-cpp (transcripción), Kokoro TTS (voz local) y MusicGen
-  (música local). No los pide la guía y `torch` añade varios GB. Se instalan aparte si hacen falta
-  para captions o voiceover.
 - **Docker** está presente pero el daemon no corre; sólo afecta al render en contenedor.
 - El render usa WebGL por software: ~2 min para 15 s a 1080x1920. Con GPU es bastante más rápido.
