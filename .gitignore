@@ -6,3 +6,6 @@ node_modules/
 video/node_modules/
 static/videos/
 out/
+
+# copia "universal" duplicada que genera `npx skills add --all`
+/agent/

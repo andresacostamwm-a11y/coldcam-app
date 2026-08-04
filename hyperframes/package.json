@@ -1,0 +1,15 @@
+{
+  "name": "coldcam-hyperframes",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HyperFrames video composition workspace for coldcam-app",
+  "scripts": {
+    "doctor": "hyperframes doctor",
+    "lint": "hyperframes lint",
+    "new": "hyperframes init",
+    "skills:update": "hyperframes skills update"
+  },
+  "devDependencies": {
+    "hyperframes": "^0.7.90"
+  }
+}
